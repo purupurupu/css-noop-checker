@@ -1,19 +1,19 @@
-import type { ElementData, Warning } from './types.ts';
+import type { Rule, Warning } from './types.ts';
+import {
+  isDefaultAlignmentValue,
+  isFlexOrGridContainer,
+} from './context.ts';
 
-const FLEX_GRID_DISPLAYS = new Set([
-  'flex', 'inline-flex', 'grid', 'inline-grid',
-]);
-
-export function checkAlignment(data: ElementData): Warning[] {
-  const { display, alignItems, justifyContent } = data.computedStyles;
-
-  if (FLEX_GRID_DISPLAYS.has(display)) return [];
+export const checkAlignment: Rule = (ctx) => {
+  const { display, alignItems, justifyContent } = ctx.styles;
+  if (isFlexOrGridContainer(display)) return [];
 
   const warnings: Warning[] = [];
 
-  if (alignItems !== 'normal') {
+  if (!isDefaultAlignmentValue(alignItems)) {
     warnings.push({
       ruleId: 'C-2',
+      property: 'align-items',
       severity: 'warning',
       title: 'align-items has no effect',
       details: `align-items is "${alignItems}" but display is "${display}". align-items works on flex/grid containers only.`,
@@ -21,9 +21,10 @@ export function checkAlignment(data: ElementData): Warning[] {
     });
   }
 
-  if (justifyContent !== 'normal') {
+  if (!isDefaultAlignmentValue(justifyContent)) {
     warnings.push({
       ruleId: 'C-2',
+      property: 'justify-content',
       severity: 'warning',
       title: 'justify-content has no effect',
       details: `justify-content is "${justifyContent}" but display is "${display}". justify-content works on flex/grid containers only.`,
@@ -32,4 +33,4 @@ export function checkAlignment(data: ElementData): Warning[] {
   }
 
   return warnings;
-}
+};

@@ -4,7 +4,7 @@ import type { ElementData } from '../../rules/types.ts';
 export type AnalysisStatus = 'no-selection' | 'analyzing' | 'ready' | 'error';
 
 const COMPUTED_STYLE_KEYS = [
-  'display', 'width', 'height', 'rowGap', 'columnGap',
+  'display', 'width', 'height', 'gap', 'rowGap', 'columnGap',
   'alignItems', 'justifyContent', 'placeItems', 'placeContent', 'columnCount',
 ] as const;
 
@@ -33,6 +33,7 @@ const EVAL_SCRIPT = `
       display: cs.display,
       width: cs.width,
       height: cs.height,
+      gap: cs.gap,
       rowGap: cs.rowGap,
       columnGap: cs.columnGap,
       alignItems: cs.alignItems,

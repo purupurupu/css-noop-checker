@@ -1,4 +1,5 @@
-import type { ElementData, Warning } from './types.ts';
+import type { Rule, Warning } from './types.ts';
+import { isDefaultInlineSizeValue } from './context.ts';
 
 /**
  * Replaced inline elements (img, input, etc.) accept width/height
@@ -10,17 +11,19 @@ const REPLACED_INLINE_ELEMENTS = new Set([
   'meter', 'progress',
 ]);
 
-export function checkInlineDimensions(data: ElementData): Warning[] {
-  const { display, width, height } = data.computedStyles;
+export const checkInlineDimensions: Rule = (ctx) => {
+  const { display, width, height } = ctx.styles;
+  const { tagName } = ctx.element;
 
   if (display !== 'inline') return [];
-  if (REPLACED_INLINE_ELEMENTS.has(data.tagName)) return [];
+  if (REPLACED_INLINE_ELEMENTS.has(tagName)) return [];
 
   const warnings: Warning[] = [];
 
-  if (width !== 'auto') {
+  if (!isDefaultInlineSizeValue(width)) {
     warnings.push({
       ruleId: 'D-1',
+      property: 'width',
       severity: 'warning',
       title: 'width has no effect on inline elements',
       details: `width is "${width}" but display is "inline". Inline elements ignore width.`,
@@ -28,9 +31,10 @@ export function checkInlineDimensions(data: ElementData): Warning[] {
     });
   }
 
-  if (height !== 'auto') {
+  if (!isDefaultInlineSizeValue(height)) {
     warnings.push({
       ruleId: 'D-1',
+      property: 'height',
       severity: 'warning',
       title: 'height has no effect on inline elements',
       details: `height is "${height}" but display is "inline". Inline elements ignore height.`,
@@ -39,4 +43,4 @@ export function checkInlineDimensions(data: ElementData): Warning[] {
   }
 
   return warnings;
-}
+};

@@ -1,5 +1,6 @@
 import { describe, it, expect } from 'vitest';
 import { checkInlineDimensions } from '../inline-dimensions.ts';
+import { createRuleContext } from '../context.ts';
 import type { ElementData } from '../types.ts';
 
 function makeElement(overrides: Partial<ElementData['computedStyles']> & { tagName?: string }): ElementData {
@@ -12,6 +13,7 @@ function makeElement(overrides: Partial<ElementData['computedStyles']> & { tagNa
       display: 'inline',
       width: 'auto',
       height: 'auto',
+      gap: 'normal',
       rowGap: 'normal',
       columnGap: 'normal',
       alignItems: 'normal',
@@ -26,45 +28,45 @@ function makeElement(overrides: Partial<ElementData['computedStyles']> & { tagNa
 
 describe('D-1: inline dimensions', () => {
   it('warns when width is set on inline element', () => {
-    const warnings = checkInlineDimensions(makeElement({ width: '200px' }));
+    const warnings = checkInlineDimensions(createRuleContext(makeElement({ width: '200px' })));
     expect(warnings).toHaveLength(1);
     expect(warnings[0].ruleId).toBe('D-1');
     expect(warnings[0].title).toContain('width');
   });
 
   it('warns when height is set on inline element', () => {
-    const warnings = checkInlineDimensions(makeElement({ height: '50px' }));
+    const warnings = checkInlineDimensions(createRuleContext(makeElement({ height: '50px' })));
     expect(warnings).toHaveLength(1);
     expect(warnings[0].title).toContain('height');
   });
 
   it('warns for both width and height', () => {
-    const warnings = checkInlineDimensions(makeElement({ width: '100px', height: '30px' }));
+    const warnings = checkInlineDimensions(createRuleContext(makeElement({ width: '100px', height: '30px' })));
     expect(warnings).toHaveLength(2);
   });
 
   it('skips replaced inline elements (img)', () => {
-    const warnings = checkInlineDimensions(makeElement({ tagName: 'img', width: '60px', height: '40px' }));
+    const warnings = checkInlineDimensions(createRuleContext(makeElement({ tagName: 'img', width: '60px', height: '40px' })));
     expect(warnings).toHaveLength(0);
   });
 
   it('skips replaced inline elements (input)', () => {
-    const warnings = checkInlineDimensions(makeElement({ tagName: 'input', width: '200px' }));
+    const warnings = checkInlineDimensions(createRuleContext(makeElement({ tagName: 'input', width: '200px' })));
     expect(warnings).toHaveLength(0);
   });
 
   it('skips replaced inline elements (button)', () => {
-    const warnings = checkInlineDimensions(makeElement({ tagName: 'button', width: '120px' }));
+    const warnings = checkInlineDimensions(createRuleContext(makeElement({ tagName: 'button', width: '120px' })));
     expect(warnings).toHaveLength(0);
   });
 
   it('skips non-inline display', () => {
-    const warnings = checkInlineDimensions(makeElement({ display: 'inline-block', width: '200px' }));
+    const warnings = checkInlineDimensions(createRuleContext(makeElement({ display: 'inline-block', width: '200px' })));
     expect(warnings).toHaveLength(0);
   });
 
   it('skips when width and height are auto', () => {
-    const warnings = checkInlineDimensions(makeElement({}));
+    const warnings = checkInlineDimensions(createRuleContext(makeElement({})));
     expect(warnings).toHaveLength(0);
   });
 });

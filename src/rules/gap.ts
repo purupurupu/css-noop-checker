@@ -1,23 +1,42 @@
-import type { ElementData, Warning } from './types.ts';
+import type { Rule, Warning } from './types.ts';
+import {
+  isDefaultGapLikeValue,
+  isFlexOrGridContainer,
+} from './context.ts';
 
-const FLEX_GRID_DISPLAYS = new Set([
-  'flex', 'inline-flex', 'grid', 'inline-grid',
-]);
+export const checkGap: Rule = (ctx) => {
+  const {
+    display,
+    gap,
+    rowGap,
+    columnGap,
+    columnCount,
+  } = ctx.styles;
 
-function isNonDefaultGap(value: string): boolean {
-  return value !== '0px' && value !== 'normal';
-}
-
-export function checkGap(data: ElementData): Warning[] {
-  const { display, rowGap, columnGap, columnCount } = data.computedStyles;
-
-  if (FLEX_GRID_DISPLAYS.has(display)) return [];
+  if (isFlexOrGridContainer(display)) return [];
 
   const warnings: Warning[] = [];
 
-  if (isNonDefaultGap(rowGap)) {
+  const hasGap = !isDefaultGapLikeValue(gap);
+  const hasRowGap = !isDefaultGapLikeValue(rowGap);
+  const hasColumnGap = !isDefaultGapLikeValue(columnGap);
+
+  if (hasGap && hasRowGap && hasColumnGap && rowGap === columnGap) {
     warnings.push({
       ruleId: 'C-1',
+      property: 'gap',
+      severity: 'warning',
+      title: 'gap has no effect',
+      details: `gap is "${gap}" but display is "${display}". gap works on flex/grid containers only.`,
+      suggestion: 'Set display: flex or display: grid on this element, or remove gap.',
+    });
+    return warnings;
+  }
+
+  if (hasRowGap) {
+    warnings.push({
+      ruleId: 'C-1',
+      property: 'row-gap',
       severity: 'warning',
       title: 'row-gap has no effect',
       details: `row-gap is "${rowGap}" but display is "${display}". row-gap works on flex/grid containers only.`,
@@ -26,9 +45,10 @@ export function checkGap(data: ElementData): Warning[] {
   }
 
   // column-gap is valid on multi-column containers (column-count !== "auto")
-  if (isNonDefaultGap(columnGap) && columnCount === 'auto') {
+  if (hasColumnGap && columnCount === 'auto') {
     warnings.push({
       ruleId: 'C-1',
+      property: 'column-gap',
       severity: 'warning',
       title: 'column-gap has no effect',
       details: `column-gap is "${columnGap}" but display is "${display}". column-gap works on flex/grid/multi-column containers only.`,
@@ -37,4 +57,4 @@ export function checkGap(data: ElementData): Warning[] {
   }
 
   return warnings;
-}
+};

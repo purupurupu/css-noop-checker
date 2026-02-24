@@ -27,7 +27,7 @@ export function WarningList({ warnings, status }: WarningListProps) {
   return (
     <div className="warning-list">
       {warnings.map((w) => (
-        <WarningCard key={`${w.ruleId}-${w.title}`} warning={w} />
+        <WarningCard key={`${w.ruleId}-${w.property}`} warning={w} />
       ))}
     </div>
   );

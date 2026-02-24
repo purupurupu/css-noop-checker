@@ -12,6 +12,7 @@ function makeElement(overrides: Partial<ElementData['computedStyles']> & { tagNa
       display: 'block',
       width: 'auto',
       height: 'auto',
+      gap: 'normal',
       rowGap: 'normal',
       columnGap: 'normal',
       alignItems: 'normal',
