@@ -4,7 +4,7 @@ function normalize(value: string): string {
   return value.trim().toLowerCase();
 }
 
-export function normalizeComputedStyles(
+function normalizeComputedStyles(
   styles: ElementData['computedStyles'],
 ): ElementData['computedStyles'] {
   return {

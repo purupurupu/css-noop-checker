@@ -44,16 +44,14 @@ describe('C-3: place-items / place-content', () => {
     expect(warnings).toHaveLength(0);
   });
 
-  it('warns on flex containers', () => {
+  it('skips flex containers', () => {
     const warnings = checkPlace(createRuleContext(makeElement({ display: 'flex', placeContent: 'center' })));
-    expect(warnings).toHaveLength(1);
-    expect(warnings[0].property).toBe('place-content');
+    expect(warnings).toHaveLength(0);
   });
 
-  it('warns on inline-flex containers', () => {
+  it('skips inline-flex containers', () => {
     const warnings = checkPlace(createRuleContext(makeElement({ display: 'inline-flex', placeItems: 'start' })));
-    expect(warnings).toHaveLength(1);
-    expect(warnings[0].property).toBe('place-items');
+    expect(warnings).toHaveLength(0);
   });
 
   it('skips inline-grid containers', () => {
