@@ -1,4 +1,4 @@
-import { useState, useEffect, useCallback } from 'react';
+import { useState, useEffect, useCallback, useRef } from 'react';
 import type { ElementData } from '../../rules/types.ts';
 
 export type AnalysisStatus = 'no-selection' | 'analyzing' | 'ready' | 'error';
@@ -51,12 +51,18 @@ const DEBOUNCE_MS = 150;
 export function useSelectedElement() {
   const [data, setData] = useState<ElementData | null>(null);
   const [status, setStatus] = useState<AnalysisStatus>('no-selection');
+  const requestIdRef = useRef(0);
 
   const evaluate = useCallback(() => {
+    const requestId = requestIdRef.current + 1;
+    requestIdRef.current = requestId;
     setStatus('analyzing');
     chrome.devtools.inspectedWindow.eval(
       EVAL_SCRIPT,
       (result: unknown, exceptionInfo) => {
+        // Ignore stale eval callbacks from older selections.
+        if (requestId !== requestIdRef.current) return;
+
         if (exceptionInfo || result === null) {
           setData(null);
           setStatus(exceptionInfo ? 'error' : 'no-selection');
@@ -86,6 +92,7 @@ export function useSelectedElement() {
     chrome.devtools.panels.elements.onSelectionChanged.addListener(debouncedEvaluate);
     return () => {
       clearTimeout(timer);
+      requestIdRef.current += 1;
       chrome.devtools.panels.elements.onSelectionChanged.removeListener(debouncedEvaluate);
     };
   }, [evaluate]);
