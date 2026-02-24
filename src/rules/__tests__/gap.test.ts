@@ -27,7 +27,9 @@ function makeElement(overrides: Partial<ElementData['computedStyles']>): Element
 
 describe('C-1: gap', () => {
   it('warns when gap is set on block element', () => {
-    const warnings = checkGap(createRuleContext(makeElement({ gap: '20px', rowGap: '20px', columnGap: '20px' })));
+    const warnings = checkGap(
+      createRuleContext(makeElement({ gap: '20px', rowGap: '20px', columnGap: '20px' })),
+    );
     expect(warnings).toHaveLength(1);
     expect(warnings[0].property).toBe('gap');
   });
@@ -46,12 +48,16 @@ describe('C-1: gap', () => {
   });
 
   it('warns for both row-gap and column-gap', () => {
-    const warnings = checkGap(createRuleContext(makeElement({ rowGap: '10px', columnGap: '5px', gap: '10px 5px' })));
+    const warnings = checkGap(
+      createRuleContext(makeElement({ rowGap: '10px', columnGap: '5px', gap: '10px 5px' })),
+    );
     expect(warnings).toHaveLength(2);
   });
 
   it('skips flex containers', () => {
-    const warnings = checkGap(createRuleContext(makeElement({ display: 'flex', rowGap: '10px', columnGap: '10px' })));
+    const warnings = checkGap(
+      createRuleContext(makeElement({ display: 'flex', rowGap: '10px', columnGap: '10px' })),
+    );
     expect(warnings).toHaveLength(0);
   });
 
@@ -61,12 +67,16 @@ describe('C-1: gap', () => {
   });
 
   it('skips inline-flex containers', () => {
-    const warnings = checkGap(createRuleContext(makeElement({ display: 'inline-flex', columnGap: '10px' })));
+    const warnings = checkGap(
+      createRuleContext(makeElement({ display: 'inline-flex', columnGap: '10px' })),
+    );
     expect(warnings).toHaveLength(0);
   });
 
   it('skips column-gap on multi-column containers', () => {
-    const warnings = checkGap(createRuleContext(makeElement({ columnGap: '40px', columnCount: '2' })));
+    const warnings = checkGap(
+      createRuleContext(makeElement({ columnGap: '40px', columnCount: '2' })),
+    );
     expect(warnings).toHaveLength(0);
   });
 
@@ -77,12 +87,16 @@ describe('C-1: gap', () => {
   });
 
   it('does not collapse to gap warning when column-gap is effective in multi-column', () => {
-    const warnings = checkGap(createRuleContext(makeElement({
-      gap: '20px',
-      rowGap: '20px',
-      columnGap: '20px',
-      columnCount: '2',
-    })));
+    const warnings = checkGap(
+      createRuleContext(
+        makeElement({
+          gap: '20px',
+          rowGap: '20px',
+          columnGap: '20px',
+          columnCount: '2',
+        }),
+      ),
+    );
     expect(warnings).toHaveLength(1);
     expect(warnings[0].property).toBe('row-gap');
   });

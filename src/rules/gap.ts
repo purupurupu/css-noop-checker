@@ -1,17 +1,8 @@
 import type { Rule, Warning } from './types.ts';
-import {
-  isDefaultGapLikeValue,
-  isFlexOrGridContainer,
-} from './context.ts';
+import { isDefaultGapLikeValue, isFlexOrGridContainer } from './context.ts';
 
 export const checkGap: Rule = (ctx) => {
-  const {
-    display,
-    gap,
-    rowGap,
-    columnGap,
-    columnCount,
-  } = ctx.styles;
+  const { display, gap, rowGap, columnGap, columnCount } = ctx.styles;
 
   if (isFlexOrGridContainer(display)) return [];
 

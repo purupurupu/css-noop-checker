@@ -17,11 +17,7 @@ export function WarningList({ warnings, status }: WarningListProps) {
   }
 
   if (warnings.length === 0) {
-    return (
-      <div className="warning-list__message">
-        No issues detected (MVP rules).
-      </div>
-    );
+    return <div className="warning-list__message">No issues detected (MVP rules).</div>;
   }
 
   return (

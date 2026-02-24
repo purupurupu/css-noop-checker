@@ -4,8 +4,17 @@ import type { ElementData } from '../../rules/types.ts';
 export type AnalysisStatus = 'no-selection' | 'analyzing' | 'ready' | 'error';
 
 const COMPUTED_STYLE_KEYS = [
-  'display', 'width', 'height', 'gap', 'rowGap', 'columnGap',
-  'alignItems', 'justifyContent', 'placeItems', 'placeContent', 'columnCount',
+  'display',
+  'width',
+  'height',
+  'gap',
+  'rowGap',
+  'columnGap',
+  'alignItems',
+  'justifyContent',
+  'placeItems',
+  'placeContent',
+  'columnCount',
 ] as const;
 
 function isElementData(v: unknown): v is ElementData {
@@ -57,26 +66,23 @@ export function useSelectedElement() {
     const requestId = requestIdRef.current + 1;
     requestIdRef.current = requestId;
     setStatus('analyzing');
-    chrome.devtools.inspectedWindow.eval(
-      EVAL_SCRIPT,
-      (result: unknown, exceptionInfo) => {
-        // Ignore stale eval callbacks from older selections.
-        if (requestId !== requestIdRef.current) return;
+    chrome.devtools.inspectedWindow.eval(EVAL_SCRIPT, (result: unknown, exceptionInfo) => {
+      // Ignore stale eval callbacks from older selections.
+      if (requestId !== requestIdRef.current) return;
 
-        if (exceptionInfo || result === null) {
-          setData(null);
-          setStatus(exceptionInfo ? 'error' : 'no-selection');
-          return;
-        }
-        if (!isElementData(result)) {
-          setData(null);
-          setStatus('error');
-          return;
-        }
-        setData(result);
-        setStatus('ready');
-      },
-    );
+      if (exceptionInfo || result === null) {
+        setData(null);
+        setStatus(exceptionInfo ? 'error' : 'no-selection');
+        return;
+      }
+      if (!isElementData(result)) {
+        setData(null);
+        setStatus('error');
+        return;
+      }
+      setData(result);
+      setStatus('ready');
+    });
   }, []);
 
   useEffect(() => {

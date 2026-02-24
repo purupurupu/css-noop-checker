@@ -5,12 +5,7 @@ import { checkGap } from './gap.ts';
 import { checkAlignment } from './alignment.ts';
 import { checkPlace } from './place.ts';
 
-const rules: Rule[] = [
-  checkInlineDimensions,
-  checkGap,
-  checkAlignment,
-  checkPlace,
-];
+const rules: Rule[] = [checkInlineDimensions, checkGap, checkAlignment, checkPlace];
 
 export function analyzeElement(data: ElementData): Warning[] {
   const ctx = createRuleContext(data);

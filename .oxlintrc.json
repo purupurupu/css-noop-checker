@@ -1,0 +1,16 @@
+{
+  "$schema": "./node_modules/oxlint/configuration_schema.json",
+  "plugins": ["typescript", "react"],
+  "categories": {
+    "correctness": "error"
+  },
+  "ignorePatterns": ["dist"],
+  "rules": {
+    "react-hooks/exhaustive-deps": "warn",
+    "react/only-export-components": ["error", { "allowConstantExport": true }]
+  },
+  "env": {
+    "browser": true,
+    "es2020": true
+  }
+}

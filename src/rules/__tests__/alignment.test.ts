@@ -34,28 +34,38 @@ describe('C-2: alignment', () => {
   });
 
   it('warns when justify-content is set on block element', () => {
-    const warnings = checkAlignment(createRuleContext(makeElement({ justifyContent: 'space-between' })));
+    const warnings = checkAlignment(
+      createRuleContext(makeElement({ justifyContent: 'space-between' })),
+    );
     expect(warnings).toHaveLength(1);
     expect(warnings[0].title).toContain('justify-content');
   });
 
   it('warns for both align-items and justify-content', () => {
-    const warnings = checkAlignment(createRuleContext(makeElement({ alignItems: 'center', justifyContent: 'center' })));
+    const warnings = checkAlignment(
+      createRuleContext(makeElement({ alignItems: 'center', justifyContent: 'center' })),
+    );
     expect(warnings).toHaveLength(2);
   });
 
   it('skips flex containers', () => {
-    const warnings = checkAlignment(createRuleContext(makeElement({ display: 'flex', alignItems: 'center' })));
+    const warnings = checkAlignment(
+      createRuleContext(makeElement({ display: 'flex', alignItems: 'center' })),
+    );
     expect(warnings).toHaveLength(0);
   });
 
   it('skips grid containers', () => {
-    const warnings = checkAlignment(createRuleContext(makeElement({ display: 'grid', justifyContent: 'center' })));
+    const warnings = checkAlignment(
+      createRuleContext(makeElement({ display: 'grid', justifyContent: 'center' })),
+    );
     expect(warnings).toHaveLength(0);
   });
 
   it('skips inline-grid containers', () => {
-    const warnings = checkAlignment(createRuleContext(makeElement({ display: 'inline-grid', alignItems: 'stretch' })));
+    const warnings = checkAlignment(
+      createRuleContext(makeElement({ display: 'inline-grid', alignItems: 'stretch' })),
+    );
     expect(warnings).toHaveLength(0);
   });
 

@@ -1,8 +1,5 @@
 import type { Rule, Warning } from './types.ts';
-import {
-  isDefaultAlignmentValue,
-  isFlexOrGridContainer,
-} from './context.ts';
+import { isDefaultAlignmentValue, isFlexOrGridContainer } from './context.ts';
 
 export const checkAlignment: Rule = (ctx) => {
   const { display, alignItems, justifyContent } = ctx.styles;

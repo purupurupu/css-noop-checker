@@ -2,7 +2,9 @@ import { describe, it, expect } from 'vitest';
 import { analyzeElement } from '../engine.ts';
 import type { ElementData } from '../types.ts';
 
-function makeElement(overrides: Partial<ElementData['computedStyles']> & { tagName?: string }): ElementData {
+function makeElement(
+  overrides: Partial<ElementData['computedStyles']> & { tagName?: string },
+): ElementData {
   const { tagName = 'div', ...styles } = overrides;
   return {
     tagName,
@@ -32,31 +34,37 @@ describe('analyzeElement (integration)', () => {
   });
 
   it('returns no warnings for a valid flex layout', () => {
-    const warnings = analyzeElement(makeElement({
-      display: 'flex',
-      rowGap: '8px',
-      alignItems: 'center',
-      justifyContent: 'space-between',
-    }));
+    const warnings = analyzeElement(
+      makeElement({
+        display: 'flex',
+        rowGap: '8px',
+        alignItems: 'center',
+        justifyContent: 'space-between',
+      }),
+    );
     expect(warnings).toHaveLength(0);
   });
 
   it('detects multiple issues on a single element', () => {
-    const warnings = analyzeElement(makeElement({
-      rowGap: '10px',
-      alignItems: 'center',
-      placeContent: 'center',
-    }));
+    const warnings = analyzeElement(
+      makeElement({
+        rowGap: '10px',
+        alignItems: 'center',
+        placeContent: 'center',
+      }),
+    );
     expect(warnings.length).toBeGreaterThanOrEqual(3);
   });
 
   it('combines D-1 with other rules on inline element', () => {
-    const warnings = analyzeElement(makeElement({
-      tagName: 'span',
-      display: 'inline',
-      width: '100px',
-      alignItems: 'center',
-    }));
+    const warnings = analyzeElement(
+      makeElement({
+        tagName: 'span',
+        display: 'inline',
+        width: '100px',
+        alignItems: 'center',
+      }),
+    );
     const ruleIds = warnings.map((w) => w.ruleId);
     expect(ruleIds).toContain('D-1');
     expect(ruleIds).toContain('C-2');

@@ -6,9 +6,19 @@ import { isDefaultInlineSizeValue } from './context.ts';
  * even when display is "inline", so we must exclude them from D-1.
  */
 const REPLACED_INLINE_ELEMENTS = new Set([
-  'img', 'input', 'video', 'audio', 'canvas', 'embed',
-  'object', 'iframe', 'select', 'textarea', 'button',
-  'meter', 'progress',
+  'img',
+  'input',
+  'video',
+  'audio',
+  'canvas',
+  'embed',
+  'object',
+  'iframe',
+  'select',
+  'textarea',
+  'button',
+  'meter',
+  'progress',
 ]);
 
 export const checkInlineDimensions: Rule = (ctx) => {
