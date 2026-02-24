@@ -17,8 +17,10 @@ export interface ElementData {
   };
 }
 
+export type RuleId = 'D-1' | 'C-1' | 'C-2' | 'C-3';
+
 export interface Warning {
-  ruleId: string;
+  ruleId: RuleId;
   severity: 'warning';
   title: string;
   details: string;

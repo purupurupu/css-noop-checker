@@ -12,6 +12,8 @@ export default defineConfig({
   build: {
     outDir: 'dist',
     emptyOutDir: true,
+    // MV3 CSP blocks <link rel="modulepreload"> in extension pages.
+    // Do not remove without testing in a loaded extension.
     modulePreload: false,
     rollupOptions: {
       input: {

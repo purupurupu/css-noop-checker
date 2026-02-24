@@ -3,6 +3,22 @@ import type { ElementData } from '../../rules/types.ts';
 
 export type AnalysisStatus = 'no-selection' | 'analyzing' | 'ready' | 'error';
 
+const COMPUTED_STYLE_KEYS = [
+  'display', 'width', 'height', 'rowGap', 'columnGap',
+  'alignItems', 'justifyContent', 'placeItems', 'placeContent', 'columnCount',
+] as const;
+
+function isElementData(v: unknown): v is ElementData {
+  if (typeof v !== 'object' || v === null) return false;
+  const o = v as Record<string, unknown>;
+  if (typeof o['tagName'] !== 'string') return false;
+  if (!Array.isArray(o['classList'])) return false;
+  const cs = o['computedStyles'];
+  if (typeof cs !== 'object' || cs === null) return false;
+  const styles = cs as Record<string, unknown>;
+  return COMPUTED_STYLE_KEYS.every((key) => typeof styles[key] === 'string');
+}
+
 /** Runs in the inspected page's context via eval(). Uses var for broad compat. */
 const EVAL_SCRIPT = `
 (function() {
@@ -45,7 +61,12 @@ export function useSelectedElement() {
           setStatus(exceptionInfo ? 'error' : 'no-selection');
           return;
         }
-        setData(result as ElementData);
+        if (!isElementData(result)) {
+          setData(null);
+          setStatus('error');
+          return;
+        }
+        setData(result);
         setStatus('ready');
       },
     );
