@@ -33,6 +33,7 @@ Package manager is **pnpm** (not npm/yarn).
 ## TypeScript Configuration
 
 Uses project references with two configs:
+
 - `tsconfig.app.json` — App source (`src/`), targets ES2022, includes `vite/client` types
 - `tsconfig.node.json` — Node tooling config (`vite.config.ts`), targets ES2023
 

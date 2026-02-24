@@ -40,22 +40,30 @@ describe('C-3: place-items / place-content', () => {
   });
 
   it('skips grid containers', () => {
-    const warnings = checkPlace(createRuleContext(makeElement({ display: 'grid', placeItems: 'center' })));
+    const warnings = checkPlace(
+      createRuleContext(makeElement({ display: 'grid', placeItems: 'center' })),
+    );
     expect(warnings).toHaveLength(0);
   });
 
   it('skips flex containers', () => {
-    const warnings = checkPlace(createRuleContext(makeElement({ display: 'flex', placeContent: 'center' })));
+    const warnings = checkPlace(
+      createRuleContext(makeElement({ display: 'flex', placeContent: 'center' })),
+    );
     expect(warnings).toHaveLength(0);
   });
 
   it('skips inline-flex containers', () => {
-    const warnings = checkPlace(createRuleContext(makeElement({ display: 'inline-flex', placeItems: 'start' })));
+    const warnings = checkPlace(
+      createRuleContext(makeElement({ display: 'inline-flex', placeItems: 'start' })),
+    );
     expect(warnings).toHaveLength(0);
   });
 
   it('skips inline-grid containers', () => {
-    const warnings = checkPlace(createRuleContext(makeElement({ display: 'inline-grid', placeContent: 'end' })));
+    const warnings = checkPlace(
+      createRuleContext(makeElement({ display: 'inline-grid', placeContent: 'end' })),
+    );
     expect(warnings).toHaveLength(0);
   });
 

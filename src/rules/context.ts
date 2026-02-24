@@ -31,10 +31,10 @@ export function createRuleContext(element: ElementData): RuleContext {
 
 export function isFlexOrGridContainer(display: string): boolean {
   return (
-    display === 'flex'
-    || display === 'inline-flex'
-    || display === 'grid'
-    || display === 'inline-grid'
+    display === 'flex' ||
+    display === 'inline-flex' ||
+    display === 'grid' ||
+    display === 'inline-grid'
   );
 }
 
@@ -53,4 +53,3 @@ export function isDefaultAlignmentValue(value: string): boolean {
 export function isDefaultInlineSizeValue(value: string): boolean {
   return value === 'auto';
 }
-
