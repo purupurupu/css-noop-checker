@@ -43,3 +43,13 @@ Both enforce: `noUnusedLocals`, `noUnusedParameters`, `noFallthroughCasesInSwitc
 - ESM modules (`"type": "module"` in package.json)
 - Use `import type` for type-only imports (`verbatimModuleSyntax` is enabled)
 - No test framework configured yet
+
+## Commit Rules
+
+- 細かく意味のある単位でコミットする（1コミット = 1つの論理的変更）
+- コミットメッセージは「なぜ（why）」を意識する。「何を変えたか」ではなく「なぜその変更が必要か」を伝える
+- フォーマット: `<type>: <why-focused message>`
+  - type: `feat`, `fix`, `refactor`, `chore`, `docs`, `test`
+- メッセージは英語で記述
+- 本文（body）が必要な場合は空行を挟んで補足を書く
+- コミット前に `pnpm build` または `pnpm lint` で壊れていないことを確認する
