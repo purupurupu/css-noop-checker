@@ -1,0 +1,72 @@
+import { useState, useEffect, useCallback } from 'react';
+import type { ElementData } from '../../rules/types.ts';
+
+export type AnalysisStatus = 'no-selection' | 'analyzing' | 'ready' | 'error';
+
+/** Runs in the inspected page's context via eval(). Uses var for broad compat. */
+const EVAL_SCRIPT = `
+(function() {
+  var el = $0;
+  if (!el) return null;
+  var cs = getComputedStyle(el);
+  return {
+    tagName: el.tagName.toLowerCase(),
+    id: el.id || '',
+    classList: Array.from(el.classList),
+    computedStyles: {
+      display: cs.display,
+      width: cs.width,
+      height: cs.height,
+      rowGap: cs.rowGap,
+      columnGap: cs.columnGap,
+      alignItems: cs.alignItems,
+      justifyContent: cs.justifyContent,
+      placeItems: cs.placeItems,
+      placeContent: cs.placeContent,
+      columnCount: cs.columnCount
+    }
+  };
+})()
+`;
+
+const DEBOUNCE_MS = 150;
+
+export function useSelectedElement() {
+  const [data, setData] = useState<ElementData | null>(null);
+  const [status, setStatus] = useState<AnalysisStatus>('no-selection');
+
+  const evaluate = useCallback(() => {
+    setStatus('analyzing');
+    chrome.devtools.inspectedWindow.eval(
+      EVAL_SCRIPT,
+      (result: unknown, exceptionInfo) => {
+        if (exceptionInfo || result === null) {
+          setData(null);
+          setStatus(exceptionInfo ? 'error' : 'no-selection');
+          return;
+        }
+        setData(result as ElementData);
+        setStatus('ready');
+      },
+    );
+  }, []);
+
+  useEffect(() => {
+    let timer: ReturnType<typeof setTimeout>;
+    const debouncedEvaluate = () => {
+      clearTimeout(timer);
+      timer = setTimeout(evaluate, DEBOUNCE_MS);
+    };
+
+    // Initial evaluation via debounce (avoids sync setState in effect)
+    debouncedEvaluate();
+
+    chrome.devtools.panels.elements.onSelectionChanged.addListener(debouncedEvaluate);
+    return () => {
+      clearTimeout(timer);
+      chrome.devtools.panels.elements.onSelectionChanged.removeListener(debouncedEvaluate);
+    };
+  }, [evaluate]);
+
+  return { data, status };
+}

@@ -1,0 +1,136 @@
+:root {
+  color-scheme: dark;
+  --bg: #1e1e1e;
+  --bg-card: #252526;
+  --border: #3c3c3c;
+  --text: #ccc;
+  --text-muted: #969696;
+  --text-element: #9cdcfe;
+  --warning-color: #cca700;
+  --suggestion-color: #4ec9b0;
+}
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  background: var(--bg);
+  color: var(--text);
+  font-family: system-ui, -apple-system, sans-serif;
+  font-size: 12px;
+  line-height: 1.5;
+  padding: 8px;
+}
+
+/* Panel layout */
+.panel {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+/* Header */
+.panel-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+  padding-bottom: 6px;
+  border-bottom: 1px solid var(--border);
+}
+
+.panel-header__selector {
+  font-family: 'Menlo', 'DejaVu Sans Mono', 'Consolas', monospace;
+  font-size: 11px;
+  color: var(--text-element);
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.panel-header__status {
+  font-size: 10px;
+  color: var(--text-muted);
+  white-space: nowrap;
+}
+
+.panel-header__status--ready {
+  color: #4ec9b0;
+}
+
+.panel-header__status--analyzing {
+  color: var(--warning-color);
+}
+
+.panel-header__status--error {
+  color: #f44747;
+}
+
+/* Warning list */
+.warning-list {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.warning-list__message {
+  color: var(--text-muted);
+  text-align: center;
+  padding: 16px 8px;
+}
+
+/* Warning card */
+.warning-card {
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-left: 3px solid var(--warning-color);
+  border-radius: 3px;
+  padding: 8px;
+}
+
+.warning-card__header {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  margin-bottom: 4px;
+}
+
+.warning-card__icon {
+  color: var(--warning-color);
+  font-size: 13px;
+  flex-shrink: 0;
+}
+
+.warning-card__title {
+  font-weight: 600;
+  flex: 1;
+}
+
+.warning-card__rule-id {
+  font-size: 10px;
+  color: var(--text-muted);
+  flex-shrink: 0;
+}
+
+.warning-card__details {
+  color: var(--text-muted);
+  font-size: 11px;
+  margin-bottom: 4px;
+}
+
+.warning-card__suggestion {
+  color: var(--suggestion-color);
+  font-size: 11px;
+}
+
+/* Footer */
+.panel-footer {
+  padding-top: 6px;
+  border-top: 1px solid var(--border);
+  color: var(--text-muted);
+  font-size: 10px;
+  text-align: center;
+}
