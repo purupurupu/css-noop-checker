@@ -76,6 +76,17 @@ describe('C-1: gap', () => {
     expect(warnings[0].title).toContain('row-gap');
   });
 
+  it('does not collapse to gap warning when column-gap is effective in multi-column', () => {
+    const warnings = checkGap(createRuleContext(makeElement({
+      gap: '20px',
+      rowGap: '20px',
+      columnGap: '20px',
+      columnCount: '2',
+    })));
+    expect(warnings).toHaveLength(1);
+    expect(warnings[0].property).toBe('row-gap');
+  });
+
   it('skips when gaps are default values', () => {
     const warnings = checkGap(createRuleContext(makeElement({})));
     expect(warnings).toHaveLength(0);

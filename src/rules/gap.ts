@@ -20,8 +20,9 @@ export const checkGap: Rule = (ctx) => {
   const hasGap = !isDefaultGapLikeValue(gap);
   const hasRowGap = !isDefaultGapLikeValue(rowGap);
   const hasColumnGap = !isDefaultGapLikeValue(columnGap);
+  const columnGapHasNoEffect = hasColumnGap && columnCount === 'auto';
 
-  if (hasGap && hasRowGap && hasColumnGap && rowGap === columnGap) {
+  if (hasGap && hasRowGap && columnGapHasNoEffect && rowGap === columnGap) {
     warnings.push({
       ruleId: 'C-1',
       property: 'gap',
@@ -45,7 +46,7 @@ export const checkGap: Rule = (ctx) => {
   }
 
   // column-gap is valid on multi-column containers (column-count !== "auto")
-  if (hasColumnGap && columnCount === 'auto') {
+  if (columnGapHasNoEffect) {
     warnings.push({
       ruleId: 'C-1',
       property: 'column-gap',
