@@ -1,0 +1,185 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>CSS Noop Checker - Test Cases</title>
+  <style>
+    body {
+      font-family: system-ui, sans-serif;
+      max-width: 800px;
+      margin: 40px auto;
+      padding: 0 20px;
+      color: #333;
+    }
+    h1 { margin-bottom: 8px; }
+    h2 { margin-top: 32px; color: #555; border-bottom: 1px solid #ddd; padding-bottom: 4px; }
+    h3 { margin-top: 16px; color: #777; font-size: 14px; }
+    .case {
+      margin: 8px 0;
+      padding: 12px;
+      border: 1px solid #ddd;
+      border-radius: 4px;
+      background: #fafafa;
+    }
+    .expect-warn { border-left: 4px solid #e6a700; }
+    .expect-ok { border-left: 4px solid #4ec9b0; }
+    .label {
+      font-size: 11px;
+      font-weight: 600;
+      text-transform: uppercase;
+      margin-bottom: 4px;
+    }
+    .label-warn { color: #e6a700; }
+    .label-ok { color: #4ec9b0; }
+  </style>
+</head>
+<body>
+  <h1>CSS Noop Checker - Test Cases</h1>
+  <p>Select each element in DevTools and check the sidebar results.</p>
+
+  <!-- ===== D-1: width/height on inline ===== -->
+  <h2>D-1: width/height on inline elements</h2>
+
+  <h3>Should warn</h3>
+  <div class="case expect-warn">
+    <div class="label label-warn">D-1 warn: span with width</div>
+    <span style="width: 200px;">This span has width: 200px</span>
+  </div>
+  <div class="case expect-warn">
+    <div class="label label-warn">D-1 warn: span with height</div>
+    <span style="height: 50px;">This span has height: 50px</span>
+  </div>
+  <div class="case expect-warn">
+    <div class="label label-warn">D-1 warn: anchor with width + height</div>
+    <a href="#" style="width: 100px; height: 30px;">Link (width + height)</a>
+  </div>
+
+  <h3>Should NOT warn (false positive check)</h3>
+  <div class="case expect-ok">
+    <div class="label label-ok">D-1 ok: img is a replaced inline element</div>
+    <img src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='60' height='40'%3E%3Crect fill='%234ec9b0' width='60' height='40'/%3E%3C/svg%3E" style="width: 60px; height: 40px;" alt="replaced element" />
+  </div>
+  <div class="case expect-ok">
+    <div class="label label-ok">D-1 ok: input is a replaced inline element</div>
+    <input type="text" style="width: 200px; height: 30px;" value="input element" />
+  </div>
+  <div class="case expect-ok">
+    <div class="label label-ok">D-1 ok: inline-block accepts width</div>
+    <span style="display: inline-block; width: 200px;">inline-block span</span>
+  </div>
+
+  <!-- ===== C-1: gap on non-flex/grid ===== -->
+  <h2>C-1: gap on non-flex/grid containers</h2>
+
+  <h3>Should warn</h3>
+  <div class="case expect-warn">
+    <div class="label label-warn">C-1 warn: display:block with gap</div>
+    <div style="gap: 10px;">
+      <div>Child 1</div>
+      <div>Child 2</div>
+    </div>
+  </div>
+  <div class="case expect-warn">
+    <div class="label label-warn">C-1 warn: display:block with row-gap</div>
+    <div style="row-gap: 20px;">
+      <div>Child 1</div>
+      <div>Child 2</div>
+    </div>
+  </div>
+
+  <h3>Should NOT warn</h3>
+  <div class="case expect-ok">
+    <div class="label label-ok">C-1 ok: flex container with gap</div>
+    <div style="display: flex; gap: 10px;">
+      <div>Flex child 1</div>
+      <div>Flex child 2</div>
+    </div>
+  </div>
+  <div class="case expect-ok">
+    <div class="label label-ok">C-1 ok: grid container with gap</div>
+    <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 10px;">
+      <div>Grid child 1</div>
+      <div>Grid child 2</div>
+    </div>
+  </div>
+  <div class="case expect-ok">
+    <div class="label label-ok">C-1 ok: multi-column with column-gap (valid)</div>
+    <div style="column-count: 2; column-gap: 40px;">
+      The quick brown fox jumps over the lazy dog.
+      Pack my box with five dozen liquor jugs.
+      How vexingly quick daft zebras jump.
+    </div>
+  </div>
+
+  <!-- ===== C-2: alignment on non-flex/grid ===== -->
+  <h2>C-2: alignment on non-flex/grid containers</h2>
+
+  <h3>Should warn</h3>
+  <div class="case expect-warn">
+    <div class="label label-warn">C-2 warn: display:block with align-items</div>
+    <div style="align-items: center;">
+      <div>Child</div>
+    </div>
+  </div>
+  <div class="case expect-warn">
+    <div class="label label-warn">C-2 warn: display:block with justify-content</div>
+    <div style="justify-content: space-between;">
+      <div>Child 1</div>
+      <div>Child 2</div>
+    </div>
+  </div>
+
+  <h3>Should NOT warn</h3>
+  <div class="case expect-ok">
+    <div class="label label-ok">C-2 ok: flex container with align-items</div>
+    <div style="display: flex; align-items: center; height: 60px; background: #f0f0f0;">
+      <div>Flex child</div>
+    </div>
+  </div>
+
+  <!-- ===== C-3: place-* on non-flex/grid ===== -->
+  <h2>C-3: place-items / place-content on non-flex/grid</h2>
+
+  <h3>Should warn</h3>
+  <div class="case expect-warn">
+    <div class="label label-warn">C-3 warn: display:block with place-items</div>
+    <div style="place-items: center;">
+      <div>Child</div>
+    </div>
+  </div>
+  <div class="case expect-warn">
+    <div class="label label-warn">C-3 warn: display:block with place-content</div>
+    <div style="place-content: center;">
+      <div>Child</div>
+    </div>
+  </div>
+
+  <h3>Should NOT warn</h3>
+  <div class="case expect-ok">
+    <div class="label label-ok">C-3 ok: grid container with place-items</div>
+    <div style="display: grid; place-items: center; height: 80px; background: #f0f0f0;">
+      <div>Grid child</div>
+    </div>
+  </div>
+  <div class="case expect-ok">
+    <div class="label label-ok">C-3 ok: flex container with place-content</div>
+    <div style="display: flex; place-content: center; height: 80px; background: #f0f0f0;">
+      <div>Flex child</div>
+    </div>
+  </div>
+
+  <!-- ===== No issues ===== -->
+  <h2>No issues expected</h2>
+  <div class="case expect-ok">
+    <div class="label label-ok">Clean: plain div</div>
+    <div>A normal div with no problematic CSS</div>
+  </div>
+  <div class="case expect-ok">
+    <div class="label label-ok">Clean: valid flex layout</div>
+    <div style="display: flex; gap: 8px; align-items: center; justify-content: space-between;">
+      <div>Left</div>
+      <div>Right</div>
+    </div>
+  </div>
+</body>
+</html>

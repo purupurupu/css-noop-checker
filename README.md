@@ -1,73 +1,52 @@
-# React + TypeScript + Vite
+# CSS Noop Checker
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+Chrome DevTools (Elements sidebar) extension that detects CSS properties that currently have no effect on the selected element.
 
-Currently, two official plugins are available:
+## Current MVP Rules
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) (or [oxc](https://oxc.rs) when used in [rolldown-vite](https://vite.dev/guide/rolldown)) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+- `D-1`: `width` / `height` on `display: inline` non-replaced elements
+- `C-1`: `gap` / `row-gap` / `column-gap` used outside valid layout contexts
+- `C-2`: `align-items` / `justify-content` used outside flex/grid containers
+- `C-3`: `place-items` / `place-content` used outside grid containers
 
-## React Compiler
+Each warning shows:
 
-The React Compiler is currently not compatible with SWC. See [this issue](https://github.com/vitejs/vite-plugin-react/issues/428) for tracking the progress.
+- severity (`warning`)
+- short title
+- why it has no effect
+- suggestion for a fix
 
-## Expanding the ESLint configuration
+## Development
 
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
-
-```js
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-
-      // Remove tseslint.configs.recommended and replace with this
-      tseslint.configs.recommendedTypeChecked,
-      // Alternatively, use this for stricter rules
-      tseslint.configs.strictTypeChecked,
-      // Optionally, add this for stylistic rules
-      tseslint.configs.stylisticTypeChecked,
-
-      // Other configs...
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
+```bash
+pnpm install
+pnpm dev
 ```
 
-You can also install [eslint-plugin-react-x](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-dom) for React-specific lint rules:
+Build extension assets:
 
-```js
-// eslint.config.js
-import reactX from 'eslint-plugin-react-x'
-import reactDom from 'eslint-plugin-react-dom'
-
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-      // Enable lint rules for React
-      reactX.configs['recommended-typescript'],
-      // Enable lint rules for React DOM
-      reactDom.configs.recommended,
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
+```bash
+pnpm build
 ```
+
+Run tests:
+
+```bash
+pnpm test
+```
+
+## Load in Chrome
+
+1. Run `pnpm build`.
+2. Open `chrome://extensions`.
+3. Enable Developer mode.
+4. Click "Load unpacked" and select this project directory.
+5. Open DevTools on any page and go to `Elements`.
+6. Open the `CSS Noop` sidebar pane.
+
+## Scope Notes
+
+- Analysis target is only the current DevTools selection (`$0`).
+- Detection is based on `getComputedStyle` and lightweight heuristics.
+- No external network calls.
+- CSS declaration origin tracking (which file/selector set the value) is not included in MVP.

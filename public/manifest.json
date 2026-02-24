@@ -1,0 +1,8 @@
+{
+  "manifest_version": 3,
+  "name": "CSS Noop Checker",
+  "version": "0.1.0",
+  "description": "Detect no-op CSS properties on the selected element in DevTools.",
+  "devtools_page": "devtools.html",
+  "permissions": []
+}
