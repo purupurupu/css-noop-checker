@@ -53,3 +53,13 @@ Both enforce: `noUnusedLocals`, `noUnusedParameters`, `noFallthroughCasesInSwitc
 - メッセージは英語で記述
 - 本文（body）が必要な場合は空行を挟んで補足を書く
 - コミット前に `pnpm build` または `pnpm lint` で壊れていないことを確認する
+
+## PR Rules
+
+- Title and body must be written in **English**
+- Title: short (under 70 chars), format `<type>: <concise description>`
+- Body structure:
+  - `## Summary` — bullet points describing what and why
+  - `## Test plan` — checklist of verification steps
+- Include a table or list for any non-obvious design decisions
+- Link to related issues if applicable
