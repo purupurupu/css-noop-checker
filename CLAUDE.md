@@ -4,46 +4,64 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 ## Project Overview
 
-css-noop-checker is a React 19 + TypeScript web application built with Vite 7. Currently in early development (scaffolded from the Vite React-TS template).
+css-noop-checker is a Chrome DevTools extension (Manifest V3) that detects "no-op" CSS properties on the selected element. Built with React 19, TypeScript 5.9, and Vite 7.
 
 ## Commands
 
-- `pnpm dev` — Start dev server with HMR
+- `pnpm dev` — Watch-mode build (`vite build --watch`)
 - `pnpm build` — Type-check with `tsc -b` then bundle with Vite
-- `pnpm lint` — Run ESLint across the project
-- `pnpm preview` — Preview the production build locally
+- `pnpm lint` — Lint with Oxlint
+- `pnpm fmt` — Format with Oxfmt
+- `pnpm fmt:check` — Check formatting without writing
+- `pnpm test` — Run tests with Vitest
+- `pnpm test:watch` — Run tests in watch mode
 
 Package manager is **pnpm** (not npm/yarn).
 
 ## Tech Stack
 
-- **Build**: Vite 7 with SWC via `@vitejs/plugin-react-swc` (not Babel)
-- **Framework**: React 19 with `react-jsx` transform
-- **Language**: TypeScript 5.9 (strict mode, `verbatimModuleSyntax`, `erasableSyntaxOnly`)
-- **Linting**: ESLint 9 flat config (`eslint.config.js`) with typescript-eslint, react-hooks, and react-refresh plugins
+- **Build**: Vite 7 + SWC via `@vitejs/plugin-react-swc`
+- **Framework**: React 19 (`react-jsx` transform)
+- **Language**: TypeScript 5.9 (strict, `verbatimModuleSyntax`, `erasableSyntaxOnly`)
+- **Linting**: Oxlint (`.oxlintrc.json`) — plugins: typescript, react
+- **Formatting**: Oxfmt (`.oxfmtrc.jsonc`) — singleQuote, trailingComma all, printWidth 100
+- **Testing**: Vitest 4 (`vitest.config.ts`, separate from `vite.config.ts`)
 
 ## Architecture
 
-- `src/main.tsx` — App entry point, renders `<App />` inside `<StrictMode>`
-- `src/App.tsx` — Root component
-- `src/index.css` — Global styles (light/dark color scheme support)
-- `src/App.css` — Component-scoped styles
-- `index.html` — Vite HTML entry point (references `/src/main.tsx`)
+Chrome DevTools extension with two entry points (multi-page Vite build):
 
-## TypeScript Configuration
+- `devtools.html` → `src/devtools.ts` — Creates "CSS Noop" sidebar pane in Elements tab
+- `sidebar.html` → `src/sidebar/main.tsx` — React app rendered inside the sidebar pane
 
-Uses project references with two configs:
+### Rules Engine (`src/rules/`)
 
-- `tsconfig.app.json` — App source (`src/`), targets ES2022, includes `vite/client` types
-- `tsconfig.node.json` — Node tooling config (`vite.config.ts`), targets ES2023
+Pure-function rules with zero Chrome API dependency — fully testable:
 
-Both enforce: `noUnusedLocals`, `noUnusedParameters`, `noFallthroughCasesInSwitch`, `noUncheckedSideEffectImports`.
+- `types.ts` — `ElementData`, `Warning`, `Rule`, `RuleContext`, `RuleId` (literal union `'D-1' | 'C-1' | 'C-2' | 'C-3'`)
+- `context.ts` — `createRuleContext()` normalizes computed styles; helper predicates (`isFlexOrGridContainer`, etc.)
+- `engine.ts` — `analyzeElement()` creates context then `rules.flatMap(r => r.check(ctx))`
+- `inline-dimensions.ts` — D-1: width/height on inline non-replaced elements
+- `gap.ts` — C-1: gap on non-flex/grid/multi-column containers
+- `alignment.ts` — C-2: align-items/justify-content on non-flex/grid
+- `place.ts` — C-3: place-content/place-items on non-flex/grid
+- `__tests__/` — 38 tests covering all rules + engine integration
+
+### Sidebar UI (`src/sidebar/`)
+
+- `hooks/useSelectedElement.ts` — Chrome DevTools bridge: `$0` eval with 150ms debounce, `requestIdRef` stale response guard, `isElementData()` runtime validation
+- `components/` — PanelHeader, WarningList, WarningCard, PanelFooter
+
+### Build Constraints
+
+- `base: ''` in vite.config.ts — relative paths required for extension
+- `modulePreload: false` — MV3 CSP blocks `<link rel="modulepreload">`. **Do not remove.**
 
 ## Code Style
 
-- ESM modules (`"type": "module"` in package.json)
+- ESM modules (`"type": "module"`)
 - Use `import type` for type-only imports (`verbatimModuleSyntax` is enabled)
-- No test framework configured yet
+- Format with Oxfmt before committing
 
 ## Commit Rules
 
