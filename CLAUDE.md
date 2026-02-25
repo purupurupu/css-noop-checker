@@ -82,14 +82,14 @@ When adding a new rule, pick a descriptive `target` and `qualifier` — avoid nu
 
 ## Commit Rules
 
-- 細かく意味のある単位でコミットする（1コミット = 1つの論理的変更）
-- コミットメッセージは「なぜ（why）」を意識する。「何を変えたか」ではなく「なぜその変更が必要か」を伝える
-- フォーマット: `<type>: <why-focused message>`
+- Make small, meaningful commits (1 commit = 1 logical change)
+- Focus on "why" in commit messages, not "what" changed
+- Format: `<type>: <why-focused message>`
   - type: `feat`, `fix`, `refactor`, `chore`, `docs`, `test`
-- メッセージは英語で記述
-- 本文（body）が必要な場合は空行を挟んで補足を書く
-- コミット前に `pnpm fmt` でフォーマットを適用する
-- コミット前に `pnpm build` または `pnpm lint` で壊れていないことを確認する
+- Write messages in English
+- Add a body after a blank line when extra context is needed
+- Run `pnpm fmt` before committing to apply formatting
+- Run `pnpm build` or `pnpm lint` before committing to verify nothing is broken
 
 ## PR Rules
 
