@@ -6,6 +6,7 @@ interface ScanResultsPanelProps {
   groups: ScanGroup[];
   status: ScanStatus;
   error: string | null;
+  inspectError: string | null;
   progress: ScanProgress;
   onInspect: (index: number) => void;
   onClear: () => void;
@@ -15,6 +16,7 @@ export function ScanResultsPanel({
   groups,
   status,
   error,
+  inspectError,
   progress,
   onInspect,
   onClear,
@@ -24,7 +26,14 @@ export function ScanResultsPanel({
       progress.total > 0
         ? `Scanning\u2026 (${progress.scanned}/${progress.total} elements)`
         : 'Scanning\u2026';
-    return <div className="scan-message">{text}</div>;
+    return (
+      <div className="scan-message" role="status" aria-live="polite">
+        <p>{text}</p>
+        <button className="scan-message__back" onClick={onClear} type="button">
+          Cancel
+        </button>
+      </div>
+    );
   }
 
   if (status === 'error') {
@@ -62,6 +71,11 @@ export function ScanResultsPanel({
         ruleCount={groups.length}
         onClear={onClear}
       />
+      {inspectError && (
+        <div className="scan-inspect-error" role="alert">
+          {inspectError}
+        </div>
+      )}
       {groups.map((group, i) => (
         <ScanRuleGroup
           key={group.ruleId}

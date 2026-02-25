@@ -8,6 +8,7 @@
   --text-element: #9cdcfe;
   --warning-color: #cca700;
   --suggestion-color: #4ec9b0;
+  --bg-hover: #2a2d2e;
 }
 
 * {
@@ -142,7 +143,7 @@ body {
   display: inline-flex;
   align-items: center;
   padding: 2px 6px;
-  border: 1px solid var(--border);
+  border: 1px solid transparent;
   border-radius: 2px;
   background: transparent;
   color: var(--text-muted);
@@ -152,7 +153,8 @@ body {
 }
 
 .scan-button:hover:not(:disabled) {
-  background: #2a2d2e;
+  background: var(--bg-hover);
+  border-color: var(--border);
   color: var(--text);
 }
 
@@ -189,7 +191,7 @@ body {
 }
 
 .scan-message__back:hover {
-  background: #2a2d2e;
+  background: var(--bg-hover);
   color: var(--text);
 }
 
@@ -217,7 +219,7 @@ body {
 }
 
 .scan-summary__clear {
-  padding: 0 4px;
+  padding: 4px 8px;
   border: none;
   background: none;
   color: var(--text-muted);
@@ -293,19 +295,28 @@ body {
   font-style: italic;
 }
 
-/* Scan violation row */
+/* Scan violation row (rendered as <button>) */
 .scan-violation-row {
   display: flex;
   align-items: baseline;
   gap: 8px;
+  width: 100%;
   padding: 3px 0 3px 16px;
+  border: none;
   border-left: 2px solid var(--border);
   margin-left: 6px;
+  background: none;
+  cursor: pointer;
+  text-align: left;
+  font: inherit;
+  color: inherit;
 }
 
-.scan-violation-row:hover {
-  background: #2a2d2e;
+.scan-violation-row:hover,
+.scan-violation-row:focus-visible {
+  background: var(--bg-hover);
   border-left-color: var(--warning-color);
+  outline: none;
 }
 
 .scan-violation-row__selector {
@@ -329,16 +340,21 @@ body {
 .scan-violation-row__inspect {
   flex-shrink: 0;
   padding: 0 4px;
-  border: none;
-  background: none;
   color: var(--text-muted);
-  cursor: pointer;
   font-size: 11px;
   line-height: 1;
 }
 
-.scan-violation-row__inspect:hover {
+.scan-violation-row:hover .scan-violation-row__inspect {
   color: var(--text);
+}
+
+/* Inspect error toast */
+.scan-inspect-error {
+  padding: 4px 8px;
+  font-size: 10px;
+  color: var(--warning-color);
+  text-align: center;
 }
 
 /* Footer */

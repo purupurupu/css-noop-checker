@@ -9,19 +9,19 @@ export function ScanViolationRow({ violation, onInspect }: ScanViolationRowProps
   const props = violation.warnings.map((w) => w.property).join(', ');
 
   return (
-    <div className="scan-violation-row">
+    <button
+      className="scan-violation-row"
+      onClick={onInspect}
+      type="button"
+      aria-label={`Inspect ${violation.selector}: ${props}`}
+    >
       <code className="scan-violation-row__selector" title={violation.selector}>
         {violation.selector}
       </code>
       <span className="scan-violation-row__props">{props}</span>
-      <button
-        className="scan-violation-row__inspect"
-        onClick={onInspect}
-        type="button"
-        title="Inspect element"
-      >
+      <span className="scan-violation-row__inspect" aria-hidden="true">
         &rarr;
-      </button>
-    </div>
+      </span>
+    </button>
   );
 }

@@ -19,7 +19,12 @@ export function ScanSummaryBar({
         {totalElements} elements{' \u00b7 '}
         {ruleCount} rules
       </span>
-      <button className="scan-summary__clear" onClick={onClear} type="button" title="Clear results">
+      <button
+        className="scan-summary__clear"
+        onClick={onClear}
+        type="button"
+        aria-label="Clear results"
+      >
         &times;
       </button>
     </div>

@@ -11,8 +11,16 @@ type ViewMode = 'element' | 'scan';
 
 function App() {
   const { data, status } = useSelectedElement();
-  const { groups, status: scanStatus, error, progress, scan, inspectElement, clear } =
-    usePageScan();
+  const {
+    groups,
+    status: scanStatus,
+    error,
+    inspectError,
+    progress,
+    scan,
+    inspectElement,
+    clear,
+  } = usePageScan();
   const [viewMode, setViewMode] = useState<ViewMode>('element');
   const warnings = data ? analyzeElement(data) : [];
 
@@ -41,6 +49,7 @@ function App() {
           groups={groups}
           status={scanStatus}
           error={error}
+          inspectError={inspectError}
           progress={progress}
           onInspect={inspectElement}
           onClear={handleClear}

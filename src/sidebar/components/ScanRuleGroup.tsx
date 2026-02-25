@@ -22,6 +22,7 @@ export function ScanRuleGroup({ group, defaultOpen, onInspect }: ScanRuleGroupPr
   const label = RULE_LABELS[group.ruleId] ?? group.ruleId;
   const displayed = group.violations.slice(0, DISPLAY_LIMIT);
   const remaining = group.violations.length - displayed.length;
+  const bodyId = `scan-group-${group.ruleId}`;
 
   return (
     <div className="scan-rule-group">
@@ -29,9 +30,12 @@ export function ScanRuleGroup({ group, defaultOpen, onInspect }: ScanRuleGroupPr
         className="scan-rule-group__header"
         onClick={() => setOpen(!open)}
         type="button"
+        aria-expanded={open}
+        aria-controls={bodyId}
       >
         <span
           className={`scan-rule-group__chevron${open ? ' scan-rule-group__chevron--open' : ''}`}
+          aria-hidden="true"
         >
           &#9654;
         </span>
@@ -40,7 +44,7 @@ export function ScanRuleGroup({ group, defaultOpen, onInspect }: ScanRuleGroupPr
         <span className="scan-rule-group__count">({group.violations.length})</span>
       </button>
       {open && (
-        <div className="scan-rule-group__body">
+        <div className="scan-rule-group__body" id={bodyId} role="region">
           {displayed.map((v) => (
             <ScanViolationRow
               key={v.index}
