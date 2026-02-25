@@ -88,6 +88,7 @@ When adding a new rule, pick a descriptive `target` and `qualifier` — avoid nu
   - type: `feat`, `fix`, `refactor`, `chore`, `docs`, `test`
 - メッセージは英語で記述
 - 本文（body）が必要な場合は空行を挟んで補足を書く
+- コミット前に `pnpm fmt` でフォーマットを適用する
 - コミット前に `pnpm build` または `pnpm lint` で壊れていないことを確認する
 
 ## PR Rules
