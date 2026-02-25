@@ -7,9 +7,9 @@ export type AnalysisStatus = 'no-selection' | 'analyzing' | 'ready' | 'error';
 
 export { isElementData };
 
-/** Runs in the inspected page's context via eval(). Uses var for broad compat. */
-const EVAL_SCRIPT = `
-(function() {
+/** Builds the eval script lazily so the registry is guaranteed to be populated. */
+function buildEvalScript(): string {
+  return `(function() {
   var el = $0;
   if (!el) return null;
   var cs = getComputedStyle(el);
@@ -21,8 +21,13 @@ const EVAL_SCRIPT = `
         ${generateStyleExtractFragment()}
     }
   };
-})()
-`;
+})()`;
+}
+
+let cachedEvalScript: string | undefined;
+function getEvalScript(): string {
+  return (cachedEvalScript ??= buildEvalScript());
+}
 
 const DEBOUNCE_MS = 150;
 
@@ -35,7 +40,7 @@ export function useSelectedElement() {
     const requestId = requestIdRef.current + 1;
     requestIdRef.current = requestId;
     setStatus('analyzing');
-    chrome.devtools.inspectedWindow.eval(EVAL_SCRIPT, (result: unknown, exceptionInfo) => {
+    chrome.devtools.inspectedWindow.eval(getEvalScript(), (result: unknown, exceptionInfo) => {
       // Ignore stale eval callbacks from older selections.
       if (requestId !== requestIdRef.current) return;
 
