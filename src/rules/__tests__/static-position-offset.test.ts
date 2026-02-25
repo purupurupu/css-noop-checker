@@ -27,6 +27,7 @@ function makeElement(overrides: Partial<ElementData['computedStyles']>): Element
       columnCount: 'auto',
       ...overrides,
     },
+    parent: null,
   };
 }
 

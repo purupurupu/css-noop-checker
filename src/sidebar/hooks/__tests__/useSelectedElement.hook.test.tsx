@@ -23,6 +23,7 @@ const validElementData = {
   id: 'app',
   classList: ['container'],
   computedStyles: makeBaseStyles(),
+  parent: null,
 };
 
 describe('useSelectedElement (hook integration)', () => {
