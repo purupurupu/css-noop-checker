@@ -9,6 +9,8 @@
   --warning-color: #cca700;
   --suggestion-color: #4ec9b0;
   --bg-hover: #2a2d2e;
+  --error-color: #f44747;
+  --text-bright: #fff;
 }
 
 * {
@@ -62,7 +64,7 @@ body {
 }
 
 .panel-header__status--ready {
-  color: #4ec9b0;
+  color: var(--suggestion-color);
 }
 
 .panel-header__status--analyzing {
@@ -70,7 +72,7 @@ body {
 }
 
 .panel-header__status--error {
-  color: #f44747;
+  color: var(--error-color);
 }
 
 /* Warning list */
@@ -175,7 +177,7 @@ body {
 }
 
 .scan-message--error {
-  color: #f44747;
+  color: var(--error-color);
 }
 
 .scan-message__back {
@@ -250,7 +252,7 @@ body {
 }
 
 .scan-rule-group__header:hover {
-  color: #fff;
+  color: var(--text-bright);
 }
 
 .scan-rule-group__chevron {
