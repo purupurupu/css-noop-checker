@@ -161,16 +161,10 @@
       </div>
     </div>
 
-    <!-- ===== container-no-place: place-* on non-flex/grid ===== -->
-    <h2>container-no-place: place-items / place-content on non-flex/grid</h2>
+    <!-- ===== container-no-place: place-content on non-flex/grid ===== -->
+    <h2>container-no-place: place-content on non-flex/grid</h2>
 
     <h3>Should warn</h3>
-    <div class="case expect-warn">
-      <div class="label label-warn">container-no-place warn: display:block with place-items</div>
-      <div style="place-items: center">
-        <div>Child</div>
-      </div>
-    </div>
     <div class="case expect-warn">
       <div class="label label-warn">container-no-place warn: display:block with place-content</div>
       <div style="place-content: center">
@@ -179,6 +173,14 @@
     </div>
 
     <h3>Should NOT warn</h3>
+    <div class="case expect-ok">
+      <div class="label label-ok">
+        container-no-place ok: place-items on block (justify-items works in block layout)
+      </div>
+      <div style="place-items: center">
+        <div>Child (centered via justify-items)</div>
+      </div>
+    </div>
     <div class="case expect-ok">
       <div class="label label-ok">container-no-place ok: grid container with place-items</div>
       <div style="display: grid; place-items: center; height: 80px; background: #f0f0f0">

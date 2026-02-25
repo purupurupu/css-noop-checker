@@ -64,7 +64,7 @@ describe('groupByRule', () => {
 
   it('sorts groups by rule ID', () => {
     const elements = [
-      makeScanElement(0, 'div.z', { placeItems: 'center' }),
+      makeScanElement(0, 'div.z', { placeContent: 'center' }),
       makeScanElement(1, 'div.a', { rowGap: '10px' }),
       makeScanElement(2, 'span.b', { tagName: 'span', display: 'inline', width: '50px' }),
     ];

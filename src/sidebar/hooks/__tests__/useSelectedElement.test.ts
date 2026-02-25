@@ -129,7 +129,6 @@ describe('isElementData', () => {
       'columnGap',
       'alignItems',
       'justifyContent',
-      'placeItems',
       'placeContent',
       'columnCount',
       'position',

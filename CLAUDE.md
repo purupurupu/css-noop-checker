@@ -63,10 +63,10 @@ Rule IDs follow Stylelint's `thing-no-qualifier` pattern — the de facto standa
 | `inline-no-dimensions` | inline non-replaced elements | width/height                |
 | `container-no-gap`     | non-flex/grid containers     | gap properties              |
 | `container-no-align`   | non-flex/grid containers     | align-items/justify-content |
-| `container-no-place`   | non-flex/grid containers     | place-items/place-content   |
+| `container-no-place`   | non-flex/grid containers     | place-content               |
 | `static-no-offset`     | static-positioned elements   | top/right/bottom/left       |
-| `item-no-self-align`   | non-flex/grid items           | align-self                  |
-| `item-no-order`        | non-flex/grid items           | order                       |
+| `item-no-self-align`   | non-flex/grid items          | align-self                  |
+| `item-no-order`        | non-flex/grid items          | order                       |
 
 When adding a new rule, pick a descriptive `target` and `qualifier` — avoid numbered IDs like `D-1` or `C-2`.
 
