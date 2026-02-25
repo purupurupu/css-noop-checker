@@ -27,6 +27,8 @@ function makeScanElement(
       placeItems: 'normal',
       placeContent: 'normal',
       columnCount: 'auto',
+      alignSelf: 'auto',
+      order: '0',
       ...styles,
     },
   };

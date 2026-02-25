@@ -24,6 +24,8 @@ const validData = {
     right: 'auto',
     bottom: 'auto',
     left: 'auto',
+    alignSelf: 'auto',
+    order: '0',
   },
   parent: null,
 };
@@ -135,6 +137,8 @@ describe('isElementData', () => {
       'right',
       'bottom',
       'left',
+      'alignSelf',
+      'order',
     ];
     for (const key of requiredKeys) {
       const styles = { ...validData.computedStyles };
