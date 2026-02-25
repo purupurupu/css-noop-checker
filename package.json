@@ -17,11 +17,13 @@
     "react-dom": "^19.2.0"
   },
   "devDependencies": {
+    "@testing-library/react": "^16.3.2",
     "@types/chrome": "^0.1.37",
     "@types/node": "^24.10.1",
     "@types/react": "^19.2.7",
     "@types/react-dom": "^19.2.3",
     "@vitejs/plugin-react-swc": "^4.2.2",
+    "happy-dom": "^20.7.0",
     "oxfmt": "^0.35.0",
     "oxlint": "^1.50.0",
     "typescript": "~5.9.3",

@@ -1,4 +1,4 @@
-import { useState, useCallback, useRef } from 'react';
+import { useState, useCallback, useRef, useEffect } from 'react';
 import { analyzeElement } from '../../rules/engine.ts';
 import { getAllRequiredProperties } from '../../rules/registry.ts';
 import { generateStyleExtractFragment } from '../../rules/css-properties.ts';
@@ -179,15 +179,21 @@ export function usePageScan() {
   }, []);
 
   const [inspectError, setInspectError] = useState<string | null>(null);
+  const inspectTimerRef = useRef<ReturnType<typeof setTimeout>>(undefined);
 
   const inspectElement = useCallback((index: number) => {
+    clearTimeout(inspectTimerRef.current);
     setInspectError(null);
     chrome.devtools.inspectedWindow.eval(makeInspectScript(index), (result: unknown) => {
       if (result === false) {
         setInspectError('Element not found — the page may have changed since the scan.');
-        setTimeout(() => setInspectError(null), 3000);
+        inspectTimerRef.current = setTimeout(() => setInspectError(null), 3000);
       }
     });
+  }, []);
+
+  useEffect(() => {
+    return () => clearTimeout(inspectTimerRef.current);
   }, []);
 
   const clear = useCallback(() => {
