@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useMemo, useState } from 'react';
 import { useSelectedElement } from './hooks/useSelectedElement.ts';
 import { usePageScan } from './hooks/usePageScan.ts';
 import { analyzeElement } from '../rules/engine.ts';
@@ -22,7 +22,7 @@ function App() {
     clear,
   } = usePageScan();
   const [viewMode, setViewMode] = useState<ViewMode>('element');
-  const warnings = data ? analyzeElement(data) : [];
+  const warnings = useMemo(() => (data ? analyzeElement(data) : []), [data]);
 
   const handleScan = () => {
     setViewMode('scan');

@@ -1,3 +1,4 @@
+import { useMemo } from 'react';
 import type { ScanGroup, ScanProgress, ScanStatus } from '../types.ts';
 import { ScanSummaryBar } from './ScanSummaryBar.tsx';
 import { ScanRuleGroup } from './ScanRuleGroup.tsx';
@@ -60,8 +61,11 @@ export function ScanResultsPanel({
 
   if (status !== 'done') return null;
 
-  const totalViolations = groups.reduce((sum, g) => sum + g.violations.length, 0);
-  const uniqueElements = new Set(groups.flatMap((g) => g.violations.map((v) => v.index))).size;
+  const { totalViolations, uniqueElements } = useMemo(() => {
+    const total = groups.reduce((sum, g) => sum + g.violations.length, 0);
+    const unique = new Set(groups.flatMap((g) => g.violations.map((v) => v.index))).size;
+    return { totalViolations: total, uniqueElements: unique };
+  }, [groups]);
 
   return (
     <div className="scan-results">
