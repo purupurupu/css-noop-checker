@@ -1,4 +1,4 @@
-import type { RuleId, Warning } from '../rules/types.ts';
+import type { ElementData, RuleId, Warning } from '../rules/types.ts';
 
 export type ScanStatus = 'idle' | 'scanning' | 'done' | 'error';
 
@@ -9,19 +9,7 @@ export interface ScanElementData {
   tagName: string;
   id: string;
   classList: string[];
-  computedStyles: {
-    display: string;
-    width: string;
-    height: string;
-    gap: string;
-    rowGap: string;
-    columnGap: string;
-    alignItems: string;
-    justifyContent: string;
-    placeItems: string;
-    placeContent: string;
-    columnCount: string;
-  };
+  computedStyles: ElementData['computedStyles'];
 }
 
 export interface ScanViolation {

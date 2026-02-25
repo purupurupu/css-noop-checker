@@ -52,8 +52,36 @@ function makeInspectScript(index: number): string {
   return `(function() {
   var els = document.body.querySelectorAll('*');
   var el = els[${index}];
-  if (el) inspect(el);
+  if (el) { inspect(el); return true; }
+  return false;
 })()`;
+}
+
+const COMPUTED_STYLE_KEYS = [
+  'display',
+  'width',
+  'height',
+  'gap',
+  'rowGap',
+  'columnGap',
+  'alignItems',
+  'justifyContent',
+  'placeItems',
+  'placeContent',
+  'columnCount',
+] as const;
+
+function isScanElementData(v: unknown): v is ScanElementData {
+  if (typeof v !== 'object' || v === null) return false;
+  const o = v as Record<string, unknown>;
+  if (typeof o['index'] !== 'number') return false;
+  if (typeof o['selector'] !== 'string') return false;
+  if (typeof o['tagName'] !== 'string') return false;
+  if (!Array.isArray(o['classList'])) return false;
+  const cs = o['computedStyles'];
+  if (typeof cs !== 'object' || cs === null) return false;
+  const styles = cs as Record<string, unknown>;
+  return COMPUTED_STYLE_KEYS.every((key) => typeof styles[key] === 'string');
 }
 
 interface ChunkResult {
@@ -64,7 +92,8 @@ interface ChunkResult {
 function isChunkResult(v: unknown): v is ChunkResult {
   if (typeof v !== 'object' || v === null) return false;
   const o = v as Record<string, unknown>;
-  return Array.isArray(o['results']) && typeof o['total'] === 'number';
+  if (!Array.isArray(o['results']) || typeof o['total'] !== 'number') return false;
+  return (o['results'] as unknown[]).every(isScanElementData);
 }
 
 export function groupByRule(elements: ScanElementData[]): ScanGroup[] {
@@ -165,8 +194,16 @@ export function usePageScan() {
     processChunk(0);
   }, []);
 
+  const [inspectError, setInspectError] = useState<string | null>(null);
+
   const inspectElement = useCallback((index: number) => {
-    chrome.devtools.inspectedWindow.eval(makeInspectScript(index));
+    setInspectError(null);
+    chrome.devtools.inspectedWindow.eval(makeInspectScript(index), (result: unknown) => {
+      if (result === false) {
+        setInspectError('Element not found — the page may have changed since the scan.');
+        setTimeout(() => setInspectError(null), 3000);
+      }
+    });
   }, []);
 
   const clear = useCallback(() => {
@@ -177,5 +214,5 @@ export function usePageScan() {
     setProgress({ scanned: 0, total: 0 });
   }, []);
 
-  return { groups, status, error, progress, scan, inspectElement, clear };
+  return { groups, status, error, inspectError, progress, scan, inspectElement, clear };
 }
