@@ -110,4 +110,11 @@ describe('C-1: gap', () => {
     const warnings = checkGap(createRuleContext(makeElement({ rowGap: '0px', columnGap: '0px' })));
     expect(warnings).toHaveLength(0);
   });
+
+  it('skips display: contents elements', () => {
+    const warnings = checkGap(
+      createRuleContext(makeElement({ display: 'contents', rowGap: '10px' })),
+    );
+    expect(warnings).toHaveLength(0);
+  });
 });

@@ -5,6 +5,7 @@ export const checkGap: Rule = (ctx) => {
   const { display, gap, rowGap, columnGap, columnCount } = ctx.styles;
 
   if (isFlexOrGridContainer(display)) return [];
+  if (display === 'contents') return [];
 
   const warnings: Warning[] = [];
 
