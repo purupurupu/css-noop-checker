@@ -29,6 +29,7 @@ function makeElement(
       left: 'auto',
       ...styles,
     },
+    parent: null,
   };
 }
 

@@ -14,6 +14,10 @@ export function getAllRequiredProperties(): string[] {
   return [...new Set(registry.flatMap((r) => r.requiredProperties))];
 }
 
+export function getAllRequiredParentProperties(): string[] {
+  return [...new Set(registry.flatMap((r) => r.requiredParentProperties ?? []))];
+}
+
 export function getRuleLabel(id: string): string {
   return registry.find((r) => r.id === id)?.label ?? id;
 }
