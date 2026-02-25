@@ -1,25 +1,11 @@
 import type { ElementData, RuleContext } from './types.ts';
 
-function normalize(value: string): string {
-  return value.trim().toLowerCase();
-}
-
-function normalizeComputedStyles(
-  styles: ElementData['computedStyles'],
-): ElementData['computedStyles'] {
-  return {
-    display: normalize(styles.display),
-    width: normalize(styles.width),
-    height: normalize(styles.height),
-    gap: normalize(styles.gap),
-    rowGap: normalize(styles.rowGap),
-    columnGap: normalize(styles.columnGap),
-    alignItems: normalize(styles.alignItems),
-    justifyContent: normalize(styles.justifyContent),
-    placeItems: normalize(styles.placeItems),
-    placeContent: normalize(styles.placeContent),
-    columnCount: normalize(styles.columnCount),
-  };
+function normalizeComputedStyles(styles: Record<string, string>): Record<string, string> {
+  const result: Record<string, string> = {};
+  for (const [key, value] of Object.entries(styles)) {
+    result[key] = value.trim().toLowerCase();
+  }
+  return result;
 }
 
 export function createRuleContext(element: ElementData): RuleContext {
