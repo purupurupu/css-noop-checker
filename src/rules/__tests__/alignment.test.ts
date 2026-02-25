@@ -25,11 +25,11 @@ function makeElement(overrides: Partial<ElementData['computedStyles']>): Element
   };
 }
 
-describe('C-2: alignment', () => {
+describe('container-no-align: alignment', () => {
   it('warns when align-items is set on block element', () => {
     const warnings = checkAlignment(createRuleContext(makeElement({ alignItems: 'center' })));
     expect(warnings).toHaveLength(1);
-    expect(warnings[0].ruleId).toBe('C-2');
+    expect(warnings[0].ruleId).toBe('container-no-align');
     expect(warnings[0].title).toContain('align-items');
   });
 

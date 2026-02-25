@@ -3,7 +3,7 @@ import { isDefaultGapLikeValue, isFlexOrGridContainer } from './context.ts';
 import { registerRule } from './registry.ts';
 
 const rule: RuleDescriptor = {
-  id: 'C-1',
+  id: 'container-no-gap',
   label: 'gap on non-flex/grid',
   requiredProperties: ['display', 'gap', 'rowGap', 'columnGap', 'columnCount'],
   check(ctx) {
@@ -21,7 +21,7 @@ const rule: RuleDescriptor = {
 
     if (hasGap && hasRowGap && columnGapHasNoEffect && rowGap === columnGap) {
       warnings.push({
-        ruleId: 'C-1',
+        ruleId: 'container-no-gap',
         property: 'gap',
         severity: 'warning',
         title: 'gap has no effect',
@@ -33,7 +33,7 @@ const rule: RuleDescriptor = {
 
     if (hasRowGap) {
       warnings.push({
-        ruleId: 'C-1',
+        ruleId: 'container-no-gap',
         property: 'row-gap',
         severity: 'warning',
         title: 'row-gap has no effect',
@@ -45,7 +45,7 @@ const rule: RuleDescriptor = {
     // column-gap is valid on multi-column containers (column-count !== "auto")
     if (columnGapHasNoEffect) {
       warnings.push({
-        ruleId: 'C-1',
+        ruleId: 'container-no-gap',
         property: 'column-gap',
         severity: 'warning',
         title: 'column-gap has no effect',

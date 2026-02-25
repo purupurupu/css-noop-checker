@@ -6,8 +6,8 @@ export interface ElementData {
   computedStyles: Record<string, string>;
 }
 
-/** Template-literal type: category prefix + hyphen + number (e.g. 'D-1', 'C-2') */
-export type RuleId = `${string}-${number}`;
+/** Stylelint-convention rule ID (e.g. 'inline-no-dimensions', 'container-no-gap') */
+export type RuleId = string;
 
 export interface Warning {
   ruleId: RuleId;

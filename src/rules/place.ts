@@ -3,7 +3,7 @@ import { isDefaultAlignmentValue, isFlexOrGridContainer } from './context.ts';
 import { registerRule } from './registry.ts';
 
 const rule: RuleDescriptor = {
-  id: 'C-3',
+  id: 'container-no-place',
   label: 'place-* on non-flex/grid',
   requiredProperties: ['display', 'placeItems', 'placeContent'],
   check(ctx) {
@@ -15,7 +15,7 @@ const rule: RuleDescriptor = {
 
     if (!isDefaultAlignmentValue(placeItems)) {
       warnings.push({
-        ruleId: 'C-3',
+        ruleId: 'container-no-place',
         property: 'place-items',
         severity: 'warning',
         title: 'place-items has no effect',
@@ -26,7 +26,7 @@ const rule: RuleDescriptor = {
 
     if (!isDefaultAlignmentValue(placeContent)) {
       warnings.push({
-        ruleId: 'C-3',
+        ruleId: 'container-no-place',
         property: 'place-content',
         severity: 'warning',
         title: 'place-content has no effect',

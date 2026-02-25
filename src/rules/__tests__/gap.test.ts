@@ -25,7 +25,7 @@ function makeElement(overrides: Partial<ElementData['computedStyles']>): Element
   };
 }
 
-describe('C-1: gap', () => {
+describe('container-no-gap: gap', () => {
   it('warns when gap is set on block element', () => {
     const warnings = checkGap(
       createRuleContext(makeElement({ gap: '20px', rowGap: '20px', columnGap: '20px' })),
@@ -37,7 +37,7 @@ describe('C-1: gap', () => {
   it('warns when row-gap is set on block element', () => {
     const warnings = checkGap(createRuleContext(makeElement({ rowGap: '20px' })));
     expect(warnings).toHaveLength(1);
-    expect(warnings[0].ruleId).toBe('C-1');
+    expect(warnings[0].ruleId).toBe('container-no-gap');
     expect(warnings[0].title).toContain('row-gap');
   });
 

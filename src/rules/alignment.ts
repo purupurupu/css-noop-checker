@@ -3,7 +3,7 @@ import { isDefaultAlignmentValue, isFlexOrGridContainer } from './context.ts';
 import { registerRule } from './registry.ts';
 
 const rule: RuleDescriptor = {
-  id: 'C-2',
+  id: 'container-no-align',
   label: 'align/justify on non-flex/grid',
   requiredProperties: ['display', 'alignItems', 'justifyContent'],
   check(ctx) {
@@ -15,7 +15,7 @@ const rule: RuleDescriptor = {
 
     if (!isDefaultAlignmentValue(alignItems)) {
       warnings.push({
-        ruleId: 'C-2',
+        ruleId: 'container-no-align',
         property: 'align-items',
         severity: 'warning',
         title: 'align-items has no effect',
@@ -26,7 +26,7 @@ const rule: RuleDescriptor = {
 
     if (!isDefaultAlignmentValue(justifyContent)) {
       warnings.push({
-        ruleId: 'C-2',
+        ruleId: 'container-no-align',
         property: 'justify-content',
         severity: 'warning',
         title: 'justify-content has no effect',

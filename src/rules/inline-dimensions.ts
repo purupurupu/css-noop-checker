@@ -23,7 +23,7 @@ const REPLACED_INLINE_ELEMENTS = new Set([
 ]);
 
 const rule: RuleDescriptor = {
-  id: 'D-1',
+  id: 'inline-no-dimensions',
   label: 'width/height on inline',
   requiredProperties: ['display', 'width', 'height'],
   check(ctx) {
@@ -37,7 +37,7 @@ const rule: RuleDescriptor = {
 
     if (!isDefaultInlineSizeValue(width)) {
       warnings.push({
-        ruleId: 'D-1',
+        ruleId: 'inline-no-dimensions',
         property: 'width',
         severity: 'warning',
         title: 'width has no effect on inline elements',
@@ -48,7 +48,7 @@ const rule: RuleDescriptor = {
 
     if (!isDefaultInlineSizeValue(height)) {
       warnings.push({
-        ruleId: 'D-1',
+        ruleId: 'inline-no-dimensions',
         property: 'height',
         severity: 'warning',
         title: 'height has no effect on inline elements',

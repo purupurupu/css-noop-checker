@@ -25,11 +25,11 @@ function makeElement(overrides: Partial<ElementData['computedStyles']>): Element
   };
 }
 
-describe('C-3: place-items / place-content', () => {
+describe('container-no-place: place-items / place-content', () => {
   it('warns when place-items is set on block element', () => {
     const warnings = checkPlace(createRuleContext(makeElement({ placeItems: 'center' })));
     expect(warnings).toHaveLength(1);
-    expect(warnings[0].ruleId).toBe('C-3');
+    expect(warnings[0].ruleId).toBe('container-no-place');
     expect(warnings[0].title).toContain('place-items');
   });
 
