@@ -45,7 +45,8 @@ Pure-function rules with zero Chrome API dependency — fully testable:
 - `gap.ts` — `container-no-gap`: gap on non-flex/grid/multi-column containers
 - `alignment.ts` — `container-no-align`: align-items/justify-content on non-flex/grid
 - `place.ts` — `container-no-place`: place-content/place-items on non-flex/grid
-- `__tests__/` — 38 tests covering all rules + engine integration
+- `static-position-offset.ts` — `static-no-offset`: top/right/bottom/left on static position
+- `__tests__/` — 49 tests covering all rules + engine integration
 
 #### Rule ID Naming Convention
 
@@ -61,8 +62,11 @@ Rule IDs follow Stylelint's `thing-no-qualifier` pattern — the de facto standa
 | `container-no-gap`     | non-flex/grid containers     | gap properties              |
 | `container-no-align`   | non-flex/grid containers     | align-items/justify-content |
 | `container-no-place`   | non-flex/grid containers     | place-items/place-content   |
+| `static-no-offset`     | static-positioned elements   | top/right/bottom/left       |
 
 When adding a new rule, pick a descriptive `target` and `qualifier` — avoid numbered IDs like `D-1` or `C-2`.
+
+When adding a new rule, also add "should warn" and "should NOT warn" test cases to `examples/test.html` so the rule can be verified manually in Chrome DevTools.
 
 ### Sidebar UI (`src/sidebar/`)
 

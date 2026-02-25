@@ -19,6 +19,11 @@ const validData = {
     placeItems: 'normal',
     placeContent: 'normal',
     columnCount: 'auto',
+    position: 'static',
+    top: 'auto',
+    right: 'auto',
+    bottom: 'auto',
+    left: 'auto',
   },
 };
 
@@ -124,6 +129,11 @@ describe('isElementData', () => {
       'placeItems',
       'placeContent',
       'columnCount',
+      'position',
+      'top',
+      'right',
+      'bottom',
+      'left',
     ];
     for (const key of requiredKeys) {
       const styles = { ...validData.computedStyles };

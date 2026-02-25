@@ -39,3 +39,7 @@ export function isDefaultAlignmentValue(value: string): boolean {
 export function isDefaultInlineSizeValue(value: string): boolean {
   return value === 'auto';
 }
+
+export function isDefaultOffsetValue(value: string): boolean {
+  return value === 'auto';
+}

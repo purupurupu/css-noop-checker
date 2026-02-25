@@ -192,6 +192,41 @@
       </div>
     </div>
 
+    <!-- ===== static-no-offset: offsets on static position ===== -->
+    <h2>static-no-offset: top/right/bottom/left on static elements</h2>
+
+    <h3>Should warn</h3>
+    <div class="case expect-warn">
+      <div class="label label-warn">static-no-offset warn: static div with top</div>
+      <div style="top: 20px">This div has top: 20px but position is static</div>
+    </div>
+    <div class="case expect-warn">
+      <div class="label label-warn">static-no-offset warn: static div with left</div>
+      <div style="left: 10px">This div has left: 10px but position is static</div>
+    </div>
+    <div class="case expect-warn">
+      <div class="label label-warn">static-no-offset warn: static div with all offsets</div>
+      <div style="top: 10px; right: 10px; bottom: 10px; left: 10px">
+        All four offsets on a static element
+      </div>
+    </div>
+
+    <h3>Should NOT warn</h3>
+    <div class="case expect-ok">
+      <div class="label label-ok">static-no-offset ok: relative with top</div>
+      <div style="position: relative; top: 20px">Relative + top: 20px (valid)</div>
+    </div>
+    <div class="case expect-ok">
+      <div class="label label-ok">static-no-offset ok: absolute with top + left</div>
+      <div style="position: absolute; top: 0; left: 0; position: relative">
+        Absolute + offsets (valid)
+      </div>
+    </div>
+    <div class="case expect-ok">
+      <div class="label label-ok">static-no-offset ok: sticky with top</div>
+      <div style="position: sticky; top: 0">Sticky + top: 0 (valid)</div>
+    </div>
+
     <!-- ===== No issues ===== -->
     <h2>No issues expected</h2>
     <div class="case expect-ok">
