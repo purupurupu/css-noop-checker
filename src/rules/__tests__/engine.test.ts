@@ -22,6 +22,11 @@ function makeElement(
       placeItems: 'normal',
       placeContent: 'normal',
       columnCount: 'auto',
+      position: 'static',
+      top: 'auto',
+      right: 'auto',
+      bottom: 'auto',
+      left: 'auto',
       ...styles,
     },
   };

@@ -3,6 +3,7 @@ import './inline-dimensions.ts';
 import './gap.ts';
 import './alignment.ts';
 import './place.ts';
+import './static-position-offset.ts';
 
 import type { ElementData, Warning } from './types.ts';
 import { createRuleContext } from './context.ts';
