@@ -171,8 +171,6 @@
         <div>Child</div>
       </div>
     </div>
-
-    <h3>Should NOT warn</h3>
     <div class="case expect-warn">
       <div class="label label-warn">
         container-no-align warn: place-items on block (align-items part has no effect)
@@ -181,6 +179,8 @@
         <div>Child (horizontally centered, but NOT vertically centered)</div>
       </div>
     </div>
+
+    <h3>Should NOT warn</h3>
     <div class="case expect-ok">
       <div class="label label-ok">container-no-place ok: grid container with place-items</div>
       <div style="display: grid; place-items: center; height: 80px; background: #f0f0f0">
