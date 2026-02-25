@@ -25,16 +25,20 @@ $ARGUMENTS
 ## Output format
 
 ### Consensus
+
 Points all three roles agree on.
 
 ### Architecture Decisions
+
 Key decisions from the architect, annotated with frontend lead's UX concerns and devil's advocate's risks.
 
 ### Action Items
+
 Prioritized list combining all findings:
 
-| # | Action | Source | Priority | Rationale |
-|---|--------|--------|----------|-----------|
+| #   | Action | Source | Priority | Rationale |
+| --- | ------ | ------ | -------- | --------- |
 
 ### Unresolved Debates
+
 Points where the roles disagree — present both sides for the user to decide.
