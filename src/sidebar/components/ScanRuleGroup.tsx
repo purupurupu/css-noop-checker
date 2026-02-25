@@ -1,15 +1,9 @@
 import { useState } from 'react';
+import { getRuleLabel } from '../../rules/registry.ts';
 import type { ScanGroup } from '../types.ts';
 import { ScanViolationRow } from './ScanViolationRow.tsx';
 
 const DISPLAY_LIMIT = 50;
-
-const RULE_LABELS: Record<string, string> = {
-  'D-1': 'width/height on inline',
-  'C-1': 'gap on non-flex/grid',
-  'C-2': 'align/justify on non-flex/grid',
-  'C-3': 'place-* on non-flex/grid',
-};
 
 interface ScanRuleGroupProps {
   group: ScanGroup;
@@ -19,7 +13,7 @@ interface ScanRuleGroupProps {
 
 export function ScanRuleGroup({ group, defaultOpen, onInspect }: ScanRuleGroupProps) {
   const [open, setOpen] = useState(defaultOpen);
-  const label = RULE_LABELS[group.ruleId] ?? group.ruleId;
+  const label = getRuleLabel(group.ruleId);
   const displayed = group.violations.slice(0, DISPLAY_LIMIT);
   const remaining = group.violations.length - displayed.length;
   const bodyId = `scan-group-${group.ruleId}`;

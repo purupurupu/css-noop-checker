@@ -3,22 +3,11 @@ export interface ElementData {
   tagName: string;
   id: string;
   classList: string[];
-  computedStyles: {
-    display: string;
-    width: string;
-    height: string;
-    gap: string;
-    rowGap: string;
-    columnGap: string;
-    alignItems: string;
-    justifyContent: string;
-    placeItems: string;
-    placeContent: string;
-    columnCount: string;
-  };
+  computedStyles: Record<string, string>;
 }
 
-export type RuleId = 'D-1' | 'C-1' | 'C-2' | 'C-3';
+/** Stylelint-convention rule ID (e.g. 'inline-no-dimensions', 'container-no-gap') */
+export type RuleId = string;
 
 export interface Warning {
   ruleId: RuleId;
@@ -31,8 +20,15 @@ export interface Warning {
 
 export interface RuleContext {
   element: ElementData;
-  styles: ElementData['computedStyles'];
+  styles: Record<string, string>;
 }
 
 /** A rule is a pure function: RuleContext → Warning[] */
 export type Rule = (ctx: RuleContext) => Warning[];
+
+export interface RuleDescriptor {
+  readonly id: RuleId;
+  readonly label: string;
+  readonly requiredProperties: readonly string[];
+  check: (ctx: RuleContext) => Warning[];
+}

@@ -66,7 +66,7 @@ describe('analyzeElement (integration)', () => {
       }),
     );
     const ruleIds = warnings.map((w) => w.ruleId);
-    expect(ruleIds).toContain('D-1');
-    expect(ruleIds).toContain('C-2');
+    expect(ruleIds).toContain('inline-no-dimensions');
+    expect(ruleIds).toContain('container-no-align');
   });
 });

@@ -45,7 +45,7 @@ describe('groupByRule', () => {
     ];
     const groups = groupByRule(elements);
     expect(groups).toHaveLength(1);
-    expect(groups[0].ruleId).toBe('C-2');
+    expect(groups[0].ruleId).toBe('container-no-align');
     expect(groups[0].violations).toHaveLength(2);
   });
 
@@ -56,8 +56,8 @@ describe('groupByRule', () => {
     ];
     const groups = groupByRule(elements);
     const ruleIds = groups.map((g) => g.ruleId);
-    expect(ruleIds).toContain('D-1');
-    expect(ruleIds).toContain('C-1');
+    expect(ruleIds).toContain('inline-no-dimensions');
+    expect(ruleIds).toContain('container-no-gap');
   });
 
   it('sorts groups by rule ID', () => {
@@ -78,8 +78,8 @@ describe('groupByRule', () => {
     const groups = groupByRule(elements);
     expect(groups).toHaveLength(2);
     const ruleIds = groups.map((g) => g.ruleId);
-    expect(ruleIds).toContain('C-2');
-    expect(ruleIds).toContain('C-3');
+    expect(ruleIds).toContain('container-no-align');
+    expect(ruleIds).toContain('container-no-place');
     expect(groups[0].violations[0].index).toBe(0);
     expect(groups[1].violations[0].index).toBe(0);
   });

@@ -28,11 +28,11 @@ function makeElement(
   };
 }
 
-describe('D-1: inline dimensions', () => {
+describe('inline-no-dimensions: inline dimensions', () => {
   it('warns when width is set on inline element', () => {
     const warnings = checkInlineDimensions(createRuleContext(makeElement({ width: '200px' })));
     expect(warnings).toHaveLength(1);
-    expect(warnings[0].ruleId).toBe('D-1');
+    expect(warnings[0].ruleId).toBe('inline-no-dimensions');
     expect(warnings[0].title).toContain('width');
   });
 

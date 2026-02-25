@@ -38,14 +38,31 @@ Chrome DevTools extension with two entry points (multi-page Vite build):
 
 Pure-function rules with zero Chrome API dependency — fully testable:
 
-- `types.ts` — `ElementData`, `Warning`, `Rule`, `RuleContext`, `RuleId` (literal union `'D-1' | 'C-1' | 'C-2' | 'C-3'`)
+- `types.ts` — `ElementData`, `Warning`, `Rule`, `RuleContext`, `RuleId` (Stylelint-convention `string` type)
 - `context.ts` — `createRuleContext()` normalizes computed styles; helper predicates (`isFlexOrGridContainer`, etc.)
 - `engine.ts` — `analyzeElement()` creates context then `rules.flatMap(r => r.check(ctx))`
-- `inline-dimensions.ts` — D-1: width/height on inline non-replaced elements
-- `gap.ts` — C-1: gap on non-flex/grid/multi-column containers
-- `alignment.ts` — C-2: align-items/justify-content on non-flex/grid
-- `place.ts` — C-3: place-content/place-items on non-flex/grid
+- `inline-dimensions.ts` — `inline-no-dimensions`: width/height on inline non-replaced elements
+- `gap.ts` — `container-no-gap`: gap on non-flex/grid/multi-column containers
+- `alignment.ts` — `container-no-align`: align-items/justify-content on non-flex/grid
+- `place.ts` — `container-no-place`: place-content/place-items on non-flex/grid
 - `__tests__/` — 38 tests covering all rules + engine integration
+
+#### Rule ID Naming Convention
+
+Rule IDs follow Stylelint's `thing-no-qualifier` pattern — the de facto standard in CSS lint tooling. This makes rule purposes immediately obvious without looking up documentation.
+
+- **Format:** `<target>-no-<what-is-disallowed>`
+- **`target`** — the element/context being checked (e.g. `inline`, `container`)
+- **`no-<qualifier>`** — the property or behavior that has no effect in that context
+
+| Rule ID                | Target                       | Disallowed                  |
+| ---------------------- | ---------------------------- | --------------------------- |
+| `inline-no-dimensions` | inline non-replaced elements | width/height                |
+| `container-no-gap`     | non-flex/grid containers     | gap properties              |
+| `container-no-align`   | non-flex/grid containers     | align-items/justify-content |
+| `container-no-place`   | non-flex/grid containers     | place-items/place-content   |
+
+When adding a new rule, pick a descriptive `target` and `qualifier` — avoid numbered IDs like `D-1` or `C-2`.
 
 ### Sidebar UI (`src/sidebar/`)
 
@@ -65,13 +82,14 @@ Pure-function rules with zero Chrome API dependency — fully testable:
 
 ## Commit Rules
 
-- 細かく意味のある単位でコミットする（1コミット = 1つの論理的変更）
-- コミットメッセージは「なぜ（why）」を意識する。「何を変えたか」ではなく「なぜその変更が必要か」を伝える
-- フォーマット: `<type>: <why-focused message>`
+- Make small, meaningful commits (1 commit = 1 logical change)
+- Focus on "why" in commit messages, not "what" changed
+- Format: `<type>: <why-focused message>`
   - type: `feat`, `fix`, `refactor`, `chore`, `docs`, `test`
-- メッセージは英語で記述
-- 本文（body）が必要な場合は空行を挟んで補足を書く
-- コミット前に `pnpm build` または `pnpm lint` で壊れていないことを確認する
+- Write messages in English
+- Add a body after a blank line when extra context is needed
+- Run `pnpm fmt` before committing to apply formatting
+- Run `pnpm build` or `pnpm lint` before committing to verify nothing is broken
 
 ## PR Rules
 
