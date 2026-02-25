@@ -73,4 +73,11 @@ describe('C-2: alignment', () => {
     const warnings = checkAlignment(createRuleContext(makeElement({})));
     expect(warnings).toHaveLength(0);
   });
+
+  it('skips display: contents elements', () => {
+    const warnings = checkAlignment(
+      createRuleContext(makeElement({ display: 'contents', alignItems: 'center' })),
+    );
+    expect(warnings).toHaveLength(0);
+  });
 });

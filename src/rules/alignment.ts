@@ -4,6 +4,7 @@ import { isDefaultAlignmentValue, isFlexOrGridContainer } from './context.ts';
 export const checkAlignment: Rule = (ctx) => {
   const { display, alignItems, justifyContent } = ctx.styles;
   if (isFlexOrGridContainer(display)) return [];
+  if (display === 'contents') return [];
 
   const warnings: Warning[] = [];
 
