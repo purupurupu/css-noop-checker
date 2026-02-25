@@ -36,12 +36,7 @@ function App() {
 
   return (
     <div className="panel">
-      <PanelHeader
-        elementData={data}
-        status={status}
-        scanStatus={scanStatus}
-        onScan={handleScan}
-      />
+      <PanelHeader elementData={data} status={status} scanStatus={scanStatus} onScan={handleScan} />
       {viewMode === 'element' ? (
         <WarningList warnings={warnings} status={status} />
       ) : (

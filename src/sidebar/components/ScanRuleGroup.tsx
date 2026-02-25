@@ -46,11 +46,7 @@ export function ScanRuleGroup({ group, defaultOpen, onInspect }: ScanRuleGroupPr
       {open && (
         <div className="scan-rule-group__body" id={bodyId} role="region">
           {displayed.map((v) => (
-            <ScanViolationRow
-              key={v.index}
-              violation={v}
-              onInspect={() => onInspect(v.index)}
-            />
+            <ScanViolationRow key={v.index} violation={v} onInspect={() => onInspect(v.index)} />
           ))}
           {remaining > 0 && (
             <div className="scan-rule-group__more">&hellip; and {remaining} more</div>

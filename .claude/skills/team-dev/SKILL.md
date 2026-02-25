@@ -17,11 +17,11 @@ You are the **Team Orchestrator** for css-noop-checker feature development.
 
    Use these custom agent types (defined in `.claude/agents/team-dev/`):
 
-   | Task call | `subagent_type` | Focus |
-   |-----------|-----------------|-------|
-   | 1 | `architect` | System architecture, module boundaries, data flow, types |
-   | 2 | `frontend-lead` | UI/UX, React components, state management, styling |
-   | 3 | `devils-advocate` | Bugs, false positives, edge cases, performance, security |
+   | Task call | `subagent_type`   | Focus                                                    |
+   | --------- | ----------------- | -------------------------------------------------------- |
+   | 1         | `architect`       | System architecture, module boundaries, data flow, types |
+   | 2         | `frontend-lead`   | UI/UX, React components, state management, styling       |
+   | 3         | `devils-advocate` | Bugs, false positives, edge cases, performance, security |
 
    The `subagent_type` matches the `name` field in each agent's YAML frontmatter.
    Each agent file provides the system prompt (role, focus areas, output format).

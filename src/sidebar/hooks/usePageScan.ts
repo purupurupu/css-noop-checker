@@ -1,7 +1,13 @@
 import { useState, useCallback, useRef } from 'react';
 import type { ElementData, RuleId, Warning } from '../../rules/types.ts';
 import { analyzeElement } from '../../rules/engine.ts';
-import type { ScanStatus, ScanElementData, ScanGroup, ScanProgress, ScanViolation } from '../types.ts';
+import type {
+  ScanStatus,
+  ScanElementData,
+  ScanGroup,
+  ScanProgress,
+  ScanViolation,
+} from '../types.ts';
 
 const CHUNK_SIZE = 200;
 const MAX_ELEMENTS = 10_000;
