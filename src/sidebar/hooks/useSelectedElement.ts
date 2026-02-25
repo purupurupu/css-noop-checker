@@ -1,32 +1,11 @@
 import { useState, useEffect, useCallback, useRef } from 'react';
 import type { ElementData } from '../../rules/types.ts';
+import { isElementData } from '../../rules/validation.ts';
+import { generateStyleExtractFragment } from '../../rules/css-properties.ts';
 
 export type AnalysisStatus = 'no-selection' | 'analyzing' | 'ready' | 'error';
 
-const COMPUTED_STYLE_KEYS = [
-  'display',
-  'width',
-  'height',
-  'gap',
-  'rowGap',
-  'columnGap',
-  'alignItems',
-  'justifyContent',
-  'placeItems',
-  'placeContent',
-  'columnCount',
-] as const;
-
-export function isElementData(v: unknown): v is ElementData {
-  if (typeof v !== 'object' || v === null) return false;
-  const o = v as Record<string, unknown>;
-  if (typeof o['tagName'] !== 'string') return false;
-  if (!Array.isArray(o['classList'])) return false;
-  const cs = o['computedStyles'];
-  if (typeof cs !== 'object' || cs === null) return false;
-  const styles = cs as Record<string, unknown>;
-  return COMPUTED_STYLE_KEYS.every((key) => typeof styles[key] === 'string');
-}
+export { isElementData };
 
 /** Runs in the inspected page's context via eval(). Uses var for broad compat. */
 const EVAL_SCRIPT = `
@@ -39,17 +18,7 @@ const EVAL_SCRIPT = `
     id: el.id || '',
     classList: Array.from(el.classList),
     computedStyles: {
-      display: cs.display,
-      width: cs.width,
-      height: cs.height,
-      gap: cs.gap,
-      rowGap: cs.rowGap,
-      columnGap: cs.columnGap,
-      alignItems: cs.alignItems,
-      justifyContent: cs.justifyContent,
-      placeItems: cs.placeItems,
-      placeContent: cs.placeContent,
-      columnCount: cs.columnCount
+        ${generateStyleExtractFragment()}
     }
   };
 })()

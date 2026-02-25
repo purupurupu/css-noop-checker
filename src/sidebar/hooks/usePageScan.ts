@@ -1,6 +1,8 @@
 import { useState, useCallback, useRef } from 'react';
-import type { ElementData, RuleId, Warning } from '../../rules/types.ts';
 import { analyzeElement } from '../../rules/engine.ts';
+import { getAllRequiredProperties } from '../../rules/registry.ts';
+import { generateStyleExtractFragment } from '../../rules/css-properties.ts';
+import type { ElementData, RuleId, Warning } from '../../rules/types.ts';
 import type {
   ScanStatus,
   ScanElementData,
@@ -36,17 +38,7 @@ function makeScanScript(offset: number, limit: number): string {
       id: el.id || '',
       classList: Array.from(el.classList),
       computedStyles: {
-        display: cs.display,
-        width: cs.width,
-        height: cs.height,
-        gap: cs.gap,
-        rowGap: cs.rowGap,
-        columnGap: cs.columnGap,
-        alignItems: cs.alignItems,
-        justifyContent: cs.justifyContent,
-        placeItems: cs.placeItems,
-        placeContent: cs.placeContent,
-        columnCount: cs.columnCount
+        ${generateStyleExtractFragment()}
       }
     });
   }
@@ -63,20 +55,6 @@ function makeInspectScript(index: number): string {
 })()`;
 }
 
-const COMPUTED_STYLE_KEYS = [
-  'display',
-  'width',
-  'height',
-  'gap',
-  'rowGap',
-  'columnGap',
-  'alignItems',
-  'justifyContent',
-  'placeItems',
-  'placeContent',
-  'columnCount',
-] as const;
-
 function isScanElementData(v: unknown): v is ScanElementData {
   if (typeof v !== 'object' || v === null) return false;
   const o = v as Record<string, unknown>;
@@ -87,7 +65,7 @@ function isScanElementData(v: unknown): v is ScanElementData {
   const cs = o['computedStyles'];
   if (typeof cs !== 'object' || cs === null) return false;
   const styles = cs as Record<string, unknown>;
-  return COMPUTED_STYLE_KEYS.every((key) => typeof styles[key] === 'string');
+  return getAllRequiredProperties().every((key) => typeof styles[key] === 'string');
 }
 
 interface ChunkResult {

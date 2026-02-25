@@ -1,5 +1,7 @@
 import { describe, it, expect } from 'vitest';
-import { isElementData } from '../useSelectedElement.ts';
+import { isElementData } from '../../../rules/validation.ts';
+// Ensure rules are registered (engine.ts has side-effect imports)
+import '../../../rules/engine.ts';
 
 const validData = {
   tagName: 'div',
