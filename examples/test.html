@@ -227,6 +227,66 @@
       <div style="position: sticky; top: 0">Sticky + top: 0 (valid)</div>
     </div>
 
+    <!-- ===== Parent context: flex/grid items (upcoming rules) ===== -->
+    <h2>Parent context: flex/grid items (upcoming rules)</h2>
+    <p style="font-size: 13px; color: #888">
+      These elements demonstrate parent-aware context. Select a child element and check that the
+      sidebar correctly identifies flex/grid item status via parent display. Rules using
+      isFlexItem/isGridItem are not yet implemented.
+    </p>
+
+    <h3>Flex items (parent is display:flex)</h3>
+    <div class="case expect-ok">
+      <div class="label label-ok">Flex item: child of display:flex container</div>
+      <div style="display: flex; gap: 8px">
+        <div style="flex: 1">Flex child 1</div>
+        <div style="flex: 1; align-self: center">Flex child 2 (align-self)</div>
+        <div style="order: -1">Flex child 3 (order)</div>
+      </div>
+    </div>
+    <div class="case expect-ok">
+      <div class="label label-ok">Flex item: child of display:inline-flex container</div>
+      <span style="display: inline-flex; gap: 4px">
+        <span>Inline-flex child 1</span>
+        <span style="align-self: flex-end">Inline-flex child 2</span>
+      </span>
+    </div>
+
+    <h3>Grid items (parent is display:grid)</h3>
+    <div class="case expect-ok">
+      <div class="label label-ok">Grid item: child of display:grid container</div>
+      <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 8px">
+        <div style="justify-self: end">Grid child 1 (justify-self)</div>
+        <div style="align-self: center">Grid child 2 (align-self)</div>
+      </div>
+    </div>
+
+    <h3>NOT flex/grid items (parent is display:block)</h3>
+    <div class="case expect-warn">
+      <div class="label label-warn">Not flex item: align-self on child of block container</div>
+      <div>
+        <div style="align-self: center">Block child with align-self (no effect)</div>
+      </div>
+    </div>
+    <div class="case expect-warn">
+      <div class="label label-warn">Not flex item: order on child of block container</div>
+      <div>
+        <div style="order: 1">Block child with order (no effect)</div>
+      </div>
+    </div>
+
+    <h3>Edge case: parent is display:contents (skipped in layout)</h3>
+    <div class="case expect-ok">
+      <div class="label label-ok">
+        display:contents parent: grandparent is the real flex container
+      </div>
+      <div style="display: flex; gap: 8px">
+        <div style="display: contents">
+          <div style="flex: 1">Child of contents wrapper (actually a flex item)</div>
+        </div>
+      </div>
+    </div>
+
     <!-- ===== No issues ===== -->
     <h2>No issues expected</h2>
     <div class="case expect-ok">

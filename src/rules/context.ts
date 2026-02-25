@@ -9,23 +9,29 @@ function normalizeComputedStyles(styles: Record<string, string>): Record<string,
 }
 
 export function createRuleContext(element: ElementData): RuleContext {
+  const parentStyles = element.parent
+    ? normalizeComputedStyles(element.parent.computedStyles)
+    : null;
+  const parentDisplay = parentStyles?.display ?? '';
   return {
     element,
     styles: normalizeComputedStyles(element.computedStyles),
+    parentStyles,
+    isFlexItem: isFlexContainer(parentDisplay),
+    isGridItem: isGridContainer(parentDisplay),
   };
 }
 
-export function isFlexOrGridContainer(display: string): boolean {
-  return (
-    display === 'flex' ||
-    display === 'inline-flex' ||
-    display === 'grid' ||
-    display === 'inline-grid'
-  );
+export function isFlexContainer(display: string): boolean {
+  return display === 'flex' || display === 'inline-flex';
 }
 
 export function isGridContainer(display: string): boolean {
   return display === 'grid' || display === 'inline-grid';
+}
+
+export function isFlexOrGridContainer(display: string): boolean {
+  return isFlexContainer(display) || isGridContainer(display);
 }
 
 export function isDefaultGapLikeValue(value: string): boolean {

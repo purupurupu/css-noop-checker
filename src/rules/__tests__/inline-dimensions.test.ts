@@ -25,6 +25,7 @@ function makeElement(
       columnCount: 'auto',
       ...styles,
     },
+    parent: null,
   };
 }
 

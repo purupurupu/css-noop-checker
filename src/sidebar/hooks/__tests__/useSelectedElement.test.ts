@@ -25,6 +25,7 @@ const validData = {
     bottom: 'auto',
     left: 'auto',
   },
+  parent: null,
 };
 
 describe('isElementData', () => {
