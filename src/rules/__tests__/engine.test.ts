@@ -27,6 +27,8 @@ function makeElement(
       right: 'auto',
       bottom: 'auto',
       left: 'auto',
+      alignSelf: 'auto',
+      order: '0',
       ...styles,
     },
     parent: null,

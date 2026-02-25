@@ -17,7 +17,6 @@ function makeElement(overrides: Partial<ElementData['computedStyles']>): Element
       columnGap: 'normal',
       alignItems: 'normal',
       justifyContent: 'normal',
-      placeItems: 'normal',
       placeContent: 'normal',
       columnCount: 'auto',
       ...overrides,
@@ -26,23 +25,17 @@ function makeElement(overrides: Partial<ElementData['computedStyles']>): Element
   };
 }
 
-describe('container-no-place: place-items / place-content', () => {
-  it('warns when place-items is set on block element', () => {
-    const warnings = checkPlace(createRuleContext(makeElement({ placeItems: 'center' })));
-    expect(warnings).toHaveLength(1);
-    expect(warnings[0].ruleId).toBe('container-no-place');
-    expect(warnings[0].title).toContain('place-items');
-  });
-
+describe('container-no-place: place-content', () => {
   it('warns when place-content is set on block element', () => {
     const warnings = checkPlace(createRuleContext(makeElement({ placeContent: 'center' })));
     expect(warnings).toHaveLength(1);
+    expect(warnings[0].ruleId).toBe('container-no-place');
     expect(warnings[0].title).toContain('place-content');
   });
 
   it('skips grid containers', () => {
     const warnings = checkPlace(
-      createRuleContext(makeElement({ display: 'grid', placeItems: 'center' })),
+      createRuleContext(makeElement({ display: 'grid', placeContent: 'center' })),
     );
     expect(warnings).toHaveLength(0);
   });
@@ -56,7 +49,7 @@ describe('container-no-place: place-items / place-content', () => {
 
   it('skips inline-flex containers', () => {
     const warnings = checkPlace(
-      createRuleContext(makeElement({ display: 'inline-flex', placeItems: 'start' })),
+      createRuleContext(makeElement({ display: 'inline-flex', placeContent: 'start' })),
     );
     expect(warnings).toHaveLength(0);
   });
@@ -75,7 +68,7 @@ describe('container-no-place: place-items / place-content', () => {
 
   it('skips display: contents elements', () => {
     const warnings = checkPlace(
-      createRuleContext(makeElement({ display: 'contents', placeItems: 'center' })),
+      createRuleContext(makeElement({ display: 'contents', placeContent: 'center' })),
     );
     expect(warnings).toHaveLength(0);
   });

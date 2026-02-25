@@ -46,7 +46,9 @@ Pure-function rules with zero Chrome API dependency — fully testable:
 - `alignment.ts` — `container-no-align`: align-items/justify-content on non-flex/grid
 - `place.ts` — `container-no-place`: place-content/place-items on non-flex/grid
 - `static-position-offset.ts` — `static-no-offset`: top/right/bottom/left on static position
-- `__tests__/` — 49 tests covering all rules + engine integration
+- `self-alignment.ts` — `item-no-self-align`: align-self on non-flex/grid items
+- `order.ts` — `item-no-order`: order on non-flex/grid items
+- `__tests__/` — tests covering all rules + engine integration
 
 #### Rule ID Naming Convention
 
@@ -61,8 +63,10 @@ Rule IDs follow Stylelint's `thing-no-qualifier` pattern — the de facto standa
 | `inline-no-dimensions` | inline non-replaced elements | width/height                |
 | `container-no-gap`     | non-flex/grid containers     | gap properties              |
 | `container-no-align`   | non-flex/grid containers     | align-items/justify-content |
-| `container-no-place`   | non-flex/grid containers     | place-items/place-content   |
+| `container-no-place`   | non-flex/grid containers     | place-content               |
 | `static-no-offset`     | static-positioned elements   | top/right/bottom/left       |
+| `item-no-self-align`   | non-flex/grid items          | align-self                  |
+| `item-no-order`        | non-flex/grid items          | order                       |
 
 When adding a new rule, pick a descriptive `target` and `qualifier` — avoid numbered IDs like `D-1` or `C-2`.
 
