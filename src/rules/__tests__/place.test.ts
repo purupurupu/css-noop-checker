@@ -71,4 +71,11 @@ describe('C-3: place-items / place-content', () => {
     const warnings = checkPlace(createRuleContext(makeElement({})));
     expect(warnings).toHaveLength(0);
   });
+
+  it('skips display: contents elements', () => {
+    const warnings = checkPlace(
+      createRuleContext(makeElement({ display: 'contents', placeItems: 'center' })),
+    );
+    expect(warnings).toHaveLength(0);
+  });
 });

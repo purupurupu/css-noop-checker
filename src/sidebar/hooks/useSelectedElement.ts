@@ -17,7 +17,7 @@ const COMPUTED_STYLE_KEYS = [
   'columnCount',
 ] as const;
 
-function isElementData(v: unknown): v is ElementData {
+export function isElementData(v: unknown): v is ElementData {
   if (typeof v !== 'object' || v === null) return false;
   const o = v as Record<string, unknown>;
   if (typeof o['tagName'] !== 'string') return false;
