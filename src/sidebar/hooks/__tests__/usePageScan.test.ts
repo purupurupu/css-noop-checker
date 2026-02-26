@@ -34,6 +34,7 @@ function makeScanElement(
       flexWrap: 'nowrap',
       ...styles,
     },
+    parent: null,
   };
 }
 
