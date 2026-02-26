@@ -1,21 +1,7 @@
 import { describe, it, expect } from 'vitest';
 import { checkBlockVerticalAlign } from '../block-vertical-align.ts';
 import { createRuleContext } from '../context.ts';
-import type { ElementData } from '../types.ts';
-
-function makeElement(overrides: Partial<ElementData['computedStyles']>): ElementData {
-  return {
-    tagName: 'div',
-    id: '',
-    classList: [],
-    computedStyles: {
-      display: 'block',
-      verticalAlign: 'baseline',
-      ...overrides,
-    },
-    parent: null,
-  };
-}
+import { makeElement } from './helpers/make-element.ts';
 
 describe('block-no-vertical-align', () => {
   it('warns when vertical-align is set on block element', () => {

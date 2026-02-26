@@ -42,8 +42,10 @@ Pure-function rules with zero Chrome API dependency — fully testable:
 
 - `types.ts` — `ElementData`, `Warning`, `Rule`, `RuleContext`, `RuleId` (Stylelint-convention `string` type)
 - `context.ts` — `createRuleContext()` normalizes computed styles; helper predicates (`isFlexOrGridContainer`, etc.)
+- `stacking-context.ts` — `isStackingContext()` detects CSS stacking context triggers (used by `static-z-index.ts`)
 - `engine.ts` — `analyzeElement()` creates context then `rules.flatMap(r => r.check(ctx))`
 - `inline-dimensions.ts` — `inline-no-dimensions`: width/height on inline non-replaced elements
+- `inline-vertical-margin.ts` — `inline-no-vertical-margin`: vertical margin on inline non-replaced elements
 - `gap.ts` — `container-no-gap`: gap on non-flex/grid/multi-column containers
 - `alignment.ts` — `container-no-align`: align-items/justify-content on non-flex/grid
 - `place.ts` — `container-no-place`: place-content/place-items on non-flex/grid
@@ -112,6 +114,7 @@ New rules are automatically covered when test cases are added to `test.html` wit
 
 - ESM modules (`"type": "module"`)
 - Use `import type` for type-only imports (`verbatimModuleSyntax` is enabled)
+- **No barrel exports** — do not create `index.ts` re-export files. Import directly from the source module.
 - Format with Oxfmt before committing
 
 ## Commit Rules

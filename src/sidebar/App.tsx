@@ -1,6 +1,7 @@
 import { useMemo, useState } from 'react';
 import { useSelectedElement } from './hooks/useSelectedElement.ts';
 import { usePageScan } from './hooks/usePageScan.ts';
+import { useInspectElement } from './hooks/useInspectElement.ts';
 import { analyzeElement } from '../rules/engine.ts';
 import { PanelHeader } from './components/PanelHeader.tsx';
 import { WarningList } from './components/WarningList.tsx';
@@ -11,16 +12,8 @@ type ViewMode = 'element' | 'scan';
 
 function App() {
   const { data, status } = useSelectedElement();
-  const {
-    groups,
-    status: scanStatus,
-    error,
-    inspectError,
-    progress,
-    scan,
-    inspectElement,
-    clear,
-  } = usePageScan();
+  const { groups, status: scanStatus, error, progress, scan, clear } = usePageScan();
+  const { inspectElement, inspectError } = useInspectElement();
   const [viewMode, setViewMode] = useState<ViewMode>('element');
   const warnings = useMemo(() => (data ? analyzeElement(data) : []), [data]);
 

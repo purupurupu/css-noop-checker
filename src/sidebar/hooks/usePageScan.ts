@@ -1,15 +1,8 @@
-import { useState, useCallback, useRef, useEffect } from 'react';
-import { analyzeElement } from '../../rules/engine.ts';
+import { useState, useCallback, useRef } from 'react';
 import { getAllRequiredProperties } from '../../rules/registry.ts';
 import { generateStyleExtractFragment } from '../../rules/css-properties.ts';
-import type { ElementData, RuleId, Warning } from '../../rules/types.ts';
-import type {
-  ScanStatus,
-  ScanElementData,
-  ScanGroup,
-  ScanProgress,
-  ScanViolation,
-} from '../types.ts';
+import type { ScanStatus, ScanElementData, ScanGroup, ScanProgress } from '../types.ts';
+import { groupByRule } from '../utils/group-by-rule.ts';
 
 const CHUNK_SIZE = 200;
 const MAX_ELEMENTS = 10_000;
@@ -46,15 +39,6 @@ function makeScanScript(offset: number, limit: number): string {
 })(${offset}, ${limit})`;
 }
 
-function makeInspectScript(index: number): string {
-  return `(function() {
-  var els = document.body.querySelectorAll('*');
-  var el = els[${index}];
-  if (el) { inspect(el); return true; }
-  return false;
-})()`;
-}
-
 function isScanElementData(v: unknown): v is ScanElementData {
   if (typeof v !== 'object' || v === null) return false;
   const o = v as Record<string, unknown>;
@@ -78,46 +62,6 @@ function isChunkResult(v: unknown): v is ChunkResult {
   const o = v as Record<string, unknown>;
   if (!Array.isArray(o['results']) || typeof o['total'] !== 'number') return false;
   return (o['results'] as unknown[]).every(isScanElementData);
-}
-
-export function groupByRule(elements: ScanElementData[]): ScanGroup[] {
-  const map = new Map<RuleId, ScanViolation[]>();
-
-  for (const el of elements) {
-    // TODO: Page scan does not collect parent context. Rules using
-    // isFlexItem/isGridItem will not fire here. When a parent-dependent
-    // rule is added, extend makeScanScript to collect parentElement styles.
-    const elementData: ElementData = {
-      tagName: el.tagName,
-      id: el.id,
-      classList: el.classList,
-      computedStyles: el.computedStyles,
-      parent: null,
-    };
-    const warnings = analyzeElement(elementData);
-    if (warnings.length === 0) continue;
-
-    const byRule = new Map<RuleId, Warning[]>();
-    for (const w of warnings) {
-      const existing = byRule.get(w.ruleId) ?? [];
-      existing.push(w);
-      byRule.set(w.ruleId, existing);
-    }
-
-    for (const [ruleId, ruleWarnings] of byRule) {
-      const violations = map.get(ruleId) ?? [];
-      violations.push({
-        index: el.index,
-        selector: el.selector,
-        warnings: ruleWarnings,
-      });
-      map.set(ruleId, violations);
-    }
-  }
-
-  return Array.from(map.entries())
-    .sort(([a], [b]) => a.localeCompare(b))
-    .map(([ruleId, violations]) => ({ ruleId, violations }));
 }
 
 export function usePageScan() {
@@ -182,24 +126,6 @@ export function usePageScan() {
     processChunk(0);
   }, []);
 
-  const [inspectError, setInspectError] = useState<string | null>(null);
-  const inspectTimerRef = useRef<ReturnType<typeof setTimeout>>(undefined);
-
-  const inspectElement = useCallback((index: number) => {
-    clearTimeout(inspectTimerRef.current);
-    setInspectError(null);
-    chrome.devtools.inspectedWindow.eval(makeInspectScript(index), (result: unknown) => {
-      if (result === false) {
-        setInspectError('Element not found — the page may have changed since the scan.');
-        inspectTimerRef.current = setTimeout(() => setInspectError(null), 3000);
-      }
-    });
-  }, []);
-
-  useEffect(() => {
-    return () => clearTimeout(inspectTimerRef.current);
-  }, []);
-
   const clear = useCallback(() => {
     scanIdRef.current += 1;
     setGroups([]);
@@ -208,5 +134,5 @@ export function usePageScan() {
     setProgress({ scanned: 0, total: 0 });
   }, []);
 
-  return { groups, status, error, inspectError, progress, scan, inspectElement, clear };
+  return { groups, status, error, progress, scan, clear };
 }

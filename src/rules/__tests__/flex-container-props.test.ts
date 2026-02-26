@@ -1,32 +1,7 @@
 import { describe, it, expect } from 'vitest';
 import { checkFlexContainerProps } from '../flex-container-props.ts';
 import { createRuleContext } from '../context.ts';
-import type { ElementData } from '../types.ts';
-
-function makeElement(overrides: Partial<ElementData['computedStyles']>): ElementData {
-  return {
-    tagName: 'div',
-    id: '',
-    classList: [],
-    computedStyles: {
-      display: 'block',
-      width: 'auto',
-      height: 'auto',
-      gap: 'normal',
-      rowGap: 'normal',
-      columnGap: 'normal',
-      alignItems: 'normal',
-      justifyContent: 'normal',
-      placeItems: 'normal',
-      placeContent: 'normal',
-      columnCount: 'auto',
-      flexDirection: 'row',
-      flexWrap: 'nowrap',
-      ...overrides,
-    },
-    parent: null,
-  };
-}
+import { makeElement } from './helpers/make-element.ts';
 
 describe('flex-no-container-props: flex-direction/wrap on non-flex', () => {
   it('warns when flex-direction is set on block element', () => {
