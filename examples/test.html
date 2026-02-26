@@ -60,119 +60,121 @@
     <h2>inline-no-dimensions: width/height on inline elements</h2>
 
     <h3>Should warn</h3>
-    <div class="case expect-warn">
+    <div class="case expect-warn" data-rule="inline-no-dimensions">
       <div class="label label-warn">inline-no-dimensions warn: span with width</div>
-      <span style="width: 200px">This span has width: 200px</span>
+      <span data-target style="width: 200px">This span has width: 200px</span>
     </div>
-    <div class="case expect-warn">
+    <div class="case expect-warn" data-rule="inline-no-dimensions">
       <div class="label label-warn">inline-no-dimensions warn: span with height</div>
-      <span style="height: 50px">This span has height: 50px</span>
+      <span data-target style="height: 50px">This span has height: 50px</span>
     </div>
-    <div class="case expect-warn">
+    <div class="case expect-warn" data-rule="inline-no-dimensions">
       <div class="label label-warn">inline-no-dimensions warn: anchor with width + height</div>
-      <a href="#" style="width: 100px; height: 30px">Link (width + height)</a>
+      <a data-target href="#" style="width: 100px; height: 30px">Link (width + height)</a>
     </div>
 
     <h3>Should NOT warn (false positive check)</h3>
-    <div class="case expect-ok">
+    <div class="case expect-ok" data-rule="inline-no-dimensions">
       <div class="label label-ok">inline-no-dimensions ok: img is a replaced inline element</div>
       <img
+        data-target
         src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='60' height='40'%3E%3Crect fill='%234ec9b0' width='60' height='40'/%3E%3C/svg%3E"
         style="width: 60px; height: 40px"
         alt="replaced element"
       />
     </div>
-    <div class="case expect-ok">
+    <div class="case expect-ok" data-rule="inline-no-dimensions">
       <div class="label label-ok">inline-no-dimensions ok: input is a replaced inline element</div>
-      <input type="text" style="width: 200px; height: 30px" value="input element" />
+      <input data-target type="text" style="width: 200px; height: 30px" value="input element" />
     </div>
-    <div class="case expect-ok">
+    <div class="case expect-ok" data-rule="inline-no-dimensions">
       <div class="label label-ok">inline-no-dimensions ok: inline-block accepts width</div>
-      <span style="display: inline-block; width: 200px">inline-block span</span>
+      <span data-target style="display: inline-block; width: 200px">inline-block span</span>
     </div>
 
     <!-- ===== inline-no-vertical-margin: vertical margin on inline ===== -->
     <h2>inline-no-vertical-margin: vertical margin on inline elements</h2>
 
     <h3>Should warn</h3>
-    <div class="case expect-warn">
+    <div class="case expect-warn" data-rule="inline-no-vertical-margin">
       <div class="label label-warn">inline-no-vertical-margin warn: span with margin-top</div>
-      <span style="margin-top: 20px">This span has margin-top: 20px</span>
+      <span data-target style="margin-top: 20px">This span has margin-top: 20px</span>
     </div>
-    <div class="case expect-warn">
+    <div class="case expect-warn" data-rule="inline-no-vertical-margin">
       <div class="label label-warn">inline-no-vertical-margin warn: span with margin-bottom</div>
-      <span style="margin-bottom: 15px">This span has margin-bottom: 15px</span>
+      <span data-target style="margin-bottom: 15px">This span has margin-bottom: 15px</span>
     </div>
-    <div class="case expect-warn">
+    <div class="case expect-warn" data-rule="inline-no-vertical-margin">
       <div class="label label-warn">
         inline-no-vertical-margin warn: anchor with margin-top + margin-bottom
       </div>
-      <a href="#" style="margin-top: 10px; margin-bottom: 10px"
+      <a data-target href="#" style="margin-top: 10px; margin-bottom: 10px"
         >Link (margin-top + margin-bottom)</a
       >
     </div>
 
     <h3>Should NOT warn (false positive check)</h3>
-    <div class="case expect-ok">
+    <div class="case expect-ok" data-rule="inline-no-vertical-margin">
       <div class="label label-ok">
         inline-no-vertical-margin ok: img is a replaced inline element
       </div>
       <img
+        data-target
         src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='60' height='40'%3E%3Crect fill='%234ec9b0' width='60' height='40'/%3E%3C/svg%3E"
         style="margin-top: 20px"
         alt="replaced element"
       />
     </div>
-    <div class="case expect-ok">
+    <div class="case expect-ok" data-rule="inline-no-vertical-margin">
       <div class="label label-ok">
         inline-no-vertical-margin ok: inline-block accepts vertical margin
       </div>
-      <span style="display: inline-block; margin-top: 20px">inline-block span</span>
+      <span data-target style="display: inline-block; margin-top: 20px">inline-block span</span>
     </div>
-    <div class="case expect-ok">
+    <div class="case expect-ok" data-rule="inline-no-vertical-margin">
       <div class="label label-ok">
         inline-no-vertical-margin ok: block div accepts vertical margin
       </div>
-      <div style="margin-top: 20px">block div with margin-top</div>
+      <div data-target style="margin-top: 20px">block div with margin-top</div>
     </div>
 
     <!-- ===== container-no-gap: gap on non-flex/grid ===== -->
     <h2>container-no-gap: gap on non-flex/grid containers</h2>
 
     <h3>Should warn</h3>
-    <div class="case expect-warn">
+    <div class="case expect-warn" data-rule="container-no-gap">
       <div class="label label-warn">container-no-gap warn: display:block with gap</div>
-      <div style="gap: 10px">
+      <div data-target style="gap: 10px">
         <div>Child 1</div>
         <div>Child 2</div>
       </div>
     </div>
-    <div class="case expect-warn">
+    <div class="case expect-warn" data-rule="container-no-gap">
       <div class="label label-warn">container-no-gap warn: display:block with row-gap</div>
-      <div style="row-gap: 20px">
+      <div data-target style="row-gap: 20px">
         <div>Child 1</div>
         <div>Child 2</div>
       </div>
     </div>
 
     <h3>Should NOT warn</h3>
-    <div class="case expect-ok">
+    <div class="case expect-ok" data-rule="container-no-gap">
       <div class="label label-ok">container-no-gap ok: flex container with gap</div>
-      <div style="display: flex; gap: 10px">
+      <div data-target style="display: flex; gap: 10px">
         <div>Flex child 1</div>
         <div>Flex child 2</div>
       </div>
     </div>
-    <div class="case expect-ok">
+    <div class="case expect-ok" data-rule="container-no-gap">
       <div class="label label-ok">container-no-gap ok: grid container with gap</div>
-      <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 10px">
+      <div data-target style="display: grid; grid-template-columns: 1fr 1fr; gap: 10px">
         <div>Grid child 1</div>
         <div>Grid child 2</div>
       </div>
     </div>
-    <div class="case expect-ok">
+    <div class="case expect-ok" data-rule="container-no-gap">
       <div class="label label-ok">container-no-gap ok: multi-column with column-gap (valid)</div>
-      <div style="column-count: 2; column-gap: 40px">
+      <div data-target style="column-count: 2; column-gap: 40px">
         The quick brown fox jumps over the lazy dog. Pack my box with five dozen liquor jugs. How
         vexingly quick daft zebras jump.
       </div>
@@ -182,26 +184,29 @@
     <h2>container-no-align: alignment on non-flex/grid containers</h2>
 
     <h3>Should warn</h3>
-    <div class="case expect-warn">
+    <div class="case expect-warn" data-rule="container-no-align">
       <div class="label label-warn">container-no-align warn: display:block with align-items</div>
-      <div style="align-items: center">
+      <div data-target style="align-items: center">
         <div>Child</div>
       </div>
     </div>
-    <div class="case expect-warn">
+    <div class="case expect-warn" data-rule="container-no-align">
       <div class="label label-warn">
         container-no-align warn: display:block with justify-content
       </div>
-      <div style="justify-content: space-between">
+      <div data-target style="justify-content: space-between">
         <div>Child 1</div>
         <div>Child 2</div>
       </div>
     </div>
 
     <h3>Should NOT warn</h3>
-    <div class="case expect-ok">
+    <div class="case expect-ok" data-rule="container-no-align">
       <div class="label label-ok">container-no-align ok: flex container with align-items</div>
-      <div style="display: flex; align-items: center; height: 60px; background: #f0f0f0">
+      <div
+        data-target
+        style="display: flex; align-items: center; height: 60px; background: #f0f0f0"
+      >
         <div>Flex child</div>
       </div>
     </div>
@@ -210,31 +215,37 @@
     <h2>container-no-place: place-content on non-flex/grid</h2>
 
     <h3>Should warn</h3>
-    <div class="case expect-warn">
+    <div class="case expect-warn" data-rule="container-no-place">
       <div class="label label-warn">container-no-place warn: display:block with place-content</div>
-      <div style="place-content: center">
+      <div data-target style="place-content: center">
         <div>Child</div>
       </div>
     </div>
-    <div class="case expect-warn">
+    <div class="case expect-warn" data-rule="container-no-align">
       <div class="label label-warn">
         container-no-align warn: place-items on block (align-items part has no effect)
       </div>
-      <div style="place-items: center; height: 120px; background: #f0f0f0">
+      <div data-target style="place-items: center; height: 120px; background: #f0f0f0">
         <div>Child (horizontally centered, but NOT vertically centered)</div>
       </div>
     </div>
 
     <h3>Should NOT warn</h3>
-    <div class="case expect-ok">
+    <div class="case expect-ok" data-rule="container-no-place">
       <div class="label label-ok">container-no-place ok: grid container with place-items</div>
-      <div style="display: grid; place-items: center; height: 80px; background: #f0f0f0">
+      <div
+        data-target
+        style="display: grid; place-items: center; height: 80px; background: #f0f0f0"
+      >
         <div>Grid child</div>
       </div>
     </div>
-    <div class="case expect-ok">
+    <div class="case expect-ok" data-rule="container-no-place">
       <div class="label label-ok">container-no-place ok: flex container with place-content</div>
-      <div style="display: flex; place-content: center; height: 80px; background: #f0f0f0">
+      <div
+        data-target
+        style="display: flex; place-content: center; height: 80px; background: #f0f0f0"
+      >
         <div>Flex child</div>
       </div>
     </div>
@@ -243,66 +254,69 @@
     <h2>flex-no-container-props: flex-direction/wrap on non-flex elements</h2>
 
     <h3>Should warn</h3>
-    <div class="case expect-warn">
+    <div class="case expect-warn" data-rule="flex-no-container-props">
       <div class="label label-warn">flex-no-container-props warn: block with flex-direction</div>
-      <div style="flex-direction: column">
+      <div data-target style="flex-direction: column">
         <div>Child 1</div>
         <div>Child 2</div>
       </div>
     </div>
-    <div class="case expect-warn">
+    <div class="case expect-warn" data-rule="flex-no-container-props">
       <div class="label label-warn">flex-no-container-props warn: block with flex-wrap</div>
-      <div style="flex-wrap: wrap">
+      <div data-target style="flex-wrap: wrap">
         <div>Child 1</div>
         <div>Child 2</div>
       </div>
     </div>
-    <div class="case expect-warn">
+    <div class="case expect-warn" data-rule="flex-no-container-props">
       <div class="label label-warn">
         flex-no-container-props warn: block with flex-flow shorthand
       </div>
-      <div style="flex-flow: column wrap">
+      <div data-target style="flex-flow: column wrap">
         <div>Child 1</div>
         <div>Child 2</div>
       </div>
     </div>
 
     <h3>Should NOT warn</h3>
-    <div class="case expect-ok">
+    <div class="case expect-ok" data-rule="flex-no-container-props">
       <div class="label label-ok">
         flex-no-container-props ok: flex container with flex-direction
       </div>
-      <div style="display: flex; flex-direction: column">
+      <div data-target style="display: flex; flex-direction: column">
         <div>Flex child 1</div>
         <div>Flex child 2</div>
       </div>
     </div>
-    <div class="case expect-ok">
+    <div class="case expect-ok" data-rule="flex-no-container-props">
       <div class="label label-ok">flex-no-container-props ok: inline-flex with flex-wrap</div>
-      <span style="display: inline-flex; flex-wrap: wrap">
+      <span data-target style="display: inline-flex; flex-wrap: wrap">
         <span>Child 1</span>
         <span>Child 2</span>
       </span>
     </div>
-    <div class="case expect-ok">
+    <div class="case expect-ok" data-rule="flex-no-container-props">
       <div class="label label-ok">
         flex-no-container-props ok: grid container (no false positive)
       </div>
-      <div style="display: grid; flex-direction: column; grid-template-columns: 1fr 1fr">
+      <div
+        data-target
+        style="display: grid; flex-direction: column; grid-template-columns: 1fr 1fr"
+      >
         <div>Grid child 1</div>
         <div>Grid child 2</div>
       </div>
     </div>
-    <div class="case expect-ok">
+    <div class="case expect-ok" data-rule="flex-no-container-props">
       <div class="label label-ok">flex-no-container-props ok: default values (no override)</div>
-      <div>
+      <div data-target>
         <div>Plain block element (flex-direction defaults to row)</div>
       </div>
     </div>
-    <div class="case expect-ok">
+    <div class="case expect-ok" data-rule="flex-no-container-props">
       <div class="label label-ok">flex-no-container-props ok: display:contents skipped</div>
       <div style="display: flex">
-        <div style="display: contents; flex-direction: column">
+        <div data-target style="display: contents; flex-direction: column">
           <div>Child of contents wrapper</div>
         </div>
       </div>
@@ -312,90 +326,96 @@
     <h2>static-no-offset: top/right/bottom/left on static elements</h2>
 
     <h3>Should warn</h3>
-    <div class="case expect-warn">
+    <div class="case expect-warn" data-rule="static-no-offset">
       <div class="label label-warn">static-no-offset warn: static div with top</div>
-      <div style="top: 20px">This div has top: 20px but position is static</div>
+      <div data-target style="top: 20px">This div has top: 20px but position is static</div>
     </div>
-    <div class="case expect-warn">
+    <div class="case expect-warn" data-rule="static-no-offset">
       <div class="label label-warn">static-no-offset warn: static div with left</div>
-      <div style="left: 10px">This div has left: 10px but position is static</div>
+      <div data-target style="left: 10px">This div has left: 10px but position is static</div>
     </div>
-    <div class="case expect-warn">
+    <div class="case expect-warn" data-rule="static-no-offset">
       <div class="label label-warn">static-no-offset warn: static div with all offsets</div>
-      <div style="top: 10px; right: 10px; bottom: 10px; left: 10px">
+      <div data-target style="top: 10px; right: 10px; bottom: 10px; left: 10px">
         All four offsets on a static element
       </div>
     </div>
 
     <h3>Should NOT warn</h3>
-    <div class="case expect-ok">
+    <div class="case expect-ok" data-rule="static-no-offset">
       <div class="label label-ok">static-no-offset ok: relative with top</div>
-      <div style="position: relative; top: 20px">Relative + top: 20px (valid)</div>
+      <div data-target style="position: relative; top: 20px">Relative + top: 20px (valid)</div>
     </div>
-    <div class="case expect-ok">
+    <div class="case expect-ok" data-rule="static-no-offset">
       <div class="label label-ok">static-no-offset ok: absolute with top + left</div>
-      <div style="position: absolute; top: 0; left: 0; position: relative">
-        Absolute + offsets (valid)
-      </div>
+      <div data-target style="position: relative; top: 0; left: 0">Absolute + offsets (valid)</div>
     </div>
-    <div class="case expect-ok">
+    <div class="case expect-ok" data-rule="static-no-offset">
       <div class="label label-ok">static-no-offset ok: sticky with top</div>
-      <div style="position: sticky; top: 0">Sticky + top: 0 (valid)</div>
+      <div data-target style="position: sticky; top: 0">Sticky + top: 0 (valid)</div>
     </div>
 
     <!-- ===== static-no-z-index: z-index on non-stacking-context elements ===== -->
     <h2>static-no-z-index: z-index on non-stacking-context elements</h2>
 
     <h3>Should warn</h3>
-    <div class="case expect-warn">
+    <div class="case expect-warn" data-rule="static-no-z-index">
       <div class="label label-warn">static-no-z-index warn: static div with z-index</div>
-      <div style="z-index: 10">This div has z-index: 10 but position is static</div>
+      <div data-target style="z-index: 10">This div has z-index: 10 but position is static</div>
     </div>
-    <div class="case expect-warn">
+    <div class="case expect-warn" data-rule="static-no-z-index">
       <div class="label label-warn">static-no-z-index warn: static div with negative z-index</div>
-      <div style="z-index: -1">Negative z-index on a static non-item element has no effect</div>
+      <div data-target style="z-index: -1">
+        Negative z-index on a static non-item element has no effect
+      </div>
     </div>
 
     <h3>Should NOT warn</h3>
-    <div class="case expect-ok">
+    <div class="case expect-ok" data-rule="static-no-z-index">
       <div class="label label-ok">static-no-z-index ok: relative with z-index</div>
-      <div style="position: relative; z-index: 10">Relative + z-index (valid)</div>
+      <div data-target style="position: relative; z-index: 10">Relative + z-index (valid)</div>
     </div>
-    <div class="case expect-ok">
+    <div class="case expect-ok" data-rule="static-no-z-index">
       <div class="label label-ok">static-no-z-index ok: absolute with z-index</div>
       <div style="position: relative">
-        <div style="position: absolute; z-index: 5">Absolute + z-index (valid)</div>
+        <div data-target style="position: absolute; z-index: 5">Absolute + z-index (valid)</div>
       </div>
     </div>
-    <div class="case expect-ok">
+    <div class="case expect-ok" data-rule="static-no-z-index">
       <div class="label label-ok">
         static-no-z-index ok: flex item with z-index (static position)
       </div>
       <div style="display: flex">
-        <div style="z-index: 2">Flex child with z-index — valid because it is a flex item</div>
+        <div data-target style="z-index: 2">
+          Flex child with z-index — valid because it is a flex item
+        </div>
       </div>
     </div>
-    <div class="case expect-ok">
+    <div class="case expect-ok" data-rule="static-no-z-index">
       <div class="label label-ok">
         static-no-z-index ok: grid item with z-index (static position)
       </div>
       <div style="display: grid; grid-template-columns: 1fr">
-        <div style="z-index: 3">Grid child with z-index — valid because it is a grid item</div>
+        <div data-target style="z-index: 3">
+          Grid child with z-index — valid because it is a grid item
+        </div>
       </div>
     </div>
-    <div class="case expect-ok">
+    <div class="case expect-ok" data-rule="static-no-z-index">
       <div class="label label-ok">static-no-z-index ok: transform creates stacking context</div>
-      <div style="transform: translateZ(0); z-index: 5">
+      <div data-target style="transform: translateZ(0); z-index: 5">
         transform + z-index (valid stacking context)
       </div>
     </div>
-    <div class="case expect-ok">
+    <div class="case expect-ok" data-rule="static-no-z-index">
       <div class="label label-ok">static-no-z-index ok: opacity creates stacking context</div>
-      <div style="opacity: 0.99; z-index: 5">opacity + z-index (valid stacking context)</div>
+      <div data-target style="opacity: 0.99; z-index: 5">
+        opacity + z-index (valid stacking context)
+      </div>
     </div>
-    <div class="case expect-ok">
+    <div class="case expect-ok" data-rule="static-no-z-index">
       <div class="label label-ok">static-no-z-index ok: z-index auto (default, no check)</div>
-      <div style="z-index: auto">z-index: auto — no warning expected</div>
+      <div data-target style="z-index: auto">z-index: auto — no warning expected</div>
     </div>
 
     <!-- ===== Parent context: flex/grid items (upcoming rules) ===== -->
@@ -407,53 +427,53 @@
     </p>
 
     <h3>Flex items (parent is display:flex)</h3>
-    <div class="case expect-ok">
+    <div class="case expect-ok" data-rule="item-no-self-align">
       <div class="label label-ok">Flex item: child of display:flex container</div>
       <div style="display: flex; gap: 8px">
         <div style="flex: 1">Flex child 1</div>
-        <div style="flex: 1; align-self: center">Flex child 2 (align-self)</div>
+        <div data-target style="flex: 1; align-self: center">Flex child 2 (align-self)</div>
         <div style="order: -1">Flex child 3 (order)</div>
       </div>
     </div>
-    <div class="case expect-ok">
+    <div class="case expect-ok" data-rule="item-no-self-align">
       <div class="label label-ok">Flex item: child of display:inline-flex container</div>
       <span style="display: inline-flex; gap: 4px">
         <span>Inline-flex child 1</span>
-        <span style="align-self: flex-end">Inline-flex child 2</span>
+        <span data-target style="align-self: flex-end">Inline-flex child 2</span>
       </span>
     </div>
 
     <h3>Grid items (parent is display:grid)</h3>
-    <div class="case expect-ok">
+    <div class="case expect-ok" data-rule="item-no-self-align">
       <div class="label label-ok">Grid item: child of display:grid container</div>
       <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 8px">
         <div style="justify-self: end">Grid child 1 (justify-self)</div>
-        <div style="align-self: center">Grid child 2 (align-self)</div>
+        <div data-target style="align-self: center">Grid child 2 (align-self)</div>
       </div>
     </div>
 
     <h3>NOT flex/grid items (parent is display:block)</h3>
-    <div class="case expect-warn">
+    <div class="case expect-warn" data-rule="item-no-self-align">
       <div class="label label-warn">Not flex item: align-self on child of block container</div>
       <div>
-        <div style="align-self: center">Block child with align-self (no effect)</div>
+        <div data-target style="align-self: center">Block child with align-self (no effect)</div>
       </div>
     </div>
-    <div class="case expect-warn">
+    <div class="case expect-warn" data-rule="item-no-order">
       <div class="label label-warn">Not flex item: order on child of block container</div>
       <div>
-        <div style="order: 1">Block child with order (no effect)</div>
+        <div data-target style="order: 1">Block child with order (no effect)</div>
       </div>
     </div>
 
     <h3>Edge case: parent is display:contents (skipped in layout)</h3>
-    <div class="case expect-ok">
+    <div class="case expect-ok" data-rule="item-no-self-align">
       <div class="label label-ok">
         display:contents parent: grandparent is the real flex container
       </div>
       <div style="display: flex; gap: 8px">
         <div style="display: contents">
-          <div style="flex: 1">Child of contents wrapper (actually a flex item)</div>
+          <div data-target style="flex: 1">Child of contents wrapper (actually a flex item)</div>
         </div>
       </div>
     </div>
@@ -462,46 +482,55 @@
     <h2>block-vertical-align: vertical-align on block-level elements</h2>
 
     <h3>Should warn</h3>
-    <div class="case expect-warn">
+    <div class="case expect-warn" data-rule="block-no-vertical-align">
       <div class="label label-warn">block-vertical-align warn: div with vertical-align: middle</div>
-      <div style="vertical-align: middle">
+      <div data-target style="vertical-align: middle">
         Block element with vertical-align: middle (no effect)
       </div>
     </div>
-    <div class="case expect-warn">
+    <div class="case expect-warn" data-rule="block-no-vertical-align">
       <div class="label label-warn">block-vertical-align warn: div with vertical-align: top</div>
-      <div style="vertical-align: top">Block element with vertical-align: top (no effect)</div>
+      <div data-target style="vertical-align: top">
+        Block element with vertical-align: top (no effect)
+      </div>
     </div>
 
     <h3>Should NOT warn</h3>
-    <div class="case expect-ok">
+    <div class="case expect-ok" data-rule="block-no-vertical-align">
       <div class="label label-ok">block-vertical-align ok: inline span with vertical-align</div>
-      <span style="vertical-align: middle">Inline span with vertical-align: middle (valid)</span>
+      <span data-target style="vertical-align: middle"
+        >Inline span with vertical-align: middle (valid)</span
+      >
     </div>
-    <div class="case expect-ok">
+    <div class="case expect-ok" data-rule="block-no-vertical-align">
       <div class="label label-ok">block-vertical-align ok: inline-block with vertical-align</div>
-      <span style="display: inline-block; vertical-align: middle">
+      <span data-target style="display: inline-block; vertical-align: middle">
         Inline-block with vertical-align: middle (valid)
       </span>
     </div>
-    <div class="case expect-ok">
+    <div class="case expect-ok" data-rule="block-no-vertical-align">
       <div class="label label-ok">block-vertical-align ok: table-cell with vertical-align</div>
       <table>
         <tr>
-          <td style="vertical-align: middle">Table cell with vertical-align: middle (valid)</td>
+          <td data-target style="vertical-align: middle">
+            Table cell with vertical-align: middle (valid)
+          </td>
         </tr>
       </table>
     </div>
 
     <!-- ===== No issues ===== -->
     <h2>No issues expected</h2>
-    <div class="case expect-ok">
+    <div class="case expect-ok" data-rule="none">
       <div class="label label-ok">Clean: plain div</div>
-      <div>A normal div with no problematic CSS</div>
+      <div data-target>A normal div with no problematic CSS</div>
     </div>
-    <div class="case expect-ok">
+    <div class="case expect-ok" data-rule="none">
       <div class="label label-ok">Clean: valid flex layout</div>
-      <div style="display: flex; gap: 8px; align-items: center; justify-content: space-between">
+      <div
+        data-target
+        style="display: flex; gap: 8px; align-items: center; justify-content: space-between"
+      >
         <div>Left</div>
         <div>Right</div>
       </div>
