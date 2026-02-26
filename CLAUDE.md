@@ -112,6 +112,7 @@ New rules are automatically covered when test cases are added to `test.html` wit
 
 - ESM modules (`"type": "module"`)
 - Use `import type` for type-only imports (`verbatimModuleSyntax` is enabled)
+- **No barrel exports** — do not create `index.ts` re-export files. Import directly from the source module.
 - Format with Oxfmt before committing
 
 ## Commit Rules

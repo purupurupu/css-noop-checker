@@ -1,47 +1,11 @@
 import { useState, useEffect, useCallback, useRef } from 'react';
 import type { ElementData } from '../../rules/types.ts';
 import { isElementData } from '../../rules/validation.ts';
-import {
-  generateParentStyleExtractFragment,
-  generateStyleExtractFragment,
-} from '../../rules/css-properties.ts';
+import { buildEvalScript } from './build-eval-script.ts';
 
 export type AnalysisStatus = 'no-selection' | 'analyzing' | 'ready' | 'error';
 
 export { isElementData };
-
-/** Builds the eval script lazily so the registry is guaranteed to be populated. */
-function buildEvalScript(): string {
-  const parentFragment = generateParentStyleExtractFragment();
-  const parentBlock = parentFragment
-    ? `
-  var pe = el.parentElement;
-  var parent = null;
-  if (pe) {
-    var pcs = getComputedStyle(pe);
-    parent = {
-      computedStyles: {
-            ${parentFragment}
-      }
-    };
-  }`
-    : '';
-
-  return `(function() {
-  var el = $0;
-  if (!el) return null;
-  var cs = getComputedStyle(el);${parentBlock}
-  return {
-    tagName: el.tagName.toLowerCase(),
-    id: el.id || '',
-    classList: Array.from(el.classList),
-    computedStyles: {
-        ${generateStyleExtractFragment()}
-    },
-    parent: ${parentFragment ? 'parent' : 'null'}
-  };
-})()`;
-}
 
 let cachedEvalScript: string | undefined;
 function getEvalScript(): string {
