@@ -90,6 +90,7 @@ Each test case in `examples/test.html` must include `data-target` and `data-rule
 - **`data-rule`** — the rule ID being tested (e.g. `inline-no-dimensions`). Use `data-rule="none"` for cases that should produce zero warnings from any rule
 - **`data-target`** — boolean attribute on the element to inspect (must be exactly one per `.case`)
 - For cases where the target is a nested child (e.g. flex/grid items), place `data-target` on the actual inspectable element, not the wrapper
+- **Ordering** — rule sections in `test.html` must be sorted alphabetically by rule ID (e.g. `block-no-vertical-align` before `container-no-align`). The "No issues" section stays at the end. This matches the Scan Page display order.
 
 ### Browser Integration Tests (`e2e/`)
 
