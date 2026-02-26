@@ -22,7 +22,7 @@ export function ScanRuleGroup({ group, defaultOpen, onInspect }: ScanRuleGroupPr
     <div className="scan-rule-group">
       <button
         className="scan-rule-group__header"
-        onClick={() => setOpen(!open)}
+        onClick={() => setOpen((prev) => !prev)}
         type="button"
         aria-expanded={open}
         aria-controls={bodyId}

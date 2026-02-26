@@ -22,6 +22,12 @@ export function ScanResultsPanel({
   onInspect,
   onClear,
 }: ScanResultsPanelProps) {
+  const { totalViolations, uniqueElements } = useMemo(() => {
+    const total = groups.reduce((sum, g) => sum + g.violations.length, 0);
+    const unique = new Set(groups.flatMap((g) => g.violations.map((v) => v.index))).size;
+    return { totalViolations: total, uniqueElements: unique };
+  }, [groups]);
+
   if (status === 'scanning') {
     const text =
       progress.total > 0
@@ -60,12 +66,6 @@ export function ScanResultsPanel({
   }
 
   if (status !== 'done') return null;
-
-  const { totalViolations, uniqueElements } = useMemo(() => {
-    const total = groups.reduce((sum, g) => sum + g.violations.length, 0);
-    const unique = new Set(groups.flatMap((g) => g.violations.map((v) => v.index))).size;
-    return { totalViolations: total, uniqueElements: unique };
-  }, [groups]);
 
   return (
     <div className="scan-results">
