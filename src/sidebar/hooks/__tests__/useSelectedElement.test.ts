@@ -26,6 +26,8 @@ const validData = {
     left: 'auto',
     alignSelf: 'auto',
     order: '0',
+    marginTop: '0px',
+    marginBottom: '0px',
   },
   parent: null,
 };
