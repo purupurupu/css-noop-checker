@@ -334,6 +334,41 @@
       </div>
     </div>
 
+    <!-- ===== block-vertical-align: vertical-align on block-level elements ===== -->
+    <h2>block-vertical-align: vertical-align on block-level elements</h2>
+
+    <h3>Should warn</h3>
+    <div class="case expect-warn">
+      <div class="label label-warn">block-vertical-align warn: div with vertical-align: middle</div>
+      <div style="vertical-align: middle">
+        Block element with vertical-align: middle (no effect)
+      </div>
+    </div>
+    <div class="case expect-warn">
+      <div class="label label-warn">block-vertical-align warn: div with vertical-align: top</div>
+      <div style="vertical-align: top">Block element with vertical-align: top (no effect)</div>
+    </div>
+
+    <h3>Should NOT warn</h3>
+    <div class="case expect-ok">
+      <div class="label label-ok">block-vertical-align ok: inline span with vertical-align</div>
+      <span style="vertical-align: middle">Inline span with vertical-align: middle (valid)</span>
+    </div>
+    <div class="case expect-ok">
+      <div class="label label-ok">block-vertical-align ok: inline-block with vertical-align</div>
+      <span style="display: inline-block; vertical-align: middle">
+        Inline-block with vertical-align: middle (valid)
+      </span>
+    </div>
+    <div class="case expect-ok">
+      <div class="label label-ok">block-vertical-align ok: table-cell with vertical-align</div>
+      <table>
+        <tr>
+          <td style="vertical-align: middle">Table cell with vertical-align: middle (valid)</td>
+        </tr>
+      </table>
+    </div>
+
     <!-- ===== No issues ===== -->
     <h2>No issues expected</h2>
     <div class="case expect-ok">

@@ -73,3 +73,19 @@ export function isReplacedInlineElement(tagName: string): boolean {
 export function isDefaultMarginValue(value: string): boolean {
   return value === '0px';
 }
+
+export function isVerticalAlignApplicable(display: string): boolean {
+  return (
+    display === 'inline' ||
+    display === 'inline-block' ||
+    display === 'inline-flex' ||
+    display === 'inline-grid' ||
+    display === 'table-cell' ||
+    display === 'table-row' ||
+    display === 'inline-table'
+  );
+}
+
+export function isDefaultVerticalAlignValue(value: string): boolean {
+  return value === 'baseline';
+}
