@@ -61,19 +61,6 @@ Rule IDs follow Stylelint's `thing-no-qualifier` pattern — the de facto standa
 - **`target`** — the element/context being checked (e.g. `inline`, `container`)
 - **`no-<qualifier>`** — the property or behavior that has no effect in that context
 
-| Rule ID                   | Target                        | Disallowed                  |
-| ------------------------- | ----------------------------- | --------------------------- |
-| `inline-no-dimensions`    | inline non-replaced elements  | width/height                |
-| `container-no-gap`        | non-flex/grid containers      | gap properties              |
-| `container-no-align`      | non-flex/grid containers      | align-items/justify-content |
-| `container-no-place`      | non-flex/grid containers      | place-content/place-items   |
-| `static-no-offset`        | static-positioned elements    | top/right/bottom/left       |
-| `item-no-self-align`      | non-flex/grid items           | align-self                  |
-| `item-no-order`           | non-flex/grid items           | order                       |
-| `block-no-vertical-align` | block-level elements          | vertical-align              |
-| `static-no-z-index`       | non-stacking-context elements | z-index                     |
-| `flex-no-container-props` | non-flex containers           | flex-direction/flex-wrap    |
-
 When adding a new rule, pick a descriptive `target` and `qualifier` — avoid numbered IDs like `D-1` or `C-2`.
 
 When adding a new rule, also add "should warn" and "should NOT warn" test cases to `examples/test.html` so the rule can be verified manually in Chrome DevTools.
