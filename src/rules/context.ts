@@ -39,7 +39,7 @@ export function isDefaultGapLikeValue(value: string): boolean {
 }
 
 export function isDefaultAlignmentValue(value: string): boolean {
-  return value === 'normal';
+  return value.split(' ').every((v) => v === 'normal');
 }
 
 export function isDefaultInlineSizeValue(value: string): boolean {
