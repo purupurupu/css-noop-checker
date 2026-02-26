@@ -87,11 +87,11 @@ For each of the 3 review→fix rounds:
 
 ### Final Verdicts
 
-| Reviewer          | Verdict                            | Rationale |
-| ----------------- | ---------------------------------- | --------- |
-| Architect         | PASS / CONDITIONAL PASS / FAIL     |           |
-| Frontend Lead     | PASS / CONDITIONAL PASS / FAIL     |           |
-| Devil's Advocate  | PASS / CONDITIONAL PASS / FAIL     |           |
+| Reviewer         | Verdict                        | Rationale |
+| ---------------- | ------------------------------ | --------- |
+| Architect        | PASS / CONDITIONAL PASS / FAIL |           |
+| Frontend Lead    | PASS / CONDITIONAL PASS / FAIL |           |
+| Devil's Advocate | PASS / CONDITIONAL PASS / FAIL |           |
 
 ### Remaining Items
 
