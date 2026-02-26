@@ -91,6 +91,51 @@
       <span style="display: inline-block; width: 200px">inline-block span</span>
     </div>
 
+    <!-- ===== inline-no-vertical-margin: vertical margin on inline ===== -->
+    <h2>inline-no-vertical-margin: vertical margin on inline elements</h2>
+
+    <h3>Should warn</h3>
+    <div class="case expect-warn">
+      <div class="label label-warn">inline-no-vertical-margin warn: span with margin-top</div>
+      <span style="margin-top: 20px">This span has margin-top: 20px</span>
+    </div>
+    <div class="case expect-warn">
+      <div class="label label-warn">inline-no-vertical-margin warn: span with margin-bottom</div>
+      <span style="margin-bottom: 15px">This span has margin-bottom: 15px</span>
+    </div>
+    <div class="case expect-warn">
+      <div class="label label-warn">
+        inline-no-vertical-margin warn: anchor with margin-top + margin-bottom
+      </div>
+      <a href="#" style="margin-top: 10px; margin-bottom: 10px"
+        >Link (margin-top + margin-bottom)</a
+      >
+    </div>
+
+    <h3>Should NOT warn (false positive check)</h3>
+    <div class="case expect-ok">
+      <div class="label label-ok">
+        inline-no-vertical-margin ok: img is a replaced inline element
+      </div>
+      <img
+        src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='60' height='40'%3E%3Crect fill='%234ec9b0' width='60' height='40'/%3E%3C/svg%3E"
+        style="margin-top: 20px"
+        alt="replaced element"
+      />
+    </div>
+    <div class="case expect-ok">
+      <div class="label label-ok">
+        inline-no-vertical-margin ok: inline-block accepts vertical margin
+      </div>
+      <span style="display: inline-block; margin-top: 20px">inline-block span</span>
+    </div>
+    <div class="case expect-ok">
+      <div class="label label-ok">
+        inline-no-vertical-margin ok: block div accepts vertical margin
+      </div>
+      <div style="margin-top: 20px">block div with margin-top</div>
+    </div>
+
     <!-- ===== container-no-gap: gap on non-flex/grid ===== -->
     <h2>container-no-gap: gap on non-flex/grid containers</h2>
 
