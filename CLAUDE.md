@@ -50,6 +50,7 @@ Pure-function rules with zero Chrome API dependency — fully testable:
 - `order.ts` — `item-no-order`: order on non-flex/grid items
 - `block-vertical-align.ts` — `block-no-vertical-align`: vertical-align on block-level elements
 - `static-z-index.ts` — `static-no-z-index`: z-index on non-stacking-context elements
+- `flex-container-props.ts` — `flex-no-container-props`: flex-direction/flex-wrap on non-flex containers
 - `__tests__/` — tests covering all rules + engine integration
 
 #### Rule ID Naming Convention
@@ -65,12 +66,13 @@ Rule IDs follow Stylelint's `thing-no-qualifier` pattern — the de facto standa
 | `inline-no-dimensions`    | inline non-replaced elements  | width/height                |
 | `container-no-gap`        | non-flex/grid containers      | gap properties              |
 | `container-no-align`      | non-flex/grid containers      | align-items/justify-content |
-| `container-no-place`      | non-flex/grid containers      | place-content               |
+| `container-no-place`      | non-flex/grid containers      | place-content/place-items   |
 | `static-no-offset`        | static-positioned elements    | top/right/bottom/left       |
 | `item-no-self-align`      | non-flex/grid items           | align-self                  |
 | `item-no-order`           | non-flex/grid items           | order                       |
 | `block-no-vertical-align` | block-level elements          | vertical-align              |
 | `static-no-z-index`       | non-stacking-context elements | z-index                     |
+| `flex-no-container-props` | non-flex containers           | flex-direction/flex-wrap    |
 
 When adding a new rule, pick a descriptive `target` and `qualifier` — avoid numbered IDs like `D-1` or `C-2`.
 

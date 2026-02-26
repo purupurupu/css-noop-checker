@@ -9,6 +9,7 @@ import './self-alignment.ts';
 import './order.ts';
 import './block-vertical-align.ts';
 import './static-z-index.ts';
+import './flex-container-props.ts';
 
 import type { ElementData, Warning } from './types.ts';
 import { createRuleContext } from './context.ts';

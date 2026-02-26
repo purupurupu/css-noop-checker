@@ -19,6 +19,8 @@ function makeBaseStyles(overrides: Record<string, string> = {}): Record<string, 
     width: 'auto',
     height: 'auto',
     verticalAlign: 'baseline',
+    flexDirection: 'row',
+    flexWrap: 'nowrap',
     ...overrides,
   };
 }
