@@ -49,3 +49,32 @@ export function isDefaultInlineSizeValue(value: string): boolean {
 export function isDefaultOffsetValue(value: string): boolean {
   return value === 'auto';
 }
+
+export function isDefaultZIndexValue(value: string): boolean {
+  return value === 'auto';
+}
+
+/**
+ * Returns true when computed styles indicate the element creates a stacking context
+ * via properties other than `position` (which callers check separately).
+ *
+ * Covers: opacity, transform, filter, perspective, clip-path, isolation,
+ *         mix-blend-mode, contain, and will-change.
+ */
+export function isStackingContext(styles: Record<string, string>): boolean {
+  if (styles['opacity'] !== '1') return true;
+  if (styles['transform'] !== 'none') return true;
+  if (styles['filter'] !== 'none') return true;
+  if (styles['perspective'] !== 'none') return true;
+  if (styles['clipPath'] !== 'none') return true;
+  if (styles['isolation'] === 'isolate') return true;
+  if (styles['mixBlendMode'] !== 'normal') return true;
+
+  const contain = styles['contain'] ?? '';
+  if (/\b(layout|paint|strict|content)\b/.test(contain)) return true;
+
+  const willChange = styles['willChange'] ?? 'auto';
+  if (/\b(transform|opacity|filter|perspective|clip-path)\b/.test(willChange)) return true;
+
+  return false;
+}
