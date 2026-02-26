@@ -43,6 +43,8 @@ function makeElement(
       mixBlendMode: 'normal',
       contain: 'none',
       willChange: 'auto',
+      flexDirection: 'row',
+      flexWrap: 'nowrap',
       ...styles,
     },
     parent: null,
@@ -82,6 +84,12 @@ describe('analyzeElement (integration)', () => {
     const warnings = analyzeElement(makeElement({ verticalAlign: 'middle' }));
     const ruleIds = warnings.map((w) => w.ruleId);
     expect(ruleIds).toContain('block-no-vertical-align');
+  });
+
+  it('detects flex-direction on non-flex container', () => {
+    const warnings = analyzeElement(makeElement({ flexDirection: 'column' }));
+    const ruleIds = warnings.map((w) => w.ruleId);
+    expect(ruleIds).toContain('flex-no-container-props');
   });
 
   it('combines D-1 with other rules on inline element', () => {

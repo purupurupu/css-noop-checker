@@ -6,6 +6,12 @@ import '../inline-dimensions.ts';
 import '../gap.ts';
 import '../alignment.ts';
 import '../place.ts';
+import '../static-position-offset.ts';
+import '../self-alignment.ts';
+import '../order.ts';
+import '../block-vertical-align.ts';
+import '../static-z-index.ts';
+import '../flex-container-props.ts';
 
 const VALID_STYLES = {
   display: 'block',
@@ -19,6 +25,29 @@ const VALID_STYLES = {
   placeItems: 'normal',
   placeContent: 'normal',
   columnCount: 'auto',
+  position: 'static',
+  top: 'auto',
+  right: 'auto',
+  bottom: 'auto',
+  left: 'auto',
+  alignSelf: 'auto',
+  order: '0',
+  marginTop: '0px',
+  marginBottom: '0px',
+  verticalAlign: 'baseline',
+  zIndex: 'auto',
+  opacity: '1',
+  transform: 'none',
+  filter: 'none',
+  backdropFilter: 'none',
+  perspective: 'none',
+  clipPath: 'none',
+  isolation: 'auto',
+  mixBlendMode: 'normal',
+  contain: 'none',
+  willChange: 'auto',
+  flexDirection: 'row',
+  flexWrap: 'nowrap',
 };
 
 describe('isElementData — parent field validation', () => {

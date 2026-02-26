@@ -30,6 +30,8 @@ function makeScanElement(
       alignSelf: 'auto',
       order: '0',
       verticalAlign: 'baseline',
+      flexDirection: 'row',
+      flexWrap: 'nowrap',
       ...styles,
     },
   };

@@ -40,6 +40,8 @@ const validData = {
     mixBlendMode: 'normal',
     contain: 'none',
     willChange: 'auto',
+    flexDirection: 'row',
+    flexWrap: 'nowrap',
   },
   parent: null,
 };
@@ -166,6 +168,8 @@ describe('isElementData', () => {
       'mixBlendMode',
       'contain',
       'willChange',
+      'flexDirection',
+      'flexWrap',
     ];
     for (const key of requiredKeys) {
       const styles = { ...validData.computedStyles };
