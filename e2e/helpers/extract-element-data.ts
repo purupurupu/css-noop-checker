@@ -1,7 +1,7 @@
 // Trigger rule registration side effects so the registry is populated.
 import '../../src/rules/engine.ts';
 
-import type { Locator, Page } from '@playwright/test';
+import type { Locator } from '@playwright/test';
 import type { ElementData } from '../../src/rules/types.ts';
 import {
   getAllRequiredParentProperties,
@@ -10,10 +10,11 @@ import {
 import { isElementData } from '../../src/rules/validation.ts';
 
 /**
- * Extract ElementData from a Playwright Locator by running getComputedStyle()
- * in the browser — mirrors what the real extension does via chrome.devtools eval.
+ * Build an ElementData object from real browser getComputedStyle() —
+ * analogous to what the extension does via chrome.devtools eval,
+ * but using Playwright's evaluate API instead.
  */
-export async function extractElementData(page: Page, locator: Locator): Promise<ElementData> {
+export async function extractElementData(locator: Locator): Promise<ElementData> {
   const properties = getAllRequiredProperties();
   const parentProperties = getAllRequiredParentProperties();
 
@@ -22,8 +23,14 @@ export async function extractElementData(page: Page, locator: Locator): Promise<
       const cs = getComputedStyle(el);
       const computedStyles: Record<string, string> = {};
       for (const prop of properties) {
-        computedStyles[prop] =
-          cs.getPropertyValue(prop) || (cs as unknown as Record<string, string>)[prop] || '';
+        const value = (cs as unknown as Record<string, string>)[prop];
+        if (value === undefined || value === null) {
+          throw new Error(
+            `getComputedStyle returned no value for property "${prop}" on <${el.tagName.toLowerCase()}>. ` +
+              `Check that the property name is correct in the rule's requiredProperties.`,
+          );
+        }
+        computedStyles[prop] = value;
       }
 
       let parent: { computedStyles: Record<string, string> } | null = null;
@@ -31,8 +38,14 @@ export async function extractElementData(page: Page, locator: Locator): Promise<
         const pcs = getComputedStyle(el.parentElement);
         const parentStyles: Record<string, string> = {};
         for (const prop of parentProperties) {
-          parentStyles[prop] =
-            pcs.getPropertyValue(prop) || (pcs as unknown as Record<string, string>)[prop] || '';
+          const value = (pcs as unknown as Record<string, string>)[prop];
+          if (value === undefined || value === null) {
+            throw new Error(
+              `getComputedStyle returned no value for parent property "${prop}" on <${el.parentElement.tagName.toLowerCase()}>. ` +
+                `Check that the property name is correct in the rule's requiredParentProperties.`,
+            );
+          }
+          parentStyles[prop] = value;
         }
         parent = { computedStyles: parentStyles };
       }
