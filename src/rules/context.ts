@@ -49,3 +49,27 @@ export function isDefaultInlineSizeValue(value: string): boolean {
 export function isDefaultOffsetValue(value: string): boolean {
   return value === 'auto';
 }
+
+const REPLACED_INLINE_ELEMENTS = new Set([
+  'img',
+  'input',
+  'video',
+  'audio',
+  'canvas',
+  'embed',
+  'object',
+  'iframe',
+  'select',
+  'textarea',
+  'button',
+  'meter',
+  'progress',
+]);
+
+export function isReplacedInlineElement(tagName: string): boolean {
+  return REPLACED_INLINE_ELEMENTS.has(tagName);
+}
+
+export function isDefaultMarginValue(value: string): boolean {
+  return value === '0px';
+}

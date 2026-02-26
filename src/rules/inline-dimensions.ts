@@ -1,26 +1,6 @@
 import type { RuleDescriptor, Warning } from './types.ts';
-import { isDefaultInlineSizeValue } from './context.ts';
+import { isDefaultInlineSizeValue, isReplacedInlineElement } from './context.ts';
 import { registerRule } from './registry.ts';
-
-/**
- * Replaced inline elements (img, input, etc.) accept width/height
- * even when display is "inline", so we must exclude them from D-1.
- */
-const REPLACED_INLINE_ELEMENTS = new Set([
-  'img',
-  'input',
-  'video',
-  'audio',
-  'canvas',
-  'embed',
-  'object',
-  'iframe',
-  'select',
-  'textarea',
-  'button',
-  'meter',
-  'progress',
-]);
 
 const rule: RuleDescriptor = {
   id: 'inline-no-dimensions',
@@ -31,7 +11,7 @@ const rule: RuleDescriptor = {
     const { tagName } = ctx.element;
 
     if (display !== 'inline') return [];
-    if (REPLACED_INLINE_ELEMENTS.has(tagName)) return [];
+    if (isReplacedInlineElement(tagName)) return [];
 
     const warnings: Warning[] = [];
 
