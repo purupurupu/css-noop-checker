@@ -31,6 +31,7 @@ function makeElement(
       order: '0',
       marginTop: '0px',
       marginBottom: '0px',
+      verticalAlign: 'baseline',
       ...styles,
     },
     parent: null,

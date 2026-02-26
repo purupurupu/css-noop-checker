@@ -13,7 +13,14 @@ function makeBaseStyles(overrides: Record<string, string> = {}): Record<string, 
   for (const key of getAllRequiredProperties()) {
     styles[key] = 'normal';
   }
-  return { ...styles, display: 'block', width: 'auto', height: 'auto', ...overrides };
+  return {
+    ...styles,
+    display: 'block',
+    width: 'auto',
+    height: 'auto',
+    verticalAlign: 'baseline',
+    ...overrides,
+  };
 }
 
 /** Creates a minimal valid ScanElementData inside a ChunkResult. */

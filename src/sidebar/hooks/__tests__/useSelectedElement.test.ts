@@ -28,6 +28,7 @@ const validData = {
     order: '0',
     marginTop: '0px',
     marginBottom: '0px',
+    verticalAlign: 'baseline',
   },
   parent: null,
 };
@@ -142,6 +143,7 @@ describe('isElementData', () => {
       'order',
       'marginTop',
       'marginBottom',
+      'verticalAlign',
     ];
     for (const key of requiredKeys) {
       const styles = { ...validData.computedStyles };
