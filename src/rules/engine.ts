@@ -1,5 +1,6 @@
 // Rule registration (side-effect imports)
 import './inline-dimensions.ts';
+import './inline-vertical-margin.ts';
 import './gap.ts';
 import './alignment.ts';
 import './place.ts';
