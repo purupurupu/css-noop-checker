@@ -29,6 +29,7 @@ function makeScanElement(
       columnCount: 'auto',
       alignSelf: 'auto',
       order: '0',
+      verticalAlign: 'baseline',
       ...styles,
     },
   };
