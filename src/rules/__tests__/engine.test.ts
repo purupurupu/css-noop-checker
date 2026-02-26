@@ -1,55 +1,6 @@
 import { describe, it, expect } from 'vitest';
 import { analyzeElement } from '../engine.ts';
-import type { ElementData } from '../types.ts';
-
-function makeElement(
-  overrides: Partial<ElementData['computedStyles']> & { tagName?: string },
-): ElementData {
-  const { tagName = 'div', ...styles } = overrides;
-  return {
-    tagName,
-    id: '',
-    classList: [],
-    computedStyles: {
-      display: 'block',
-      width: 'auto',
-      height: 'auto',
-      gap: 'normal',
-      rowGap: 'normal',
-      columnGap: 'normal',
-      alignItems: 'normal',
-      justifyContent: 'normal',
-      placeItems: 'normal',
-      placeContent: 'normal',
-      columnCount: 'auto',
-      position: 'static',
-      top: 'auto',
-      right: 'auto',
-      bottom: 'auto',
-      left: 'auto',
-      alignSelf: 'auto',
-      order: '0',
-      marginTop: '0px',
-      marginBottom: '0px',
-      verticalAlign: 'baseline',
-      zIndex: 'auto',
-      opacity: '1',
-      transform: 'none',
-      filter: 'none',
-      backdropFilter: 'none',
-      perspective: 'none',
-      clipPath: 'none',
-      isolation: 'auto',
-      mixBlendMode: 'normal',
-      contain: 'none',
-      willChange: 'auto',
-      flexDirection: 'row',
-      flexWrap: 'nowrap',
-      ...styles,
-    },
-    parent: null,
-  };
-}
+import { makeElement } from './helpers/make-element.ts';
 
 describe('analyzeElement (integration)', () => {
   it('returns no warnings for a clean element', () => {
@@ -92,7 +43,7 @@ describe('analyzeElement (integration)', () => {
     expect(ruleIds).toContain('flex-no-container-props');
   });
 
-  it('combines D-1 with other rules on inline element', () => {
+  it('combines inline-no-dimensions with other rules on inline element', () => {
     const warnings = analyzeElement(
       makeElement({
         tagName: 'span',

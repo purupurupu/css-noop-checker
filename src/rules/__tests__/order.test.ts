@@ -2,22 +2,13 @@ import { describe, it, expect } from 'vitest';
 import { checkOrder } from '../order.ts';
 import { createRuleContext } from '../context.ts';
 import type { ElementData } from '../types.ts';
+import { makeElement as _makeElement } from './helpers/make-element.ts';
 
 function makeElement(
   styles: Partial<ElementData['computedStyles']>,
   parent: ElementData['parent'] = { computedStyles: { display: 'block' } },
 ): ElementData {
-  return {
-    tagName: 'div',
-    id: '',
-    classList: [],
-    computedStyles: {
-      display: 'block',
-      order: '0',
-      ...styles,
-    },
-    parent,
-  };
+  return _makeElement(styles, parent);
 }
 
 describe('item-no-order', () => {

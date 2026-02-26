@@ -2,33 +2,12 @@ import { describe, it, expect } from 'vitest';
 import { checkInlineVerticalMargin } from '../inline-vertical-margin.ts';
 import { createRuleContext } from '../context.ts';
 import type { ElementData } from '../types.ts';
+import { makeElement as _makeElement } from './helpers/make-element.ts';
 
 function makeElement(
-  overrides: Partial<ElementData['computedStyles']> & { tagName?: string },
+  overrides: Partial<ElementData['computedStyles']> & { tagName?: string } = {},
 ): ElementData {
-  const { tagName = 'span', ...styles } = overrides;
-  return {
-    tagName,
-    id: '',
-    classList: [],
-    computedStyles: {
-      display: 'inline',
-      width: 'auto',
-      height: 'auto',
-      gap: 'normal',
-      rowGap: 'normal',
-      columnGap: 'normal',
-      alignItems: 'normal',
-      justifyContent: 'normal',
-      placeItems: 'normal',
-      placeContent: 'normal',
-      columnCount: 'auto',
-      marginTop: '0px',
-      marginBottom: '0px',
-      ...styles,
-    },
-    parent: null,
-  };
+  return _makeElement({ tagName: 'span', display: 'inline', ...overrides });
 }
 
 describe('inline-no-vertical-margin: vertical margin on inline elements', () => {

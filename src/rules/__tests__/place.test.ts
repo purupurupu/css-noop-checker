@@ -1,29 +1,7 @@
 import { describe, it, expect } from 'vitest';
 import { checkPlace } from '../place.ts';
 import { createRuleContext } from '../context.ts';
-import type { ElementData } from '../types.ts';
-
-function makeElement(overrides: Partial<ElementData['computedStyles']>): ElementData {
-  return {
-    tagName: 'div',
-    id: '',
-    classList: [],
-    computedStyles: {
-      display: 'block',
-      width: 'auto',
-      height: 'auto',
-      gap: 'normal',
-      rowGap: 'normal',
-      columnGap: 'normal',
-      alignItems: 'normal',
-      justifyContent: 'normal',
-      placeContent: 'normal',
-      columnCount: 'auto',
-      ...overrides,
-    },
-    parent: null,
-  };
-}
+import { makeElement } from './helpers/make-element.ts';
 
 describe('container-no-place: place-content', () => {
   it('warns when place-content is set on block element', () => {

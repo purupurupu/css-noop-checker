@@ -1,5 +1,6 @@
 import type { RuleDescriptor } from './types.ts';
-import { isDefaultZIndexValue, isStackingContext } from './context.ts';
+import { isDefaultZIndexValue } from './context.ts';
+import { isStackingContext } from './stacking-context.ts';
 import { registerRule } from './registry.ts';
 
 /**

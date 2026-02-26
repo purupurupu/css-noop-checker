@@ -1,5 +1,5 @@
 import { describe, it, expect } from 'vitest';
-import { groupByRule } from '../usePageScan.ts';
+import { groupByRule } from '../../utils/group-by-rule.ts';
 import type { ScanElementData } from '../../types.ts';
 import type { ElementData } from '../../../rules/types.ts';
 
