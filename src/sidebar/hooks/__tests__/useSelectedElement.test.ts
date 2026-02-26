@@ -140,6 +140,8 @@ describe('isElementData', () => {
       'left',
       'alignSelf',
       'order',
+      'marginTop',
+      'marginBottom',
     ];
     for (const key of requiredKeys) {
       const styles = { ...validData.computedStyles };
