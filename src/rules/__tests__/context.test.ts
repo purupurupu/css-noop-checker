@@ -1,5 +1,5 @@
 import { describe, it, expect } from 'vitest';
-import { createRuleContext } from '../context.ts';
+import { createRuleContext, isStackingContext } from '../context.ts';
 import type { ElementData } from '../types.ts';
 
 const BASE_STYLES: ElementData['computedStyles'] = {
@@ -75,5 +75,88 @@ describe('createRuleContext — parent-aware predicates', () => {
     expect(ctx.parentStyles).not.toBeNull();
     expect(ctx.isFlexItem).toBe(false);
     expect(ctx.isGridItem).toBe(false);
+  });
+});
+
+const DEFAULT_STYLES: Record<string, string> = {
+  opacity: '1',
+  transform: 'none',
+  filter: 'none',
+  backdropFilter: 'none',
+  perspective: 'none',
+  clipPath: 'none',
+  isolation: 'auto',
+  mixBlendMode: 'normal',
+  contain: 'none',
+  willChange: 'auto',
+};
+
+describe('isStackingContext', () => {
+  it('returns false when all properties are at defaults', () => {
+    expect(isStackingContext({ ...DEFAULT_STYLES })).toBe(false);
+  });
+
+  it('returns true for opacity !== "1"', () => {
+    expect(isStackingContext({ ...DEFAULT_STYLES, opacity: '0.99' })).toBe(true);
+  });
+
+  it('returns true for transform !== "none"', () => {
+    expect(isStackingContext({ ...DEFAULT_STYLES, transform: 'translatez(0)' })).toBe(true);
+  });
+
+  it('returns true for filter !== "none"', () => {
+    expect(isStackingContext({ ...DEFAULT_STYLES, filter: 'blur(4px)' })).toBe(true);
+  });
+
+  it('returns true for backdrop-filter !== "none"', () => {
+    expect(isStackingContext({ ...DEFAULT_STYLES, backdropFilter: 'blur(10px)' })).toBe(true);
+  });
+
+  it('returns true for isolation === "isolate"', () => {
+    expect(isStackingContext({ ...DEFAULT_STYLES, isolation: 'isolate' })).toBe(true);
+  });
+
+  it('returns true for contain: "paint"', () => {
+    expect(isStackingContext({ ...DEFAULT_STYLES, contain: 'paint' })).toBe(true);
+  });
+
+  it('returns true for contain: "content"', () => {
+    expect(isStackingContext({ ...DEFAULT_STYLES, contain: 'content' })).toBe(true);
+  });
+
+  it('returns true for compound contain: "layout paint"', () => {
+    expect(isStackingContext({ ...DEFAULT_STYLES, contain: 'layout paint' })).toBe(true);
+  });
+
+  it('returns false for contain: "size"', () => {
+    expect(isStackingContext({ ...DEFAULT_STYLES, contain: 'size' })).toBe(false);
+  });
+
+  it('returns false for contain: "style"', () => {
+    expect(isStackingContext({ ...DEFAULT_STYLES, contain: 'style' })).toBe(false);
+  });
+
+  it('returns true for willChange: "opacity"', () => {
+    expect(isStackingContext({ ...DEFAULT_STYLES, willChange: 'opacity' })).toBe(true);
+  });
+
+  it('returns true for willChange: "opacity, transform"', () => {
+    expect(isStackingContext({ ...DEFAULT_STYLES, willChange: 'opacity, transform' })).toBe(true);
+  });
+
+  it('returns true for willChange: "z-index"', () => {
+    expect(isStackingContext({ ...DEFAULT_STYLES, willChange: 'z-index' })).toBe(true);
+  });
+
+  it('returns false for willChange: "scroll-position"', () => {
+    expect(isStackingContext({ ...DEFAULT_STYLES, willChange: 'scroll-position' })).toBe(false);
+  });
+
+  it('returns false for willChange: "contents"', () => {
+    expect(isStackingContext({ ...DEFAULT_STYLES, willChange: 'contents' })).toBe(false);
+  });
+
+  it('treats missing properties as default (no stacking context)', () => {
+    expect(isStackingContext({})).toBe(false);
   });
 });

@@ -274,6 +274,61 @@
       <div style="position: sticky; top: 0">Sticky + top: 0 (valid)</div>
     </div>
 
+    <!-- ===== static-no-z-index: z-index on non-stacking-context elements ===== -->
+    <h2>static-no-z-index: z-index on non-stacking-context elements</h2>
+
+    <h3>Should warn</h3>
+    <div class="case expect-warn">
+      <div class="label label-warn">static-no-z-index warn: static div with z-index</div>
+      <div style="z-index: 10">This div has z-index: 10 but position is static</div>
+    </div>
+    <div class="case expect-warn">
+      <div class="label label-warn">static-no-z-index warn: static div with negative z-index</div>
+      <div style="z-index: -1">Negative z-index on a static non-item element has no effect</div>
+    </div>
+
+    <h3>Should NOT warn</h3>
+    <div class="case expect-ok">
+      <div class="label label-ok">static-no-z-index ok: relative with z-index</div>
+      <div style="position: relative; z-index: 10">Relative + z-index (valid)</div>
+    </div>
+    <div class="case expect-ok">
+      <div class="label label-ok">static-no-z-index ok: absolute with z-index</div>
+      <div style="position: relative">
+        <div style="position: absolute; z-index: 5">Absolute + z-index (valid)</div>
+      </div>
+    </div>
+    <div class="case expect-ok">
+      <div class="label label-ok">
+        static-no-z-index ok: flex item with z-index (static position)
+      </div>
+      <div style="display: flex">
+        <div style="z-index: 2">Flex child with z-index — valid because it is a flex item</div>
+      </div>
+    </div>
+    <div class="case expect-ok">
+      <div class="label label-ok">
+        static-no-z-index ok: grid item with z-index (static position)
+      </div>
+      <div style="display: grid; grid-template-columns: 1fr">
+        <div style="z-index: 3">Grid child with z-index — valid because it is a grid item</div>
+      </div>
+    </div>
+    <div class="case expect-ok">
+      <div class="label label-ok">static-no-z-index ok: transform creates stacking context</div>
+      <div style="transform: translateZ(0); z-index: 5">
+        transform + z-index (valid stacking context)
+      </div>
+    </div>
+    <div class="case expect-ok">
+      <div class="label label-ok">static-no-z-index ok: opacity creates stacking context</div>
+      <div style="opacity: 0.99; z-index: 5">opacity + z-index (valid stacking context)</div>
+    </div>
+    <div class="case expect-ok">
+      <div class="label label-ok">static-no-z-index ok: z-index auto (default, no check)</div>
+      <div style="z-index: auto">z-index: auto — no warning expected</div>
+    </div>
+
     <!-- ===== Parent context: flex/grid items (upcoming rules) ===== -->
     <h2>Parent context: flex/grid items (upcoming rules)</h2>
     <p style="font-size: 13px; color: #888">
