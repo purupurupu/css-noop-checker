@@ -6,15 +6,12 @@ export function groupByRule(elements: ScanElementData[]): ScanGroup[] {
   const map = new Map<RuleId, ScanViolation[]>();
 
   for (const el of elements) {
-    // TODO: Page scan does not collect parent context. Rules using
-    // isFlexItem/isGridItem will not fire here. When a parent-dependent
-    // rule is added, extend makeScanScript to collect parentElement styles.
     const elementData: ElementData = {
       tagName: el.tagName,
       id: el.id,
       classList: el.classList,
       computedStyles: el.computedStyles,
-      parent: null,
+      parent: el.parent,
     };
     const warnings = analyzeElement(elementData);
     if (warnings.length === 0) continue;

@@ -39,6 +39,7 @@ function makeChunkResult(
     id: '',
     classList: [],
     computedStyles: makeBaseStyles(overrides),
+    parent: null,
   }));
   return { results, total };
 }

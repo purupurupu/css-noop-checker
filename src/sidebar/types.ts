@@ -10,6 +10,7 @@ export interface ScanElementData {
   id: string;
   classList: string[];
   computedStyles: Record<string, string>;
+  parent: { computedStyles: Record<string, string> } | null;
 }
 
 export interface ScanViolation {
