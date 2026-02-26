@@ -1,5 +1,5 @@
 import { describe, it, expect } from 'vitest';
-import { createRuleContext, isStackingContext } from '../context.ts';
+import { createRuleContext, isDefaultAlignmentValue, isStackingContext } from '../context.ts';
 import type { ElementData } from '../types.ts';
 
 const BASE_STYLES: ElementData['computedStyles'] = {
@@ -158,5 +158,25 @@ describe('isStackingContext', () => {
 
   it('treats missing properties as default (no stacking context)', () => {
     expect(isStackingContext({})).toBe(false);
+  });
+});
+
+describe('isDefaultAlignmentValue', () => {
+  it('returns true for "normal"', () => {
+    expect(isDefaultAlignmentValue('normal')).toBe(true);
+  });
+
+  it('returns true for "normal normal" (browser two-value form)', () => {
+    expect(isDefaultAlignmentValue('normal normal')).toBe(true);
+  });
+
+  it('returns false for non-default values', () => {
+    expect(isDefaultAlignmentValue('center')).toBe(false);
+    expect(isDefaultAlignmentValue('flex-start')).toBe(false);
+    expect(isDefaultAlignmentValue('space-between')).toBe(false);
+  });
+
+  it('returns false for mixed values like "normal center"', () => {
+    expect(isDefaultAlignmentValue('normal center')).toBe(false);
   });
 });
