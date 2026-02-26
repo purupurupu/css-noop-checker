@@ -142,3 +142,11 @@ export function isStackingContext(styles: Record<string, string>): boolean {
 
   return false;
 }
+
+export function isDefaultFlexDirectionValue(value: string): boolean {
+  return value === 'row';
+}
+
+export function isDefaultFlexWrapValue(value: string): boolean {
+  return value === 'nowrap';
+}
