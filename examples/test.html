@@ -56,86 +56,86 @@
     <h1>CSS Noop Checker - Test Cases</h1>
     <p>Select each element in DevTools and check the sidebar results.</p>
 
-    <!-- ===== inline-no-dimensions: width/height on inline ===== -->
-    <h2>inline-no-dimensions: width/height on inline elements</h2>
+    <!-- ===== block-no-vertical-align: vertical-align on block-level elements ===== -->
+    <h2>block-no-vertical-align: vertical-align on block-level elements</h2>
 
     <h3>Should warn</h3>
-    <div class="case expect-warn" data-rule="inline-no-dimensions">
-      <div class="label label-warn">inline-no-dimensions warn: span with width</div>
-      <span data-target style="width: 200px">This span has width: 200px</span>
-    </div>
-    <div class="case expect-warn" data-rule="inline-no-dimensions">
-      <div class="label label-warn">inline-no-dimensions warn: span with height</div>
-      <span data-target style="height: 50px">This span has height: 50px</span>
-    </div>
-    <div class="case expect-warn" data-rule="inline-no-dimensions">
-      <div class="label label-warn">inline-no-dimensions warn: anchor with width + height</div>
-      <a data-target href="#" style="width: 100px; height: 30px">Link (width + height)</a>
-    </div>
-
-    <h3>Should NOT warn (false positive check)</h3>
-    <div class="case expect-ok" data-rule="inline-no-dimensions">
-      <div class="label label-ok">inline-no-dimensions ok: img is a replaced inline element</div>
-      <img
-        data-target
-        src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='60' height='40'%3E%3Crect fill='%234ec9b0' width='60' height='40'/%3E%3C/svg%3E"
-        style="width: 60px; height: 40px"
-        alt="replaced element"
-      />
-    </div>
-    <div class="case expect-ok" data-rule="inline-no-dimensions">
-      <div class="label label-ok">inline-no-dimensions ok: input is a replaced inline element</div>
-      <input data-target type="text" style="width: 200px; height: 30px" value="input element" />
-    </div>
-    <div class="case expect-ok" data-rule="inline-no-dimensions">
-      <div class="label label-ok">inline-no-dimensions ok: inline-block accepts width</div>
-      <span data-target style="display: inline-block; width: 200px">inline-block span</span>
-    </div>
-
-    <!-- ===== inline-no-vertical-margin: vertical margin on inline ===== -->
-    <h2>inline-no-vertical-margin: vertical margin on inline elements</h2>
-
-    <h3>Should warn</h3>
-    <div class="case expect-warn" data-rule="inline-no-vertical-margin">
-      <div class="label label-warn">inline-no-vertical-margin warn: span with margin-top</div>
-      <span data-target style="margin-top: 20px">This span has margin-top: 20px</span>
-    </div>
-    <div class="case expect-warn" data-rule="inline-no-vertical-margin">
-      <div class="label label-warn">inline-no-vertical-margin warn: span with margin-bottom</div>
-      <span data-target style="margin-bottom: 15px">This span has margin-bottom: 15px</span>
-    </div>
-    <div class="case expect-warn" data-rule="inline-no-vertical-margin">
+    <div class="case expect-warn" data-rule="block-no-vertical-align">
       <div class="label label-warn">
-        inline-no-vertical-margin warn: anchor with margin-top + margin-bottom
+        block-no-vertical-align warn: div with vertical-align: middle
       </div>
-      <a data-target href="#" style="margin-top: 10px; margin-bottom: 10px"
-        >Link (margin-top + margin-bottom)</a
+      <div data-target style="vertical-align: middle">
+        Block element with vertical-align: middle (no effect)
+      </div>
+    </div>
+    <div class="case expect-warn" data-rule="block-no-vertical-align">
+      <div class="label label-warn">block-no-vertical-align warn: div with vertical-align: top</div>
+      <div data-target style="vertical-align: top">
+        Block element with vertical-align: top (no effect)
+      </div>
+    </div>
+
+    <h3>Should NOT warn</h3>
+    <div class="case expect-ok" data-rule="block-no-vertical-align">
+      <div class="label label-ok">block-no-vertical-align ok: inline span with vertical-align</div>
+      <span data-target style="vertical-align: middle"
+        >Inline span with vertical-align: middle (valid)</span
       >
     </div>
+    <div class="case expect-ok" data-rule="block-no-vertical-align">
+      <div class="label label-ok">block-no-vertical-align ok: inline-block with vertical-align</div>
+      <span data-target style="display: inline-block; vertical-align: middle">
+        Inline-block with vertical-align: middle (valid)
+      </span>
+    </div>
+    <div class="case expect-ok" data-rule="block-no-vertical-align">
+      <div class="label label-ok">block-no-vertical-align ok: table-cell with vertical-align</div>
+      <table>
+        <tr>
+          <td data-target style="vertical-align: middle">
+            Table cell with vertical-align: middle (valid)
+          </td>
+        </tr>
+      </table>
+    </div>
 
-    <h3>Should NOT warn (false positive check)</h3>
-    <div class="case expect-ok" data-rule="inline-no-vertical-margin">
-      <div class="label label-ok">
-        inline-no-vertical-margin ok: img is a replaced inline element
+    <!-- ===== container-no-align: alignment on non-flex/grid ===== -->
+    <h2>container-no-align: alignment on non-flex/grid containers</h2>
+
+    <h3>Should warn</h3>
+    <div class="case expect-warn" data-rule="container-no-align">
+      <div class="label label-warn">container-no-align warn: display:block with align-items</div>
+      <div data-target style="align-items: center">
+        <div>Child</div>
       </div>
-      <img
+    </div>
+    <div class="case expect-warn" data-rule="container-no-align">
+      <div class="label label-warn">
+        container-no-align warn: display:block with justify-content
+      </div>
+      <div data-target style="justify-content: space-between">
+        <div>Child 1</div>
+        <div>Child 2</div>
+      </div>
+    </div>
+    <div class="case expect-warn" data-rule="container-no-align">
+      <div class="label label-warn">
+        container-no-align warn: place-items on block (align-items part has no effect)
+      </div>
+      <div data-target style="place-items: center; height: 120px; background: #f0f0f0">
+        <div>Child (horizontally centered, but NOT vertically centered)</div>
+      </div>
+    </div>
+
+    <h3>Should NOT warn</h3>
+    <div class="case expect-ok" data-rule="container-no-align">
+      <div class="label label-ok">container-no-align ok: flex container with align-items</div>
+      <div
         data-target
-        src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='60' height='40'%3E%3Crect fill='%234ec9b0' width='60' height='40'/%3E%3C/svg%3E"
-        style="margin-top: 20px"
-        alt="replaced element"
-      />
-    </div>
-    <div class="case expect-ok" data-rule="inline-no-vertical-margin">
-      <div class="label label-ok">
-        inline-no-vertical-margin ok: inline-block accepts vertical margin
+        style="display: flex; align-items: center; height: 60px; background: #f0f0f0"
+      >
+        <div>Flex child</div>
       </div>
-      <span data-target style="display: inline-block; margin-top: 20px">inline-block span</span>
-    </div>
-    <div class="case expect-ok" data-rule="inline-no-vertical-margin">
-      <div class="label label-ok">
-        inline-no-vertical-margin ok: block div accepts vertical margin
-      </div>
-      <div data-target style="margin-top: 20px">block div with margin-top</div>
     </div>
 
     <!-- ===== container-no-gap: gap on non-flex/grid ===== -->
@@ -180,37 +180,6 @@
       </div>
     </div>
 
-    <!-- ===== container-no-align: alignment on non-flex/grid ===== -->
-    <h2>container-no-align: alignment on non-flex/grid containers</h2>
-
-    <h3>Should warn</h3>
-    <div class="case expect-warn" data-rule="container-no-align">
-      <div class="label label-warn">container-no-align warn: display:block with align-items</div>
-      <div data-target style="align-items: center">
-        <div>Child</div>
-      </div>
-    </div>
-    <div class="case expect-warn" data-rule="container-no-align">
-      <div class="label label-warn">
-        container-no-align warn: display:block with justify-content
-      </div>
-      <div data-target style="justify-content: space-between">
-        <div>Child 1</div>
-        <div>Child 2</div>
-      </div>
-    </div>
-
-    <h3>Should NOT warn</h3>
-    <div class="case expect-ok" data-rule="container-no-align">
-      <div class="label label-ok">container-no-align ok: flex container with align-items</div>
-      <div
-        data-target
-        style="display: flex; align-items: center; height: 60px; background: #f0f0f0"
-      >
-        <div>Flex child</div>
-      </div>
-    </div>
-
     <!-- ===== container-no-place: place-content on non-flex/grid ===== -->
     <h2>container-no-place: place-content on non-flex/grid</h2>
 
@@ -219,14 +188,6 @@
       <div class="label label-warn">container-no-place warn: display:block with place-content</div>
       <div data-target style="place-content: center">
         <div>Child</div>
-      </div>
-    </div>
-    <div class="case expect-warn" data-rule="container-no-align">
-      <div class="label label-warn">
-        container-no-align warn: place-items on block (align-items part has no effect)
-      </div>
-      <div data-target style="place-items: center; height: 120px; background: #f0f0f0">
-        <div>Child (horizontally centered, but NOT vertically centered)</div>
       </div>
     </div>
 
@@ -318,6 +279,146 @@
       <div style="display: flex">
         <div data-target style="display: contents; flex-direction: column">
           <div>Child of contents wrapper</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ===== inline-no-dimensions: width/height on inline ===== -->
+    <h2>inline-no-dimensions: width/height on inline elements</h2>
+
+    <h3>Should warn</h3>
+    <div class="case expect-warn" data-rule="inline-no-dimensions">
+      <div class="label label-warn">inline-no-dimensions warn: span with width</div>
+      <span data-target style="width: 200px">This span has width: 200px</span>
+    </div>
+    <div class="case expect-warn" data-rule="inline-no-dimensions">
+      <div class="label label-warn">inline-no-dimensions warn: span with height</div>
+      <span data-target style="height: 50px">This span has height: 50px</span>
+    </div>
+    <div class="case expect-warn" data-rule="inline-no-dimensions">
+      <div class="label label-warn">inline-no-dimensions warn: anchor with width + height</div>
+      <a data-target href="#" style="width: 100px; height: 30px">Link (width + height)</a>
+    </div>
+
+    <h3>Should NOT warn (false positive check)</h3>
+    <div class="case expect-ok" data-rule="inline-no-dimensions">
+      <div class="label label-ok">inline-no-dimensions ok: img is a replaced inline element</div>
+      <img
+        data-target
+        src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='60' height='40'%3E%3Crect fill='%234ec9b0' width='60' height='40'/%3E%3C/svg%3E"
+        style="width: 60px; height: 40px"
+        alt="replaced element"
+      />
+    </div>
+    <div class="case expect-ok" data-rule="inline-no-dimensions">
+      <div class="label label-ok">inline-no-dimensions ok: input is a replaced inline element</div>
+      <input data-target type="text" style="width: 200px; height: 30px" value="input element" />
+    </div>
+    <div class="case expect-ok" data-rule="inline-no-dimensions">
+      <div class="label label-ok">inline-no-dimensions ok: inline-block accepts width</div>
+      <span data-target style="display: inline-block; width: 200px">inline-block span</span>
+    </div>
+
+    <!-- ===== inline-no-vertical-margin: vertical margin on inline ===== -->
+    <h2>inline-no-vertical-margin: vertical margin on inline elements</h2>
+
+    <h3>Should warn</h3>
+    <div class="case expect-warn" data-rule="inline-no-vertical-margin">
+      <div class="label label-warn">inline-no-vertical-margin warn: span with margin-top</div>
+      <span data-target style="margin-top: 20px">This span has margin-top: 20px</span>
+    </div>
+    <div class="case expect-warn" data-rule="inline-no-vertical-margin">
+      <div class="label label-warn">inline-no-vertical-margin warn: span with margin-bottom</div>
+      <span data-target style="margin-bottom: 15px">This span has margin-bottom: 15px</span>
+    </div>
+    <div class="case expect-warn" data-rule="inline-no-vertical-margin">
+      <div class="label label-warn">
+        inline-no-vertical-margin warn: anchor with margin-top + margin-bottom
+      </div>
+      <a data-target href="#" style="margin-top: 10px; margin-bottom: 10px"
+        >Link (margin-top + margin-bottom)</a
+      >
+    </div>
+
+    <h3>Should NOT warn (false positive check)</h3>
+    <div class="case expect-ok" data-rule="inline-no-vertical-margin">
+      <div class="label label-ok">
+        inline-no-vertical-margin ok: img is a replaced inline element
+      </div>
+      <img
+        data-target
+        src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='60' height='40'%3E%3Crect fill='%234ec9b0' width='60' height='40'/%3E%3C/svg%3E"
+        style="margin-top: 20px"
+        alt="replaced element"
+      />
+    </div>
+    <div class="case expect-ok" data-rule="inline-no-vertical-margin">
+      <div class="label label-ok">
+        inline-no-vertical-margin ok: inline-block accepts vertical margin
+      </div>
+      <span data-target style="display: inline-block; margin-top: 20px">inline-block span</span>
+    </div>
+    <div class="case expect-ok" data-rule="inline-no-vertical-margin">
+      <div class="label label-ok">
+        inline-no-vertical-margin ok: block div accepts vertical margin
+      </div>
+      <div data-target style="margin-top: 20px">block div with margin-top</div>
+    </div>
+
+    <!-- ===== item-no-order: order on non-flex/grid items ===== -->
+    <h2>item-no-order: order on non-flex/grid items</h2>
+
+    <h3>Should warn</h3>
+    <div class="case expect-warn" data-rule="item-no-order">
+      <div class="label label-warn">item-no-order warn: order on child of block container</div>
+      <div>
+        <div data-target style="order: 1">Block child with order (no effect)</div>
+      </div>
+    </div>
+
+    <!-- ===== item-no-self-align: align-self on non-flex/grid items ===== -->
+    <h2>item-no-self-align: align-self on non-flex/grid items</h2>
+
+    <h3>Should warn</h3>
+    <div class="case expect-warn" data-rule="item-no-self-align">
+      <div class="label label-warn">
+        item-no-self-align warn: align-self on child of block container
+      </div>
+      <div>
+        <div data-target style="align-self: center">Block child with align-self (no effect)</div>
+      </div>
+    </div>
+
+    <h3>Should NOT warn</h3>
+    <div class="case expect-ok" data-rule="item-no-self-align">
+      <div class="label label-ok">item-no-self-align ok: flex item with align-self</div>
+      <div style="display: flex; gap: 8px">
+        <div style="flex: 1">Flex child 1</div>
+        <div data-target style="flex: 1; align-self: center">Flex child 2 (align-self)</div>
+        <div style="order: -1">Flex child 3 (order)</div>
+      </div>
+    </div>
+    <div class="case expect-ok" data-rule="item-no-self-align">
+      <div class="label label-ok">item-no-self-align ok: inline-flex item with align-self</div>
+      <span style="display: inline-flex; gap: 4px">
+        <span>Inline-flex child 1</span>
+        <span data-target style="align-self: flex-end">Inline-flex child 2</span>
+      </span>
+    </div>
+    <div class="case expect-ok" data-rule="item-no-self-align">
+      <div class="label label-ok">item-no-self-align ok: grid item with align-self</div>
+      <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 8px">
+        <div style="justify-self: end">Grid child 1 (justify-self)</div>
+        <div data-target style="align-self: center">Grid child 2 (align-self)</div>
+      </div>
+    </div>
+    <div class="case expect-ok" data-rule="item-no-self-align">
+      <div class="label label-ok">
+        item-no-self-align ok: display:contents parent (grandparent is flex)
+      </div>
+      <div style="display: flex; gap: 8px">
+        <div style="display: contents">
+          <div data-target style="flex: 1">Child of contents wrapper (actually a flex item)</div>
         </div>
       </div>
     </div>
@@ -416,108 +517,6 @@
     <div class="case expect-ok" data-rule="static-no-z-index">
       <div class="label label-ok">static-no-z-index ok: z-index auto (default, no check)</div>
       <div data-target style="z-index: auto">z-index: auto — no warning expected</div>
-    </div>
-
-    <!-- ===== Parent context: flex/grid items ===== -->
-    <h2>Parent context: flex/grid items</h2>
-    <p style="font-size: 13px; color: #888">
-      These elements demonstrate parent-aware context. Select a child element and check that the
-      sidebar correctly identifies flex/grid item status via parent display.
-    </p>
-
-    <h3>Flex items (parent is display:flex)</h3>
-    <div class="case expect-ok" data-rule="item-no-self-align">
-      <div class="label label-ok">Flex item: child of display:flex container</div>
-      <div style="display: flex; gap: 8px">
-        <div style="flex: 1">Flex child 1</div>
-        <div data-target style="flex: 1; align-self: center">Flex child 2 (align-self)</div>
-        <div style="order: -1">Flex child 3 (order)</div>
-      </div>
-    </div>
-    <div class="case expect-ok" data-rule="item-no-self-align">
-      <div class="label label-ok">Flex item: child of display:inline-flex container</div>
-      <span style="display: inline-flex; gap: 4px">
-        <span>Inline-flex child 1</span>
-        <span data-target style="align-self: flex-end">Inline-flex child 2</span>
-      </span>
-    </div>
-
-    <h3>Grid items (parent is display:grid)</h3>
-    <div class="case expect-ok" data-rule="item-no-self-align">
-      <div class="label label-ok">Grid item: child of display:grid container</div>
-      <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 8px">
-        <div style="justify-self: end">Grid child 1 (justify-self)</div>
-        <div data-target style="align-self: center">Grid child 2 (align-self)</div>
-      </div>
-    </div>
-
-    <h3>NOT flex/grid items (parent is display:block)</h3>
-    <div class="case expect-warn" data-rule="item-no-self-align">
-      <div class="label label-warn">Not flex item: align-self on child of block container</div>
-      <div>
-        <div data-target style="align-self: center">Block child with align-self (no effect)</div>
-      </div>
-    </div>
-    <div class="case expect-warn" data-rule="item-no-order">
-      <div class="label label-warn">Not flex item: order on child of block container</div>
-      <div>
-        <div data-target style="order: 1">Block child with order (no effect)</div>
-      </div>
-    </div>
-
-    <h3>Edge case: parent is display:contents (skipped in layout)</h3>
-    <div class="case expect-ok" data-rule="item-no-self-align">
-      <div class="label label-ok">
-        display:contents parent: grandparent is the real flex container
-      </div>
-      <div style="display: flex; gap: 8px">
-        <div style="display: contents">
-          <div data-target style="flex: 1">Child of contents wrapper (actually a flex item)</div>
-        </div>
-      </div>
-    </div>
-
-    <!-- ===== block-no-vertical-align: vertical-align on block-level elements ===== -->
-    <h2>block-no-vertical-align: vertical-align on block-level elements</h2>
-
-    <h3>Should warn</h3>
-    <div class="case expect-warn" data-rule="block-no-vertical-align">
-      <div class="label label-warn">
-        block-no-vertical-align warn: div with vertical-align: middle
-      </div>
-      <div data-target style="vertical-align: middle">
-        Block element with vertical-align: middle (no effect)
-      </div>
-    </div>
-    <div class="case expect-warn" data-rule="block-no-vertical-align">
-      <div class="label label-warn">block-no-vertical-align warn: div with vertical-align: top</div>
-      <div data-target style="vertical-align: top">
-        Block element with vertical-align: top (no effect)
-      </div>
-    </div>
-
-    <h3>Should NOT warn</h3>
-    <div class="case expect-ok" data-rule="block-no-vertical-align">
-      <div class="label label-ok">block-no-vertical-align ok: inline span with vertical-align</div>
-      <span data-target style="vertical-align: middle"
-        >Inline span with vertical-align: middle (valid)</span
-      >
-    </div>
-    <div class="case expect-ok" data-rule="block-no-vertical-align">
-      <div class="label label-ok">block-no-vertical-align ok: inline-block with vertical-align</div>
-      <span data-target style="display: inline-block; vertical-align: middle">
-        Inline-block with vertical-align: middle (valid)
-      </span>
-    </div>
-    <div class="case expect-ok" data-rule="block-no-vertical-align">
-      <div class="label label-ok">block-no-vertical-align ok: table-cell with vertical-align</div>
-      <table>
-        <tr>
-          <td data-target style="vertical-align: middle">
-            Table cell with vertical-align: middle (valid)
-          </td>
-        </tr>
-      </table>
     </div>
 
     <!-- ===== No issues ===== -->
