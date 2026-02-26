@@ -15,6 +15,8 @@ css-noop-checker is a Chrome DevTools extension (Manifest V3) that detects "no-o
 - `pnpm fmt:check` — Check formatting without writing
 - `pnpm test` — Run tests with Vitest
 - `pnpm test:watch` — Run tests in watch mode
+- `pnpm test:e2e` — Run Playwright browser integration tests
+- `pnpm test:e2e:ui` — Run Playwright tests with interactive UI
 
 Package manager is **pnpm** (not npm/yarn).
 
@@ -25,7 +27,7 @@ Package manager is **pnpm** (not npm/yarn).
 - **Language**: TypeScript 5.9 (strict, `verbatimModuleSyntax`, `erasableSyntaxOnly`)
 - **Linting**: Oxlint (`.oxlintrc.json`) — plugins: typescript, react
 - **Formatting**: Oxfmt (`.oxfmtrc.jsonc`) — singleQuote, trailingComma all, printWidth 100
-- **Testing**: Vitest 4 (`vitest.config.ts`, separate from `vite.config.ts`)
+- **Testing**: Vitest 4 (`vitest.config.ts`, separate from `vite.config.ts`), Playwright (`playwright.config.ts`) for browser integration tests
 
 ## Architecture
 
@@ -63,7 +65,38 @@ Rule IDs follow Stylelint's `thing-no-qualifier` pattern — the de facto standa
 
 When adding a new rule, pick a descriptive `target` and `qualifier` — avoid numbered IDs like `D-1` or `C-2`.
 
-When adding a new rule, also add "should warn" and "should NOT warn" test cases to `examples/test.html` so the rule can be verified manually in Chrome DevTools.
+When adding a new rule, also add "should warn" and "should NOT warn" test cases to `examples/test.html` so the rule can be verified both manually in Chrome DevTools and automatically via `pnpm test:e2e`.
+
+#### test.html Test Case Format
+
+Each test case in `examples/test.html` must include `data-target` and `data-rule` attributes for Playwright integration tests:
+
+```html
+<!-- "should warn" case -->
+<div class="case expect-warn" data-rule="<rule-id>">
+  <div class="label label-warn"><rule-id> warn: description</div>
+  <TARGET_ELEMENT data-target style="...">...</TARGET_ELEMENT>
+</div>
+
+<!-- "should NOT warn" case -->
+<div class="case expect-ok" data-rule="<rule-id>">
+  <div class="label label-ok"><rule-id> ok: description</div>
+  <TARGET_ELEMENT data-target style="...">...</TARGET_ELEMENT>
+</div>
+```
+
+- **`data-rule`** — the rule ID being tested (e.g. `inline-no-dimensions`)
+- **`data-target`** — boolean attribute on the element to inspect (must be exactly one per `.case`)
+- For cases where the target is a nested child (e.g. flex/grid items), place `data-target` on the actual inspectable element, not the wrapper
+
+### Browser Integration Tests (`e2e/`)
+
+Playwright-based tests that verify rules against real browser `getComputedStyle()`:
+
+- `helpers/extract-element-data.ts` — registry-driven computed style extraction (mirrors extension eval script)
+- `integration/rules-against-real-styles.test.ts` — opens `test.html`, extracts real styles, runs `analyzeElement()`, asserts against `data-rule` / `expect-warn` / `expect-ok`
+
+New rules are automatically covered when test cases are added to `test.html` with proper `data-target` and `data-rule` attributes. No changes to the integration test code are needed.
 
 ### Sidebar UI (`src/sidebar/`)
 
