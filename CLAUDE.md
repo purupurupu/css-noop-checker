@@ -48,7 +48,7 @@ Pure-function rules with zero Chrome API dependency — fully testable:
 - `static-position-offset.ts` — `static-no-offset`: top/right/bottom/left on static position
 - `self-alignment.ts` — `item-no-self-align`: align-self on non-flex/grid items
 - `order.ts` — `item-no-order`: order on non-flex/grid items
-- `block-vertical-align.ts` — `block-vertical-align`: vertical-align on block-level elements
+- `block-vertical-align.ts` — `block-no-vertical-align`: vertical-align on block-level elements
 - `__tests__/` — tests covering all rules + engine integration
 
 #### Rule ID Naming Convention
@@ -59,16 +59,16 @@ Rule IDs follow Stylelint's `thing-no-qualifier` pattern — the de facto standa
 - **`target`** — the element/context being checked (e.g. `inline`, `container`)
 - **`no-<qualifier>`** — the property or behavior that has no effect in that context
 
-| Rule ID                | Target                       | Disallowed                  |
-| ---------------------- | ---------------------------- | --------------------------- |
-| `inline-no-dimensions` | inline non-replaced elements | width/height                |
-| `container-no-gap`     | non-flex/grid containers     | gap properties              |
-| `container-no-align`   | non-flex/grid containers     | align-items/justify-content |
-| `container-no-place`   | non-flex/grid containers     | place-content               |
-| `static-no-offset`     | static-positioned elements   | top/right/bottom/left       |
-| `item-no-self-align`   | non-flex/grid items          | align-self                  |
-| `item-no-order`        | non-flex/grid items          | order                       |
-| `block-vertical-align` | block-level elements         | vertical-align              |
+| Rule ID                   | Target                       | Disallowed                  |
+| ------------------------- | ---------------------------- | --------------------------- |
+| `inline-no-dimensions`    | inline non-replaced elements | width/height                |
+| `container-no-gap`        | non-flex/grid containers     | gap properties              |
+| `container-no-align`      | non-flex/grid containers     | align-items/justify-content |
+| `container-no-place`      | non-flex/grid containers     | place-content               |
+| `static-no-offset`        | static-positioned elements   | top/right/bottom/left       |
+| `item-no-self-align`      | non-flex/grid items          | align-self                  |
+| `item-no-order`           | non-flex/grid items          | order                       |
+| `block-no-vertical-align` | block-level elements         | vertical-align              |
 
 When adding a new rule, pick a descriptive `target` and `qualifier` — avoid numbered IDs like `D-1` or `C-2`.
 

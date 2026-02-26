@@ -74,13 +74,14 @@ export function isDefaultMarginValue(value: string): boolean {
   return value === '0px';
 }
 
-export function isInlineLevel(display: string): boolean {
+export function isVerticalAlignApplicable(display: string): boolean {
   return (
     display === 'inline' ||
     display === 'inline-block' ||
     display === 'inline-flex' ||
     display === 'inline-grid' ||
     display === 'table-cell' ||
+    display === 'table-row' ||
     display === 'inline-table'
   );
 }

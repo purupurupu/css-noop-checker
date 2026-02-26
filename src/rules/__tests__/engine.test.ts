@@ -67,6 +67,12 @@ describe('analyzeElement (integration)', () => {
     expect(warnings.length).toBeGreaterThanOrEqual(3);
   });
 
+  it('detects vertical-align on block element', () => {
+    const warnings = analyzeElement(makeElement({ verticalAlign: 'middle' }));
+    const ruleIds = warnings.map((w) => w.ruleId);
+    expect(ruleIds).toContain('block-no-vertical-align');
+  });
+
   it('combines D-1 with other rules on inline element', () => {
     const warnings = analyzeElement(
       makeElement({

@@ -26,6 +26,8 @@ describe('block-no-vertical-align', () => {
     expect(warnings[0].ruleId).toBe('block-no-vertical-align');
     expect(warnings[0].property).toBe('vertical-align');
     expect(warnings[0].title).toContain('vertical-align');
+    expect(warnings[0].details).toContain('"middle"');
+    expect(warnings[0].details).toContain('"block"');
   });
 
   it('warns when vertical-align is set on flex container', () => {
@@ -33,11 +35,20 @@ describe('block-no-vertical-align', () => {
       createRuleContext(makeElement({ display: 'flex', verticalAlign: 'top' })),
     );
     expect(warnings).toHaveLength(1);
+    expect(warnings[0].ruleId).toBe('block-no-vertical-align');
   });
 
   it('warns when vertical-align is set on grid container', () => {
     const warnings = checkBlockVerticalAlign(
       createRuleContext(makeElement({ display: 'grid', verticalAlign: 'bottom' })),
+    );
+    expect(warnings).toHaveLength(1);
+    expect(warnings[0].ruleId).toBe('block-no-vertical-align');
+  });
+
+  it('warns when vertical-align is set on list-item', () => {
+    const warnings = checkBlockVerticalAlign(
+      createRuleContext(makeElement({ display: 'list-item', verticalAlign: 'middle' })),
     );
     expect(warnings).toHaveLength(1);
   });
@@ -80,6 +91,13 @@ describe('block-no-vertical-align', () => {
   it('skips inline-table elements', () => {
     const warnings = checkBlockVerticalAlign(
       createRuleContext(makeElement({ display: 'inline-table', verticalAlign: 'top' })),
+    );
+    expect(warnings).toHaveLength(0);
+  });
+
+  it('skips table-row elements', () => {
+    const warnings = checkBlockVerticalAlign(
+      createRuleContext(makeElement({ display: 'table-row', verticalAlign: 'middle' })),
     );
     expect(warnings).toHaveLength(0);
   });

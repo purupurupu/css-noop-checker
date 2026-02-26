@@ -1,5 +1,5 @@
-import type { RuleDescriptor, Warning } from './types.ts';
-import { isDefaultVerticalAlignValue, isInlineLevel } from './context.ts';
+import type { RuleDescriptor } from './types.ts';
+import { isDefaultVerticalAlignValue, isVerticalAlignApplicable } from './context.ts';
 import { registerRule } from './registry.ts';
 
 const rule: RuleDescriptor = {
@@ -8,11 +8,11 @@ const rule: RuleDescriptor = {
   requiredProperties: ['display', 'verticalAlign'],
   check(ctx) {
     const { display, verticalAlign } = ctx.styles;
-    if (isInlineLevel(display)) return [];
+    if (isVerticalAlignApplicable(display)) return [];
     if (display === 'contents') return [];
-    if (!verticalAlign || isDefaultVerticalAlignValue(verticalAlign)) return [];
+    if (isDefaultVerticalAlignValue(verticalAlign)) return [];
 
-    const warnings: Warning[] = [
+    return [
       {
         ruleId: 'block-no-vertical-align',
         property: 'vertical-align',
@@ -23,8 +23,6 @@ const rule: RuleDescriptor = {
           'Set display: inline-block or display: table-cell on this element, or remove vertical-align.',
       },
     ];
-
-    return warnings;
   },
 };
 
