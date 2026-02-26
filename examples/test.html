@@ -347,8 +347,8 @@
       <div data-target style="position: relative; top: 20px">Relative + top: 20px (valid)</div>
     </div>
     <div class="case expect-ok" data-rule="static-no-offset">
-      <div class="label label-ok">static-no-offset ok: absolute with top + left</div>
-      <div data-target style="position: relative; top: 0; left: 0">Absolute + offsets (valid)</div>
+      <div class="label label-ok">static-no-offset ok: relative with top + left</div>
+      <div data-target style="position: relative; top: 0; left: 0">Relative + offsets (valid)</div>
     </div>
     <div class="case expect-ok" data-rule="static-no-offset">
       <div class="label label-ok">static-no-offset ok: sticky with top</div>
@@ -418,12 +418,11 @@
       <div data-target style="z-index: auto">z-index: auto — no warning expected</div>
     </div>
 
-    <!-- ===== Parent context: flex/grid items (upcoming rules) ===== -->
-    <h2>Parent context: flex/grid items (upcoming rules)</h2>
+    <!-- ===== Parent context: flex/grid items ===== -->
+    <h2>Parent context: flex/grid items</h2>
     <p style="font-size: 13px; color: #888">
       These elements demonstrate parent-aware context. Select a child element and check that the
-      sidebar correctly identifies flex/grid item status via parent display. Rules using
-      isFlexItem/isGridItem are not yet implemented.
+      sidebar correctly identifies flex/grid item status via parent display.
     </p>
 
     <h3>Flex items (parent is display:flex)</h3>
@@ -478,18 +477,20 @@
       </div>
     </div>
 
-    <!-- ===== block-vertical-align: vertical-align on block-level elements ===== -->
-    <h2>block-vertical-align: vertical-align on block-level elements</h2>
+    <!-- ===== block-no-vertical-align: vertical-align on block-level elements ===== -->
+    <h2>block-no-vertical-align: vertical-align on block-level elements</h2>
 
     <h3>Should warn</h3>
     <div class="case expect-warn" data-rule="block-no-vertical-align">
-      <div class="label label-warn">block-vertical-align warn: div with vertical-align: middle</div>
+      <div class="label label-warn">
+        block-no-vertical-align warn: div with vertical-align: middle
+      </div>
       <div data-target style="vertical-align: middle">
         Block element with vertical-align: middle (no effect)
       </div>
     </div>
     <div class="case expect-warn" data-rule="block-no-vertical-align">
-      <div class="label label-warn">block-vertical-align warn: div with vertical-align: top</div>
+      <div class="label label-warn">block-no-vertical-align warn: div with vertical-align: top</div>
       <div data-target style="vertical-align: top">
         Block element with vertical-align: top (no effect)
       </div>
@@ -497,19 +498,19 @@
 
     <h3>Should NOT warn</h3>
     <div class="case expect-ok" data-rule="block-no-vertical-align">
-      <div class="label label-ok">block-vertical-align ok: inline span with vertical-align</div>
+      <div class="label label-ok">block-no-vertical-align ok: inline span with vertical-align</div>
       <span data-target style="vertical-align: middle"
         >Inline span with vertical-align: middle (valid)</span
       >
     </div>
     <div class="case expect-ok" data-rule="block-no-vertical-align">
-      <div class="label label-ok">block-vertical-align ok: inline-block with vertical-align</div>
+      <div class="label label-ok">block-no-vertical-align ok: inline-block with vertical-align</div>
       <span data-target style="display: inline-block; vertical-align: middle">
         Inline-block with vertical-align: middle (valid)
       </span>
     </div>
     <div class="case expect-ok" data-rule="block-no-vertical-align">
-      <div class="label label-ok">block-vertical-align ok: table-cell with vertical-align</div>
+      <div class="label label-ok">block-no-vertical-align ok: table-cell with vertical-align</div>
       <table>
         <tr>
           <td data-target style="vertical-align: middle">
