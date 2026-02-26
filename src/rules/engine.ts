@@ -6,6 +6,7 @@ import './place.ts';
 import './static-position-offset.ts';
 import './self-alignment.ts';
 import './order.ts';
+import './static-z-index.ts';
 
 import type { ElementData, Warning } from './types.ts';
 import { createRuleContext } from './context.ts';
