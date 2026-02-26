@@ -2,11 +2,15 @@ import type { RuleDescriptor } from './types.ts';
 import { isDefaultZIndexValue, isStackingContext } from './context.ts';
 import { registerRule } from './registry.ts';
 
-/** Properties that may create a stacking context (checked by isStackingContext) */
+/**
+ * Properties that may create a stacking context (checked by isStackingContext).
+ * Included in requiredProperties so they are collected from the inspected element.
+ */
 const STACKING_CONTEXT_PROPERTIES = [
   'opacity',
   'transform',
   'filter',
+  'backdropFilter',
   'perspective',
   'clipPath',
   'isolation',
@@ -31,7 +35,9 @@ const rule: RuleDescriptor = {
     // z-index works on flex/grid items
     if (ctx.isFlexItem || ctx.isGridItem) return [];
 
-    // Cannot determine effective formatting context when parent is display:contents
+    // display:contents removes the parent's box, so the child participates in the
+    // grandparent's formatting context. Without grandparent data we cannot determine
+    // if this element is effectively a flex/grid item.
     const parentDisplay = ctx.parentStyles?.display ?? '';
     if (parentDisplay === 'contents') return [];
 

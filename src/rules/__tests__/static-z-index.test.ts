@@ -18,6 +18,7 @@ function makeElement(
       opacity: '1',
       transform: 'none',
       filter: 'none',
+      backdropFilter: 'none',
       perspective: 'none',
       clipPath: 'none',
       isolation: 'auto',
@@ -138,6 +139,13 @@ describe('static-no-z-index', () => {
   it('does not warn when transform is set', () => {
     const warnings = checkStaticZIndex(
       createRuleContext(makeElement({ zIndex: '10', transform: 'translatez(0)' })),
+    );
+    expect(warnings).toHaveLength(0);
+  });
+
+  it('does not warn when backdrop-filter is set', () => {
+    const warnings = checkStaticZIndex(
+      createRuleContext(makeElement({ zIndex: '10', backdropFilter: 'blur(4px)' })),
     );
     expect(warnings).toHaveLength(0);
   });

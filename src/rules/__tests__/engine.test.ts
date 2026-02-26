@@ -33,6 +33,7 @@ function makeElement(
       opacity: '1',
       transform: 'none',
       filter: 'none',
+      backdropFilter: 'none',
       perspective: 'none',
       clipPath: 'none',
       isolation: 'auto',
