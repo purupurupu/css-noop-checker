@@ -26,6 +26,16 @@ const validData = {
     left: 'auto',
     alignSelf: 'auto',
     order: '0',
+    zIndex: 'auto',
+    opacity: '1',
+    transform: 'none',
+    filter: 'none',
+    perspective: 'none',
+    clipPath: 'none',
+    isolation: 'auto',
+    mixBlendMode: 'normal',
+    contain: 'none',
+    willChange: 'auto',
   },
   parent: null,
 };
@@ -138,6 +148,16 @@ describe('isElementData', () => {
       'left',
       'alignSelf',
       'order',
+      'zIndex',
+      'opacity',
+      'transform',
+      'filter',
+      'perspective',
+      'clipPath',
+      'isolation',
+      'mixBlendMode',
+      'contain',
+      'willChange',
     ];
     for (const key of requiredKeys) {
       const styles = { ...validData.computedStyles };
