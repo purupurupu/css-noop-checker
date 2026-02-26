@@ -85,7 +85,7 @@ Each test case in `examples/test.html` must include `data-target` and `data-rule
 </div>
 ```
 
-- **`data-rule`** — the rule ID being tested (e.g. `inline-no-dimensions`)
+- **`data-rule`** — the rule ID being tested (e.g. `inline-no-dimensions`). Use `data-rule="none"` for cases that should produce zero warnings from any rule
 - **`data-target`** — boolean attribute on the element to inspect (must be exactly one per `.case`)
 - For cases where the target is a nested child (e.g. flex/grid items), place `data-target` on the actual inspectable element, not the wrapper
 
