@@ -20,6 +20,12 @@ function compileEvalScript(script: string): string {
   return `(function($0) { return ${script}; })`;
 }
 
+/** Inject the compiled eval script as a global function on the page. */
+async function injectEvalScript(page: import('@playwright/test').Page): Promise<void> {
+  const wrapper = compileEvalScript(buildEvalScript());
+  await page.evaluate(`window.__evalScript = ${wrapper}`);
+}
+
 test.describe('buildEvalScript() browser execution', () => {
   const script = buildEvalScript();
 
@@ -30,25 +36,27 @@ test.describe('buildEvalScript() browser execution', () => {
 
   test('returns null when $0 is null (no element selected)', async ({ page }) => {
     await page.goto(TEST_HTML);
-    const wrapper = compileEvalScript(script);
-    const result = await page.evaluate(`${wrapper}(null)`);
+    await injectEvalScript(page);
+
+    const result = await page.evaluate(() => {
+      return (window as any).__evalScript(null);
+    });
     expect(result).toBeNull();
   });
 
   test('returns valid ElementData for a block element', async ({ page }) => {
     await page.goto(TEST_HTML);
-    const wrapper = compileEvalScript(script);
+    await injectEvalScript(page);
 
-    const result = await page.evaluate((fn) => {
+    const result = await page.evaluate(() => {
       const div = document.createElement('div');
       div.id = 'eval-test-block';
       div.className = 'foo bar';
       document.body.appendChild(div);
-      // biome-ignore lint: eval is intentional for testing generated script
-      const data = eval(`${fn}(div)`);
+      const data = (window as any).__evalScript(div);
       div.remove();
       return data;
-    }, wrapper);
+    });
 
     expect(result).not.toBeNull();
     expect(isElementData(result)).toBe(true);
@@ -60,16 +68,15 @@ test.describe('buildEvalScript() browser execution', () => {
 
   test('returns valid ElementData for an inline element', async ({ page }) => {
     await page.goto(TEST_HTML);
-    const wrapper = compileEvalScript(script);
+    await injectEvalScript(page);
 
-    const result = await page.evaluate((fn) => {
+    const result = await page.evaluate(() => {
       const span = document.createElement('span');
       document.body.appendChild(span);
-      // biome-ignore lint: eval is intentional for testing generated script
-      const data = eval(`${fn}(span)`);
+      const data = (window as any).__evalScript(span);
       span.remove();
       return data;
-    }, wrapper);
+    });
 
     expect(result).not.toBeNull();
     expect(isElementData(result)).toBe(true);
@@ -79,19 +86,18 @@ test.describe('buildEvalScript() browser execution', () => {
 
   test('extracts parent styles for a flex item', async ({ page }) => {
     await page.goto(TEST_HTML);
-    const wrapper = compileEvalScript(script);
+    await injectEvalScript(page);
 
-    const result = await page.evaluate((fn) => {
+    const result = await page.evaluate(() => {
       const container = document.createElement('div');
       container.style.display = 'flex';
       const child = document.createElement('div');
       container.appendChild(child);
       document.body.appendChild(container);
-      // biome-ignore lint: eval is intentional for testing generated script
-      const data = eval(`${fn}(child)`);
+      const data = (window as any).__evalScript(child);
       container.remove();
       return data;
-    }, wrapper);
+    });
 
     expect(result).not.toBeNull();
     expect(isElementData(result)).toBe(true);
@@ -101,7 +107,7 @@ test.describe('buildEvalScript() browser execution', () => {
 
   test('all test.html targets produce valid ElementData', async ({ page }) => {
     await page.goto(TEST_HTML);
-    const wrapper = compileEvalScript(script);
+    await injectEvalScript(page);
 
     const targets = page.locator('[data-target]');
     const count = await targets.count();
@@ -111,10 +117,9 @@ test.describe('buildEvalScript() browser execution', () => {
       const target = targets.nth(i);
       const tag = await target.evaluate((el) => el.tagName.toLowerCase());
 
-      const result = await target.evaluate((_el, fn) => {
-        // biome-ignore lint: eval is intentional for testing generated script
-        return eval(`${fn}(_el)`);
-      }, wrapper);
+      const result = await target.evaluate((el) => {
+        return (window as any).__evalScript(el);
+      });
 
       expect(result, `[data-target] #${i} (<${tag}>) returned null`).not.toBeNull();
       expect(
