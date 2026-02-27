@@ -542,6 +542,83 @@
       </div>
     </div>
 
+    <!-- ===== item-no-grid-props: grid item props on children of non-grid containers ===== -->
+    <h2>item-no-grid-props: grid item props on children of non-grid containers</h2>
+
+    <h3>Should warn</h3>
+    <div class="case expect-warn" data-rule="item-no-grid-props">
+      <div class="label label-warn">item-no-grid-props warn: grid-column on block child</div>
+      <div>
+        <div data-target style="grid-column: 1 / 3">
+          grid-column: 1 / 3 on child of block parent
+        </div>
+      </div>
+    </div>
+    <div class="case expect-warn" data-rule="item-no-grid-props">
+      <div class="label label-warn">item-no-grid-props warn: grid-row on block child</div>
+      <div>
+        <div data-target style="grid-row: 2 / 4">grid-row: 2 / 4 on child of block parent</div>
+      </div>
+    </div>
+    <div class="case expect-warn" data-rule="item-no-grid-props">
+      <div class="label label-warn">item-no-grid-props warn: grid-column on flex child</div>
+      <div style="display: flex">
+        <div data-target style="grid-column: 1 / 3">grid-column: 1 / 3 on child of flex parent</div>
+      </div>
+    </div>
+    <div class="case expect-warn" data-rule="item-no-grid-props">
+      <div class="label label-warn">
+        item-no-grid-props warn: grid-area shorthand on block child
+      </div>
+      <div>
+        <div data-target style="grid-area: 1 / 2 / 3 / 4">
+          grid-area: 1 / 2 / 3 / 4 on child of block parent (shorthand expands to longhands)
+        </div>
+      </div>
+    </div>
+    <div class="case expect-warn" data-rule="item-no-grid-props">
+      <div class="label label-warn">item-no-grid-props warn: grid-column span on block child</div>
+      <div>
+        <div data-target style="grid-column: span 2">
+          grid-column: span 2 on child of block parent
+        </div>
+      </div>
+    </div>
+
+    <h3>Should NOT warn</h3>
+    <div class="case expect-ok" data-rule="item-no-grid-props">
+      <div class="label label-ok">item-no-grid-props ok: grid-column on grid child</div>
+      <div style="display: grid; grid-template-columns: 1fr 1fr 1fr">
+        <div data-target style="grid-column: 1 / 3">grid-column: 1 / 3 on child of grid parent</div>
+      </div>
+    </div>
+    <div class="case expect-ok" data-rule="item-no-grid-props">
+      <div class="label label-ok">item-no-grid-props ok: grid-row on inline-grid child</div>
+      <div style="display: inline-grid; grid-template-rows: auto auto auto">
+        <div data-target style="grid-row: 2 / 3">
+          grid-row: 2 / 3 on child of inline-grid parent
+        </div>
+      </div>
+    </div>
+    <div class="case expect-ok" data-rule="item-no-grid-props">
+      <div class="label label-ok">item-no-grid-props ok: default values on block child</div>
+      <div>
+        <div data-target>default grid placement on child of block parent</div>
+      </div>
+    </div>
+    <div class="case expect-ok" data-rule="item-no-grid-props">
+      <div class="label label-ok">
+        item-no-grid-props ok: display:contents parent (grandparent is grid)
+      </div>
+      <div style="display: grid; grid-template-columns: 1fr 1fr 1fr">
+        <div style="display: contents">
+          <div data-target style="grid-column: 1 / 3">
+            Child of contents wrapper (actually a grid item)
+          </div>
+        </div>
+      </div>
+    </div>
+
     <!-- ===== item-no-order: order on non-flex/grid items ===== -->
     <h2>item-no-order: order on non-flex/grid items</h2>
 
