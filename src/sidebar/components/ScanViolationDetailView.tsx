@@ -17,12 +17,12 @@ export function ScanViolationDetailView({
 
   useEffect(() => {
     backRef.current?.focus();
-  }, [violation.index]);
+  }, []);
 
   return (
-    <div className="scan-detail" role="region" aria-label="Violation detail">
+    <div className="scan-detail">
       <button ref={backRef} className="scan-detail__back" onClick={onBack} type="button">
-        &larr; Back to results
+        {'\u2190'} Back to results
       </button>
       <code className="scan-detail__selector" title={violation.selector}>
         {violation.selector}
@@ -33,8 +33,8 @@ export function ScanViolationDetailView({
         </div>
       )}
       <div className="warning-list">
-        {violation.warnings.map((w, i) => (
-          <WarningCard key={`${w.ruleId}-${w.property}-${i}`} warning={w} />
+        {violation.warnings.map((w) => (
+          <WarningCard key={`${w.ruleId}-${w.property}`} warning={w} />
         ))}
       </div>
     </div>
