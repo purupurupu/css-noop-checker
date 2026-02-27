@@ -382,10 +382,16 @@ body {
   cursor: pointer;
 }
 
-.scan-detail__back:hover,
+.scan-detail__back:hover {
+  background: var(--bg-hover);
+  color: var(--text);
+}
+
 .scan-detail__back:focus-visible {
   background: var(--bg-hover);
   color: var(--text);
+  outline: 2px solid var(--text-element);
+  outline-offset: 1px;
 }
 
 .scan-detail__selector {
