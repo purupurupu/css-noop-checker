@@ -1,5 +1,5 @@
 import { describe, it, expect } from 'vitest';
-import { checkItemNoFlexProps } from '../non-flex-child-props.ts';
+import { checkItemNoFlexProps } from '../item-no-flex-props.ts';
 import { createRuleContext } from '../context.ts';
 import type { ElementData } from '../types.ts';
 import { makeElement as _makeElement } from './helpers/make-element.ts';

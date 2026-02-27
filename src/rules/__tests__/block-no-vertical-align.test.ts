@@ -1,5 +1,5 @@
 import { describe, it, expect } from 'vitest';
-import { checkBlockVerticalAlign } from '../block-vertical-align.ts';
+import { checkBlockVerticalAlign } from '../block-no-vertical-align.ts';
 import { createRuleContext } from '../context.ts';
 import { makeElement } from './helpers/make-element.ts';
 

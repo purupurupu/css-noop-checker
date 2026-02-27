@@ -172,6 +172,87 @@
         <div>Flex child</div>
       </div>
     </div>
+    <div class="case expect-ok" data-rule="container-no-align">
+      <div class="label label-ok">container-no-align ok: grid container with align-items</div>
+      <div
+        data-target
+        style="display: grid; align-items: center; height: 60px; background: #f0f0f0"
+      >
+        <div>Grid child</div>
+      </div>
+    </div>
+
+    <!-- ===== container-no-flex-props: flex-direction/wrap on non-flex ===== -->
+    <h2>container-no-flex-props: flex-direction/wrap on non-flex elements</h2>
+
+    <h3>Should warn</h3>
+    <div class="case expect-warn" data-rule="container-no-flex-props">
+      <div class="label label-warn">container-no-flex-props warn: block with flex-direction</div>
+      <div data-target style="flex-direction: column">
+        <div>Child 1</div>
+        <div>Child 2</div>
+      </div>
+    </div>
+    <div class="case expect-warn" data-rule="container-no-flex-props">
+      <div class="label label-warn">container-no-flex-props warn: block with flex-wrap</div>
+      <div data-target style="flex-wrap: wrap">
+        <div>Child 1</div>
+        <div>Child 2</div>
+      </div>
+    </div>
+    <div class="case expect-warn" data-rule="container-no-flex-props">
+      <div class="label label-warn">
+        container-no-flex-props warn: block with flex-flow shorthand
+      </div>
+      <div data-target style="flex-flow: column wrap">
+        <div>Child 1</div>
+        <div>Child 2</div>
+      </div>
+    </div>
+
+    <h3>Should NOT warn</h3>
+    <div class="case expect-ok" data-rule="container-no-flex-props">
+      <div class="label label-ok">
+        container-no-flex-props ok: flex container with flex-direction
+      </div>
+      <div data-target style="display: flex; flex-direction: column">
+        <div>Flex child 1</div>
+        <div>Flex child 2</div>
+      </div>
+    </div>
+    <div class="case expect-ok" data-rule="container-no-flex-props">
+      <div class="label label-ok">container-no-flex-props ok: inline-flex with flex-wrap</div>
+      <span data-target style="display: inline-flex; flex-wrap: wrap">
+        <span>Child 1</span>
+        <span>Child 2</span>
+      </span>
+    </div>
+    <div class="case expect-ok" data-rule="container-no-flex-props">
+      <div class="label label-ok">
+        container-no-flex-props ok: grid container (no false positive)
+      </div>
+      <div
+        data-target
+        style="display: grid; flex-direction: column; grid-template-columns: 1fr 1fr"
+      >
+        <div>Grid child 1</div>
+        <div>Grid child 2</div>
+      </div>
+    </div>
+    <div class="case expect-ok" data-rule="container-no-flex-props">
+      <div class="label label-ok">container-no-flex-props ok: default values (no override)</div>
+      <div data-target>
+        <div>Plain block element (flex-direction defaults to row)</div>
+      </div>
+    </div>
+    <div class="case expect-ok" data-rule="container-no-flex-props">
+      <div class="label label-ok">container-no-flex-props ok: display:contents skipped</div>
+      <div style="display: flex">
+        <div data-target style="display: contents; flex-direction: column">
+          <div>Child of contents wrapper</div>
+        </div>
+      </div>
+    </div>
 
     <!-- ===== container-no-gap: gap on non-flex/grid ===== -->
     <h2>container-no-gap: gap on non-flex/grid containers</h2>
@@ -226,6 +307,70 @@
       </div>
     </div>
 
+    <!-- ===== container-no-grid-props: grid container props on non-grid ===== -->
+    <h2>container-no-grid-props: grid container props on non-grid elements</h2>
+
+    <h3>Should warn</h3>
+    <div class="case expect-warn" data-rule="container-no-grid-props">
+      <div class="label label-warn">
+        container-no-grid-props warn: block with grid-template-columns
+      </div>
+      <div data-target style="grid-template-columns: 1fr 1fr">
+        <div>Child 1</div>
+        <div>Child 2</div>
+      </div>
+    </div>
+    <div class="case expect-warn" data-rule="container-no-grid-props">
+      <div class="label label-warn">container-no-grid-props warn: block with grid-auto-flow</div>
+      <div data-target style="grid-auto-flow: column">
+        <div>Child 1</div>
+        <div>Child 2</div>
+      </div>
+    </div>
+    <div class="case expect-warn" data-rule="container-no-grid-props">
+      <div class="label label-warn">
+        container-no-grid-props warn: flex with grid-template-columns
+      </div>
+      <div data-target style="display: flex; grid-template-columns: 1fr 1fr">
+        <div>Child 1</div>
+        <div>Child 2</div>
+      </div>
+    </div>
+
+    <h3>Should NOT warn</h3>
+    <div class="case expect-ok" data-rule="container-no-grid-props">
+      <div class="label label-ok">
+        container-no-grid-props ok: grid container with grid-template-columns
+      </div>
+      <div data-target style="display: grid; grid-template-columns: 1fr 1fr">
+        <div>Grid child 1</div>
+        <div>Grid child 2</div>
+      </div>
+    </div>
+    <div class="case expect-ok" data-rule="container-no-grid-props">
+      <div class="label label-ok">
+        container-no-grid-props ok: inline-grid with grid-template-columns
+      </div>
+      <span data-target style="display: inline-grid; grid-template-columns: 1fr 1fr">
+        <span>Child 1</span>
+        <span>Child 2</span>
+      </span>
+    </div>
+    <div class="case expect-ok" data-rule="container-no-grid-props">
+      <div class="label label-ok">container-no-grid-props ok: default values (no override)</div>
+      <div data-target>
+        <div>Plain block element (grid properties at defaults)</div>
+      </div>
+    </div>
+    <div class="case expect-ok" data-rule="container-no-grid-props">
+      <div class="label label-ok">container-no-grid-props ok: display:contents skipped</div>
+      <div style="display: grid; grid-template-columns: 1fr 1fr">
+        <div data-target style="display: contents; grid-template-columns: 100px 100px">
+          <div>Child of contents wrapper</div>
+        </div>
+      </div>
+    </div>
+
     <!-- ===== container-no-place: place-* on non-flex/grid ===== -->
     <h2>container-no-place: place-* on non-flex/grid</h2>
 
@@ -260,142 +405,6 @@
         style="display: flex; place-content: center; height: 80px; background: #f0f0f0"
       >
         <div>Flex child</div>
-      </div>
-    </div>
-
-    <!-- ===== flex-no-container-props: flex-direction/wrap on non-flex ===== -->
-    <h2>flex-no-container-props: flex-direction/wrap on non-flex elements</h2>
-
-    <h3>Should warn</h3>
-    <div class="case expect-warn" data-rule="flex-no-container-props">
-      <div class="label label-warn">flex-no-container-props warn: block with flex-direction</div>
-      <div data-target style="flex-direction: column">
-        <div>Child 1</div>
-        <div>Child 2</div>
-      </div>
-    </div>
-    <div class="case expect-warn" data-rule="flex-no-container-props">
-      <div class="label label-warn">flex-no-container-props warn: block with flex-wrap</div>
-      <div data-target style="flex-wrap: wrap">
-        <div>Child 1</div>
-        <div>Child 2</div>
-      </div>
-    </div>
-    <div class="case expect-warn" data-rule="flex-no-container-props">
-      <div class="label label-warn">
-        flex-no-container-props warn: block with flex-flow shorthand
-      </div>
-      <div data-target style="flex-flow: column wrap">
-        <div>Child 1</div>
-        <div>Child 2</div>
-      </div>
-    </div>
-
-    <h3>Should NOT warn</h3>
-    <div class="case expect-ok" data-rule="flex-no-container-props">
-      <div class="label label-ok">
-        flex-no-container-props ok: flex container with flex-direction
-      </div>
-      <div data-target style="display: flex; flex-direction: column">
-        <div>Flex child 1</div>
-        <div>Flex child 2</div>
-      </div>
-    </div>
-    <div class="case expect-ok" data-rule="flex-no-container-props">
-      <div class="label label-ok">flex-no-container-props ok: inline-flex with flex-wrap</div>
-      <span data-target style="display: inline-flex; flex-wrap: wrap">
-        <span>Child 1</span>
-        <span>Child 2</span>
-      </span>
-    </div>
-    <div class="case expect-ok" data-rule="flex-no-container-props">
-      <div class="label label-ok">
-        flex-no-container-props ok: grid container (no false positive)
-      </div>
-      <div
-        data-target
-        style="display: grid; flex-direction: column; grid-template-columns: 1fr 1fr"
-      >
-        <div>Grid child 1</div>
-        <div>Grid child 2</div>
-      </div>
-    </div>
-    <div class="case expect-ok" data-rule="flex-no-container-props">
-      <div class="label label-ok">flex-no-container-props ok: default values (no override)</div>
-      <div data-target>
-        <div>Plain block element (flex-direction defaults to row)</div>
-      </div>
-    </div>
-    <div class="case expect-ok" data-rule="flex-no-container-props">
-      <div class="label label-ok">flex-no-container-props ok: display:contents skipped</div>
-      <div style="display: flex">
-        <div data-target style="display: contents; flex-direction: column">
-          <div>Child of contents wrapper</div>
-        </div>
-      </div>
-    </div>
-
-    <!-- ===== grid-no-container-props: grid container props on non-grid ===== -->
-    <h2>grid-no-container-props: grid container props on non-grid elements</h2>
-
-    <h3>Should warn</h3>
-    <div class="case expect-warn" data-rule="grid-no-container-props">
-      <div class="label label-warn">
-        grid-no-container-props warn: block with grid-template-columns
-      </div>
-      <div data-target style="grid-template-columns: 1fr 1fr">
-        <div>Child 1</div>
-        <div>Child 2</div>
-      </div>
-    </div>
-    <div class="case expect-warn" data-rule="grid-no-container-props">
-      <div class="label label-warn">grid-no-container-props warn: block with grid-auto-flow</div>
-      <div data-target style="grid-auto-flow: column">
-        <div>Child 1</div>
-        <div>Child 2</div>
-      </div>
-    </div>
-    <div class="case expect-warn" data-rule="grid-no-container-props">
-      <div class="label label-warn">
-        grid-no-container-props warn: flex with grid-template-columns
-      </div>
-      <div data-target style="display: flex; grid-template-columns: 1fr 1fr">
-        <div>Child 1</div>
-        <div>Child 2</div>
-      </div>
-    </div>
-
-    <h3>Should NOT warn</h3>
-    <div class="case expect-ok" data-rule="grid-no-container-props">
-      <div class="label label-ok">
-        grid-no-container-props ok: grid container with grid-template-columns
-      </div>
-      <div data-target style="display: grid; grid-template-columns: 1fr 1fr">
-        <div>Grid child 1</div>
-        <div>Grid child 2</div>
-      </div>
-    </div>
-    <div class="case expect-ok" data-rule="grid-no-container-props">
-      <div class="label label-ok">
-        grid-no-container-props ok: inline-grid with grid-template-columns
-      </div>
-      <span data-target style="display: inline-grid; grid-template-columns: 1fr 1fr">
-        <span>Child 1</span>
-        <span>Child 2</span>
-      </span>
-    </div>
-    <div class="case expect-ok" data-rule="grid-no-container-props">
-      <div class="label label-ok">grid-no-container-props ok: default values (no override)</div>
-      <div data-target>
-        <div>Plain block element (grid properties at defaults)</div>
-      </div>
-    </div>
-    <div class="case expect-ok" data-rule="grid-no-container-props">
-      <div class="label label-ok">grid-no-container-props ok: display:contents skipped</div>
-      <div style="display: grid; grid-template-columns: 1fr 1fr">
-        <div data-target style="display: contents; grid-template-columns: 100px 100px">
-          <div>Child of contents wrapper</div>
-        </div>
       </div>
     </div>
 
@@ -679,6 +688,20 @@
 
     <h3>Should NOT warn</h3>
     <div class="case expect-ok" data-rule="item-no-order">
+      <div class="label label-ok">item-no-order ok: flex item with order</div>
+      <div style="display: flex; gap: 8px">
+        <div data-target style="order: 2">Flex child with order (valid)</div>
+        <div>Flex child 2</div>
+      </div>
+    </div>
+    <div class="case expect-ok" data-rule="item-no-order">
+      <div class="label label-ok">item-no-order ok: grid item with order</div>
+      <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 8px">
+        <div data-target style="order: 2">Grid child with order (valid)</div>
+        <div>Grid child 2</div>
+      </div>
+    </div>
+    <div class="case expect-ok" data-rule="item-no-order">
       <div class="label label-ok">
         item-no-order ok: display:contents parent (grandparent is flex)
       </div>
@@ -731,7 +754,9 @@
       </div>
       <div style="display: flex; gap: 8px">
         <div style="display: contents">
-          <div data-target style="flex: 1">Child of contents wrapper (actually a flex item)</div>
+          <div data-target style="align-self: center">
+            Child of contents wrapper (actually a flex item)
+          </div>
         </div>
       </div>
     </div>
@@ -839,6 +864,32 @@
       </div>
       <div data-target style="container-type: inline-size; z-index: 5">
         container-type + z-index (valid stacking context)
+      </div>
+    </div>
+    <div class="case expect-ok" data-rule="static-no-z-index">
+      <div class="label label-ok">static-no-z-index ok: will-change creates stacking context</div>
+      <div data-target style="will-change: transform; z-index: 5">
+        will-change: transform + z-index (valid stacking context)
+      </div>
+    </div>
+    <div class="case expect-ok" data-rule="static-no-z-index">
+      <div class="label label-ok">static-no-z-index ok: filter creates stacking context</div>
+      <div data-target style="filter: blur(0px); z-index: 5">
+        filter + z-index (valid stacking context)
+      </div>
+    </div>
+    <div class="case expect-ok" data-rule="static-no-z-index">
+      <div class="label label-ok">static-no-z-index ok: isolation creates stacking context</div>
+      <div data-target style="isolation: isolate; z-index: 5">
+        isolation: isolate + z-index (valid stacking context)
+      </div>
+    </div>
+    <div class="case expect-ok" data-rule="static-no-z-index">
+      <div class="label label-ok">
+        static-no-z-index ok: backdrop-filter creates stacking context
+      </div>
+      <div data-target style="backdrop-filter: blur(4px); z-index: 5">
+        backdrop-filter + z-index (valid stacking context)
       </div>
     </div>
     <div class="case expect-ok" data-rule="static-no-z-index">

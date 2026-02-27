@@ -40,7 +40,7 @@ describe('analyzeElement (integration)', () => {
   it('detects flex-direction on non-flex container', () => {
     const warnings = analyzeElement(makeElement({ flexDirection: 'column' }));
     const ruleIds = warnings.map((w) => w.ruleId);
-    expect(ruleIds).toContain('flex-no-container-props');
+    expect(ruleIds).toContain('container-no-flex-props');
   });
 
   it('combines inline-no-dimensions with other rules on inline element', () => {

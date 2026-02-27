@@ -1,5 +1,5 @@
 import { describe, it, expect } from 'vitest';
-import { checkSelfAlignment } from '../self-alignment.ts';
+import { checkSelfAlignment } from '../item-no-self-align.ts';
 import { createRuleContext } from '../context.ts';
 import type { ElementData } from '../types.ts';
 import { makeElement as _makeElement } from './helpers/make-element.ts';

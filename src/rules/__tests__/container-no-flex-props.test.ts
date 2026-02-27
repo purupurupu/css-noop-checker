@@ -1,15 +1,15 @@
 import { describe, it, expect } from 'vitest';
-import { checkFlexContainerProps } from '../flex-container-props.ts';
+import { checkFlexContainerProps } from '../container-no-flex-props.ts';
 import { createRuleContext } from '../context.ts';
 import { makeElement } from './helpers/make-element.ts';
 
-describe('flex-no-container-props: flex-direction/wrap on non-flex', () => {
+describe('container-no-flex-props: flex-direction/wrap on non-flex', () => {
   it('warns when flex-direction is set on block element', () => {
     const warnings = checkFlexContainerProps(
       createRuleContext(makeElement({ flexDirection: 'column' })),
     );
     expect(warnings).toHaveLength(1);
-    expect(warnings[0].ruleId).toBe('flex-no-container-props');
+    expect(warnings[0].ruleId).toBe('container-no-flex-props');
     expect(warnings[0].property).toBe('flex-direction');
     expect(warnings[0].title).toContain('flex-direction');
   });

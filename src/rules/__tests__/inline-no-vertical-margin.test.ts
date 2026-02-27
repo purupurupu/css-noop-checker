@@ -1,5 +1,5 @@
 import { describe, it, expect } from 'vitest';
-import { checkInlineVerticalMargin } from '../inline-vertical-margin.ts';
+import { checkInlineVerticalMargin } from '../inline-no-vertical-margin.ts';
 import { createRuleContext } from '../context.ts';
 import type { ElementData } from '../types.ts';
 import { makeElement as _makeElement } from './helpers/make-element.ts';

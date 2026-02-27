@@ -1,5 +1,5 @@
 import { describe, it, expect } from 'vitest';
-import { checkOrder } from '../order.ts';
+import { checkOrder } from '../item-no-order.ts';
 import { createRuleContext } from '../context.ts';
 import type { ElementData } from '../types.ts';
 import { makeElement as _makeElement } from './helpers/make-element.ts';

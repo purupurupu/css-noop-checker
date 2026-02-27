@@ -1,5 +1,5 @@
 import { describe, it, expect } from 'vitest';
-import { checkGap } from '../gap.ts';
+import { checkGap } from '../container-no-gap.ts';
 import { createRuleContext } from '../context.ts';
 import { makeElement } from './helpers/make-element.ts';
 

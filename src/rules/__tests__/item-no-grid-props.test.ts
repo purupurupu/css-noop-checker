@@ -1,5 +1,5 @@
 import { describe, it, expect } from 'vitest';
-import { checkItemNoGridProps } from '../non-grid-child-props.ts';
+import { checkItemNoGridProps } from '../item-no-grid-props.ts';
 import { createRuleContext } from '../context.ts';
 import type { ElementData } from '../types.ts';
 import { makeElement as _makeElement } from './helpers/make-element.ts';

@@ -1,5 +1,5 @@
 import { describe, it, expect } from 'vitest';
-import { checkStaticZIndex } from '../static-z-index.ts';
+import { checkStaticZIndex } from '../static-no-z-index.ts';
 import { createRuleContext } from '../context.ts';
 import type { ElementData } from '../types.ts';
 import { makeElement as _makeElement } from './helpers/make-element.ts';

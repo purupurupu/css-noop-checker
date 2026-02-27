@@ -1,19 +1,19 @@
 // Rule registration (side-effect imports)
-import './alignment.ts';
-import './block-vertical-align.ts';
-import './flex-container-props.ts';
-import './gap.ts';
-import './grid-container-props.ts';
-import './inline-dimensions.ts';
-import './inline-vertical-margin.ts';
+import './block-no-vertical-align.ts';
+import './container-no-align.ts';
+import './container-no-flex-props.ts';
+import './container-no-gap.ts';
+import './container-no-grid-props.ts';
+import './container-no-place.ts';
+import './inline-no-dimensions.ts';
+import './inline-no-vertical-margin.ts';
+import './item-no-flex-props.ts';
 import './item-no-float.ts';
-import './non-flex-child-props.ts';
-import './non-grid-child-props.ts';
-import './order.ts';
-import './place.ts';
-import './self-alignment.ts';
-import './static-position-offset.ts';
-import './static-z-index.ts';
+import './item-no-grid-props.ts';
+import './item-no-order.ts';
+import './item-no-self-align.ts';
+import './static-no-offset.ts';
+import './static-no-z-index.ts';
 
 import type { ElementData, Warning } from './types.ts';
 import { createRuleContext } from './context.ts';
