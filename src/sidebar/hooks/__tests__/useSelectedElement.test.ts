@@ -54,6 +54,10 @@ const validData = {
     gridAutoColumns: 'auto',
     gridAutoRows: 'auto',
     gridAutoFlow: 'row',
+    gridColumnStart: 'auto',
+    gridColumnEnd: 'auto',
+    gridRowStart: 'auto',
+    gridRowEnd: 'auto',
   },
   parent: null,
 };
@@ -195,6 +199,10 @@ describe('isElementData', () => {
       'gridAutoColumns',
       'gridAutoRows',
       'gridAutoFlow',
+      'gridColumnStart',
+      'gridColumnEnd',
+      'gridRowStart',
+      'gridRowEnd',
     ];
     for (const key of requiredKeys) {
       const styles = { ...validData.computedStyles };

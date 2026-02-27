@@ -12,6 +12,7 @@ import './static-z-index.ts';
 import './flex-container-props.ts';
 import './non-flex-child-props.ts';
 import './grid-container-props.ts';
+import './non-grid-child-props.ts';
 
 import type { ElementData, Warning } from './types.ts';
 import { createRuleContext } from './context.ts';

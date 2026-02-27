@@ -55,6 +55,8 @@ Pure-function rules with zero Chrome API dependency — fully testable:
 - `block-vertical-align.ts` — `block-no-vertical-align`: vertical-align on block-level elements
 - `static-z-index.ts` — `static-no-z-index`: z-index on non-stacking-context elements
 - `flex-container-props.ts` — `flex-no-container-props`: flex-direction/flex-wrap on non-flex containers
+- `non-flex-child-props.ts` — `item-no-flex-props`: flex-grow/shrink/basis on non-flex children
+- `non-grid-child-props.ts` — `item-no-grid-props`: grid-column-start/end and grid-row-start/end on non-grid children
 - `__tests__/` — tests covering all rules + engine integration
 
 #### Rule ID Naming Convention

@@ -51,6 +51,10 @@ const VALID_STYLES = {
   gridAutoColumns: 'auto',
   gridAutoRows: 'auto',
   gridAutoFlow: 'row',
+  gridColumnStart: 'auto',
+  gridColumnEnd: 'auto',
+  gridRowStart: 'auto',
+  gridRowEnd: 'auto',
 };
 
 describe('isElementData — parent field validation', () => {
