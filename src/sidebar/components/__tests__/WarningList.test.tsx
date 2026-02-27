@@ -22,9 +22,9 @@ describe('WarningList', () => {
     expect(container.innerHTML).toBe('');
   });
 
-  it('returns null when status is error', () => {
-    const { container } = render(<WarningList warnings={[]} status="error" />);
-    expect(container.innerHTML).toBe('');
+  it('shows error message when status is error', () => {
+    render(<WarningList warnings={[]} status="error" />);
+    screen.getByText('Analysis failed. Try selecting another element.');
   });
 
   it('shows "Analyzing..." when status is analyzing', () => {
@@ -34,7 +34,7 @@ describe('WarningList', () => {
 
   it('shows "No issues detected" when status is ready with empty warnings', () => {
     render(<WarningList warnings={[]} status="ready" />);
-    screen.getByText('No issues detected (MVP rules).');
+    screen.getByText('No issues detected.');
   });
 
   it('renders WarningCard for each warning when ready with warnings', () => {
@@ -53,6 +53,6 @@ describe('WarningList', () => {
 
   it('does not render "No issues detected" when there are warnings', () => {
     render(<WarningList warnings={[makeWarning()]} status="ready" />);
-    expect(screen.queryByText('No issues detected (MVP rules).')).toBeNull();
+    expect(screen.queryByText('No issues detected.')).toBeNull();
   });
 });

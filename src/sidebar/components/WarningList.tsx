@@ -8,8 +8,16 @@ interface WarningListProps {
 }
 
 export function WarningList({ warnings, status }: WarningListProps) {
-  if (status === 'no-selection' || status === 'error') {
+  if (status === 'no-selection') {
     return null;
+  }
+
+  if (status === 'error') {
+    return (
+      <div className="warning-list__message warning-list__message--error">
+        Analysis failed. Try selecting another element.
+      </div>
+    );
   }
 
   if (status === 'analyzing') {
@@ -17,7 +25,7 @@ export function WarningList({ warnings, status }: WarningListProps) {
   }
 
   if (warnings.length === 0) {
-    return <div className="warning-list__message">No issues detected (MVP rules).</div>;
+    return <div className="warning-list__message">No issues detected.</div>;
   }
 
   return (

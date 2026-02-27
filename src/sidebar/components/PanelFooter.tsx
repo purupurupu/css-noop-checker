@@ -1,7 +1,6 @@
+import { getRules } from '../../rules/registry.ts';
+
 export function PanelFooter() {
-  return (
-    <footer className="panel-footer">
-      MVP rules: width/height, flex/grid gap, alignment, place-*
-    </footer>
-  );
+  const ruleCount = getRules().length;
+  return <footer className="panel-footer">{ruleCount} rules active</footer>;
 }

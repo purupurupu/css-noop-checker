@@ -38,7 +38,12 @@ export function ScanRuleGroup({ group, defaultOpen, onInspect }: ScanRuleGroupPr
         <span className="scan-rule-group__count">({group.violations.length})</span>
       </button>
       {open && (
-        <div className="scan-rule-group__body" id={bodyId} role="region">
+        <div
+          className="scan-rule-group__body"
+          id={bodyId}
+          role="region"
+          aria-label={`${label} violations`}
+        >
           {displayed.map((v) => (
             <ScanViolationRow key={v.index} violation={v} onInspect={() => onInspect(v)} />
           ))}
