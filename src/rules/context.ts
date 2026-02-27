@@ -84,7 +84,11 @@ export function isVerticalAlignApplicable(display: string): boolean {
     display === 'inline-flex' ||
     display === 'inline-grid' ||
     display === 'table-cell' ||
-    display === 'inline-table'
+    display === 'inline-table' ||
+    display === 'table-row' ||
+    display === 'table-row-group' ||
+    display === 'table-header-group' ||
+    display === 'table-footer-group'
   );
 }
 
