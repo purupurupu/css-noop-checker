@@ -36,6 +36,9 @@ export const DEFAULT_COMPUTED_STYLES: ElementData['computedStyles'] = {
   willChange: 'auto',
   flexDirection: 'row',
   flexWrap: 'nowrap',
+  flexGrow: '0',
+  flexShrink: '1',
+  flexBasis: 'auto',
 };
 
 /** Create a test ElementData with overrides and optional tagName / parent. */

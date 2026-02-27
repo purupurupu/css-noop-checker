@@ -42,6 +42,9 @@ const validData = {
     willChange: 'auto',
     flexDirection: 'row',
     flexWrap: 'nowrap',
+    flexGrow: '0',
+    flexShrink: '1',
+    flexBasis: 'auto',
   },
   parent: null,
 };
@@ -170,6 +173,9 @@ describe('isElementData', () => {
       'willChange',
       'flexDirection',
       'flexWrap',
+      'flexGrow',
+      'flexShrink',
+      'flexBasis',
     ];
     for (const key of requiredKeys) {
       const styles = { ...validData.computedStyles };

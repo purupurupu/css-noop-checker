@@ -365,6 +365,57 @@
       <div data-target style="margin-top: 20px">block div with margin-top</div>
     </div>
 
+    <!-- ===== item-no-flex-props: flex item props on children of non-flex containers ===== -->
+    <h2>item-no-flex-props: flex item props on children of non-flex containers</h2>
+
+    <h3>Should warn</h3>
+    <div class="case expect-warn" data-rule="item-no-flex-props">
+      <div class="label label-warn">item-no-flex-props warn: flex-grow on block child</div>
+      <div>
+        <div data-target style="flex-grow: 1">flex-grow: 1 on child of block parent</div>
+      </div>
+    </div>
+    <div class="case expect-warn" data-rule="item-no-flex-props">
+      <div class="label label-warn">item-no-flex-props warn: flex-shrink on block child</div>
+      <div>
+        <div data-target style="flex-shrink: 0">flex-shrink: 0 on child of block parent</div>
+      </div>
+    </div>
+    <div class="case expect-warn" data-rule="item-no-flex-props">
+      <div class="label label-warn">item-no-flex-props warn: flex-basis on block child</div>
+      <div>
+        <div data-target style="flex-basis: 100px">flex-basis: 100px on child of block parent</div>
+      </div>
+    </div>
+    <div class="case expect-warn" data-rule="item-no-flex-props">
+      <div class="label label-warn">item-no-flex-props warn: flex-grow on grid child</div>
+      <div style="display: grid">
+        <div data-target style="flex-grow: 1">flex-grow: 1 on child of grid parent</div>
+      </div>
+    </div>
+
+    <h3>Should NOT warn</h3>
+    <div class="case expect-ok" data-rule="item-no-flex-props">
+      <div class="label label-ok">item-no-flex-props ok: flex-grow on flex child</div>
+      <div style="display: flex">
+        <div data-target style="flex-grow: 1">flex-grow: 1 on child of flex parent</div>
+      </div>
+    </div>
+    <div class="case expect-ok" data-rule="item-no-flex-props">
+      <div class="label label-ok">item-no-flex-props ok: flex-grow on inline-flex child</div>
+      <div style="display: inline-flex">
+        <div data-target style="flex-grow: 1">flex-grow: 1 on child of inline-flex parent</div>
+      </div>
+    </div>
+    <div class="case expect-ok" data-rule="item-no-flex-props">
+      <div class="label label-ok">item-no-flex-props ok: default values on block child</div>
+      <div>
+        <div data-target style="flex-grow: 0; flex-shrink: 1; flex-basis: auto">
+          default flex values on child of block parent
+        </div>
+      </div>
+    </div>
+
     <!-- ===== item-no-order: order on non-flex/grid items ===== -->
     <h2>item-no-order: order on non-flex/grid items</h2>
 
