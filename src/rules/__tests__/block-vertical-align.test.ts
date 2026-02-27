@@ -88,11 +88,32 @@ describe('block-no-vertical-align', () => {
     expect(warnings).toHaveLength(1);
   });
 
-  it('warns on table-row elements (vertical-align has no effect)', () => {
+  it('skips table-row elements (vertical-align propagates to cells)', () => {
     const warnings = checkBlockVerticalAlign(
       createRuleContext(makeElement({ display: 'table-row', verticalAlign: 'middle' })),
     );
-    expect(warnings).toHaveLength(1);
+    expect(warnings).toHaveLength(0);
+  });
+
+  it('skips table-row-group elements (vertical-align propagates to cells)', () => {
+    const warnings = checkBlockVerticalAlign(
+      createRuleContext(makeElement({ display: 'table-row-group', verticalAlign: 'middle' })),
+    );
+    expect(warnings).toHaveLength(0);
+  });
+
+  it('skips table-header-group elements (vertical-align propagates to cells)', () => {
+    const warnings = checkBlockVerticalAlign(
+      createRuleContext(makeElement({ display: 'table-header-group', verticalAlign: 'middle' })),
+    );
+    expect(warnings).toHaveLength(0);
+  });
+
+  it('skips table-footer-group elements (vertical-align propagates to cells)', () => {
+    const warnings = checkBlockVerticalAlign(
+      createRuleContext(makeElement({ display: 'table-footer-group', verticalAlign: 'middle' })),
+    );
+    expect(warnings).toHaveLength(0);
   });
 
   it('skips display: contents elements', () => {
