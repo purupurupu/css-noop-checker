@@ -1,0 +1,45 @@
+import type { RuleDescriptor, Warning } from './types.ts';
+import { registerRule } from './registry.ts';
+
+const FLEX_CHILD_PROPERTIES = [
+  { key: 'flexGrow', cssName: 'flex-grow', defaultValue: '0' },
+  { key: 'flexShrink', cssName: 'flex-shrink', defaultValue: '1' },
+  { key: 'flexBasis', cssName: 'flex-basis', defaultValue: 'auto' },
+] as const;
+
+const rule: RuleDescriptor = {
+  id: 'item-no-flex-props',
+  label: 'flex item props on non-flex child',
+  requiredProperties: FLEX_CHILD_PROPERTIES.map((p) => p.key),
+  requiredParentProperties: ['display'],
+  check(ctx): Warning[] {
+    if (!ctx.parentStyles) return [];
+    // flex-grow/flex-shrink/flex-basis only apply to flex items.
+    // Unlike order/align-self which apply to both flex and grid items,
+    // these properties are flex-specific, so grid items are NOT excluded.
+    if (ctx.isFlexItem) return [];
+
+    const parentDisplay = ctx.parentStyles.display ?? 'block';
+
+    return FLEX_CHILD_PROPERTIES.flatMap(({ key, cssName, defaultValue }) => {
+      const value = ctx.styles[key];
+      if (value === defaultValue) return [];
+
+      return [
+        {
+          ruleId: 'item-no-flex-props',
+          property: cssName,
+          severity: 'warning',
+          title: `${cssName} has no effect`,
+          details: `${cssName} is "${value}" but parent display is "${parentDisplay}". Flex item properties only apply to children of flex containers.`,
+          suggestion:
+            'Set display: flex or display: inline-flex on the parent element, or remove this property.',
+        },
+      ];
+    });
+  },
+};
+
+registerRule(rule);
+
+export const checkItemNoFlexProps = rule.check;
