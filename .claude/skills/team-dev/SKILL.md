@@ -23,6 +23,7 @@ You are the **Team Orchestrator** for css-noop-checker feature development.
    ```
 
    **Implementer prompt template:**
+
    ```
    You are the implementer for css-noop-checker.
 
@@ -88,6 +89,7 @@ through specialist review and targeted fixes.
    Do NOT pass a `model` parameter for these — it is handled automatically.
 
    **Reviewer prompt template** (adapt for each reviewer):
+
    ```
    ## Context
    <original input context / spec>
@@ -118,6 +120,7 @@ through specialist review and targeted fixes.
    ```
 
    **Fix prompt template:**
+
    ```
    You are the implementer for css-noop-checker.
 
@@ -159,6 +162,7 @@ through specialist review and targeted fixes.
 
 7. **Final review** — Spawn all four reviewers one last time **in parallel** (same as step 3)
    to confirm the implementation is satisfactory. Add this to the reviewer prompt:
+
    ```
    This is the FINAL review. Give a verdict: PASS / CONDITIONAL PASS / FAIL
    with brief rationale.
