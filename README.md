@@ -23,16 +23,31 @@ pnpm install
 pnpm dev
 ```
 
+## Build & Test Commands
+
 Build extension assets:
 
 ```bash
 pnpm build
 ```
 
-Run tests:
+Run unit/component tests:
 
 ```bash
 pnpm test
+```
+
+Run E2E tests (Playwright):
+
+```bash
+pnpm test:e2e
+```
+
+Run lint/format checks:
+
+```bash
+pnpm lint
+pnpm fmt:check
 ```
 
 ## Load in Chrome
@@ -50,3 +65,7 @@ pnpm test
 - Detection is based on `getComputedStyle` and lightweight heuristics.
 - No external network calls.
 - CSS declaration origin tracking (which file/selector set the value) is not included in MVP.
+
+## Contributing
+
+See the contributor guide in [`AGENTS.md`](./AGENTS.md) for repository structure, coding style, testing expectations, and PR conventions.
