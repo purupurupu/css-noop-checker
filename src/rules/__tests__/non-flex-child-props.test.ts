@@ -79,6 +79,15 @@ describe('item-no-flex-props', () => {
     expect(warnings).toHaveLength(0);
   });
 
+  it('skips when parent display is contents (grandparent context unknown)', () => {
+    const warnings = checkItemNoFlexProps(
+      createRuleContext(
+        makeElement({ flexGrow: '1' }, { computedStyles: { display: 'contents' } }),
+      ),
+    );
+    expect(warnings).toHaveLength(0);
+  });
+
   it('skips when parent is null (unknown parent context)', () => {
     const warnings = checkItemNoFlexProps(createRuleContext(makeElement({ flexGrow: '1' }, null)));
     expect(warnings).toHaveLength(0);
