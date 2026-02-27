@@ -4,7 +4,7 @@ function makeInspectScript(index: number): string {
   return `(function() {
   var els = document.body.querySelectorAll('*');
   var el = els[${index}];
-  if (el) { inspect(el); return true; }
+  if (el) { el.scrollIntoView({ block: 'center', behavior: 'smooth' }); inspect(el); return true; }
   return false;
 })()`;
 }
