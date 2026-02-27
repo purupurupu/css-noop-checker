@@ -41,6 +41,7 @@ Chrome DevTools extension with two entry points (multi-page Vite build):
 Pure-function rules with zero Chrome API dependency — fully testable. Each rule file is named after its rule ID (e.g. `container-no-gap.ts` → rule ID `container-no-gap`).
 
 Key infrastructure files:
+
 - `types.ts` — `ElementData`, `Warning`, `Rule`, `RuleContext`, `RuleId`
 - `context.ts` — `createRuleContext()` normalizes computed styles; helper predicates
 - `stacking-context.ts` — `isStackingContext()` detects CSS stacking context triggers
