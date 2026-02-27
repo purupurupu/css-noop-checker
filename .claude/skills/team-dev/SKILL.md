@@ -19,17 +19,17 @@ You manage a persistent team of 5 specialists using `TeamCreate`, `SendMessage`,
 
 2. **Create tasks** with `TaskCreate` for the full workflow (9 tasks):
 
-   | # | Subject | Description |
-   |---|---------|-------------|
-   | 1 | Initial implementation | Implement the feature per the spec |
-   | 2 | Review round 1 | All 4 reviewers review the implementation |
-   | 3 | Fix round 1 | Implementer addresses round 1 feedback |
-   | 4 | Review round 2 | All 4 reviewers review fixes from round 1 |
-   | 5 | Fix round 2 | Implementer addresses round 2 feedback |
-   | 6 | Review round 3 | All 4 reviewers review fixes from round 2 |
-   | 7 | Fix round 3 | Implementer addresses round 3 feedback |
-   | 8 | Final review | All 4 reviewers give PASS/CONDITIONAL PASS/FAIL verdict |
-   | 9 | Cleanup | Shutdown all members and delete team |
+   | #   | Subject                | Description                                             |
+   | --- | ---------------------- | ------------------------------------------------------- |
+   | 1   | Initial implementation | Implement the feature per the spec                      |
+   | 2   | Review round 1         | All 4 reviewers review the implementation               |
+   | 3   | Fix round 1            | Implementer addresses round 1 feedback                  |
+   | 4   | Review round 2         | All 4 reviewers review fixes from round 1               |
+   | 5   | Fix round 2            | Implementer addresses round 2 feedback                  |
+   | 6   | Review round 3         | All 4 reviewers review fixes from round 2               |
+   | 7   | Fix round 3            | Implementer addresses round 3 feedback                  |
+   | 8   | Final review           | All 4 reviewers give PASS/CONDITIONAL PASS/FAIL verdict |
+   | 9   | Cleanup                | Shutdown all members and delete team                    |
 
    Set up dependencies: task 2 blocked by 1, task 3 blocked by 2, etc.
 
@@ -367,6 +367,7 @@ Repeat the following cycle **exactly 3 times**:
 ### Progress tracking
 
 After each round, briefly summarize:
+
 - Issues fixed in this round
 - Remaining open items (if any)
 - Which reviewer concerns were addressed vs. deferred
