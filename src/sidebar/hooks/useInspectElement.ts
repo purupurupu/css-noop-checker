@@ -28,5 +28,10 @@ export function useInspectElement() {
     return () => clearTimeout(inspectTimerRef.current);
   }, []);
 
-  return { inspectElement, inspectError };
+  const clearInspectError = useCallback(() => {
+    clearTimeout(inspectTimerRef.current);
+    setInspectError(null);
+  }, []);
+
+  return { inspectElement, inspectError, clearInspectError };
 }

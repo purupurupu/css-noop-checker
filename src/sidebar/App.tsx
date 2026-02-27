@@ -1,4 +1,4 @@
-import { useCallback, useMemo, useState } from 'react';
+import { useCallback, useMemo, useRef, useState } from 'react';
 import { useSelectedElement } from './hooks/useSelectedElement.ts';
 import { usePageScan } from './hooks/usePageScan.ts';
 import { useInspectElement } from './hooks/useInspectElement.ts';
@@ -15,12 +15,15 @@ type ViewMode = 'element' | 'scan' | 'scan-detail';
 function App() {
   const { data, status } = useSelectedElement();
   const { groups, status: scanStatus, error, progress, scan, clear } = usePageScan();
-  const { inspectElement, inspectError } = useInspectElement();
+  const { inspectElement, inspectError, clearInspectError } = useInspectElement();
   const [viewMode, setViewMode] = useState<ViewMode>('element');
   const [selectedViolation, setSelectedViolation] = useState<ScanViolation | null>(null);
+  const [inspectCount, setInspectCount] = useState(0);
+  const scrollPositionRef = useRef(0);
   const warnings = useMemo(() => (data ? analyzeElement(data) : []), [data]);
 
   const handleScan = () => {
+    clearInspectError();
     setSelectedViolation(null);
     setViewMode('scan');
     scan();
@@ -34,33 +37,32 @@ function App() {
 
   const handleInspect = useCallback(
     (violation: ScanViolation) => {
+      scrollPositionRef.current = document.documentElement.scrollTop;
       inspectElement(violation.index);
       setSelectedViolation(violation);
+      setInspectCount((c) => c + 1);
       setViewMode('scan-detail');
     },
     [inspectElement],
   );
 
   const handleBackToResults = () => {
+    clearInspectError();
     setSelectedViolation(null);
     setViewMode('scan');
+    requestAnimationFrame(() => {
+      document.documentElement.scrollTop = scrollPositionRef.current;
+    });
   };
 
   const renderContent = () => {
-    switch (viewMode) {
-      case 'element':
-        return <WarningList warnings={warnings} status={status} />;
-      case 'scan-detail':
-        return (
-          <ScanViolationDetailView
-            key={selectedViolation!.index}
-            violation={selectedViolation!}
-            inspectError={inspectError}
-            onBack={handleBackToResults}
-          />
-        );
-      case 'scan':
-        return (
+    if (viewMode === 'element') {
+      return <WarningList warnings={warnings} status={status} />;
+    }
+
+    return (
+      <>
+        <div hidden={viewMode === 'scan-detail'}>
           <ScanResultsPanel
             groups={groups}
             status={scanStatus}
@@ -70,8 +72,17 @@ function App() {
             onInspect={handleInspect}
             onClear={handleClear}
           />
-        );
-    }
+        </div>
+        {viewMode === 'scan-detail' && selectedViolation && (
+          <ScanViolationDetailView
+            key={inspectCount}
+            violation={selectedViolation}
+            inspectError={inspectError}
+            onBack={handleBackToResults}
+          />
+        )}
+      </>
+    );
   };
 
   return (
