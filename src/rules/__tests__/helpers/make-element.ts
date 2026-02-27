@@ -48,6 +48,10 @@ export const DEFAULT_COMPUTED_STYLES: ElementData['computedStyles'] = {
   gridAutoColumns: 'auto',
   gridAutoRows: 'auto',
   gridAutoFlow: 'row',
+  gridColumnStart: 'auto',
+  gridColumnEnd: 'auto',
+  gridRowStart: 'auto',
+  gridRowEnd: 'auto',
 };
 
 /** Create a test ElementData with overrides and optional tagName / parent. */
