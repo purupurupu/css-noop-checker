@@ -45,6 +45,7 @@ const VALID_STYLES = {
   flexGrow: '0',
   flexShrink: '1',
   flexBasis: 'auto',
+  cssFloat: 'none',
   gridTemplateColumns: 'none',
   gridTemplateRows: 'none',
   gridTemplateAreas: 'none',
