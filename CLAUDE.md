@@ -38,26 +38,14 @@ Chrome DevTools extension with two entry points (multi-page Vite build):
 
 ### Rules Engine (`src/rules/`)
 
-Pure-function rules with zero Chrome API dependency — fully testable:
+Pure-function rules with zero Chrome API dependency — fully testable. Each rule file is named after its rule ID (e.g. `container-no-gap.ts` → rule ID `container-no-gap`).
 
-- `types.ts` — `ElementData`, `Warning`, `Rule`, `RuleContext`, `RuleId` (Stylelint-convention `string` type)
-- `context.ts` — `createRuleContext()` normalizes computed styles; helper predicates (`isFlexOrGridContainer`, etc.)
-- `stacking-context.ts` — `isStackingContext()` detects CSS stacking context triggers (used by `static-z-index.ts`)
-- `engine.ts` — `analyzeElement()` creates context then `rules.flatMap(r => r.check(ctx))`
-- `inline-dimensions.ts` — `inline-no-dimensions`: width/height on inline non-replaced elements
-- `inline-vertical-margin.ts` — `inline-no-vertical-margin`: vertical margin on inline non-replaced elements
-- `gap.ts` — `container-no-gap`: gap on non-flex/grid/multi-column containers
-- `alignment.ts` — `container-no-align`: align-items/justify-content on non-flex/grid
-- `place.ts` — `container-no-place`: place-content/place-items on non-flex/grid
-- `static-position-offset.ts` — `static-no-offset`: top/right/bottom/left on static position
-- `self-alignment.ts` — `item-no-self-align`: align-self on non-flex/grid items
-- `order.ts` — `item-no-order`: order on non-flex/grid items
-- `block-vertical-align.ts` — `block-no-vertical-align`: vertical-align on block-level elements
-- `static-z-index.ts` — `static-no-z-index`: z-index on non-stacking-context elements
-- `flex-container-props.ts` — `flex-no-container-props`: flex-direction/flex-wrap on non-flex containers
-- `non-flex-child-props.ts` — `item-no-flex-props`: flex-grow/shrink/basis on non-flex children
-- `non-grid-child-props.ts` — `item-no-grid-props`: grid-column-start/end and grid-row-start/end on non-grid children
-- `__tests__/` — tests covering all rules + engine integration
+Key infrastructure files:
+- `types.ts` — `ElementData`, `Warning`, `Rule`, `RuleContext`, `RuleId`
+- `context.ts` — `createRuleContext()` normalizes computed styles; helper predicates
+- `stacking-context.ts` — `isStackingContext()` detects CSS stacking context triggers
+- `engine.ts` — `analyzeElement()` creates context then runs all registered rules
+- `registry.ts` — rule registration via side-effect imports in `engine.ts`
 
 #### Rule ID Naming Convention
 
