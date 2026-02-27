@@ -335,6 +335,70 @@
       </div>
     </div>
 
+    <!-- ===== grid-no-container-props: grid container props on non-grid ===== -->
+    <h2>grid-no-container-props: grid container props on non-grid elements</h2>
+
+    <h3>Should warn</h3>
+    <div class="case expect-warn" data-rule="grid-no-container-props">
+      <div class="label label-warn">
+        grid-no-container-props warn: block with grid-template-columns
+      </div>
+      <div data-target style="grid-template-columns: 1fr 1fr">
+        <div>Child 1</div>
+        <div>Child 2</div>
+      </div>
+    </div>
+    <div class="case expect-warn" data-rule="grid-no-container-props">
+      <div class="label label-warn">grid-no-container-props warn: block with grid-auto-flow</div>
+      <div data-target style="grid-auto-flow: column">
+        <div>Child 1</div>
+        <div>Child 2</div>
+      </div>
+    </div>
+    <div class="case expect-warn" data-rule="grid-no-container-props">
+      <div class="label label-warn">
+        grid-no-container-props warn: flex with grid-template-columns
+      </div>
+      <div data-target style="display: flex; grid-template-columns: 1fr 1fr">
+        <div>Child 1</div>
+        <div>Child 2</div>
+      </div>
+    </div>
+
+    <h3>Should NOT warn</h3>
+    <div class="case expect-ok" data-rule="grid-no-container-props">
+      <div class="label label-ok">
+        grid-no-container-props ok: grid container with grid-template-columns
+      </div>
+      <div data-target style="display: grid; grid-template-columns: 1fr 1fr">
+        <div>Grid child 1</div>
+        <div>Grid child 2</div>
+      </div>
+    </div>
+    <div class="case expect-ok" data-rule="grid-no-container-props">
+      <div class="label label-ok">
+        grid-no-container-props ok: inline-grid with grid-template-columns
+      </div>
+      <span data-target style="display: inline-grid; grid-template-columns: 1fr 1fr">
+        <span>Child 1</span>
+        <span>Child 2</span>
+      </span>
+    </div>
+    <div class="case expect-ok" data-rule="grid-no-container-props">
+      <div class="label label-ok">grid-no-container-props ok: default values (no override)</div>
+      <div data-target>
+        <div>Plain block element (grid properties at defaults)</div>
+      </div>
+    </div>
+    <div class="case expect-ok" data-rule="grid-no-container-props">
+      <div class="label label-ok">grid-no-container-props ok: display:contents skipped</div>
+      <div style="display: grid; grid-template-columns: 1fr 1fr">
+        <div data-target style="display: contents; grid-template-columns: 100px 100px">
+          <div>Child of contents wrapper</div>
+        </div>
+      </div>
+    </div>
+
     <!-- ===== inline-no-dimensions: width/height on inline ===== -->
     <h2>inline-no-dimensions: width/height on inline elements</h2>
 

@@ -48,6 +48,12 @@ const validData = {
     flexGrow: '0',
     flexShrink: '1',
     flexBasis: 'auto',
+    gridTemplateColumns: 'none',
+    gridTemplateRows: 'none',
+    gridTemplateAreas: 'none',
+    gridAutoColumns: 'auto',
+    gridAutoRows: 'auto',
+    gridAutoFlow: 'row',
   },
   parent: null,
 };
@@ -183,6 +189,12 @@ describe('isElementData', () => {
       'flexGrow',
       'flexShrink',
       'flexBasis',
+      'gridTemplateColumns',
+      'gridTemplateRows',
+      'gridTemplateAreas',
+      'gridAutoColumns',
+      'gridAutoRows',
+      'gridAutoFlow',
     ];
     for (const key of requiredKeys) {
       const styles = { ...validData.computedStyles };

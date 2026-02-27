@@ -21,6 +21,12 @@ function makeBaseStyles(overrides: Record<string, string> = {}): Record<string, 
     verticalAlign: 'baseline',
     flexDirection: 'row',
     flexWrap: 'nowrap',
+    gridTemplateColumns: 'none',
+    gridTemplateRows: 'none',
+    gridTemplateAreas: 'none',
+    gridAutoColumns: 'auto',
+    gridAutoRows: 'auto',
+    gridAutoFlow: 'row',
     ...overrides,
   };
 }
