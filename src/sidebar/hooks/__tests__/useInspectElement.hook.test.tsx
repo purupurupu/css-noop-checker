@@ -90,6 +90,24 @@ describe('useInspectElement', () => {
     expect(result.current.inspectError).toBeNull();
   });
 
+  it('clearInspectError clears error and cancels auto-clear timer', async () => {
+    vi.useFakeTimers();
+    const { result } = renderHook(() => useInspectElement());
+
+    act(() => {
+      result.current.inspectElement(0);
+    });
+    await act(async () => {
+      await mock.resolveLastEval(false);
+    });
+    expect(result.current.inspectError).not.toBeNull();
+
+    act(() => {
+      result.current.clearInspectError();
+    });
+    expect(result.current.inspectError).toBeNull();
+  });
+
   it('inspectElement timer is cleaned up on unmount', async () => {
     vi.useFakeTimers();
     const { result, unmount } = renderHook(() => useInspectElement());
