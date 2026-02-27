@@ -16,6 +16,8 @@ const STACKING_CONTEXT_PROPERTIES = [
   'clipPath',
   'isolation',
   'mixBlendMode',
+  'mask',
+  'containerType',
   'contain',
   'willChange',
 ] as const;

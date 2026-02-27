@@ -5,9 +5,9 @@ import { registerRule } from './registry.ts';
 const rule: RuleDescriptor = {
   id: 'container-no-gap',
   label: 'gap on non-flex/grid',
-  requiredProperties: ['display', 'gap', 'rowGap', 'columnGap', 'columnCount'],
+  requiredProperties: ['display', 'gap', 'rowGap', 'columnGap', 'columnCount', 'columnWidth'],
   check(ctx) {
-    const { display, gap, rowGap, columnGap, columnCount } = ctx.styles;
+    const { display, gap, rowGap, columnGap, columnCount, columnWidth } = ctx.styles;
 
     if (isFlexOrGridContainer(display)) return [];
     if (display === 'contents') return [];
@@ -17,7 +17,8 @@ const rule: RuleDescriptor = {
     const hasGap = !isDefaultGapLikeValue(gap);
     const hasRowGap = !isDefaultGapLikeValue(rowGap);
     const hasColumnGap = !isDefaultGapLikeValue(columnGap);
-    const columnGapHasNoEffect = hasColumnGap && columnCount === 'auto';
+    const isMultiColumnContainer = columnCount !== 'auto' || (columnWidth ?? 'auto') !== 'auto';
+    const columnGapHasNoEffect = hasColumnGap && !isMultiColumnContainer;
 
     if (hasGap && hasRowGap && columnGapHasNoEffect && rowGap === columnGap) {
       warnings.push({
