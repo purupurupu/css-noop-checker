@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { getRuleLabel } from '../../rules/registry.ts';
-import type { ScanGroup } from '../types.ts';
+import type { ScanGroup, ScanViolation } from '../types.ts';
 import { ScanViolationRow } from './ScanViolationRow.tsx';
 
 const DISPLAY_LIMIT = 50;
@@ -8,7 +8,7 @@ const DISPLAY_LIMIT = 50;
 interface ScanRuleGroupProps {
   group: ScanGroup;
   defaultOpen: boolean;
-  onInspect: (index: number) => void;
+  onInspect: (violation: ScanViolation) => void;
 }
 
 export function ScanRuleGroup({ group, defaultOpen, onInspect }: ScanRuleGroupProps) {
@@ -40,7 +40,7 @@ export function ScanRuleGroup({ group, defaultOpen, onInspect }: ScanRuleGroupPr
       {open && (
         <div className="scan-rule-group__body" id={bodyId} role="region">
           {displayed.map((v) => (
-            <ScanViolationRow key={v.index} violation={v} onInspect={() => onInspect(v.index)} />
+            <ScanViolationRow key={v.index} violation={v} onInspect={() => onInspect(v)} />
           ))}
           {remaining > 0 && (
             <div className="scan-rule-group__more">&hellip; and {remaining} more</div>

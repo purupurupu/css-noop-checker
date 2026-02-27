@@ -151,7 +151,7 @@ describe('ScanRuleGroup', () => {
     expect(screen.queryByText(/and \d+ more/)).toBeNull();
   });
 
-  it('calls onInspect with correct index when a violation row is clicked (index=0)', () => {
+  it('calls onInspect with correct violation when a violation row is clicked (index=0)', () => {
     const onInspect = vi.fn();
     const { container } = render(
       <ScanRuleGroup {...defaultProps} defaultOpen={true} onInspect={onInspect} />,
@@ -160,10 +160,10 @@ describe('ScanRuleGroup', () => {
     // Click the violation row button
     const violationButton = container.querySelector('.scan-violation-row');
     fireEvent.click(violationButton!);
-    expect(onInspect).toHaveBeenCalledWith(0);
+    expect(onInspect).toHaveBeenCalledWith(defaultProps.group.violations[0]);
   });
 
-  it('calls onInspect with non-zero index to verify index is passed through', () => {
+  it('calls onInspect with non-zero index violation to verify violation is passed through', () => {
     const onInspect = vi.fn();
     const group = makeGroup({
       violations: [
@@ -189,7 +189,7 @@ describe('ScanRuleGroup', () => {
 
     const violationButton = container.querySelector('.scan-violation-row');
     fireEvent.click(violationButton!);
-    expect(onInspect).toHaveBeenCalledWith(42);
+    expect(onInspect).toHaveBeenCalledWith(group.violations[0]);
   });
 
   it('aria-controls on header matches body region id', () => {
