@@ -1,5 +1,5 @@
 import { describe, it, expect } from 'vitest';
-import { checkAlignment } from '../alignment.ts';
+import { checkAlignment } from '../container-no-align.ts';
 import { createRuleContext } from '../context.ts';
 import { makeElement } from './helpers/make-element.ts';
 

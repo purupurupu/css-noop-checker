@@ -1,5 +1,5 @@
 import { describe, it, expect } from 'vitest';
-import { checkInlineDimensions } from '../inline-dimensions.ts';
+import { checkInlineDimensions } from '../inline-no-dimensions.ts';
 import { createRuleContext } from '../context.ts';
 import type { ElementData } from '../types.ts';
 import { makeElement as _makeElement } from './helpers/make-element.ts';

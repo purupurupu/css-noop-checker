@@ -1,5 +1,5 @@
 import { describe, it, expect } from 'vitest';
-import { checkStaticPositionOffset } from '../static-position-offset.ts';
+import { checkStaticPositionOffset } from '../static-no-offset.ts';
 import { createRuleContext } from '../context.ts';
 import { makeElement } from './helpers/make-element.ts';
 

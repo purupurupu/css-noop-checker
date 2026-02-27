@@ -1,5 +1,5 @@
 import { describe, it, expect } from 'vitest';
-import { checkPlace } from '../place.ts';
+import { checkPlace } from '../container-no-place.ts';
 import { createRuleContext } from '../context.ts';
 import { makeElement } from './helpers/make-element.ts';
 
