@@ -74,6 +74,19 @@
         Block element with vertical-align: top (no effect)
       </div>
     </div>
+    <div class="case expect-warn" data-rule="block-no-vertical-align">
+      <div class="label label-warn">
+        block-no-vertical-align warn: table-caption with vertical-align (no effect)
+      </div>
+      <table>
+        <caption data-target style="vertical-align: top">
+          Table caption with vertical-align: top (no effect per CSS spec)
+        </caption>
+        <tr>
+          <td>Cell</td>
+        </tr>
+      </table>
+    </div>
 
     <h3>Should NOT warn</h3>
     <div class="case expect-ok" data-rule="block-no-vertical-align">
@@ -118,19 +131,6 @@
             <td>Cell in tbody with vertical-align: middle</td>
           </tr>
         </tbody>
-      </table>
-    </div>
-    <div class="case expect-warn" data-rule="block-no-vertical-align">
-      <div class="label label-warn">
-        block-no-vertical-align warn: table-caption with vertical-align (no effect)
-      </div>
-      <table>
-        <caption data-target style="vertical-align: top">
-          Table caption with vertical-align: top (no effect per CSS spec)
-        </caption>
-        <tr>
-          <td>Cell</td>
-        </tr>
       </table>
     </div>
 
@@ -464,6 +464,16 @@
       <div>
         <div data-target style="flex-grow: 0; flex-shrink: 1; flex-basis: auto">
           default flex values on child of block parent
+        </div>
+      </div>
+    </div>
+    <div class="case expect-ok" data-rule="item-no-flex-props">
+      <div class="label label-ok">
+        item-no-flex-props ok: display:contents parent (grandparent is flex)
+      </div>
+      <div style="display: flex">
+        <div style="display: contents">
+          <div data-target style="flex: 1">Child of contents wrapper (actually a flex item)</div>
         </div>
       </div>
     </div>
