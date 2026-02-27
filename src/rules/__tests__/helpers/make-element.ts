@@ -42,6 +42,12 @@ export const DEFAULT_COMPUTED_STYLES: ElementData['computedStyles'] = {
   flexGrow: '0',
   flexShrink: '1',
   flexBasis: 'auto',
+  gridTemplateColumns: 'none',
+  gridTemplateRows: 'none',
+  gridTemplateAreas: 'none',
+  gridAutoColumns: 'auto',
+  gridAutoRows: 'auto',
+  gridAutoFlow: 'row',
 };
 
 /** Create a test ElementData with overrides and optional tagName / parent. */
