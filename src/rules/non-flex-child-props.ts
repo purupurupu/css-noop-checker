@@ -19,7 +19,11 @@ const rule: RuleDescriptor = {
     // these properties are flex-specific, so grid items are NOT excluded.
     if (ctx.isFlexItem) return [];
 
+    // display:contents removes the parent's box, so the child participates in the
+    // grandparent's formatting context. Without grandparent data we cannot determine
+    // if this element is effectively a flex item.
     const parentDisplay = ctx.parentStyles.display ?? 'block';
+    if (parentDisplay === 'contents') return [];
 
     return FLEX_CHILD_PROPERTIES.flatMap(({ key, cssName, defaultValue }) => {
       const value = ctx.styles[key];
