@@ -1,5 +1,5 @@
 import { useMemo } from 'react';
-import type { ScanGroup, ScanProgress, ScanStatus } from '../types.ts';
+import type { ScanGroup, ScanProgress, ScanStatus, ScanViolation } from '../types.ts';
 import { ScanSummaryBar } from './ScanSummaryBar.tsx';
 import { ScanRuleGroup } from './ScanRuleGroup.tsx';
 
@@ -9,7 +9,7 @@ interface ScanResultsPanelProps {
   error: string | null;
   inspectError: string | null;
   progress: ScanProgress;
-  onInspect: (index: number) => void;
+  onInspect: (violation: ScanViolation) => void;
   onClear: () => void;
 }
 
