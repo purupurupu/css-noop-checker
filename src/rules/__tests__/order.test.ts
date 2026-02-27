@@ -66,4 +66,11 @@ describe('item-no-order', () => {
     const warnings = checkOrder(createRuleContext(makeElement({ order: '2' }, null)));
     expect(warnings).toHaveLength(0);
   });
+
+  it('skips when parent is display:contents (unknown grandparent context)', () => {
+    const warnings = checkOrder(
+      createRuleContext(makeElement({ order: '1' }, { computedStyles: { display: 'contents' } })),
+    );
+    expect(warnings).toHaveLength(0);
+  });
 });
