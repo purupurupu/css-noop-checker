@@ -39,7 +39,10 @@ export function isDefaultGapLikeValue(value: string): boolean {
 }
 
 export function isDefaultAlignmentValue(value: string): boolean {
-  return value.split(' ').every((v) => v === 'normal');
+  return value
+    .trim()
+    .split(/\s+/)
+    .every((v) => v === 'normal');
 }
 
 export function isDefaultInlineSizeValue(value: string): boolean {
@@ -81,7 +84,6 @@ export function isVerticalAlignApplicable(display: string): boolean {
     display === 'inline-flex' ||
     display === 'inline-grid' ||
     display === 'table-cell' ||
-    display === 'table-row' ||
     display === 'inline-table'
   );
 }
