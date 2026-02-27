@@ -1,15 +1,15 @@
 import { describe, it, expect } from 'vitest';
-import { checkGridContainerProps } from '../grid-container-props.ts';
+import { checkGridContainerProps } from '../container-no-grid-props.ts';
 import { createRuleContext } from '../context.ts';
 import { makeElement } from './helpers/make-element.ts';
 
-describe('grid-no-container-props: grid container props on non-grid', () => {
+describe('container-no-grid-props: grid container props on non-grid', () => {
   it('warns when grid-template-columns is set on block element', () => {
     const warnings = checkGridContainerProps(
       createRuleContext(makeElement({ gridTemplateColumns: '1fr 1fr' })),
     );
     expect(warnings).toHaveLength(1);
-    expect(warnings[0].ruleId).toBe('grid-no-container-props');
+    expect(warnings[0].ruleId).toBe('container-no-grid-props');
     expect(warnings[0].property).toBe('grid-template-columns');
     expect(warnings[0].title).toContain('grid-template-columns');
   });
@@ -58,7 +58,7 @@ describe('grid-no-container-props: grid container props on non-grid', () => {
     const ctx = createRuleContext(makeElement({ gridAutoFlow: 'row dense' }));
     const warnings = checkGridContainerProps(ctx);
     expect(warnings).toHaveLength(1);
-    expect(warnings[0].ruleId).toBe('grid-no-container-props');
+    expect(warnings[0].ruleId).toBe('container-no-grid-props');
     expect(warnings[0].property).toBe('grid-auto-flow');
   });
 

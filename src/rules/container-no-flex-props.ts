@@ -7,7 +7,7 @@ import {
 import { registerRule } from './registry.ts';
 
 const rule: RuleDescriptor = {
-  id: 'flex-no-container-props',
+  id: 'container-no-flex-props',
   label: 'flex-direction/wrap on non-flex',
   requiredProperties: ['display', 'flexDirection', 'flexWrap'],
   check(ctx) {
@@ -23,7 +23,7 @@ const rule: RuleDescriptor = {
 
     if (!isDefaultFlexDirectionValue(flexDirection)) {
       warnings.push({
-        ruleId: 'flex-no-container-props',
+        ruleId: 'container-no-flex-props',
         property: 'flex-direction',
         severity: 'warning',
         title: 'flex-direction has no effect',
@@ -35,7 +35,7 @@ const rule: RuleDescriptor = {
 
     if (!isDefaultFlexWrapValue(flexWrap)) {
       warnings.push({
-        ruleId: 'flex-no-container-props',
+        ruleId: 'container-no-flex-props',
         property: 'flex-wrap',
         severity: 'warning',
         title: 'flex-wrap has no effect',

@@ -12,7 +12,7 @@ const GRID_CONTAINER_PROPERTIES = [
 ] as const;
 
 const rule: RuleDescriptor = {
-  id: 'grid-no-container-props',
+  id: 'container-no-grid-props',
   label: 'grid container props on non-grid',
   requiredProperties: ['display', ...GRID_CONTAINER_PROPERTIES.map((p) => p.key)],
   check(ctx) {
@@ -20,7 +20,7 @@ const rule: RuleDescriptor = {
     // We use isGridContainer() — not isFlexOrGridContainer() — because
     // grid-specific properties (grid-template-*, grid-auto-*) never have any
     // effect on flex containers, so warning on a flex container is always correct.
-    // This contrasts with flex-no-container-props (issue #40), where flex props
+    // This contrasts with container-no-flex-props (issue #40), where flex props
     // on a grid container are silenced to avoid false positives in responsive
     // breakpoint patterns (e.g. switching between display:flex and display:grid
     // via media queries). That trade-off doesn't apply here since no responsive
@@ -35,7 +35,7 @@ const rule: RuleDescriptor = {
       const value = ctx.styles[key];
       if (value !== defaultValue) {
         warnings.push({
-          ruleId: 'grid-no-container-props',
+          ruleId: 'container-no-grid-props',
           property: cssName,
           severity: 'warning',
           title: `${cssName} has no effect`,
