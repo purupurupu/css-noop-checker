@@ -359,6 +359,41 @@ body {
   text-align: center;
 }
 
+/* Scan detail view */
+.scan-detail {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.scan-detail__back {
+  display: inline-block;
+  align-self: flex-start;
+  padding: 2px 8px;
+  border: 1px solid var(--border);
+  border-radius: 2px;
+  background: transparent;
+  color: var(--text-muted);
+  font-size: 10px;
+  cursor: pointer;
+}
+
+.scan-detail__back:hover,
+.scan-detail__back:focus-visible {
+  background: var(--bg-hover);
+  color: var(--text);
+}
+
+.scan-detail__selector {
+  display: block;
+  font-family: 'Menlo', 'DejaVu Sans Mono', 'Consolas', monospace;
+  font-size: 11px;
+  color: var(--text-element);
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
 /* Footer */
 .panel-footer {
   padding-top: 6px;
