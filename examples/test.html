@@ -542,6 +542,53 @@
       </div>
     </div>
 
+    <!-- ===== item-no-float: float on flex/grid items ===== -->
+    <h2>item-no-float: float on flex/grid items</h2>
+
+    <h3>Should warn</h3>
+    <div class="case expect-warn" data-rule="item-no-float">
+      <div class="label label-warn">item-no-float warn: float on flex item (ignored per spec)</div>
+      <div style="display: flex">
+        <div data-target style="float: left">Float on flex item has no effect</div>
+      </div>
+    </div>
+    <div class="case expect-warn" data-rule="item-no-float">
+      <div class="label label-warn">item-no-float warn: float on grid item (ignored per spec)</div>
+      <div style="display: grid">
+        <div data-target style="float: left">Float on grid item has no effect</div>
+      </div>
+    </div>
+
+    <h3>Should NOT warn</h3>
+    <div class="case expect-ok" data-rule="item-no-float">
+      <div class="label label-ok">
+        item-no-float ok: normal flow element with float (valid usage)
+      </div>
+      <div>
+        <div data-target style="float: left; width: 100px">
+          Float on normal flow element — valid usage
+        </div>
+      </div>
+    </div>
+    <div class="case expect-ok" data-rule="item-no-float">
+      <div class="label label-ok">item-no-float ok: float none on flex item (default)</div>
+      <div style="display: flex">
+        <div data-target>No float set on flex item</div>
+      </div>
+    </div>
+    <div class="case expect-ok" data-rule="item-no-float">
+      <div class="label label-ok">
+        item-no-float ok: display:contents parent (grandparent is flex)
+      </div>
+      <div style="display: flex">
+        <div style="display: contents">
+          <div data-target style="float: left">
+            Child of contents wrapper — rule skips because immediate parent is display:contents
+          </div>
+        </div>
+      </div>
+    </div>
+
     <!-- ===== item-no-grid-props: grid item props on children of non-grid containers ===== -->
     <h2>item-no-grid-props: grid item props on children of non-grid containers</h2>
 
