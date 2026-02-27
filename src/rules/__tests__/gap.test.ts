@@ -51,9 +51,16 @@ describe('container-no-gap: gap', () => {
     expect(warnings).toHaveLength(0);
   });
 
-  it('skips column-gap on multi-column containers', () => {
+  it('skips column-gap on multi-column containers (column-count)', () => {
     const warnings = checkGap(
       createRuleContext(makeElement({ columnGap: '40px', columnCount: '2' })),
+    );
+    expect(warnings).toHaveLength(0);
+  });
+
+  it('skips column-gap on multi-column containers (column-width)', () => {
+    const warnings = checkGap(
+      createRuleContext(makeElement({ columnGap: '40px', columnWidth: '200px' })),
     );
     expect(warnings).toHaveLength(0);
   });

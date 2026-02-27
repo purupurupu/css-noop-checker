@@ -81,11 +81,18 @@ describe('block-no-vertical-align', () => {
     expect(warnings).toHaveLength(0);
   });
 
-  it('skips table-row elements', () => {
+  it('warns on table-caption elements (vertical-align has no effect)', () => {
+    const warnings = checkBlockVerticalAlign(
+      createRuleContext(makeElement({ display: 'table-caption', verticalAlign: 'top' })),
+    );
+    expect(warnings).toHaveLength(1);
+  });
+
+  it('warns on table-row elements (vertical-align has no effect)', () => {
     const warnings = checkBlockVerticalAlign(
       createRuleContext(makeElement({ display: 'table-row', verticalAlign: 'middle' })),
     );
-    expect(warnings).toHaveLength(0);
+    expect(warnings).toHaveLength(1);
   });
 
   it('skips display: contents elements', () => {

@@ -81,4 +81,13 @@ describe('item-no-self-align', () => {
     );
     expect(warnings).toHaveLength(0);
   });
+
+  it('skips when parent is display:contents (unknown grandparent context)', () => {
+    const warnings = checkSelfAlignment(
+      createRuleContext(
+        makeElement({ alignSelf: 'center' }, { computedStyles: { display: 'contents' } }),
+      ),
+    );
+    expect(warnings).toHaveLength(0);
+  });
 });

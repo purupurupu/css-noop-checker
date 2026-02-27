@@ -32,9 +32,6 @@ export interface RuleContext {
   isGridItem: boolean;
 }
 
-/** A rule is a pure function: RuleContext → Warning[] */
-export type Rule = (ctx: RuleContext) => Warning[];
-
 export interface RuleDescriptor {
   readonly id: RuleId;
   readonly label: string;

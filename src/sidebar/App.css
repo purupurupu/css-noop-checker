@@ -88,6 +88,10 @@ body {
   padding: 16px 8px;
 }
 
+.warning-list__message--error {
+  color: var(--error-color);
+}
+
 /* Warning card */
 .warning-card {
   background: var(--bg-card);

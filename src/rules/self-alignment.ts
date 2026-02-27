@@ -10,12 +10,16 @@ const rule: RuleDescriptor = {
     if (ctx.isFlexItem || ctx.isGridItem) return [];
     if (!ctx.parentStyles) return [];
 
+    // display:contents removes the parent's box, so the child participates in the
+    // grandparent's formatting context. Without grandparent data we cannot determine
+    // if this element is effectively a flex/grid item.
+    const parentDisplay = ctx.parentStyles.display ?? 'block';
+    if (parentDisplay === 'contents') return [];
+
     const { alignSelf } = ctx.styles;
     // align-self initial value is "auto" (inherits parent's align-items),
     // but some browsers may compute it as "normal"
     if (alignSelf === 'auto' || alignSelf === 'normal') return [];
-
-    const parentDisplay = ctx.parentStyles?.display ?? 'block';
 
     return [
       {

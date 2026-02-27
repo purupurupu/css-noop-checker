@@ -10,10 +10,14 @@ const rule: RuleDescriptor = {
     if (ctx.isFlexItem || ctx.isGridItem) return [];
     if (!ctx.parentStyles) return [];
 
+    // display:contents removes the parent's box, so the child participates in the
+    // grandparent's formatting context. Without grandparent data we cannot determine
+    // if this element is effectively a flex/grid item.
+    const parentDisplay = ctx.parentStyles.display ?? 'block';
+    if (parentDisplay === 'contents') return [];
+
     const { order } = ctx.styles;
     if (order === '0') return [];
-
-    const parentDisplay = ctx.parentStyles?.display ?? 'block';
 
     return [
       {

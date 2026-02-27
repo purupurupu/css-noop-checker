@@ -1,17 +1,8 @@
 import { describe, it, expect } from 'vitest';
 import { isElementData } from '../validation.ts';
 
-// Side-effect imports to populate the registry (same as engine.ts)
-import '../inline-dimensions.ts';
-import '../gap.ts';
-import '../alignment.ts';
-import '../place.ts';
-import '../static-position-offset.ts';
-import '../self-alignment.ts';
-import '../order.ts';
-import '../block-vertical-align.ts';
-import '../static-z-index.ts';
-import '../flex-container-props.ts';
+// Side-effect import to populate the registry (registers all rules)
+import '../engine.ts';
 
 const VALID_STYLES = {
   display: 'block',
@@ -25,6 +16,7 @@ const VALID_STYLES = {
   placeItems: 'normal',
   placeContent: 'normal',
   columnCount: 'auto',
+  columnWidth: 'auto',
   position: 'static',
   top: 'auto',
   right: 'auto',
@@ -44,10 +36,15 @@ const VALID_STYLES = {
   clipPath: 'none',
   isolation: 'auto',
   mixBlendMode: 'normal',
+  mask: 'none',
+  containerType: 'normal',
   contain: 'none',
   willChange: 'auto',
   flexDirection: 'row',
   flexWrap: 'nowrap',
+  flexGrow: '0',
+  flexShrink: '1',
+  flexBasis: 'auto',
 };
 
 describe('isElementData — parent field validation', () => {

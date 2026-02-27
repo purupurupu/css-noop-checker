@@ -98,6 +98,19 @@
         </tr>
       </table>
     </div>
+    <div class="case expect-warn" data-rule="block-no-vertical-align">
+      <div class="label label-warn">
+        block-no-vertical-align warn: table-caption with vertical-align (no effect)
+      </div>
+      <table>
+        <caption data-target style="vertical-align: top">
+          Table caption with vertical-align: top (no effect per CSS spec)
+        </caption>
+        <tr>
+          <td>Cell</td>
+        </tr>
+      </table>
+    </div>
 
     <!-- ===== container-no-align: alignment on non-flex/grid ===== -->
     <h2>container-no-align: alignment on non-flex/grid containers</h2>
@@ -173,20 +186,37 @@
       </div>
     </div>
     <div class="case expect-ok" data-rule="container-no-gap">
-      <div class="label label-ok">container-no-gap ok: multi-column with column-gap (valid)</div>
+      <div class="label label-ok">
+        container-no-gap ok: multi-column with column-gap (column-count)
+      </div>
       <div data-target style="column-count: 2; column-gap: 40px">
         The quick brown fox jumps over the lazy dog. Pack my box with five dozen liquor jugs. How
         vexingly quick daft zebras jump.
       </div>
     </div>
+    <div class="case expect-ok" data-rule="container-no-gap">
+      <div class="label label-ok">
+        container-no-gap ok: multi-column with column-gap (column-width)
+      </div>
+      <div data-target style="column-width: 200px; column-gap: 40px">
+        The quick brown fox jumps over the lazy dog. Pack my box with five dozen liquor jugs. How
+        vexingly quick daft zebras jump.
+      </div>
+    </div>
 
-    <!-- ===== container-no-place: place-content on non-flex/grid ===== -->
-    <h2>container-no-place: place-content on non-flex/grid</h2>
+    <!-- ===== container-no-place: place-* on non-flex/grid ===== -->
+    <h2>container-no-place: place-* on non-flex/grid</h2>
 
     <h3>Should warn</h3>
     <div class="case expect-warn" data-rule="container-no-place">
       <div class="label label-warn">container-no-place warn: display:block with place-content</div>
       <div data-target style="place-content: center">
+        <div>Child</div>
+      </div>
+    </div>
+    <div class="case expect-warn" data-rule="container-no-place">
+      <div class="label label-warn">container-no-place warn: display:block with place-items</div>
+      <div data-target style="place-items: center">
         <div>Child</div>
       </div>
     </div>
@@ -427,6 +457,18 @@
       </div>
     </div>
 
+    <h3>Should NOT warn</h3>
+    <div class="case expect-ok" data-rule="item-no-order">
+      <div class="label label-ok">
+        item-no-order ok: display:contents parent (grandparent is flex)
+      </div>
+      <div style="display: flex; gap: 8px">
+        <div style="display: contents">
+          <div data-target style="order: 1">Child of contents wrapper (actually a flex item)</div>
+        </div>
+      </div>
+    </div>
+
     <!-- ===== item-no-self-align: align-self on non-flex/grid items ===== -->
     <h2>item-no-self-align: align-self on non-flex/grid items</h2>
 
@@ -563,6 +605,20 @@
       <div class="label label-ok">static-no-z-index ok: opacity creates stacking context</div>
       <div data-target style="opacity: 0.99; z-index: 5">
         opacity + z-index (valid stacking context)
+      </div>
+    </div>
+    <div class="case expect-ok" data-rule="static-no-z-index">
+      <div class="label label-ok">static-no-z-index ok: mask creates stacking context</div>
+      <div data-target style="mask: linear-gradient(black, transparent); z-index: 5">
+        mask + z-index (valid stacking context)
+      </div>
+    </div>
+    <div class="case expect-ok" data-rule="static-no-z-index">
+      <div class="label label-ok">
+        static-no-z-index ok: container-type creates stacking context
+      </div>
+      <div data-target style="container-type: inline-size; z-index: 5">
+        container-type + z-index (valid stacking context)
       </div>
     </div>
     <div class="case expect-ok" data-rule="static-no-z-index">

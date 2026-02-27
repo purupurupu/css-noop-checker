@@ -179,9 +179,44 @@ describe('static-no-z-index', () => {
     expect(warnings).toHaveLength(0);
   });
 
+  it('does not warn when mask is set', () => {
+    const warnings = checkStaticZIndex(
+      createRuleContext(makeElement({ zIndex: '10', mask: 'url(#mask)' })),
+    );
+    expect(warnings).toHaveLength(0);
+  });
+
+  it('does not warn when container-type is set', () => {
+    const warnings = checkStaticZIndex(
+      createRuleContext(makeElement({ zIndex: '10', containerType: 'inline-size' })),
+    );
+    expect(warnings).toHaveLength(0);
+  });
+
   it('does not warn when will-change names a stacking trigger', () => {
     const warnings = checkStaticZIndex(
       createRuleContext(makeElement({ zIndex: '10', willChange: 'transform' })),
+    );
+    expect(warnings).toHaveLength(0);
+  });
+
+  it('does not warn when will-change is isolation (creates stacking context)', () => {
+    const warnings = checkStaticZIndex(
+      createRuleContext(makeElement({ zIndex: '10', willChange: 'isolation' })),
+    );
+    expect(warnings).toHaveLength(0);
+  });
+
+  it('does not warn when will-change is mix-blend-mode (creates stacking context)', () => {
+    const warnings = checkStaticZIndex(
+      createRuleContext(makeElement({ zIndex: '10', willChange: 'mix-blend-mode' })),
+    );
+    expect(warnings).toHaveLength(0);
+  });
+
+  it('does not warn when will-change is contain (creates stacking context)', () => {
+    const warnings = checkStaticZIndex(
+      createRuleContext(makeElement({ zIndex: '10', willChange: 'contain' })),
     );
     expect(warnings).toHaveLength(0);
   });
