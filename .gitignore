@@ -12,6 +12,7 @@ dist
 dist-ssr
 mcp-server/node_modules
 *.local
+.mcp.json
 
 # Playwright
 test-results/
