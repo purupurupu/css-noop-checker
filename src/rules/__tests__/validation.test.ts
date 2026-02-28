@@ -56,6 +56,8 @@ const VALID_STYLES = {
   gridColumnEnd: 'auto',
   gridRowStart: 'auto',
   gridRowEnd: 'auto',
+  textOverflow: 'clip',
+  overflowX: 'visible',
 };
 
 describe('isElementData — parent field validation', () => {

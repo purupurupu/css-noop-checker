@@ -897,6 +897,103 @@
       <div data-target style="z-index: auto">z-index: auto — no warning expected</div>
     </div>
 
+    <!-- ===== visible-overflow-no-text-overflow: text-overflow on visible overflow ===== -->
+    <h2>visible-overflow-no-text-overflow: text-overflow on visible overflow</h2>
+
+    <h3>Should warn</h3>
+    <div class="case expect-warn" data-rule="visible-overflow-no-text-overflow">
+      <div class="label label-warn">
+        visible-overflow-no-text-overflow warn: ellipsis with default overflow (visible)
+      </div>
+      <div data-target style="text-overflow: ellipsis; white-space: nowrap; width: 150px">
+        This text should be truncated but overflow is visible
+      </div>
+    </div>
+    <div class="case expect-warn" data-rule="visible-overflow-no-text-overflow">
+      <div class="label label-warn">
+        visible-overflow-no-text-overflow warn: ellipsis explicitly with overflow: visible
+      </div>
+      <div
+        data-target
+        style="text-overflow: ellipsis; overflow: visible; white-space: nowrap; width: 150px"
+      >
+        Explicit overflow: visible with text-overflow: ellipsis
+      </div>
+    </div>
+
+    <h3>Should NOT warn</h3>
+    <div class="case expect-ok" data-rule="visible-overflow-no-text-overflow">
+      <div class="label label-ok">
+        visible-overflow-no-text-overflow ok: ellipsis with overflow: hidden (correct usage)
+      </div>
+      <div
+        data-target
+        style="text-overflow: ellipsis; overflow: hidden; white-space: nowrap; width: 150px"
+      >
+        This text is properly truncated with overflow hidden and ellipsis
+      </div>
+    </div>
+    <div class="case expect-ok" data-rule="visible-overflow-no-text-overflow">
+      <div class="label label-ok">
+        visible-overflow-no-text-overflow ok: default text-overflow (clip) with visible overflow
+      </div>
+      <div data-target style="width: 150px">Default text-overflow is clip, no warning needed</div>
+    </div>
+    <div class="case expect-ok" data-rule="visible-overflow-no-text-overflow">
+      <div class="label label-ok">
+        visible-overflow-no-text-overflow ok: ellipsis with overflow: scroll
+      </div>
+      <div
+        data-target
+        style="text-overflow: ellipsis; overflow: scroll; white-space: nowrap; width: 150px"
+      >
+        text-overflow with overflow: scroll is valid
+      </div>
+    </div>
+    <div class="case expect-ok" data-rule="visible-overflow-no-text-overflow">
+      <div class="label label-ok">
+        visible-overflow-no-text-overflow ok: ellipsis with overflow: auto
+      </div>
+      <div
+        data-target
+        style="text-overflow: ellipsis; overflow: auto; white-space: nowrap; width: 150px"
+      >
+        text-overflow with overflow: auto is valid
+      </div>
+    </div>
+    <div class="case expect-ok" data-rule="visible-overflow-no-text-overflow">
+      <div class="label label-ok">
+        visible-overflow-no-text-overflow ok: ellipsis with overflow-x: clip
+      </div>
+      <div
+        data-target
+        style="text-overflow: ellipsis; overflow-x: clip; white-space: nowrap; width: 150px"
+      >
+        text-overflow with overflow-x: clip is valid
+      </div>
+    </div>
+    <div class="case expect-ok" data-rule="visible-overflow-no-text-overflow">
+      <div class="label label-ok">
+        visible-overflow-no-text-overflow ok: input with text-overflow: ellipsis (UA styles)
+      </div>
+      <input
+        data-target
+        type="text"
+        style="text-overflow: ellipsis; width: 80px"
+        value="Long input text that should be truncated"
+      />
+    </div>
+    <div class="case expect-ok" data-rule="visible-overflow-no-text-overflow">
+      <div class="label label-ok">
+        visible-overflow-no-text-overflow ok: display:contents (no box, skip)
+      </div>
+      <div style="display: flex">
+        <div data-target style="display: contents; text-overflow: ellipsis">
+          <span>Child of contents element</span>
+        </div>
+      </div>
+    </div>
+
     <!-- ===== No issues ===== -->
     <h2>No issues expected</h2>
     <div class="case expect-ok" data-rule="none">
