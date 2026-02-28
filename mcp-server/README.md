@@ -4,11 +4,11 @@ MCP server that exposes CSS no-op detection rules as tools. Uses Playwright to o
 
 ## Tools
 
-| Tool | Description |
-| --- | --- |
-| `list_rules` | List all available CSS no-op detection rules |
-| `analyze_element(url, selector)` | Analyze a specific element for violations |
-| `scan_page(url)` | Scan all elements on a page for violations |
+| Tool                             | Description                                  |
+| -------------------------------- | -------------------------------------------- |
+| `list_rules`                     | List all available CSS no-op detection rules |
+| `analyze_element(url, selector)` | Analyze a specific element for violations    |
+| `scan_page(url)`                 | Scan all elements on a page for violations   |
 
 ## Setup
 
