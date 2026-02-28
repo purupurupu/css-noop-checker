@@ -1,3 +1,3 @@
 #!/bin/bash
-cd /Users/purupurupu/product/react/css-noop-checker
+cd "$(dirname "$0")/.."
 exec npx tsx mcp-server/src/index.ts
