@@ -7,12 +7,16 @@ export function isPrivateIPv4(dottedQuad: string): boolean {
   if (a === 10) return true; //  10.0.0.0/8    RFC-1918
   if (a === 172 && b >= 16 && b <= 31) return true; // 172.16.0.0/12 RFC-1918
   if (a === 192 && b === 168) return true; // 192.168.0.0/16 RFC-1918
+  if (a === 100 && b >= 64 && b <= 127) return true; // 100.64.0.0/10  CGNAT (cloud internal)
   if (a === 169 && b === 254) return true; // 169.254.0.0/16 link-local / cloud metadata
   if (a === 0) return true; //   0.0.0.0/8     "this" network
   return false;
 }
 
-/** Reject hostnames that resolve to private/loopback/link-local addresses (SSRF mitigation). */
+/**
+ * Reject hostnames that syntactically match private/loopback/link-local addresses (SSRF mitigation).
+ * Does not perform DNS resolution — hostnames that DNS-resolve to private IPs are not caught.
+ */
 export function isPrivateHost(hostname: string): boolean {
   // Strip IPv6 brackets
   const host = hostname.startsWith('[') ? hostname.slice(1, -1) : hostname;

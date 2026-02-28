@@ -78,15 +78,31 @@ const server = new McpServer({
 });
 
 server.tool('list_rules', 'List all available CSS no-op detection rules', async () => {
-  const rules = getRules().map((r) => ({
-    id: r.id,
-    label: r.label,
-    requiredProperties: [...r.requiredProperties],
-  }));
+  try {
+    const rules = getRules().map((r) => ({
+      id: r.id,
+      label: r.label,
+      requiredProperties: [...r.requiredProperties],
+    }));
 
-  return {
-    content: [{ type: 'text', text: JSON.stringify(rules, null, 2) }],
-  };
+    return {
+      content: [{ type: 'text', text: JSON.stringify(rules, null, 2) }],
+    };
+  } catch (err) {
+    return {
+      content: [
+        {
+          type: 'text',
+          text: JSON.stringify(
+            { error: `Failed to list rules: ${err instanceof Error ? err.message : err}` },
+            null,
+            2,
+          ),
+        },
+      ],
+      isError: true,
+    };
+  }
 });
 
 server.tool(

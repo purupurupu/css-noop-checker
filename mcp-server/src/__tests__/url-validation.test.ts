@@ -14,7 +14,11 @@ describe('isPrivateIPv4', () => {
     ['169.254.1.1', true],
     ['0.0.0.0', true],
     ['0.1.2.3', true],
+    ['100.64.0.1', true],
+    ['100.127.255.255', true],
     // Public addresses
+    ['100.63.255.255', false],
+    ['100.128.0.1', false],
     ['8.8.8.8', false],
     ['172.15.0.1', false],
     ['172.32.0.1', false],
@@ -121,7 +125,17 @@ describe('validateUrl', () => {
     expect(() => validateUrl('http://2130706433')).toThrow('private/internal address');
   });
 
+  it('rejects IPv6-mapped private IPv4 in hex form (URL constructor normalization bypass)', () => {
+    // URL constructor normalizes ::ffff:127.0.0.1 to ::ffff:7f00:1
+    expect(() => validateUrl('http://[::ffff:7f00:1]')).toThrow('private/internal address');
+  });
+
+  it('rejects CGNAT range (100.64.x.x)', () => {
+    expect(() => validateUrl('http://100.64.0.1')).toThrow('private/internal address');
+  });
+
   it('preserves error cause for malformed URLs', () => {
+    expect.assertions(2);
     try {
       validateUrl('not-a-url');
     } catch (err) {

@@ -23,7 +23,8 @@ export function CopyJsonButton({ data }: CopyJsonButtonProps) {
     let json: string;
     try {
       json = JSON.stringify(data, null, 2);
-    } catch {
+    } catch (err) {
+      console.warn('Failed to serialize data as JSON:', err);
       setStatus('failed');
       if (timerRef.current) clearTimeout(timerRef.current);
       timerRef.current = setTimeout(() => setStatus('idle'), 1500);

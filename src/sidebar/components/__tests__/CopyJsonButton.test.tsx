@@ -96,6 +96,24 @@ describe('CopyJsonButton', () => {
     expect(screen.getByText('Copy JSON')).toBeDefined();
   });
 
+  it('shows "Failed" when JSON.stringify throws (e.g. circular reference)', async () => {
+    const consoleWarn = vi.spyOn(console, 'warn').mockImplementation(() => {});
+
+    // Create data with a circular reference that JSON.stringify cannot handle
+    const circular: Record<string, unknown> = { a: 1 };
+    circular.self = circular;
+
+    render(<CopyJsonButton data={circular as unknown as Warning[]} />);
+
+    await act(async () => {
+      fireEvent.click(screen.getByText('Copy JSON'));
+    });
+
+    expect(screen.getByText('Failed')).toBeDefined();
+    expect(consoleWarn).toHaveBeenCalled();
+    consoleWarn.mockRestore();
+  });
+
   it('serializes data as pretty-printed JSON', async () => {
     const writeText = vi.fn().mockResolvedValue(undefined);
     mockClipboard(writeText);

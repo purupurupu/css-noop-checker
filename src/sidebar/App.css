@@ -144,7 +144,7 @@ body {
   flex-shrink: 0;
 }
 
-/* L2: Shared action button style (Scan Page, Copy JSON) */
+/* Shared action button style (Scan Page, Copy JSON) */
 .panel-action-button {
   display: inline-flex;
   align-items: center;
@@ -164,7 +164,7 @@ body {
   color: var(--text);
 }
 
-/* L3: Focus-visible for keyboard navigation */
+/* Focus-visible for keyboard navigation */
 .panel-action-button:focus-visible {
   background: var(--bg-hover);
   border-color: var(--border);

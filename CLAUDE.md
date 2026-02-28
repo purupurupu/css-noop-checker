@@ -102,14 +102,17 @@ Element extraction (getting computed styles from in-page elements) exists in **t
 
 **Adding a new rule does NOT require changes to either extraction implementation** — both dynamically query `registry.ts` for required CSS properties.
 
-**However, changes to extraction behavior itself require updating both implementations.** Specifically:
+**However, changes to extraction behavior itself require updating both implementations.** The two implementations currently have known divergences:
 
-- `SKIP_TAGS` (which elements to skip during scan)
-- `display: none` filtering logic
-- Selector generation (how human-readable selectors are built)
-- Element scan cap / chunking strategy
+| Behavior            | Extension sidebar                                        | E2E / MCP server                  |
+| ------------------- | -------------------------------------------------------- | --------------------------------- |
+| **SKIP_TAGS**       | 7 tags (`SCRIPT STYLE NOSCRIPT TEMPLATE BASE LINK META`) | 11 tags (adds `HEAD BR HR TITLE`) |
+| **`display: none`** | Filters out (`cs.display === 'none'`)                    | Does not filter                   |
+| **Query scope**     | `document.body.querySelectorAll('*')`                    | `document.querySelectorAll('*')`  |
+| **Selector format** | `CSS.escape()` + max 3 classes                           | `nth-of-type` + all classes       |
+| **Scan cap**        | Chunked pagination (offset/limit)                        | Single pass, 5 000 element cap    |
 
-When modifying any of these, update both `build-scan-script.ts` and `extract-element-data.ts` to keep behavior consistent.
+When modifying any of these behaviors, update both `build-scan-script.ts` and `extract-element-data.ts`.
 
 ### Browser Integration Tests (`e2e/`)
 
