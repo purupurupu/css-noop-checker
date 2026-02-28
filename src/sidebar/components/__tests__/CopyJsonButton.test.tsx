@@ -60,11 +60,30 @@ describe('CopyJsonButton', () => {
     expect(writeText).toHaveBeenCalledWith(JSON.stringify(warnings, null, 2));
   });
 
-  it('shows "Failed" when clipboard write rejects', async () => {
+  it('falls back to execCommand when clipboard API fails', async () => {
     const writeText = vi.fn().mockRejectedValue(new Error('denied'));
     mockClipboard(writeText);
 
-    const consoleWarn = vi.spyOn(console, 'warn').mockImplementation(() => {});
+    // happy-dom lacks execCommand — define it on document
+    const execCommand = vi.fn().mockReturnValue(true);
+    document.execCommand = execCommand;
+
+    render(<CopyJsonButton data={[makeWarning()]} />);
+
+    await act(async () => {
+      fireEvent.click(screen.getByText('Copy JSON'));
+    });
+
+    expect(screen.getByText('Copied!')).toBeDefined();
+    expect(execCommand).toHaveBeenCalledWith('copy');
+  });
+
+  it('shows "Failed" when both clipboard API and execCommand fail', async () => {
+    const writeText = vi.fn().mockRejectedValue(new Error('denied'));
+    mockClipboard(writeText);
+
+    document.execCommand = vi.fn().mockReturnValue(false);
+
     render(<CopyJsonButton data={[makeWarning()]} />);
 
     await act(async () => {
@@ -73,8 +92,6 @@ describe('CopyJsonButton', () => {
 
     expect(screen.getByText('Failed')).toBeDefined();
     expect(screen.getByLabelText('Failed to copy JSON')).toBeDefined();
-    expect(consoleWarn).toHaveBeenCalled();
-    consoleWarn.mockRestore();
   });
 
   it('resets to idle after 1500ms', async () => {
@@ -99,7 +116,6 @@ describe('CopyJsonButton', () => {
   it('shows "Failed" when JSON.stringify throws (e.g. circular reference)', async () => {
     const consoleWarn = vi.spyOn(console, 'warn').mockImplementation(() => {});
 
-    // Create data with a circular reference that JSON.stringify cannot handle
     const circular: Record<string, unknown> = { a: 1 };
     circular.self = circular;
 

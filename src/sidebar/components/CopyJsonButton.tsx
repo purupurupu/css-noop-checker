@@ -19,7 +19,7 @@ export function CopyJsonButton({ data }: CopyJsonButtonProps) {
     };
   }, []);
 
-  const handleCopy = useCallback(() => {
+  const handleCopy = useCallback(async () => {
     let json: string;
     try {
       json = JSON.stringify(data, null, 2);
@@ -31,19 +31,35 @@ export function CopyJsonButton({ data }: CopyJsonButtonProps) {
       return;
     }
 
-    navigator.clipboard.writeText(json).then(
-      () => {
-        setStatus('copied');
-        if (timerRef.current) clearTimeout(timerRef.current);
-        timerRef.current = setTimeout(() => setStatus('idle'), 1500);
-      },
-      (err) => {
-        console.warn('Clipboard write failed:', err);
-        setStatus('failed');
-        if (timerRef.current) clearTimeout(timerRef.current);
-        timerRef.current = setTimeout(() => setStatus('idle'), 1500);
-      },
-    );
+    // Clipboard API is unavailable in DevTools sidebar panels (no document focus),
+    // so fall back to execCommand('copy') via a temporary textarea.
+    let success = false;
+    if (navigator.clipboard?.writeText) {
+      try {
+        await navigator.clipboard.writeText(json);
+        success = true;
+      } catch {
+        // Expected to fail in DevTools sidebar — fall through to execCommand
+      }
+    }
+    if (!success) {
+      const textarea = document.createElement('textarea');
+      textarea.value = json;
+      textarea.style.position = 'fixed';
+      textarea.style.opacity = '0';
+      document.body.appendChild(textarea);
+      textarea.select();
+      success = document.execCommand('copy');
+      document.body.removeChild(textarea);
+    }
+
+    if (success) {
+      setStatus('copied');
+    } else {
+      setStatus('failed');
+    }
+    if (timerRef.current) clearTimeout(timerRef.current);
+    timerRef.current = setTimeout(() => setStatus('idle'), 1500);
   }, [data]);
 
   const label = status === 'copied' ? 'Copied!' : status === 'failed' ? 'Failed' : 'Copy JSON';
