@@ -128,7 +128,7 @@ export async function scanAllElements(page: Page): Promise<ScanResult> {
   const properties = getAllRequiredProperties();
   const parentProperties = getAllRequiredParentProperties();
 
-  // L3: Extraction logic mirrors buildExtractFn() but runs inline within the
+  // Extraction logic mirrors buildExtractFn() but runs inline within the
   // page.evaluate() loop to avoid per-element serialization overhead.
   const results = await page.evaluate(
     ({ properties, parentProperties, maxElements }) => {
@@ -194,7 +194,7 @@ export async function scanAllElements(page: Page): Promise<ScanResult> {
           parent = { computedStyles: parentStyles };
         }
 
-        // Build a unique selector using nth-of-type path
+        // Build a best-effort human-readable selector (may not be globally unique)
         let selector = el.tagName.toLowerCase();
         if (el.id) {
           selector += `#${el.id}`;

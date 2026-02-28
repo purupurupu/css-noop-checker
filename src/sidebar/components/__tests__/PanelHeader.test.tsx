@@ -1,7 +1,7 @@
 // @vitest-environment happy-dom
 import { describe, it, expect, vi, beforeEach, afterEach } from 'vitest';
 import { render, screen, fireEvent, cleanup } from '@testing-library/react';
-import type { ElementData } from '../../../rules/types.ts';
+import type { ElementData, Warning } from '../../../rules/types.ts';
 import type { AnalysisStatus } from '../../hooks/useSelectedElement.ts';
 import type { ScanStatus } from '../../types.ts';
 import { PanelHeader } from '../PanelHeader.tsx';
@@ -115,5 +115,42 @@ describe('PanelHeader', () => {
     render(<PanelHeader {...defaultProps} scanStatus="scanning" onScan={onScan} />);
     fireEvent.click(screen.getByText('Scanning\u2026'));
     expect(onScan).not.toHaveBeenCalled();
+  });
+
+  describe('Copy JSON button visibility', () => {
+    const warning: Warning = {
+      ruleId: 'inline-no-dimensions' as Warning['ruleId'],
+      property: 'width',
+      severity: 'warning',
+      title: 'width has no effect',
+      details: 'width has no effect on inline elements',
+      suggestion: 'Use display: inline-block or block',
+    };
+
+    it('shows Copy JSON when status=ready, scanStatus!=done, and warnings exist', () => {
+      render(
+        <PanelHeader {...defaultProps} status="ready" scanStatus="idle" warnings={[warning]} />,
+      );
+      expect(screen.queryByLabelText('Copy JSON to clipboard')).not.toBeNull();
+    });
+
+    it('hides Copy JSON when warnings are empty', () => {
+      render(<PanelHeader {...defaultProps} status="ready" scanStatus="idle" warnings={[]} />);
+      expect(screen.queryByLabelText('Copy JSON to clipboard')).toBeNull();
+    });
+
+    it('hides Copy JSON when status is not ready', () => {
+      render(
+        <PanelHeader {...defaultProps} status="analyzing" scanStatus="idle" warnings={[warning]} />,
+      );
+      expect(screen.queryByLabelText('Copy JSON to clipboard')).toBeNull();
+    });
+
+    it('hides Copy JSON when scanStatus is done (scan results have their own button)', () => {
+      render(
+        <PanelHeader {...defaultProps} status="ready" scanStatus="done" warnings={[warning]} />,
+      );
+      expect(screen.queryByLabelText('Copy JSON to clipboard')).toBeNull();
+    });
   });
 });

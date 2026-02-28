@@ -1,16 +1,18 @@
 import { useCallback, useEffect, useRef, useState } from 'react';
 
+import type { Warning } from '../../rules/types.ts';
+import type { ScanGroup } from '../types.ts';
+
 type CopyStatus = 'idle' | 'copied' | 'failed';
 
 interface CopyJsonButtonProps {
-  data: unknown;
+  data: Warning[] | ScanGroup[];
 }
 
 export function CopyJsonButton({ data }: CopyJsonButtonProps) {
   const [status, setStatus] = useState<CopyStatus>('idle');
   const timerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
 
-  // M3: Clean up timer on unmount
   useEffect(() => {
     return () => {
       if (timerRef.current) clearTimeout(timerRef.current);
@@ -18,15 +20,24 @@ export function CopyJsonButton({ data }: CopyJsonButtonProps) {
   }, []);
 
   const handleCopy = useCallback(() => {
-    const json = JSON.stringify(data, null, 2);
+    let json: string;
+    try {
+      json = JSON.stringify(data, null, 2);
+    } catch {
+      setStatus('failed');
+      if (timerRef.current) clearTimeout(timerRef.current);
+      timerRef.current = setTimeout(() => setStatus('idle'), 1500);
+      return;
+    }
+
     navigator.clipboard.writeText(json).then(
       () => {
         setStatus('copied');
         if (timerRef.current) clearTimeout(timerRef.current);
         timerRef.current = setTimeout(() => setStatus('idle'), 1500);
       },
-      // M2: Handle clipboard failure
-      () => {
+      (err) => {
+        console.warn('Clipboard write failed:', err);
         setStatus('failed');
         if (timerRef.current) clearTimeout(timerRef.current);
         timerRef.current = setTimeout(() => setStatus('idle'), 1500);
