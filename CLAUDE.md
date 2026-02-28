@@ -83,6 +83,34 @@ Each test case in `examples/test.html` must include `data-target` and `data-rule
 - For cases where the target is a nested child (e.g. flex/grid items), place `data-target` on the actual inspectable element, not the wrapper
 - **Ordering** — rule sections in `test.html` must be sorted alphabetically by rule ID (e.g. `block-no-vertical-align` before `container-no-align`). The "No issues" section stays at the end. This matches the Scan Page display order.
 
+### MCP Server (`mcp-server/`)
+
+Standalone MCP server that reuses the rules engine and e2e extraction helpers to analyze live pages via Playwright. Separate `package.json` managed as a pnpm workspace.
+
+- `src/index.ts` — MCP tool handlers (`list_rules`, `analyze_element`, `scan_page`)
+- `src/url-validation.ts` — SSRF-safe URL validation (scheme + private IP checks)
+
+### Element Extraction: Dual Implementation
+
+Element extraction (getting computed styles from in-page elements) exists in **two parallel implementations** due to different API constraints:
+
+|             | Extension sidebar                                                            | E2E helpers / MCP server                                      |
+| ----------- | ---------------------------------------------------------------------------- | ------------------------------------------------------------- |
+| **Files**   | `src/sidebar/hooks/build-eval-script.ts`, `build-scan-script.ts`             | `e2e/helpers/extract-element-data.ts`                         |
+| **API**     | `chrome.devtools.inspectedWindow.eval()` — requires **string-serialized JS** | Playwright `page.evaluate()` — accepts **functions directly** |
+| **Used by** | Chrome extension UI                                                          | Playwright e2e tests, MCP server                              |
+
+**Adding a new rule does NOT require changes to either extraction implementation** — both dynamically query `registry.ts` for required CSS properties.
+
+**However, changes to extraction behavior itself require updating both implementations.** Specifically:
+
+- `SKIP_TAGS` (which elements to skip during scan)
+- `display: none` filtering logic
+- Selector generation (how human-readable selectors are built)
+- Element scan cap / chunking strategy
+
+When modifying any of these, update both `build-scan-script.ts` and `extract-element-data.ts` to keep behavior consistent.
+
 ### Browser Integration Tests (`e2e/`)
 
 Playwright-based tests that verify rules against real browser `getComputedStyle()`:
