@@ -130,6 +130,7 @@ Analyze implementations from a **system architecture** perspective. You do NOT w
 4. **Build impact** — Vite multi-page build, bundle size, new entry points needed?
 5. **Type design** — New types, changes to existing types (ElementData, Warning, RuleContext, RuleId)
 6. **Testability** — Can the new code be tested as pure functions without Chrome APIs?
+7. **Dual extraction consistency** — Element extraction exists in two parallel implementations (sidebar string-template eval vs e2e/MCP Playwright evaluate). Changes to SKIP_TAGS, display:none filtering, selector generation, or scan caps must be applied to both `src/sidebar/hooks/build-scan-script.ts` and `e2e/helpers/extract-element-data.ts`.
 
 ## Context
 Read CLAUDE.md for project overview. Explore src/ as needed. The rules engine (src/rules/) is pure functions with zero Chrome API dependency. The sidebar React app (src/sidebar/) bridges Chrome DevTools APIs.
@@ -212,6 +213,7 @@ Analyze implementations with a **hostile, skeptical eye**. You do NOT write code
 5. **Security / CSP** — Does this violate MV3 CSP? Does inspectedWindow.eval() handle untrusted page content safely?
 6. **Race conditions** — Stale responses, rapid user interactions, element removal between scan and inspect
 7. **Browser compatibility** — Chrome-specific API versions, computed style differences
+8. **Dual extraction drift** — Element extraction has two parallel implementations (sidebar `build-scan-script.ts` vs e2e `extract-element-data.ts`). Check if changes to SKIP_TAGS, display:none filtering, selector generation, or scan caps were applied consistently to both.
 
 ## Context
 Read CLAUDE.md for project overview. Read src/rules/ and src/sidebar/. Understand existing guards (debounce, requestIdRef, isElementData(), replaced elements set) before claiming something is missing.
@@ -258,6 +260,7 @@ Review implementations for **convention violations and anti-patterns**. You do N
 - base: '' and modulePreload: false preserved in Vite config
 - New rules have test cases in examples/test.html with data-target and data-rule
 - Test sections in test.html are sorted alphabetically by rule ID
+- **Dual extraction consistency** — Changes to element extraction behavior (SKIP_TAGS, display:none filtering, selector generation, scan caps) must be applied to both `src/sidebar/hooks/build-scan-script.ts` and `e2e/helpers/extract-element-data.ts`
 
 ### Vercel React best practices (relevant subset)
 Read the rule files in .claude/skills/vercel-react-best-practices/rules/ and check for violations. Focus on: rerender-*, rendering-*, client-*, js-*, bundle-*. Skip server-* rules.

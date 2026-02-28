@@ -73,6 +73,7 @@ export function ScanResultsPanel({
         totalViolations={totalViolations}
         totalElements={uniqueElements}
         ruleCount={groups.length}
+        groups={groups}
         onClear={onClear}
       />
       {inspectError && (
