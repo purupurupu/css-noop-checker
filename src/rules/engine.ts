@@ -14,6 +14,7 @@ import './item-no-order.ts';
 import './item-no-self-align.ts';
 import './static-no-offset.ts';
 import './static-no-z-index.ts';
+import './visible-overflow-no-text-overflow.ts';
 
 import type { ElementData, Warning } from './types.ts';
 import { createRuleContext } from './context.ts';
