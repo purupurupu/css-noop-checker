@@ -87,7 +87,13 @@ function App() {
 
   return (
     <div className="panel">
-      <PanelHeader elementData={data} status={status} scanStatus={scanStatus} onScan={handleScan} />
+      <PanelHeader
+        elementData={data}
+        status={status}
+        scanStatus={scanStatus}
+        warnings={warnings}
+        onScan={handleScan}
+      />
       {renderContent()}
       <PanelFooter />
     </div>

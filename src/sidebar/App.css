@@ -144,8 +144,8 @@ body {
   flex-shrink: 0;
 }
 
-/* Scan button */
-.scan-button {
+/* L2: Shared action button style (Scan Page, Copy JSON) */
+.panel-action-button {
   display: inline-flex;
   align-items: center;
   padding: 2px 6px;
@@ -158,18 +158,27 @@ body {
   white-space: nowrap;
 }
 
-.scan-button:hover:not(:disabled) {
+.panel-action-button:hover:not(:disabled) {
   background: var(--bg-hover);
   border-color: var(--border);
   color: var(--text);
 }
 
-.scan-button:disabled {
+/* L3: Focus-visible for keyboard navigation */
+.panel-action-button:focus-visible {
+  background: var(--bg-hover);
+  border-color: var(--border);
+  color: var(--text);
+  outline: 2px solid var(--text-element);
+  outline-offset: 1px;
+}
+
+.panel-action-button:disabled {
   opacity: 0.5;
   cursor: not-allowed;
 }
 
-.scan-button--scanning {
+.panel-action-button--scanning {
   color: var(--warning-color);
 }
 
@@ -222,6 +231,12 @@ body {
 .scan-summary__count {
   color: var(--warning-color);
   font-weight: 600;
+}
+
+.scan-summary__actions {
+  display: flex;
+  align-items: center;
+  gap: 4px;
 }
 
 .scan-summary__clear {

@@ -10,6 +10,7 @@ lerna-debug.log*
 node_modules
 dist
 dist-ssr
+mcp-server/node_modules
 *.local
 
 # Playwright

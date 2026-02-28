@@ -1,11 +1,13 @@
-import type { ElementData } from '../../rules/types.ts';
+import type { ElementData, Warning } from '../../rules/types.ts';
 import type { AnalysisStatus } from '../hooks/useSelectedElement.ts';
 import type { ScanStatus } from '../types.ts';
+import { CopyJsonButton } from './CopyJsonButton.tsx';
 
 interface PanelHeaderProps {
   elementData: ElementData | null;
   status: AnalysisStatus;
   scanStatus: ScanStatus;
+  warnings: Warning[];
   onScan: () => void;
 }
 
@@ -23,8 +25,15 @@ const STATUS_LABELS: Record<AnalysisStatus, string> = {
   error: 'Error',
 };
 
-export function PanelHeader({ elementData, status, scanStatus, onScan }: PanelHeaderProps) {
+export function PanelHeader({
+  elementData,
+  status,
+  scanStatus,
+  warnings,
+  onScan,
+}: PanelHeaderProps) {
   const isScanning = scanStatus === 'scanning';
+  const showCopyJson = status === 'ready' && scanStatus !== 'done' && warnings.length > 0;
 
   return (
     <header className="panel-header">
@@ -35,8 +44,9 @@ export function PanelHeader({ elementData, status, scanStatus, onScan }: PanelHe
         <span className={`panel-header__status panel-header__status--${status}`}>
           {STATUS_LABELS[status]}
         </span>
+        {showCopyJson && <CopyJsonButton data={warnings} />}
         <button
-          className={`scan-button${isScanning ? ' scan-button--scanning' : ''}`}
+          className={`panel-action-button${isScanning ? ' panel-action-button--scanning' : ''}`}
           onClick={onScan}
           disabled={isScanning}
           type="button"

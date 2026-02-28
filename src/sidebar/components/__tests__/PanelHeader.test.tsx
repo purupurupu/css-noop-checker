@@ -22,6 +22,7 @@ describe('PanelHeader', () => {
     elementData: null as ElementData | null,
     status: 'no-selection' as AnalysisStatus,
     scanStatus: 'idle' as ScanStatus,
+    warnings: [],
     onScan: vi.fn(),
   };
 
@@ -92,29 +93,27 @@ describe('PanelHeader', () => {
 
   it('shows "Scan Page" button when not scanning', () => {
     render(<PanelHeader {...defaultProps} scanStatus="idle" />);
-    const button = screen.getByRole('button');
-    expect(button.textContent).toBe('Scan Page');
+    const button = screen.getByText('Scan Page');
     expect(button.hasAttribute('disabled')).toBe(false);
   });
 
   it('shows "Scanning\u2026" and disables button when scanStatus is scanning', () => {
     render(<PanelHeader {...defaultProps} scanStatus="scanning" />);
-    const button = screen.getByRole('button');
-    expect(button.textContent).toBe('Scanning\u2026');
+    const button = screen.getByText('Scanning\u2026');
     expect(button.hasAttribute('disabled')).toBe(true);
   });
 
   it('calls onScan when Scan Page button is clicked', () => {
     const onScan = vi.fn();
     render(<PanelHeader {...defaultProps} onScan={onScan} />);
-    fireEvent.click(screen.getByRole('button'));
+    fireEvent.click(screen.getByText('Scan Page'));
     expect(onScan).toHaveBeenCalledTimes(1);
   });
 
   it('does not call onScan when button is disabled (scanning)', () => {
     const onScan = vi.fn();
     render(<PanelHeader {...defaultProps} scanStatus="scanning" onScan={onScan} />);
-    fireEvent.click(screen.getByRole('button'));
+    fireEvent.click(screen.getByText('Scanning\u2026'));
     expect(onScan).not.toHaveBeenCalled();
   });
 });

@@ -10,6 +10,7 @@ describe('ScanSummaryBar', () => {
     totalViolations: 5,
     totalElements: 3,
     ruleCount: 2,
+    groups: [],
     onClear: vi.fn(),
   };
 
