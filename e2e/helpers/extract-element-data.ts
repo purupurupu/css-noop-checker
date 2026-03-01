@@ -18,11 +18,18 @@ function buildExtractFn() {
     el: Element,
     { properties, parentProperties }: { properties: string[]; parentProperties: string[] },
   ) => {
+    // CSSStyleDeclaration supports camelCase bracket access at runtime,
+    // but TypeScript's type definition lacks a string index signature.
+    function readStyleProp(cs: CSSStyleDeclaration, prop: string): string | undefined {
+      const val: unknown = Reflect.get(cs, prop);
+      return typeof val === 'string' ? val : undefined;
+    }
+
     const cs = getComputedStyle(el);
     const computedStyles: Record<string, string> = {};
     for (const prop of properties) {
-      const value = (cs as unknown as Record<string, string>)[prop];
-      if (value === undefined || value === null) {
+      const value = readStyleProp(cs, prop);
+      if (value === undefined) {
         throw new Error(
           `getComputedStyle returned no value for property "${prop}" on <${el.tagName.toLowerCase()}>. ` +
             `Check that the property name is correct in the rule's requiredProperties.`,
@@ -36,8 +43,8 @@ function buildExtractFn() {
       const pcs = getComputedStyle(el.parentElement);
       const parentStyles: Record<string, string> = {};
       for (const prop of parentProperties) {
-        const value = (pcs as unknown as Record<string, string>)[prop];
-        if (value === undefined || value === null) {
+        const value = readStyleProp(pcs, prop);
+        if (value === undefined) {
           throw new Error(
             `getComputedStyle returned no value for parent property "${prop}" on <${el.parentElement.tagName.toLowerCase()}>. ` +
               `Check that the property name is correct in the rule's requiredParentProperties.`,
@@ -127,6 +134,13 @@ export async function scanAllElements(page: Page): Promise<ScanResult> {
   // page.evaluate() loop to avoid per-element serialization overhead.
   const results = await page.evaluate(
     ({ properties, parentProperties, maxElements }) => {
+      // CSSStyleDeclaration supports camelCase bracket access at runtime,
+      // but TypeScript's type definition lacks a string index signature.
+      function readStyleProp(cs: CSSStyleDeclaration, prop: string): string | undefined {
+        const val: unknown = Reflect.get(cs, prop);
+        return typeof val === 'string' ? val : undefined;
+      }
+
       // Non-rendered elements where getComputedStyle() may return null properties.
       // These can never have meaningful CSS no-op violations, so skip them.
       const SKIP_TAGS = new Set([
@@ -162,8 +176,8 @@ export async function scanAllElements(page: Page): Promise<ScanResult> {
         const cs = getComputedStyle(el);
         const computedStyles: Record<string, string> = {};
         for (const prop of properties) {
-          const value = (cs as unknown as Record<string, string>)[prop];
-          if (value === undefined || value === null) {
+          const value = readStyleProp(cs, prop);
+          if (value === undefined) {
             throw new Error(
               `getComputedStyle returned no value for property "${prop}" on <${el.tagName.toLowerCase()}>. ` +
                 `Check that the property name is correct in the rule's requiredProperties.`,
@@ -177,8 +191,8 @@ export async function scanAllElements(page: Page): Promise<ScanResult> {
           const pcs = getComputedStyle(el.parentElement);
           const parentStyles: Record<string, string> = {};
           for (const prop of parentProperties) {
-            const value = (pcs as unknown as Record<string, string>)[prop];
-            if (value === undefined || value === null) {
+            const value = readStyleProp(pcs, prop);
+            if (value === undefined) {
               throw new Error(
                 `getComputedStyle returned no value for parent property "${prop}" on <${el.parentElement.tagName.toLowerCase()}>. ` +
                   `Check that the property name is correct in the rule's requiredParentProperties.`,

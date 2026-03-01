@@ -6,6 +6,12 @@ import '../../src/rules/engine.ts';
 import { buildEvalScript } from '../../src/sidebar/hooks/build-eval-script.ts';
 import { isElementData } from '../../src/rules/validation.ts';
 
+declare global {
+  interface Window {
+    __evalScript: (el: Element | null) => unknown;
+  }
+}
+
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const TEST_HTML = `file://${path.resolve(__dirname, '../../examples/test.html')}`;
 
@@ -39,7 +45,7 @@ test.describe('buildEvalScript() browser execution', () => {
     await injectEvalScript(page);
 
     const result = await page.evaluate(() => {
-      return (window as any).__evalScript(null);
+      return window.__evalScript(null);
     });
     expect(result).toBeNull();
   });
@@ -53,7 +59,7 @@ test.describe('buildEvalScript() browser execution', () => {
       div.id = 'eval-test-block';
       div.className = 'foo bar';
       document.body.appendChild(div);
-      const data = (window as any).__evalScript(div);
+      const data = window.__evalScript(div);
       div.remove();
       return data;
     });
@@ -73,7 +79,7 @@ test.describe('buildEvalScript() browser execution', () => {
     const result = await page.evaluate(() => {
       const span = document.createElement('span');
       document.body.appendChild(span);
-      const data = (window as any).__evalScript(span);
+      const data = window.__evalScript(span);
       span.remove();
       return data;
     });
@@ -94,7 +100,7 @@ test.describe('buildEvalScript() browser execution', () => {
       const child = document.createElement('div');
       container.appendChild(child);
       document.body.appendChild(container);
-      const data = (window as any).__evalScript(child);
+      const data = window.__evalScript(child);
       container.remove();
       return data;
     });
@@ -118,7 +124,7 @@ test.describe('buildEvalScript() browser execution', () => {
       const tag = await target.evaluate((el) => el.tagName.toLowerCase());
 
       const result = await target.evaluate((el) => {
-        return (window as any).__evalScript(el);
+        return window.__evalScript(el);
       });
 
       expect(result, `[data-target] #${i} (<${tag}>) returned null`).not.toBeNull();

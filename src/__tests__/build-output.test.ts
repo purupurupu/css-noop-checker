@@ -61,7 +61,7 @@ describe('build output', () => {
 
     beforeAll(() => {
       const raw = readFileSync(resolve(DIST, 'manifest.json'), 'utf-8');
-      manifest = JSON.parse(raw) as Record<string, unknown>;
+      manifest = JSON.parse(raw);
     });
 
     it('has manifest_version 3', () => {
@@ -73,13 +73,15 @@ describe('build output', () => {
     });
 
     it('has devtools_page pointing to an existing file', () => {
+      const devtoolsPage = manifest.devtools_page;
       expect(
-        typeof manifest.devtools_page,
+        typeof devtoolsPage,
         'devtools_page is required — without it the sidebar pane is never registered',
       ).toBe('string');
+      if (typeof devtoolsPage !== 'string') return;
       expect(
-        existsSync(resolve(DIST, manifest.devtools_page as string)),
-        `devtools_page "${manifest.devtools_page}" does not exist in dist/`,
+        existsSync(resolve(DIST, devtoolsPage)),
+        `devtools_page "${devtoolsPage}" does not exist in dist/`,
       ).toBe(true);
     });
   });

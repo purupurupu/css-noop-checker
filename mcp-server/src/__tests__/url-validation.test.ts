@@ -140,7 +140,9 @@ describe('validateUrl', () => {
       validateUrl('not-a-url');
     } catch (err) {
       expect(err).toBeInstanceOf(Error);
-      expect((err as Error).cause).toBeDefined();
+      if (err instanceof Error) {
+        expect(err.cause).toBeDefined();
+      }
     }
   });
 });

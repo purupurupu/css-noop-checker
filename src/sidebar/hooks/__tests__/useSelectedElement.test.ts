@@ -166,7 +166,7 @@ describe('isElementData', () => {
     ];
     for (const key of requiredKeys) {
       const styles = { ...validData.computedStyles };
-      delete (styles as Record<string, unknown>)[key];
+      Reflect.deleteProperty(styles, key);
       expect(isElementData({ ...validData, computedStyles: styles })).toBe(false);
     }
   });

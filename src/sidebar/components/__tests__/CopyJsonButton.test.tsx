@@ -7,7 +7,7 @@ import { CopyJsonButton } from '../CopyJsonButton.tsx';
 afterEach(cleanup);
 
 const makeWarning = (overrides: Partial<Warning> = {}): Warning => ({
-  ruleId: 'inline-no-dimensions' as Warning['ruleId'],
+  ruleId: 'inline-no-dimensions',
   property: 'width',
   severity: 'warning',
   title: 'width has no effect',
@@ -119,7 +119,8 @@ describe('CopyJsonButton', () => {
     const circular: Record<string, unknown> = { a: 1 };
     circular.self = circular;
 
-    render(<CopyJsonButton data={circular as unknown as Warning[]} />);
+    // @ts-expect-error intentionally passing circular reference to test error handling
+    render(<CopyJsonButton data={circular} />);
 
     await act(async () => {
       fireEvent.click(screen.getByText('Copy JSON'));
