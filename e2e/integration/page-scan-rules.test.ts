@@ -26,15 +26,7 @@ test.describe('page scan with parent context', () => {
       if (targetCount !== 1) continue;
 
       const data = await extractElementData(target);
-      scanElements.push({
-        index: i,
-        selector: `case-${i}`,
-        tagName: data.tagName,
-        id: data.id,
-        classList: data.classList,
-        computedStyles: data.computedStyles,
-        parent: data.parent,
-      });
+      scanElements.push({ ...data, index: i, selector: `case-${i}` });
     }
 
     // Run groupByRule (which internally calls analyzeElement with parent context)
@@ -43,13 +35,7 @@ test.describe('page scan with parent context', () => {
     // Collect per-element warnings independently for comparison (unique rule IDs per element)
     const perElementRules = new Map<number, Set<string>>();
     for (const el of scanElements) {
-      const warnings = analyzeElement({
-        tagName: el.tagName,
-        id: el.id,
-        classList: el.classList,
-        computedStyles: el.computedStyles,
-        parent: el.parent,
-      });
+      const warnings = analyzeElement(el);
       if (warnings.length > 0) {
         perElementRules.set(el.index, new Set(warnings.map((w) => w.ruleId)));
       }
@@ -94,15 +80,7 @@ test.describe('page scan with parent context', () => {
       const label = (await caseEl.locator('.label').textContent()) ?? `(index ${i})`;
       const data = await extractElementData(target);
 
-      scanElements.push({
-        index: i,
-        selector: `warn-case-${i}`,
-        tagName: data.tagName,
-        id: data.id,
-        classList: data.classList,
-        computedStyles: data.computedStyles,
-        parent: data.parent,
-      });
+      scanElements.push({ ...data, index: i, selector: `warn-case-${i}` });
       caseRules.push({ index: i, rule, label });
     }
 
@@ -141,15 +119,7 @@ test.describe('page scan with parent context', () => {
       const label = (await caseEl.locator('.label').textContent()) ?? `(index ${i})`;
       const data = await extractElementData(target);
 
-      scanElements.push({
-        index: i,
-        selector: `ok-case-${i}`,
-        tagName: data.tagName,
-        id: data.id,
-        classList: data.classList,
-        computedStyles: data.computedStyles,
-        parent: data.parent,
-      });
+      scanElements.push({ ...data, index: i, selector: `ok-case-${i}` });
       caseRules.push({ index: i, rule, label });
     }
 
