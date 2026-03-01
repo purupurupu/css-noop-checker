@@ -107,3 +107,7 @@ export function isDefaultFlexDirectionValue(value: string): boolean {
 export function isDefaultFlexWrapValue(value: string): boolean {
   return value === 'nowrap';
 }
+
+export function isDefaultOverflowValue(value: string): boolean {
+  return value === 'visible';
+}
