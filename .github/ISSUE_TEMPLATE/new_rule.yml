@@ -1,0 +1,60 @@
+name: New Rule Proposal
+description: Propose a new CSS no-op detection rule
+labels: ['new rule']
+body:
+  - type: input
+    id: rule-id
+    attributes:
+      label: Rule ID
+      description: 'Follow the `<target>-no-<qualifier>` naming convention (e.g., `inline-no-dimensions`).'
+      placeholder: 'e.g., container-no-flex-props'
+    validations:
+      required: true
+  - type: textarea
+    id: description
+    attributes:
+      label: What does this rule detect?
+      description: Describe the CSS property combination that has no effect and why.
+    validations:
+      required: true
+  - type: textarea
+    id: warn-example
+    attributes:
+      label: 'Example: should warn'
+      description: HTML/CSS example where the rule should fire a warning.
+      render: html
+    validations:
+      required: true
+  - type: textarea
+    id: ok-example
+    attributes:
+      label: 'Example: should NOT warn'
+      description: HTML/CSS example where the property is valid and the rule should stay silent.
+      render: html
+    validations:
+      required: true
+  - type: textarea
+    id: properties
+    attributes:
+      label: Related CSS Properties
+      description: List the CSS properties involved in this rule.
+      placeholder: 'e.g., display, flex-direction, flex-wrap'
+    validations:
+      required: true
+  - type: input
+    id: spec
+    attributes:
+      label: Specification Reference
+      description: Link to the relevant CSS specification or MDN documentation.
+      placeholder: 'https://developer.mozilla.org/en-US/docs/Web/CSS/...'
+    validations:
+      required: true
+  - type: dropdown
+    id: willing
+    attributes:
+      label: Would you like to implement this rule?
+      options:
+        - "Yes, I'd like to submit a PR"
+        - "No, I'm just proposing the idea"
+    validations:
+      required: true

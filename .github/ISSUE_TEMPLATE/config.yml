@@ -1,0 +1,5 @@
+blank_issues_enabled: true
+contact_links:
+  - name: Security Vulnerability
+    url: https://github.com/purupurupu/css-noop-checker/security/advisories/new
+    about: Please report security vulnerabilities through GitHub Security Advisories.

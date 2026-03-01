@@ -2,6 +2,24 @@
   "name": "css-noop-checker-mcp",
   "version": "0.0.1",
   "private": true,
+  "description": "MCP server for CSS no-op detection via Playwright",
+  "keywords": [
+    "css",
+    "linting",
+    "mcp",
+    "playwright"
+  ],
+  "homepage": "https://github.com/purupurupu/css-noop-checker#readme",
+  "bugs": {
+    "url": "https://github.com/purupurupu/css-noop-checker/issues"
+  },
+  "license": "MIT",
+  "author": "purupurupu",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/purupurupu/css-noop-checker.git",
+    "directory": "mcp-server"
+  },
   "type": "module",
   "scripts": {
     "start": "tsx src/index.ts"
