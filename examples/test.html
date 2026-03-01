@@ -761,6 +761,68 @@
       </div>
     </div>
 
+    <!-- ===== nonfloat-no-shape-outside: shape-outside on non-floated elements ===== -->
+    <h2>nonfloat-no-shape-outside: shape-outside on non-floated elements</h2>
+
+    <h3>Should warn</h3>
+    <div class="case expect-warn" data-rule="nonfloat-no-shape-outside">
+      <div class="label label-warn">
+        nonfloat-no-shape-outside warn: shape-outside on non-floated element
+      </div>
+      <div data-target style="shape-outside: circle()">
+        Non-floated element with shape-outside: circle() (no effect)
+      </div>
+    </div>
+    <div class="case expect-warn" data-rule="nonfloat-no-shape-outside">
+      <div class="label label-warn">
+        nonfloat-no-shape-outside warn: shape-margin on non-floated element
+      </div>
+      <div data-target style="shape-outside: circle(); shape-margin: 10px">
+        Non-floated element with shape-margin: 10px (no effect)
+      </div>
+    </div>
+    <div class="case expect-warn" data-rule="nonfloat-no-shape-outside">
+      <div class="label label-warn">
+        nonfloat-no-shape-outside warn: shape-image-threshold on non-floated element
+      </div>
+      <div
+        data-target
+        style="
+          shape-outside: url('data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7');
+          shape-image-threshold: 0.5;
+        "
+      >
+        Non-floated element with shape-image-threshold: 0.5 (no effect)
+      </div>
+    </div>
+
+    <div class="case expect-warn" data-rule="nonfloat-no-shape-outside">
+      <div class="label label-warn">
+        nonfloat-no-shape-outside warn: flex item with float + shape-outside (float ignored)
+      </div>
+      <div style="display: flex">
+        <div data-target style="float: left; shape-outside: circle()">
+          Flex item with float: left + shape-outside (float is ignored on flex items)
+        </div>
+      </div>
+    </div>
+
+    <h3>Should NOT warn</h3>
+    <div class="case expect-ok" data-rule="nonfloat-no-shape-outside">
+      <div class="label label-ok">
+        nonfloat-no-shape-outside ok: floated element with shape-outside
+      </div>
+      <div data-target style="float: left; width: 100px; height: 100px; shape-outside: circle()">
+        Floated element with shape-outside: circle() (valid)
+      </div>
+    </div>
+    <div class="case expect-ok" data-rule="nonfloat-no-shape-outside">
+      <div class="label label-ok">
+        nonfloat-no-shape-outside ok: non-floated with default shape-outside (none)
+      </div>
+      <div data-target>Non-floated element with default shape-outside: none (no warning)</div>
+    </div>
+
     <!-- ===== nonreplaced-no-object-fit: object-fit/object-position on non-replaced elements ===== -->
     <h2>nonreplaced-no-object-fit: object-fit/object-position on non-replaced elements</h2>
 
