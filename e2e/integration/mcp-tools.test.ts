@@ -7,7 +7,6 @@ import '../../src/rules/engine.ts';
 import { getRules } from '../../src/rules/registry.ts';
 import { analyzeElement } from '../../src/rules/engine.ts';
 import { extractElementBySelector, scanAllElements } from '../helpers/extract-element-data.ts';
-import type { ElementData } from '../../src/rules/types.ts';
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const TEST_HTML = `file://${path.resolve(__dirname, '../../examples/test.html')}`;
@@ -64,14 +63,7 @@ test.describe('MCP server tools', () => {
     // Analyze all elements and collect violations
     const violations: { selector: string; warnings: ReturnType<typeof analyzeElement> }[] = [];
     for (const el of elements) {
-      const elementData: ElementData = {
-        tagName: el.tagName,
-        id: el.id,
-        classList: el.classList,
-        computedStyles: el.computedStyles,
-        parent: el.parent,
-      };
-      const warnings = analyzeElement(elementData);
+      const warnings = analyzeElement(el);
       if (warnings.length > 0) {
         violations.push({ selector: el.selector, warnings });
       }
