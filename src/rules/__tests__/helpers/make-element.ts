@@ -70,13 +70,11 @@ export function makeElement(
   parent: ElementData['parent'] = null,
 ): ElementData {
   const { tagName = 'div', ...styles } = overrides;
-  return {
-    tagName,
-    id: '',
-    classList: [],
-    computedStyles: { ...DEFAULT_COMPUTED_STYLES, ...styles } as Record<string, string>,
-    parent,
-  };
+  const computedStyles: Record<string, string> = { ...DEFAULT_COMPUTED_STYLES };
+  for (const [key, value] of Object.entries(styles)) {
+    if (value !== undefined) computedStyles[key] = value;
+  }
+  return { tagName, id: '', classList: [], computedStyles, parent };
 }
 
 const DEFAULT_BLOCK_PARENT: ElementData['parent'] = { computedStyles: { display: 'block' } };
