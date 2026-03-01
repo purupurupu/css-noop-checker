@@ -371,6 +371,77 @@
       </div>
     </div>
 
+    <!-- ===== container-no-justify-items: justify-items on non-grid ===== -->
+    <h2>container-no-justify-items: justify-items on non-grid containers</h2>
+
+    <h3>Should warn</h3>
+    <div class="case expect-warn" data-rule="container-no-justify-items">
+      <div class="label label-warn">
+        container-no-justify-items warn: display:block with justify-items
+      </div>
+      <div data-target style="justify-items: center">
+        <div>Child</div>
+      </div>
+    </div>
+    <div class="case expect-warn" data-rule="container-no-justify-items">
+      <div class="label label-warn">
+        container-no-justify-items warn: display:flex with justify-items
+      </div>
+      <div data-target style="display: flex; justify-items: center">
+        <div>Child</div>
+      </div>
+    </div>
+    <div class="case expect-warn" data-rule="container-no-justify-items">
+      <div class="label label-warn">
+        container-no-justify-items warn: display:inline with justify-items
+      </div>
+      <span data-target style="justify-items: center">Child</span>
+    </div>
+
+    <h3>Should NOT warn</h3>
+    <div class="case expect-ok" data-rule="container-no-justify-items">
+      <div class="label label-ok">
+        container-no-justify-items ok: grid container with justify-items
+      </div>
+      <div data-target style="display: grid; justify-items: center">
+        <div>Grid child</div>
+      </div>
+    </div>
+    <div class="case expect-ok" data-rule="container-no-justify-items">
+      <div class="label label-ok">
+        container-no-justify-items ok: inline-grid container with justify-items
+      </div>
+      <span data-target style="display: inline-grid; justify-items: center">
+        <span>Grid child</span>
+      </span>
+    </div>
+    <div class="case expect-ok" data-rule="container-no-justify-items">
+      <div class="label label-ok">
+        container-no-justify-items ok: block with default justify-items
+      </div>
+      <div data-target>
+        <div>Default value (normal)</div>
+      </div>
+    </div>
+    <div class="case expect-ok" data-rule="container-no-justify-items">
+      <div class="label label-ok">
+        container-no-justify-items ok: display:contents with justify-items
+      </div>
+      <div style="display: grid; justify-items: center">
+        <div data-target style="display: contents; justify-items: center">
+          <div>Child of contents wrapper</div>
+        </div>
+      </div>
+    </div>
+    <div class="case expect-ok" data-rule="container-no-justify-items">
+      <div class="label label-ok">
+        container-no-justify-items ok: legacy keyword propagates to descendants
+      </div>
+      <div data-target style="justify-items: legacy center">
+        <div>Child inherits legacy value</div>
+      </div>
+    </div>
+
     <!-- ===== container-no-place: place-* on non-flex/grid ===== -->
     <h2>container-no-place: place-* on non-flex/grid</h2>
 

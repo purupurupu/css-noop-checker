@@ -24,6 +24,7 @@ function makeScanElement(
       columnGap: 'normal',
       alignItems: 'normal',
       justifyContent: 'normal',
+      justifyItems: 'normal',
       placeItems: 'normal',
       placeContent: 'normal',
       columnCount: 'auto',
