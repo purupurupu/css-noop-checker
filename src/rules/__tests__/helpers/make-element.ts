@@ -10,6 +10,7 @@ export const DEFAULT_COMPUTED_STYLES: ElementData['computedStyles'] = {
   columnGap: 'normal',
   alignItems: 'normal',
   justifyContent: 'normal',
+  justifyItems: 'normal',
   placeItems: 'normal',
   placeContent: 'normal',
   columnCount: 'auto',

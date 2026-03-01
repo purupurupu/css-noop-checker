@@ -111,6 +111,7 @@ describe('isElementData', () => {
       'columnGap',
       'alignItems',
       'justifyContent',
+      'justifyItems',
       'placeItems',
       'placeContent',
       'columnCount',
