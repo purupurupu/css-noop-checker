@@ -31,6 +31,8 @@ function makeBaseStyles(overrides: Record<string, string> = {}): Record<string, 
     overflowX: 'visible',
     overflowY: 'visible',
     resize: 'none',
+    objectFit: 'fill',
+    objectPosition: '50% 50%',
     ...overrides,
   };
 }

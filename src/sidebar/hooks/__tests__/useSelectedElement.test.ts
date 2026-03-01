@@ -63,6 +63,8 @@ const validData = {
     overflowX: 'visible',
     overflowY: 'visible',
     resize: 'none',
+    objectFit: 'fill',
+    objectPosition: '50% 50%',
   },
   parent: null,
 };
@@ -213,6 +215,8 @@ describe('isElementData', () => {
       'overflowX',
       'overflowY',
       'resize',
+      'objectFit',
+      'objectPosition',
     ];
     for (const key of requiredKeys) {
       const styles = { ...validData.computedStyles };
