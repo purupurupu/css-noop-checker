@@ -60,6 +60,8 @@ const VALID_STYLES = {
   overflowX: 'visible',
   overflowY: 'visible',
   resize: 'none',
+  objectFit: 'fill',
+  objectPosition: '50% 50%',
 };
 
 describe('isElementData — parent field validation', () => {

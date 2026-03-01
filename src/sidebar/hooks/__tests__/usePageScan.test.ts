@@ -42,6 +42,8 @@ function makeScanElement(
       overflowX: 'visible',
       overflowY: 'visible',
       resize: 'none',
+      objectFit: 'fill',
+      objectPosition: '50% 50%',
       ...styles,
     },
     parent: null,

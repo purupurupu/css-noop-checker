@@ -57,6 +57,8 @@ export const DEFAULT_COMPUTED_STYLES: ElementData['computedStyles'] = {
   overflowX: 'visible',
   overflowY: 'visible',
   resize: 'none',
+  objectFit: 'fill',
+  objectPosition: '50% 50%',
 };
 
 /** Create a test ElementData with overrides and optional tagName / parent. */

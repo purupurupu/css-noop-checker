@@ -761,6 +761,129 @@
       </div>
     </div>
 
+    <!-- ===== nonreplaced-no-object-fit: object-fit/object-position on non-replaced elements ===== -->
+    <h2>nonreplaced-no-object-fit: object-fit/object-position on non-replaced elements</h2>
+
+    <h3>Should warn</h3>
+    <div class="case expect-warn" data-rule="nonreplaced-no-object-fit">
+      <div class="label label-warn">nonreplaced-no-object-fit warn: div with object-fit: cover</div>
+      <div data-target style="object-fit: cover; width: 200px; height: 100px; background: #f0f0f0">
+        Block div with object-fit: cover (no effect)
+      </div>
+    </div>
+    <div class="case expect-warn" data-rule="nonreplaced-no-object-fit">
+      <div class="label label-warn">
+        nonreplaced-no-object-fit warn: span with object-fit: contain
+      </div>
+      <span data-target style="object-fit: contain"
+        >Inline span with object-fit: contain (no effect)</span
+      >
+    </div>
+    <div class="case expect-warn" data-rule="nonreplaced-no-object-fit">
+      <div class="label label-warn">nonreplaced-no-object-fit warn: div with object-position</div>
+      <div data-target style="object-position: top left; width: 200px; height: 100px">
+        Block div with object-position (no effect)
+      </div>
+    </div>
+    <div class="case expect-warn" data-rule="nonreplaced-no-object-fit">
+      <div class="label label-warn">
+        nonreplaced-no-object-fit warn: div with both object-fit and object-position
+      </div>
+      <div
+        data-target
+        style="object-fit: cover; object-position: center top; width: 200px; height: 100px"
+      >
+        Block div with both object-fit and object-position (no effect)
+      </div>
+    </div>
+    <div class="case expect-warn" data-rule="nonreplaced-no-object-fit">
+      <div class="label label-warn">
+        nonreplaced-no-object-fit warn: button with object-fit (form control, not object-fit target)
+      </div>
+      <button data-target style="object-fit: cover">Button with object-fit (no effect)</button>
+    </div>
+    <div class="case expect-warn" data-rule="nonreplaced-no-object-fit">
+      <div class="label label-warn">
+        nonreplaced-no-object-fit warn: audio with object-fit (UA widget, no effect)
+      </div>
+      <audio data-target style="object-fit: cover" controls></audio>
+    </div>
+
+    <h3>Should NOT warn</h3>
+    <div class="case expect-ok" data-rule="nonreplaced-no-object-fit">
+      <div class="label label-ok">
+        nonreplaced-no-object-fit ok: img with object-fit (replaced element)
+      </div>
+      <img
+        data-target
+        src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='60' height='40'%3E%3Crect fill='%234ec9b0' width='60' height='40'/%3E%3C/svg%3E"
+        style="object-fit: cover; width: 100px; height: 60px"
+        alt="replaced element with object-fit"
+      />
+    </div>
+    <div class="case expect-ok" data-rule="nonreplaced-no-object-fit">
+      <div class="label label-ok">
+        nonreplaced-no-object-fit ok: video with object-fit (replaced element)
+      </div>
+      <video
+        data-target
+        style="object-fit: contain; width: 100px; height: 60px; background: #333"
+      ></video>
+    </div>
+    <div class="case expect-ok" data-rule="nonreplaced-no-object-fit">
+      <div class="label label-ok">
+        nonreplaced-no-object-fit ok: canvas with object-fit (replaced element)
+      </div>
+      <canvas
+        data-target
+        style="object-fit: cover; width: 100px; height: 60px; background: #eee"
+      ></canvas>
+    </div>
+    <div class="case expect-ok" data-rule="nonreplaced-no-object-fit">
+      <div class="label label-ok">
+        nonreplaced-no-object-fit ok: embed with object-fit (allowlisted replaced element)
+      </div>
+      <embed
+        data-target
+        type="image/svg+xml"
+        style="object-fit: cover; width: 100px; height: 60px"
+      />
+    </div>
+    <div class="case expect-ok" data-rule="nonreplaced-no-object-fit">
+      <div class="label label-ok">
+        nonreplaced-no-object-fit ok: object with object-fit (allowlisted replaced element)
+      </div>
+      <object
+        data-target
+        type="image/svg+xml"
+        style="object-fit: cover; width: 100px; height: 60px"
+      ></object>
+    </div>
+    <div class="case expect-ok" data-rule="nonreplaced-no-object-fit">
+      <div class="label label-ok">
+        nonreplaced-no-object-fit ok: div with default object-fit (fill) and default object-position
+      </div>
+      <div data-target style="width: 200px; height: 100px">Default values — no warning needed</div>
+    </div>
+    <div class="case expect-ok" data-rule="nonreplaced-no-object-fit">
+      <div class="label label-ok">
+        nonreplaced-no-object-fit ok: div with explicit default object-position (50% 50%)
+      </div>
+      <div data-target style="object-position: 50% 50%; width: 200px; height: 100px">
+        Explicit default object-position — no warning needed
+      </div>
+    </div>
+    <div class="case expect-ok" data-rule="nonreplaced-no-object-fit">
+      <div class="label label-ok">
+        nonreplaced-no-object-fit ok: display:contents skipped (no box)
+      </div>
+      <div style="display: flex">
+        <div data-target style="display: contents; object-fit: cover">
+          <span>Child of contents element</span>
+        </div>
+      </div>
+    </div>
+
     <!-- ===== static-no-offset: offsets on static position ===== -->
     <h2>static-no-offset: top/right/bottom/left on static elements</h2>
 
