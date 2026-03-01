@@ -1,5 +1,8 @@
 # CSS Noop Checker
 
+[![CI](https://github.com/purupurupu/css-noop-checker/actions/workflows/ci.yml/badge.svg)](https://github.com/purupurupu/css-noop-checker/actions/workflows/ci.yml)
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](./LICENSE)
+
 Chrome DevTools (Elements sidebar) extension that detects CSS properties that currently have no effect on the selected element.
 
 ## Features
@@ -88,4 +91,8 @@ React 19 · TypeScript 5.9 · Vite 7 · Oxlint / Oxfmt · Vitest · Playwright �
 
 ## Contributing
 
-See the contributor guide in [`AGENTS.md`](./AGENTS.md) for project structure, adding new rules, coding style, and PR conventions.
+Contributions are welcome! See the contributor guide in [`AGENTS.md`](./AGENTS.md) for project structure, adding new rules, coding style, and PR conventions.
+
+## License
+
+[MIT](./LICENSE)
