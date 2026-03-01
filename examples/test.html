@@ -408,6 +408,67 @@
       </div>
     </div>
 
+    <!-- ===== element-no-table-props: table props on non-table elements ===== -->
+    <h2>element-no-table-props: table props on non-table elements</h2>
+
+    <h3>Should warn</h3>
+    <div class="case expect-warn" data-rule="element-no-table-props">
+      <div class="label label-warn">element-no-table-props warn: block with border-collapse</div>
+      <div data-target style="border-collapse: collapse">Block with border-collapse: collapse</div>
+    </div>
+    <div class="case expect-warn" data-rule="element-no-table-props">
+      <div class="label label-warn">element-no-table-props warn: block with table-layout</div>
+      <div data-target style="table-layout: fixed">Block with table-layout: fixed</div>
+    </div>
+    <div class="case expect-warn" data-rule="element-no-table-props">
+      <div class="label label-warn">element-no-table-props warn: flex with border-collapse</div>
+      <div data-target style="display: flex; border-collapse: collapse">
+        Flex with border-collapse
+      </div>
+    </div>
+
+    <h3>Should NOT warn</h3>
+    <div class="case expect-ok" data-rule="element-no-table-props">
+      <div class="label label-ok">
+        element-no-table-props ok: display: table with border-collapse
+      </div>
+      <div data-target style="display: table; border-collapse: collapse">
+        <div style="display: table-row"><div style="display: table-cell">Table cell</div></div>
+      </div>
+    </div>
+    <div class="case expect-ok" data-rule="element-no-table-props">
+      <div class="label label-ok">
+        element-no-table-props ok: display: inline-table with table-layout
+      </div>
+      <div data-target style="display: inline-table; table-layout: fixed">
+        <div style="display: table-row"><div style="display: table-cell">Cell</div></div>
+      </div>
+    </div>
+    <div class="case expect-ok" data-rule="element-no-table-props">
+      <div class="label label-ok">element-no-table-props ok: block with default values</div>
+      <div data-target>Block with default border-collapse and table-layout</div>
+    </div>
+    <div class="case expect-ok" data-rule="element-no-table-props">
+      <div class="label label-ok">
+        element-no-table-props ok: table-cell inherits border-collapse
+      </div>
+      <div style="display: table; border-collapse: collapse">
+        <div style="display: table-row">
+          <div data-target style="display: table-cell">Cell in collapsed table</div>
+        </div>
+      </div>
+    </div>
+    <div class="case expect-ok" data-rule="element-no-table-props">
+      <div class="label label-ok">
+        element-no-table-props ok: table-row inherits border-collapse
+      </div>
+      <div style="display: table; border-collapse: collapse">
+        <div data-target style="display: table-row">
+          <div style="display: table-cell">Cell</div>
+        </div>
+      </div>
+    </div>
+
     <!-- ===== inline-no-dimensions: width/height on inline ===== -->
     <h2>inline-no-dimensions: width/height on inline elements</h2>
 
