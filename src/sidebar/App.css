@@ -210,6 +210,13 @@ body {
   color: var(--text);
 }
 
+.scan-message__back:focus-visible {
+  background: var(--bg-hover);
+  color: var(--text);
+  outline: 2px solid var(--text-element);
+  outline-offset: 1px;
+}
+
 /* Scan results */
 .scan-results {
   display: flex;
