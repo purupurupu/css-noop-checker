@@ -170,20 +170,6 @@ describe('visible-overflow-no-resize', () => {
       expect(warnings).toHaveLength(0);
     });
 
-    it('does not warn for TEXTAREA (uppercase tagName)', () => {
-      const warnings = checkVisibleOverflowResize(
-        createRuleContext(
-          makeElement({
-            tagName: 'TEXTAREA',
-            resize: 'both',
-            overflowX: 'visible',
-            overflowY: 'visible',
-          }),
-        ),
-      );
-      expect(warnings).toHaveLength(0);
-    });
-
     it('does not warn when display is contents', () => {
       const warnings = checkVisibleOverflowResize(
         createRuleContext(

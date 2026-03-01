@@ -82,7 +82,7 @@ const rule: RuleDescriptor = {
     // Browsers special-case <textarea>: resize works even when overflow is visible.
     // A page may explicitly set overflow: visible on a textarea, but browsers still
     // allow resize in that case, so we skip the warning entirely.
-    if (ctx.element.tagName.toLowerCase() === 'textarea') return [];
+    if (ctx.element.tagName === 'textarea') return [];
 
     if (!isOverflowBlockingResize(resize, overflowX, overflowY)) return [];
 

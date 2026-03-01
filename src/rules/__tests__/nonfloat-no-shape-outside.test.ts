@@ -1,15 +1,7 @@
 import { describe, it, expect } from 'vitest';
 import { checkNonfloatNoShapeOutside } from '../nonfloat-no-shape-outside.ts';
 import { createRuleContext } from '../context.ts';
-import type { ElementData } from '../types.ts';
-import { makeElement as _makeElement } from './helpers/make-element.ts';
-
-function makeElement(
-  styles: Partial<ElementData['computedStyles']>,
-  parent: ElementData['parent'] = null,
-): ElementData {
-  return _makeElement(styles, parent);
-}
+import { makeElement } from './helpers/make-element.ts';
 
 describe('nonfloat-no-shape-outside', () => {
   it('warns when shapeOutside is non-default and element is not floated', () => {
