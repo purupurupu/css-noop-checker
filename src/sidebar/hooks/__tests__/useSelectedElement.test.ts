@@ -65,6 +65,9 @@ const validData = {
     resize: 'none',
     objectFit: 'fill',
     objectPosition: '50% 50%',
+    shapeOutside: 'none',
+    shapeMargin: '0px',
+    shapeImageThreshold: '0',
   },
   parent: null,
 };
@@ -217,6 +220,9 @@ describe('isElementData', () => {
       'resize',
       'objectFit',
       'objectPosition',
+      'shapeOutside',
+      'shapeMargin',
+      'shapeImageThreshold',
     ];
     for (const key of requiredKeys) {
       const styles = { ...validData.computedStyles };

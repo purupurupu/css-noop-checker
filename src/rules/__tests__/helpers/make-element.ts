@@ -59,6 +59,9 @@ export const DEFAULT_COMPUTED_STYLES: ElementData['computedStyles'] = {
   resize: 'none',
   objectFit: 'fill',
   objectPosition: '50% 50%',
+  shapeOutside: 'none',
+  shapeMargin: '0px',
+  shapeImageThreshold: '0',
 };
 
 /** Create a test ElementData with overrides and optional tagName / parent. */

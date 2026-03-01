@@ -62,6 +62,9 @@ const VALID_STYLES = {
   resize: 'none',
   objectFit: 'fill',
   objectPosition: '50% 50%',
+  shapeOutside: 'none',
+  shapeMargin: '0px',
+  shapeImageThreshold: '0',
 };
 
 describe('isElementData — parent field validation', () => {
