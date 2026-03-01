@@ -1,19 +1,12 @@
 import { analyzeElement } from '../../rules/engine.ts';
-import type { ElementData, RuleId, Warning } from '../../rules/types.ts';
+import type { RuleId, Warning } from '../../rules/types.ts';
 import type { ScanElementData, ScanGroup, ScanViolation } from '../types.ts';
 
 export function groupByRule(elements: ScanElementData[]): ScanGroup[] {
   const map = new Map<RuleId, ScanViolation[]>();
 
   for (const el of elements) {
-    const elementData: ElementData = {
-      tagName: el.tagName,
-      id: el.id,
-      classList: el.classList,
-      computedStyles: el.computedStyles,
-      parent: el.parent,
-    };
-    const warnings = analyzeElement(elementData);
+    const warnings = analyzeElement(el);
     if (warnings.length === 0) continue;
 
     const byRule = new Map<RuleId, Warning[]>();

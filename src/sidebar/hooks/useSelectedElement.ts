@@ -5,8 +5,6 @@ import { buildEvalScript } from './build-eval-script.ts';
 
 export type AnalysisStatus = 'no-selection' | 'analyzing' | 'ready' | 'error';
 
-export { isElementData };
-
 let cachedEvalScript: string | undefined;
 function getEvalScript(): string {
   return (cachedEvalScript ??= buildEvalScript());

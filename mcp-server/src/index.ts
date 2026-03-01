@@ -10,10 +10,22 @@ import {
   extractElementBySelector,
   scanAllElements,
 } from '../../e2e/helpers/extract-element-data.ts';
-import type { ElementData } from '../../src/rules/types.ts';
 import { validateUrl } from './url-validation.ts';
 
 const MAX_SELECTOR_LENGTH = 500;
+
+function mcpError(message: string) {
+  return {
+    content: [{ type: 'text' as const, text: JSON.stringify({ error: message }, null, 2) }],
+    isError: true as const,
+  };
+}
+
+function mcpSuccess(data: unknown) {
+  return {
+    content: [{ type: 'text' as const, text: JSON.stringify(data, null, 2) }],
+  };
+}
 
 // Persistent browser instance with lazy init and launch-race guard
 let browserInstance: Browser | null = null;
@@ -85,23 +97,9 @@ server.tool('list_rules', 'List all available CSS no-op detection rules', async 
       requiredProperties: [...r.requiredProperties],
     }));
 
-    return {
-      content: [{ type: 'text', text: JSON.stringify(rules, null, 2) }],
-    };
+    return mcpSuccess(rules);
   } catch (err) {
-    return {
-      content: [
-        {
-          type: 'text',
-          text: JSON.stringify(
-            { error: `Failed to list rules: ${err instanceof Error ? err.message : err}` },
-            null,
-            2,
-          ),
-        },
-      ],
-      isError: true,
-    };
+    return mcpError(`Failed to list rules: ${err instanceof Error ? err.message : err}`);
   }
 });
 
@@ -120,38 +118,14 @@ server.tool(
     try {
       validatedUrl = validateUrl(url);
     } catch (err) {
-      return {
-        content: [
-          {
-            type: 'text',
-            text: JSON.stringify(
-              { error: err instanceof Error ? err.message : String(err) },
-              null,
-              2,
-            ),
-          },
-        ],
-        isError: true,
-      };
+      return mcpError(err instanceof Error ? err.message : String(err));
     }
 
     let browser: Browser;
     try {
       browser = await getBrowser();
     } catch (err) {
-      return {
-        content: [
-          {
-            type: 'text',
-            text: JSON.stringify(
-              { error: `Failed to launch browser: ${err instanceof Error ? err.message : err}` },
-              null,
-              2,
-            ),
-          },
-        ],
-        isError: true,
-      };
+      return mcpError(`Failed to launch browser: ${err instanceof Error ? err.message : err}`);
     }
 
     let context: Awaited<ReturnType<Browser['newContext']>> | undefined;
@@ -162,56 +136,21 @@ server.tool(
 
       const elementData = await extractElementBySelector(page, selector);
       if (!elementData) {
-        return {
-          content: [
-            {
-              type: 'text',
-              text: JSON.stringify(
-                { error: `No element found matching selector: ${selector}` },
-                null,
-                2,
-              ),
-            },
-          ],
-          isError: true,
-        };
+        return mcpError(`No element found matching selector: ${selector}`);
       }
 
       const warnings = analyzeElement(elementData);
 
-      return {
-        content: [
-          {
-            type: 'text',
-            text: JSON.stringify(
-              {
-                element: {
-                  tagName: elementData.tagName,
-                  id: elementData.id,
-                  classList: elementData.classList,
-                },
-                warnings,
-              },
-              null,
-              2,
-            ),
-          },
-        ],
-      };
+      return mcpSuccess({
+        element: {
+          tagName: elementData.tagName,
+          id: elementData.id,
+          classList: elementData.classList,
+        },
+        warnings,
+      });
     } catch (err) {
-      return {
-        content: [
-          {
-            type: 'text',
-            text: JSON.stringify(
-              { error: `Analysis failed: ${err instanceof Error ? err.message : err}` },
-              null,
-              2,
-            ),
-          },
-        ],
-        isError: true,
-      };
+      return mcpError(`Analysis failed: ${err instanceof Error ? err.message : err}`);
     } finally {
       try {
         await context?.close();
@@ -233,38 +172,14 @@ server.tool(
     try {
       validatedUrl = validateUrl(url);
     } catch (err) {
-      return {
-        content: [
-          {
-            type: 'text',
-            text: JSON.stringify(
-              { error: err instanceof Error ? err.message : String(err) },
-              null,
-              2,
-            ),
-          },
-        ],
-        isError: true,
-      };
+      return mcpError(err instanceof Error ? err.message : String(err));
     }
 
     let browser: Browser;
     try {
       browser = await getBrowser();
     } catch (err) {
-      return {
-        content: [
-          {
-            type: 'text',
-            text: JSON.stringify(
-              { error: `Failed to launch browser: ${err instanceof Error ? err.message : err}` },
-              null,
-              2,
-            ),
-          },
-        ],
-        isError: true,
-      };
+      return mcpError(`Failed to launch browser: ${err instanceof Error ? err.message : err}`);
     }
 
     let context: Awaited<ReturnType<Browser['newContext']>> | undefined;
@@ -281,14 +196,7 @@ server.tool(
       }[] = [];
 
       for (const el of elements) {
-        const elementData: ElementData = {
-          tagName: el.tagName,
-          id: el.id,
-          classList: el.classList,
-          computedStyles: el.computedStyles,
-          parent: el.parent,
-        };
-        const warnings = analyzeElement(elementData);
+        const warnings = analyzeElement(el);
         if (warnings.length > 0) {
           violations.push({
             index: el.index,
@@ -298,38 +206,15 @@ server.tool(
         }
       }
 
-      return {
-        content: [
-          {
-            type: 'text',
-            text: JSON.stringify(
-              {
-                totalElements: totalOnPage,
-                scannedElements: elements.length,
-                truncated,
-                totalViolations: violations.length,
-                violations,
-              },
-              null,
-              2,
-            ),
-          },
-        ],
-      };
+      return mcpSuccess({
+        totalElements: totalOnPage,
+        scannedElements: elements.length,
+        truncated,
+        totalViolations: violations.length,
+        violations,
+      });
     } catch (err) {
-      return {
-        content: [
-          {
-            type: 'text',
-            text: JSON.stringify(
-              { error: `Scan failed: ${err instanceof Error ? err.message : err}` },
-              null,
-              2,
-            ),
-          },
-        ],
-        isError: true,
-      };
+      return mcpError(`Scan failed: ${err instanceof Error ? err.message : err}`);
     } finally {
       try {
         await context?.close();

@@ -1,15 +1,7 @@
 import { describe, it, expect } from 'vitest';
 import { checkStaticZIndex } from '../static-no-z-index.ts';
 import { createRuleContext } from '../context.ts';
-import type { ElementData } from '../types.ts';
-import { makeElement as _makeElement } from './helpers/make-element.ts';
-
-function makeElement(
-  styles: Partial<ElementData['computedStyles']>,
-  parent: ElementData['parent'] = { computedStyles: { display: 'block' } },
-): ElementData {
-  return _makeElement(styles, parent);
-}
+import { makeChildElement as makeElement } from './helpers/make-element.ts';
 
 describe('static-no-z-index', () => {
   it('warns when z-index is set on static element', () => {

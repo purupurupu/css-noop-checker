@@ -78,3 +78,13 @@ export function makeElement(
     parent,
   };
 }
+
+const DEFAULT_BLOCK_PARENT: ElementData['parent'] = { computedStyles: { display: 'block' } };
+
+/** Like makeElement, but defaults parent to a block container instead of null. */
+export function makeChildElement(
+  styles: Partial<ElementData['computedStyles']>,
+  parent: ElementData['parent'] = DEFAULT_BLOCK_PARENT,
+): ElementData {
+  return makeElement(styles, parent);
+}

@@ -1,3 +1,7 @@
+const CONTAIN_RE = /\b(layout|paint|strict|content)\b/;
+const WILL_CHANGE_RE =
+  /\b(transform|opacity|filter|backdrop-filter|perspective|clip-path|z-index|isolation|mix-blend-mode|mask|contain)\b/;
+
 /**
  * Returns true when computed styles indicate the element likely creates a stacking
  * context via CSS properties (callers handle position and flex/grid item status
@@ -40,16 +44,11 @@ export function isStackingContext(styles: Record<string, string>): boolean {
   // contain: layout | paint | strict | content create a stacking context;
   // size and style alone do not.
   const contain = styles['contain'] ?? '';
-  if (/\b(layout|paint|strict|content)\b/.test(contain)) return true;
+  if (CONTAIN_RE.test(contain)) return true;
 
   // will-change values use CSS kebab-case property names (e.g. "clip-path", not "clipPath")
   const willChange = styles['willChange'] ?? 'auto';
-  if (
-    /\b(transform|opacity|filter|backdrop-filter|perspective|clip-path|z-index|isolation|mix-blend-mode|mask|contain)\b/.test(
-      willChange,
-    )
-  )
-    return true;
+  if (WILL_CHANGE_RE.test(willChange)) return true;
 
   return false;
 }
