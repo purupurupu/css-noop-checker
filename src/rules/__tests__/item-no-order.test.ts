@@ -1,15 +1,7 @@
 import { describe, it, expect } from 'vitest';
 import { checkOrder } from '../item-no-order.ts';
 import { createRuleContext } from '../context.ts';
-import type { ElementData } from '../types.ts';
-import { makeElement as _makeElement } from './helpers/make-element.ts';
-
-function makeElement(
-  styles: Partial<ElementData['computedStyles']>,
-  parent: ElementData['parent'] = { computedStyles: { display: 'block' } },
-): ElementData {
-  return _makeElement(styles, parent);
-}
+import { makeChildElement as makeElement } from './helpers/make-element.ts';
 
 describe('item-no-order', () => {
   it('warns when order is set on child of block container', () => {

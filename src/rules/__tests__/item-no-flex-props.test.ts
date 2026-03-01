@@ -1,15 +1,7 @@
 import { describe, it, expect } from 'vitest';
 import { checkItemNoFlexProps } from '../item-no-flex-props.ts';
 import { createRuleContext } from '../context.ts';
-import type { ElementData } from '../types.ts';
-import { makeElement as _makeElement } from './helpers/make-element.ts';
-
-function makeElement(
-  styles: Partial<ElementData['computedStyles']>,
-  parent: ElementData['parent'] = { computedStyles: { display: 'block' } },
-): ElementData {
-  return _makeElement(styles, parent);
-}
+import { makeChildElement as makeElement } from './helpers/make-element.ts';
 
 describe('item-no-flex-props', () => {
   it('warns when flex-grow is set on child of block container', () => {
