@@ -18,7 +18,7 @@ css-noop-checker is a Chrome DevTools extension (Manifest V3) that detects "no-o
 - `pnpm test:e2e` — Run Playwright browser integration tests
 - `pnpm test:e2e:ui` — Run Playwright tests with interactive UI
 
-Package manager is **pnpm** (not npm/yarn).
+Package manager is **pnpm** (not npm/yarn). Runtime: Node.js 24, pnpm 10 (managed via `.mise.toml`).
 
 ## Tech Stack
 
@@ -82,6 +82,7 @@ Each test case in `examples/test.html` must include `data-target` and `data-rule
 - **`data-target`** — boolean attribute on the element to inspect (must be exactly one per `.case`)
 - For cases where the target is a nested child (e.g. flex/grid items), place `data-target` on the actual inspectable element, not the wrapper
 - **Ordering** — rule sections in `test.html` must be sorted alphabetically by rule ID (e.g. `block-no-vertical-align` before `container-no-align`). The "No issues" section stays at the end. This matches the Scan Page display order.
+- **`EXPECTED_CASE_COUNT`** — after adding or removing test cases, update the `EXPECTED_CASE_COUNT` constant in `e2e/integration/rules-against-real-styles.test.ts`. This safeguard catches accidental additions/removals.
 
 ### MCP Server (`mcp-server/`)
 
