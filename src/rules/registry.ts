@@ -2,8 +2,13 @@ import type { RuleDescriptor } from './types.ts';
 
 const registry: RuleDescriptor[] = [];
 
+let cachedProps: string[] | null = null;
+let cachedParentProps: string[] | null = null;
+
 export function registerRule(rule: RuleDescriptor): void {
   registry.push(rule);
+  cachedProps = null;
+  cachedParentProps = null;
 }
 
 export function getRules(): readonly RuleDescriptor[] {
@@ -11,11 +16,13 @@ export function getRules(): readonly RuleDescriptor[] {
 }
 
 export function getAllRequiredProperties(): string[] {
-  return [...new Set(registry.flatMap((r) => r.requiredProperties))];
+  return (cachedProps ??= [...new Set(registry.flatMap((r) => r.requiredProperties))]);
 }
 
 export function getAllRequiredParentProperties(): string[] {
-  return [...new Set(registry.flatMap((r) => r.requiredParentProperties ?? []))];
+  return (cachedParentProps ??= [
+    ...new Set(registry.flatMap((r) => r.requiredParentProperties ?? [])),
+  ]);
 }
 
 export function getRuleLabel(id: string): string {
