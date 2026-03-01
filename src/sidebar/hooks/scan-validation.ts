@@ -1,11 +1,10 @@
-import { isElementData } from '../../rules/validation.ts';
+import { isRecord, isElementData } from '../../rules/validation.ts';
 import type { ScanElementData } from '../types.ts';
 
 export function isScanElementData(v: unknown): v is ScanElementData {
-  if (typeof v !== 'object' || v === null) return false;
-  const o = v as Record<string, unknown>;
-  if (typeof o['index'] !== 'number') return false;
-  if (typeof o['selector'] !== 'string') return false;
+  if (!isRecord(v)) return false;
+  if (typeof v['index'] !== 'number') return false;
+  if (typeof v['selector'] !== 'string') return false;
   return isElementData(v);
 }
 
@@ -15,8 +14,8 @@ export interface ChunkResult {
 }
 
 export function isChunkResult(v: unknown): v is ChunkResult {
-  if (typeof v !== 'object' || v === null) return false;
-  const o = v as Record<string, unknown>;
-  if (!Array.isArray(o['results']) || typeof o['total'] !== 'number') return false;
-  return (o['results'] as unknown[]).every(isScanElementData);
+  if (!isRecord(v)) return false;
+  const results = v['results'];
+  if (!Array.isArray(results) || typeof v['total'] !== 'number') return false;
+  return results.every(isScanElementData);
 }
