@@ -2,6 +2,25 @@
   "name": "css-noop-checker",
   "version": "0.0.0",
   "private": true,
+  "description": "Chrome DevTools extension that detects no-op CSS properties",
+  "keywords": [
+    "chrome-extension",
+    "css",
+    "devtools",
+    "linting",
+    "mcp",
+    "no-op"
+  ],
+  "homepage": "https://github.com/purupurupu/css-noop-checker#readme",
+  "bugs": {
+    "url": "https://github.com/purupurupu/css-noop-checker/issues"
+  },
+  "license": "MIT",
+  "author": "purupurupu",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/purupurupu/css-noop-checker.git"
+  },
   "type": "module",
   "scripts": {
     "dev": "vite build --watch",
@@ -32,5 +51,9 @@
     "typescript": "~5.9.3",
     "vite": "^7.3.1",
     "vitest": "^4.0.18"
+  },
+  "engines": {
+    "node": ">=24",
+    "pnpm": ">=10"
   }
 }
