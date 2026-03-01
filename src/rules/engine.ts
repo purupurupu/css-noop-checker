@@ -5,6 +5,7 @@ import './container-no-flex-props.ts';
 import './container-no-gap.ts';
 import './container-no-grid-props.ts';
 import './container-no-place.ts';
+import './element-no-table-props.ts';
 import './inline-no-dimensions.ts';
 import './inline-no-vertical-margin.ts';
 import './item-no-flex-props.ts';
