@@ -4,8 +4,8 @@ import { registerRule } from './registry.ts';
 
 function describeOverflow(overflowX: string, overflowY: string): string {
   if (overflowX === overflowY) return `overflow is "${overflowX}"`;
-  if (overflowX === 'visible') return `overflow-y is "${overflowY}"`;
-  if (overflowY === 'visible') return `overflow-x is "${overflowX}"`;
+  if (isDefaultOverflowValue(overflowX)) return `overflow-y is "${overflowY}"`;
+  if (isDefaultOverflowValue(overflowY)) return `overflow-x is "${overflowX}"`;
   return `overflow-x is "${overflowX}" and overflow-y is "${overflowY}"`;
 }
 
