@@ -911,35 +911,17 @@
     </div>
     <div class="case expect-warn" data-rule="visible-overflow-no-resize">
       <div class="label label-warn">
-        visible-overflow-no-resize warn: resize:horizontal with overflow-x:visible
+        visible-overflow-no-resize warn: resize:horizontal with default overflow (visible)
       </div>
-      <div
-        data-target
-        style="
-          resize: horizontal;
-          overflow-x: visible;
-          overflow-y: hidden;
-          width: 200px;
-          height: 100px;
-        "
-      >
+      <div data-target style="resize: horizontal; width: 200px; height: 100px">
         resize: horizontal needs overflow-x to be non-visible
       </div>
     </div>
     <div class="case expect-warn" data-rule="visible-overflow-no-resize">
       <div class="label label-warn">
-        visible-overflow-no-resize warn: resize:vertical with overflow-y:visible
+        visible-overflow-no-resize warn: resize:vertical with default overflow (visible)
       </div>
-      <div
-        data-target
-        style="
-          resize: vertical;
-          overflow-x: hidden;
-          overflow-y: visible;
-          width: 200px;
-          height: 100px;
-        "
-      >
+      <div data-target style="resize: vertical; width: 200px; height: 100px">
         resize: vertical needs overflow-y to be non-visible
       </div>
     </div>
