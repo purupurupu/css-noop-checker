@@ -576,6 +576,44 @@
       <span data-target style="display: inline-block; width: 200px">inline-block span</span>
     </div>
 
+    <!-- ===== inline-no-overflow: overflow on inline ===== -->
+    <h2>inline-no-overflow: overflow on inline elements</h2>
+
+    <h3>Should warn</h3>
+    <div class="case expect-warn" data-rule="inline-no-overflow">
+      <div class="label label-warn">inline-no-overflow warn: span with overflow hidden</div>
+      <span data-target style="overflow: hidden">This span has overflow: hidden</span>
+    </div>
+    <div class="case expect-warn" data-rule="inline-no-overflow">
+      <div class="label label-warn">inline-no-overflow warn: span with overflow-x scroll</div>
+      <span data-target style="overflow-x: scroll">This span has overflow-x: scroll</span>
+    </div>
+    <div class="case expect-warn" data-rule="inline-no-overflow">
+      <div class="label label-warn">inline-no-overflow warn: anchor with overflow auto</div>
+      <a data-target href="#" style="overflow: auto">Link (overflow: auto)</a>
+    </div>
+
+    <h3>Should NOT warn (false positive check)</h3>
+    <div class="case expect-ok" data-rule="inline-no-overflow">
+      <div class="label label-ok">inline-no-overflow ok: img is a replaced inline element</div>
+      <img
+        data-target
+        src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='60' height='40'%3E%3Crect fill='%234ec9b0' width='60' height='40'/%3E%3C/svg%3E"
+        style="overflow: hidden"
+        alt="replaced element"
+      />
+    </div>
+    <div class="case expect-ok" data-rule="inline-no-overflow">
+      <div class="label label-ok">inline-no-overflow ok: inline-block accepts overflow</div>
+      <span data-target style="display: inline-block; overflow: hidden; width: 100px; height: 30px"
+        >inline-block span</span
+      >
+    </div>
+    <div class="case expect-ok" data-rule="inline-no-overflow">
+      <div class="label label-ok">inline-no-overflow ok: block div accepts overflow</div>
+      <div data-target style="overflow: hidden">block div with overflow</div>
+    </div>
+
     <!-- ===== inline-no-vertical-margin: vertical margin on inline ===== -->
     <h2>inline-no-vertical-margin: vertical margin on inline elements</h2>
 
