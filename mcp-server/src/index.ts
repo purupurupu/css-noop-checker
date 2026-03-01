@@ -103,6 +103,46 @@ server.tool('list_rules', 'List all available CSS no-op detection rules', async 
   }
 });
 
+import type { Page } from 'playwright';
+
+type McpResult = ReturnType<typeof mcpSuccess> | ReturnType<typeof mcpError>;
+
+async function withPage(
+  url: string,
+  errorLabel: string,
+  fn: (page: Page) => Promise<McpResult>,
+): Promise<McpResult> {
+  let validatedUrl: string;
+  try {
+    validatedUrl = validateUrl(url);
+  } catch (err) {
+    return mcpError(err instanceof Error ? err.message : String(err));
+  }
+
+  let browser: Browser;
+  try {
+    browser = await getBrowser();
+  } catch (err) {
+    return mcpError(`Failed to launch browser: ${err instanceof Error ? err.message : err}`);
+  }
+
+  let context: Awaited<ReturnType<Browser['newContext']>> | undefined;
+  try {
+    context = await browser.newContext();
+    const page = await context.newPage();
+    await page.goto(validatedUrl, { waitUntil: 'load' });
+    return await fn(page);
+  } catch (err) {
+    return mcpError(`${errorLabel}: ${err instanceof Error ? err.message : err}`);
+  } finally {
+    try {
+      await context?.close();
+    } catch (closeErr) {
+      console.error('Failed to close browser context:', closeErr);
+    }
+  }
+}
+
 server.tool(
   'analyze_element',
   'Analyze a specific element on a page for CSS no-op violations',
@@ -113,27 +153,8 @@ server.tool(
       .max(MAX_SELECTOR_LENGTH, `Selector must be at most ${MAX_SELECTOR_LENGTH} characters`)
       .describe('CSS selector for the target element'),
   },
-  async ({ url, selector }) => {
-    let validatedUrl: string;
-    try {
-      validatedUrl = validateUrl(url);
-    } catch (err) {
-      return mcpError(err instanceof Error ? err.message : String(err));
-    }
-
-    let browser: Browser;
-    try {
-      browser = await getBrowser();
-    } catch (err) {
-      return mcpError(`Failed to launch browser: ${err instanceof Error ? err.message : err}`);
-    }
-
-    let context: Awaited<ReturnType<Browser['newContext']>> | undefined;
-    try {
-      context = await browser.newContext();
-      const page = await context.newPage();
-      await page.goto(validatedUrl, { waitUntil: 'load' });
-
+  async ({ url, selector }) =>
+    withPage(url, 'Analysis failed', async (page) => {
       const elementData = await extractElementBySelector(page, selector);
       if (!elementData) {
         return mcpError(`No element found matching selector: ${selector}`);
@@ -149,16 +170,7 @@ server.tool(
         },
         warnings,
       });
-    } catch (err) {
-      return mcpError(`Analysis failed: ${err instanceof Error ? err.message : err}`);
-    } finally {
-      try {
-        await context?.close();
-      } catch (closeErr) {
-        console.error('Failed to close browser context:', closeErr);
-      }
-    }
-  },
+    }),
 );
 
 server.tool(
@@ -167,27 +179,8 @@ server.tool(
   {
     url: z.string().describe('URL of the page to scan (http/https only)'),
   },
-  async ({ url }) => {
-    let validatedUrl: string;
-    try {
-      validatedUrl = validateUrl(url);
-    } catch (err) {
-      return mcpError(err instanceof Error ? err.message : String(err));
-    }
-
-    let browser: Browser;
-    try {
-      browser = await getBrowser();
-    } catch (err) {
-      return mcpError(`Failed to launch browser: ${err instanceof Error ? err.message : err}`);
-    }
-
-    let context: Awaited<ReturnType<Browser['newContext']>> | undefined;
-    try {
-      context = await browser.newContext();
-      const page = await context.newPage();
-      await page.goto(validatedUrl, { waitUntil: 'load' });
-
+  async ({ url }) =>
+    withPage(url, 'Scan failed', async (page) => {
       const { elements, totalOnPage, truncated } = await scanAllElements(page);
       const violations: {
         index: number;
@@ -213,16 +206,7 @@ server.tool(
         totalViolations: violations.length,
         violations,
       });
-    } catch (err) {
-      return mcpError(`Scan failed: ${err instanceof Error ? err.message : err}`);
-    } finally {
-      try {
-        await context?.close();
-      } catch (closeErr) {
-        console.error('Failed to close browser context:', closeErr);
-      }
-    }
-  },
+    }),
 );
 
 async function main() {
