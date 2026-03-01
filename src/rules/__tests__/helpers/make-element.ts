@@ -55,6 +55,8 @@ export const DEFAULT_COMPUTED_STYLES: ElementData['computedStyles'] = {
   gridRowEnd: 'auto',
   textOverflow: 'clip',
   overflowX: 'visible',
+  overflowY: 'visible',
+  resize: 'none',
 };
 
 /** Create a test ElementData with overrides and optional tagName / parent. */
