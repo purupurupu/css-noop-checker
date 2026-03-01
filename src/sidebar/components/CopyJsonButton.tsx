@@ -11,11 +11,11 @@ interface CopyJsonButtonProps {
 
 export function CopyJsonButton({ data }: CopyJsonButtonProps) {
   const [status, setStatus] = useState<CopyStatus>('idle');
-  const timerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
+  const timerRef = useRef<ReturnType<typeof setTimeout> | undefined>(undefined);
 
   useEffect(() => {
     return () => {
-      if (timerRef.current) clearTimeout(timerRef.current);
+      clearTimeout(timerRef.current);
     };
   }, []);
 
@@ -26,7 +26,7 @@ export function CopyJsonButton({ data }: CopyJsonButtonProps) {
     } catch (err) {
       console.warn('Failed to serialize data as JSON:', err);
       setStatus('failed');
-      if (timerRef.current) clearTimeout(timerRef.current);
+      clearTimeout(timerRef.current);
       timerRef.current = setTimeout(() => setStatus('idle'), 1500);
       return;
     }
@@ -58,7 +58,7 @@ export function CopyJsonButton({ data }: CopyJsonButtonProps) {
     } else {
       setStatus('failed');
     }
-    if (timerRef.current) clearTimeout(timerRef.current);
+    clearTimeout(timerRef.current);
     timerRef.current = setTimeout(() => setStatus('idle'), 1500);
   }, [data]);
 
