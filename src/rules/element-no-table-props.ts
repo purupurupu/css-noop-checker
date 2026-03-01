@@ -22,7 +22,7 @@ const TABLE_PROPERTIES = [
 const rule: RuleDescriptor = {
   id: 'element-no-table-props',
   label: 'table props on non-table',
-  requiredProperties: ['display', 'borderCollapse', 'tableLayout'],
+  requiredProperties: ['display', ...TABLE_PROPERTIES.map((p) => p.key)],
   check(ctx) {
     const { display } = ctx.styles;
 
