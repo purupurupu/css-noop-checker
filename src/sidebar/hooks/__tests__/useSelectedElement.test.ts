@@ -61,6 +61,8 @@ const validData = {
     gridRowEnd: 'auto',
     textOverflow: 'clip',
     overflowX: 'visible',
+    overflowY: 'visible',
+    resize: 'none',
   },
   parent: null,
 };
@@ -209,6 +211,8 @@ describe('isElementData', () => {
       'gridRowEnd',
       'textOverflow',
       'overflowX',
+      'overflowY',
+      'resize',
     ];
     for (const key of requiredKeys) {
       const styles = { ...validData.computedStyles };

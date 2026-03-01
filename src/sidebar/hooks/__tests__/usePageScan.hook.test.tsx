@@ -27,6 +27,10 @@ function makeBaseStyles(overrides: Record<string, string> = {}): Record<string, 
     gridAutoColumns: 'auto',
     gridAutoRows: 'auto',
     gridAutoFlow: 'row',
+    textOverflow: 'clip',
+    overflowX: 'visible',
+    overflowY: 'visible',
+    resize: 'none',
     ...overrides,
   };
 }
