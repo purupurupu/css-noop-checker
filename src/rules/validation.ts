@@ -1,7 +1,7 @@
 import { getAllRequiredParentProperties, getAllRequiredProperties } from './registry.ts';
 import type { ElementData } from './types.ts';
 
-function isValidStyles(obj: unknown, requiredKeys: string[]): boolean {
+export function isValidStyles(obj: unknown, requiredKeys: string[]): boolean {
   if (typeof obj !== 'object' || obj === null) return false;
   const styles = obj as Record<string, unknown>;
   return requiredKeys.every((key) => typeof styles[key] === 'string');

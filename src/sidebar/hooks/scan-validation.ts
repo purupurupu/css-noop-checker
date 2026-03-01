@@ -1,4 +1,5 @@
 import { getAllRequiredParentProperties, getAllRequiredProperties } from '../../rules/registry.ts';
+import { isValidStyles } from '../../rules/validation.ts';
 import type { ScanElementData } from '../types.ts';
 
 export function isScanElementData(v: unknown): v is ScanElementData {
@@ -8,20 +9,13 @@ export function isScanElementData(v: unknown): v is ScanElementData {
   if (typeof o['selector'] !== 'string') return false;
   if (typeof o['tagName'] !== 'string') return false;
   if (!Array.isArray(o['classList'])) return false;
-  const cs = o['computedStyles'];
-  if (typeof cs !== 'object' || cs === null) return false;
-  const styles = cs as Record<string, unknown>;
-  if (!getAllRequiredProperties().every((key) => typeof styles[key] === 'string')) return false;
+  if (!isValidStyles(o['computedStyles'], getAllRequiredProperties())) return false;
 
   const parent = o['parent'];
   if (parent !== null) {
     if (typeof parent !== 'object' || parent === undefined) return false;
     const p = parent as Record<string, unknown>;
-    const pcs = p['computedStyles'];
-    if (typeof pcs !== 'object' || pcs === null) return false;
-    const parentStyles = pcs as Record<string, unknown>;
-    if (!getAllRequiredParentProperties().every((key) => typeof parentStyles[key] === 'string'))
-      return false;
+    if (!isValidStyles(p['computedStyles'], getAllRequiredParentProperties())) return false;
   }
 
   return true;
