@@ -4,6 +4,7 @@ import './container-no-align.ts';
 import './container-no-flex-props.ts';
 import './container-no-gap.ts';
 import './container-no-grid-props.ts';
+import './container-no-justify-items.ts';
 import './container-no-place.ts';
 import './inline-no-dimensions.ts';
 import './inline-no-vertical-margin.ts';
