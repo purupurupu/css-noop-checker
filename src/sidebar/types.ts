@@ -1,16 +1,11 @@
-import type { RuleId, Warning } from '../rules/types.ts';
+import type { ElementData, RuleId, Warning } from '../rules/types.ts';
 
 export type ScanStatus = 'idle' | 'scanning' | 'done' | 'error';
 
 /** Element data collected during a page-wide scan, extended with scan-specific fields. */
-export interface ScanElementData {
+export interface ScanElementData extends ElementData {
   index: number;
   selector: string;
-  tagName: string;
-  id: string;
-  classList: string[];
-  computedStyles: Record<string, string>;
-  parent: { computedStyles: Record<string, string> } | null;
 }
 
 export interface ScanViolation {

@@ -100,16 +100,11 @@ export async function extractElementBySelector(
   return result;
 }
 
-export interface ScannedElement {
+export interface ScannedElement extends ElementData {
   /** Position in document.querySelectorAll('*') — stable programmatic reference. */
   index: number;
   /** Human-readable CSS selector (display hint; may not be globally unique). */
   selector: string;
-  tagName: string;
-  id: string;
-  classList: string[];
-  computedStyles: Record<string, string>;
-  parent: { computedStyles: Record<string, string> } | null;
 }
 
 export interface ScanResult {
