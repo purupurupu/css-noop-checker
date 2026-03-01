@@ -44,6 +44,8 @@ function makeScanElement(
       resize: 'none',
       objectFit: 'fill',
       objectPosition: '50% 50%',
+      borderCollapse: 'separate',
+      tableLayout: 'auto',
       ...styles,
     },
     parent: null,

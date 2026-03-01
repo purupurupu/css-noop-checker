@@ -33,6 +33,8 @@ function makeBaseStyles(overrides: Record<string, string> = {}): Record<string, 
     resize: 'none',
     objectFit: 'fill',
     objectPosition: '50% 50%',
+    borderCollapse: 'separate',
+    tableLayout: 'auto',
     ...overrides,
   };
 }

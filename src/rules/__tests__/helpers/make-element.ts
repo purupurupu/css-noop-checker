@@ -62,6 +62,8 @@ export const DEFAULT_COMPUTED_STYLES: ElementData['computedStyles'] = {
   shapeOutside: 'none',
   shapeMargin: '0px',
   shapeImageThreshold: '0',
+  borderCollapse: 'separate',
+  tableLayout: 'auto',
 };
 
 /** Create a test ElementData with overrides and optional tagName / parent. */
