@@ -18,11 +18,16 @@ const makeElementData = (overrides: Partial<ElementData> = {}): ElementData => (
 });
 
 describe('PanelHeader', () => {
+  const elementData: ElementData | null = null;
+  const status: AnalysisStatus = 'no-selection';
+  const scanStatus: ScanStatus = 'idle';
+  const warnings: Warning[] = [];
+
   const defaultProps = {
-    elementData: null as ElementData | null,
-    status: 'no-selection' as AnalysisStatus,
-    scanStatus: 'idle' as ScanStatus,
-    warnings: [],
+    elementData,
+    status,
+    scanStatus,
+    warnings,
     onScan: vi.fn(),
   };
 
@@ -119,7 +124,7 @@ describe('PanelHeader', () => {
 
   describe('Copy JSON button visibility', () => {
     const warning: Warning = {
-      ruleId: 'inline-no-dimensions' as Warning['ruleId'],
+      ruleId: 'inline-no-dimensions',
       property: 'width',
       severity: 'warning',
       title: 'width has no effect',

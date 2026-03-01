@@ -28,12 +28,18 @@ const makeGroup = (ruleId: string, violationCount: number, startIndex = 0): Scan
   })),
 });
 
+const groups: ScanGroup[] = [];
+const status: ScanStatus = 'idle';
+const error: string | null = null;
+const inspectError: string | null = null;
+const progress: ScanProgress = { scanned: 0, total: 0 };
+
 const defaultProps = {
-  groups: [] as ScanGroup[],
-  status: 'idle' as ScanStatus,
-  error: null as string | null,
-  inspectError: null as string | null,
-  progress: { scanned: 0, total: 0 } as ScanProgress,
+  groups,
+  status,
+  error,
+  inspectError,
+  progress,
   onInspect: vi.fn(),
   onClear: vi.fn(),
 };
