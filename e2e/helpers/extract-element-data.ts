@@ -4,6 +4,7 @@ import '../../src/rules/engine.ts';
 import type { Locator, Page } from '@playwright/test';
 import type { ElementData } from '../../src/rules/types.ts';
 import {
+  getAllRequiredInlineProperties,
   getAllRequiredParentProperties,
   getAllRequiredProperties,
 } from '../../src/rules/registry.ts';
@@ -16,7 +17,11 @@ import { isElementData } from '../../src/rules/validation.ts';
 function buildExtractFn() {
   return (
     el: Element,
-    { properties, parentProperties }: { properties: string[]; parentProperties: string[] },
+    {
+      properties,
+      parentProperties,
+      inlineProperties,
+    }: { properties: string[]; parentProperties: string[]; inlineProperties: string[] },
   ) => {
     // CSSStyleDeclaration supports camelCase bracket access at runtime,
     // but TypeScript's type definition lacks a string index signature.
@@ -55,11 +60,22 @@ function buildExtractFn() {
       parent = { computedStyles: parentStyles };
     }
 
+    let inlineStyles: Record<string, string> | undefined;
+    if (inlineProperties.length > 0) {
+      const htmlEl = el as HTMLElement | SVGElement;
+      inlineStyles = {};
+      for (const prop of inlineProperties) {
+        const value = readStyleProp(htmlEl.style, prop);
+        inlineStyles[prop] = value ?? '';
+      }
+    }
+
     return {
       tagName: el.tagName.toLowerCase(),
       id: el.id || '',
       classList: Array.from(el.classList),
       computedStyles,
+      ...(inlineStyles !== undefined ? { inlineStyles } : {}),
       parent,
     };
   };
@@ -73,8 +89,13 @@ function buildExtractFn() {
 export async function extractElementData(locator: Locator): Promise<ElementData> {
   const properties = getAllRequiredProperties();
   const parentProperties = getAllRequiredParentProperties();
+  const inlineProperties = getAllRequiredInlineProperties();
 
-  const result = await locator.evaluate(buildExtractFn(), { properties, parentProperties });
+  const result = await locator.evaluate(buildExtractFn(), {
+    properties,
+    parentProperties,
+    inlineProperties,
+  });
 
   if (!isElementData(result)) {
     throw new Error(`Extracted data failed ElementData validation: ${JSON.stringify(result)}`);
@@ -93,12 +114,17 @@ export async function extractElementBySelector(
 ): Promise<ElementData | null> {
   const properties = getAllRequiredProperties();
   const parentProperties = getAllRequiredParentProperties();
+  const inlineProperties = getAllRequiredInlineProperties();
 
   const locator = page.locator(selector).first();
   const count = await locator.count();
   if (count === 0) return null;
 
-  const result = await locator.evaluate(buildExtractFn(), { properties, parentProperties });
+  const result = await locator.evaluate(buildExtractFn(), {
+    properties,
+    parentProperties,
+    inlineProperties,
+  });
 
   if (!isElementData(result)) {
     throw new Error(`Extracted data failed ElementData validation: ${JSON.stringify(result)}`);
@@ -129,11 +155,12 @@ const MAX_ELEMENTS = 5000;
 export async function scanAllElements(page: Page): Promise<ScanResult> {
   const properties = getAllRequiredProperties();
   const parentProperties = getAllRequiredParentProperties();
+  const inlineProperties = getAllRequiredInlineProperties();
 
   // Extraction logic mirrors buildExtractFn() but runs inline within the
   // page.evaluate() loop to avoid per-element serialization overhead.
   const results = await page.evaluate(
-    ({ properties, parentProperties, maxElements }) => {
+    ({ properties, parentProperties, inlineProperties, maxElements }) => {
       // CSSStyleDeclaration supports camelCase bracket access at runtime,
       // but TypeScript's type definition lacks a string index signature.
       function readStyleProp(cs: CSSStyleDeclaration, prop: string): string | undefined {
@@ -166,6 +193,7 @@ export async function scanAllElements(page: Page): Promise<ScanResult> {
         id: string;
         classList: string[];
         computedStyles: Record<string, string>;
+        inlineStyles?: Record<string, string>;
         parent: { computedStyles: Record<string, string> } | null;
       }[] = [];
 
@@ -203,6 +231,16 @@ export async function scanAllElements(page: Page): Promise<ScanResult> {
           parent = { computedStyles: parentStyles };
         }
 
+        let inlineStyles: Record<string, string> | undefined;
+        if (inlineProperties.length > 0) {
+          const htmlEl = el as HTMLElement | SVGElement;
+          inlineStyles = {};
+          for (const prop of inlineProperties) {
+            const value = readStyleProp(htmlEl.style, prop);
+            inlineStyles[prop] = value ?? '';
+          }
+        }
+
         // Build a best-effort human-readable selector (may not be globally unique)
         let selector = el.tagName.toLowerCase();
         if (el.id) {
@@ -224,13 +262,14 @@ export async function scanAllElements(page: Page): Promise<ScanResult> {
           id: el.id || '',
           classList: Array.from(el.classList),
           computedStyles,
+          ...(inlineStyles !== undefined ? { inlineStyles } : {}),
           parent,
         });
       }
 
       return { elements: scanned, totalOnPage: total, truncated: scanned.length >= maxElements };
     },
-    { properties, parentProperties, maxElements: MAX_ELEMENTS },
+    { properties, parentProperties, inlineProperties, maxElements: MAX_ELEMENTS },
   );
 
   return results;

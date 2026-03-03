@@ -1,4 +1,5 @@
 import {
+  generateInlineStyleExtractFragment,
   generateParentStyleExtractFragment,
   generateStyleExtractFragment,
 } from '../../rules/css-properties.ts';
@@ -20,6 +21,14 @@ export function buildEvalScript(): string {
   }`
     : '';
 
+  const inlineFragment = generateInlineStyleExtractFragment();
+  const inlineBlock = inlineFragment
+    ? `,
+    inlineStyles: {
+        ${inlineFragment}
+    }`
+    : '';
+
   return `(function() {
   var el = $0;
   if (!el) return null;
@@ -31,7 +40,7 @@ export function buildEvalScript(): string {
     computedStyles: {
         ${generateStyleExtractFragment()}
     },
-    parent: ${parentFragment ? 'parent' : 'null'}
+    parent: ${parentFragment ? 'parent' : 'null'}${inlineBlock}
   };
 })()`;
 }
