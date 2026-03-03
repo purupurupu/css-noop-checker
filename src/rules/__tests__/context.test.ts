@@ -138,6 +138,23 @@ describe('isStackingContext', () => {
   });
 });
 
+describe('createRuleContext — inlineStyles normalization', () => {
+  it('defaults inlineStyles to empty object when element has no inlineStyles', () => {
+    const ctx = createRuleContext(makeElement({}));
+    expect(ctx.inlineStyles).toEqual({});
+  });
+
+  it('passes through inlineStyles when present', () => {
+    const ctx = createRuleContext(makeElement({}, null, { cssFloat: 'right' }));
+    expect(ctx.inlineStyles.cssFloat).toBe('right');
+  });
+
+  it('normalizes inlineStyles to lowercase and trimmed', () => {
+    const ctx = createRuleContext(makeElement({}, null, { cssFloat: '  Left  ' }));
+    expect(ctx.inlineStyles.cssFloat).toBe('left');
+  });
+});
+
 describe('isDefaultAlignmentValue', () => {
   it('returns true for "normal"', () => {
     expect(isDefaultAlignmentValue('normal')).toBe(true);

@@ -1,4 +1,8 @@
-import { getAllRequiredParentProperties, getAllRequiredProperties } from './registry.ts';
+import {
+  getAllRequiredInlineProperties,
+  getAllRequiredParentProperties,
+  getAllRequiredProperties,
+} from './registry.ts';
 import type { ElementData } from './types.ts';
 
 export function isRecord(v: unknown): v is Record<string, unknown> {
@@ -15,6 +19,12 @@ export function isElementData(v: unknown): v is ElementData {
   if (typeof v['tagName'] !== 'string') return false;
   if (!Array.isArray(v['classList'])) return false;
   if (!isValidStyles(v['computedStyles'], getAllRequiredProperties())) return false;
+
+  // inlineStyles: optional (absent or { prop: string, ... })
+  const inlineStyles = v['inlineStyles'];
+  if (inlineStyles !== undefined) {
+    if (!isValidStyles(inlineStyles, getAllRequiredInlineProperties())) return false;
+  }
 
   // parent: null (no parent element) or { computedStyles: { ... } }
   const parent = v['parent'];

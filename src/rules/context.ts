@@ -1,6 +1,6 @@
 import type { ElementData, RuleContext } from './types.ts';
 
-function normalizeComputedStyles(styles: Record<string, string>): Record<string, string> {
+function normalizeStyles(styles: Record<string, string>): Record<string, string> {
   const result: Record<string, string> = {};
   for (const [key, value] of Object.entries(styles)) {
     result[key] = value.trim().toLowerCase();
@@ -9,13 +9,12 @@ function normalizeComputedStyles(styles: Record<string, string>): Record<string,
 }
 
 export function createRuleContext(element: ElementData): RuleContext {
-  const parentStyles = element.parent
-    ? normalizeComputedStyles(element.parent.computedStyles)
-    : null;
+  const parentStyles = element.parent ? normalizeStyles(element.parent.computedStyles) : null;
   const parentDisplay = parentStyles?.display ?? '';
   return {
     element,
-    styles: normalizeComputedStyles(element.computedStyles),
+    styles: normalizeStyles(element.computedStyles),
+    inlineStyles: normalizeStyles(element.inlineStyles ?? {}),
     parentStyles,
     isFlexItem: isFlexContainer(parentDisplay),
     isGridItem: isGridContainer(parentDisplay),

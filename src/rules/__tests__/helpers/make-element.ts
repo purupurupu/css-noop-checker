@@ -82,13 +82,16 @@ export const DEFAULT_COMPUTED_STYLES: ElementData['computedStyles'] = {
 export function makeElement(
   overrides: Partial<ElementData['computedStyles']> & { tagName?: string } = {},
   parent: ElementData['parent'] = null,
+  inlineStyles?: Record<string, string>,
 ): ElementData {
   const { tagName = 'div', ...styles } = overrides;
   const computedStyles: Record<string, string> = { ...DEFAULT_COMPUTED_STYLES };
   for (const [key, value] of Object.entries(styles)) {
     if (value !== undefined) computedStyles[key] = value;
   }
-  return { tagName, id: '', classList: [], computedStyles, parent };
+  const el: ElementData = { tagName, id: '', classList: [], computedStyles, parent };
+  if (inlineStyles) el.inlineStyles = inlineStyles;
+  return el;
 }
 
 const DEFAULT_BLOCK_PARENT: ElementData['parent'] = { computedStyles: { display: 'block' } };

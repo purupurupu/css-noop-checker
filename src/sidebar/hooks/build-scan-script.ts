@@ -1,4 +1,5 @@
 import {
+  generateInlineStyleExtractFragment,
   generateParentStyleExtractFragment,
   generateStyleExtractFragment,
 } from '../../rules/css-properties.ts';
@@ -18,6 +19,14 @@ export function buildScanScript(offset: number, limit: number): string {
         }
       };
     }`
+    : '';
+
+  const inlineFragment = generateInlineStyleExtractFragment();
+  const inlineBlock = inlineFragment
+    ? `,
+      inlineStyles: {
+        ${inlineFragment}
+      }`
     : '';
 
   return `(function(offset, limit) {
@@ -45,7 +54,7 @@ export function buildScanScript(offset: number, limit: number): string {
       computedStyles: {
         ${generateStyleExtractFragment()}
       },
-      parent: ${parentFragment ? 'parent' : 'null'}
+      parent: ${parentFragment ? 'parent' : 'null'}${inlineBlock}
     });
   }
   return { results: results, total: total };
