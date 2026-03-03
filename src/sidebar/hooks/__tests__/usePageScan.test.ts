@@ -1,5 +1,6 @@
 import { describe, it, expect } from 'vitest';
 import { groupByRule } from '../../utils/group-by-rule.ts';
+import { DEFAULT_COMPUTED_STYLES } from '../../../rules/__tests__/helpers/make-element.ts';
 import type { ScanElementData } from '../../types.ts';
 import type { ElementData } from '../../../rules/types.ts';
 
@@ -15,40 +16,7 @@ function makeScanElement(
     tagName,
     id: '',
     classList: [],
-    computedStyles: {
-      display: 'block',
-      width: 'auto',
-      height: 'auto',
-      gap: 'normal',
-      rowGap: 'normal',
-      columnGap: 'normal',
-      alignItems: 'normal',
-      justifyContent: 'normal',
-      justifyItems: 'normal',
-      placeItems: 'normal',
-      placeContent: 'normal',
-      columnCount: 'auto',
-      alignSelf: 'auto',
-      order: '0',
-      verticalAlign: 'baseline',
-      flexDirection: 'row',
-      flexWrap: 'nowrap',
-      gridTemplateColumns: 'none',
-      gridTemplateRows: 'none',
-      gridTemplateAreas: 'none',
-      gridAutoColumns: 'auto',
-      gridAutoRows: 'auto',
-      gridAutoFlow: 'row',
-      textOverflow: 'clip',
-      overflowX: 'visible',
-      overflowY: 'visible',
-      resize: 'none',
-      objectFit: 'fill',
-      objectPosition: '50% 50%',
-      borderCollapse: 'separate',
-      tableLayout: 'auto',
-      ...styles,
-    },
+    computedStyles: { ...DEFAULT_COMPUTED_STYLES, ...styles },
     parent: null,
   };
 }
