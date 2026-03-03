@@ -92,3 +92,56 @@ describe('isElementData — parent field validation', () => {
     ).toBe(false);
   });
 });
+
+describe('isElementData — inlineStyles field validation', () => {
+  it('accepts element data without inlineStyles (backward compatibility)', () => {
+    expect(
+      isElementData({
+        tagName: 'div',
+        id: '',
+        classList: [],
+        computedStyles: { ...VALID_STYLES },
+        parent: null,
+      }),
+    ).toBe(true);
+  });
+
+  it('accepts element data with valid inlineStyles', () => {
+    expect(
+      isElementData({
+        tagName: 'div',
+        id: '',
+        classList: [],
+        computedStyles: { ...VALID_STYLES },
+        inlineStyles: { cssFloat: 'left' },
+        parent: null,
+      }),
+    ).toBe(true);
+  });
+
+  it('rejects element data with non-object inlineStyles', () => {
+    expect(
+      isElementData({
+        tagName: 'div',
+        id: '',
+        classList: [],
+        computedStyles: { ...VALID_STYLES },
+        inlineStyles: 'not-an-object',
+        parent: null,
+      }),
+    ).toBe(false);
+  });
+
+  it('rejects element data with inlineStyles missing required properties', () => {
+    expect(
+      isElementData({
+        tagName: 'div',
+        id: '',
+        classList: [],
+        computedStyles: { ...VALID_STYLES },
+        inlineStyles: {},
+        parent: null,
+      }),
+    ).toBe(false);
+  });
+});
