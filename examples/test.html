@@ -1351,6 +1351,73 @@
       <div data-target style="position: sticky; clear: both; top: 0">Sticky with clear</div>
     </div>
 
+    <!-- ===== positioned-no-float: float on out-of-flow positioned element ===== -->
+    <h2>positioned-no-float: float on out-of-flow positioned element</h2>
+
+    <h3>Should warn</h3>
+    <div class="case expect-warn" data-rule="positioned-no-float">
+      <div class="label label-warn">
+        positioned-no-float warn: float left on absolute positioned element
+      </div>
+      <div style="position: relative; height: 40px">
+        <div data-target style="position: absolute; float: left">
+          Absolute with float: left (no effect)
+        </div>
+      </div>
+    </div>
+    <div class="case expect-warn" data-rule="positioned-no-float">
+      <div class="label label-warn">
+        positioned-no-float warn: float right on absolute positioned element
+      </div>
+      <div style="position: relative; height: 40px">
+        <div data-target style="position: absolute; float: right">
+          Absolute with float: right (no effect)
+        </div>
+      </div>
+    </div>
+    <div class="case expect-warn" data-rule="positioned-no-float">
+      <div class="label label-warn">
+        positioned-no-float warn: float left on fixed positioned element
+      </div>
+      <div data-target style="position: fixed; float: left; top: -9999px; left: -9999px">
+        Fixed with float: left (no effect)
+      </div>
+    </div>
+
+    <h3>Should NOT warn</h3>
+    <div class="case expect-ok" data-rule="positioned-no-float">
+      <div class="label label-ok">
+        positioned-no-float ok: float on static positioned element (valid usage)
+      </div>
+      <div>
+        <div data-target style="float: left; width: 100px">
+          Static with float: left — valid usage
+        </div>
+      </div>
+    </div>
+    <div class="case expect-ok" data-rule="positioned-no-float">
+      <div class="label label-ok">
+        positioned-no-float ok: float on relative positioned element (valid usage)
+      </div>
+      <div>
+        <div data-target style="position: relative; float: left; width: 100px">
+          Relative with float: left — valid usage
+        </div>
+      </div>
+    </div>
+    <div class="case expect-ok" data-rule="positioned-no-float">
+      <div class="label label-ok">
+        positioned-no-float ok: absolute positioned element without float (default)
+      </div>
+      <div style="position: relative; height: 40px">
+        <div data-target style="position: absolute">Absolute without float — no warning</div>
+      </div>
+    </div>
+    <div class="case expect-ok" data-rule="positioned-no-float">
+      <div class="label label-ok">positioned-no-float ok: sticky element with float (valid)</div>
+      <div data-target style="position: sticky; float: left; top: 0">Sticky + float</div>
+    </div>
+
     <!-- ===== static-no-logical-offset: logical offsets on static position ===== -->
     <h2>static-no-logical-offset: logical offsets on static elements</h2>
 
