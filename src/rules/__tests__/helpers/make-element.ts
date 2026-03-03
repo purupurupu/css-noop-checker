@@ -25,6 +25,7 @@ export const DEFAULT_COMPUTED_STYLES: ElementData['computedStyles'] = {
   insetInlineStart: 'auto',
   insetInlineEnd: 'auto',
   alignSelf: 'auto',
+  justifySelf: 'auto',
   order: '0',
   marginTop: '0px',
   marginBottom: '0px',
