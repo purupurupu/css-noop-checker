@@ -845,6 +845,79 @@
       </div>
     </div>
 
+    <!-- ===== item-no-justify-self: justify-self outside grid layout ===== -->
+    <h2>item-no-justify-self: justify-self outside grid layout</h2>
+
+    <h3>Should warn</h3>
+    <div class="case expect-warn" data-rule="item-no-justify-self">
+      <div class="label label-warn">
+        item-no-justify-self warn: justify-self on child of block container
+      </div>
+      <div>
+        <div data-target style="justify-self: center">
+          Block child with justify-self (no effect)
+        </div>
+      </div>
+    </div>
+    <div class="case expect-warn" data-rule="item-no-justify-self">
+      <div class="label label-warn">
+        item-no-justify-self warn: justify-self on child of flex container
+      </div>
+      <div style="display: flex; gap: 8px">
+        <div data-target style="justify-self: center">Flex child with justify-self (no effect)</div>
+      </div>
+    </div>
+
+    <h3>Should NOT warn</h3>
+    <div class="case expect-ok" data-rule="item-no-justify-self">
+      <div class="label label-ok">item-no-justify-self ok: grid item with justify-self</div>
+      <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 8px">
+        <div data-target style="justify-self: end">Grid child with justify-self (valid)</div>
+        <div>Grid child 2</div>
+      </div>
+    </div>
+    <div class="case expect-ok" data-rule="item-no-justify-self">
+      <div class="label label-ok">item-no-justify-self ok: inline-grid item with justify-self</div>
+      <span style="display: inline-grid; grid-template-columns: 1fr 1fr; gap: 4px">
+        <span data-target style="justify-self: center">Inline-grid child</span>
+        <span>Inline-grid child 2</span>
+      </span>
+    </div>
+    <div class="case expect-ok" data-rule="item-no-justify-self">
+      <div class="label label-ok">
+        item-no-justify-self ok: absolutely positioned element with justify-self
+      </div>
+      <div>
+        <div data-target style="position: absolute; justify-self: center">
+          Absolutely positioned with justify-self (valid)
+        </div>
+      </div>
+    </div>
+    <div class="case expect-ok" data-rule="item-no-justify-self">
+      <div class="label label-ok">item-no-justify-self ok: justify-self auto (default value)</div>
+      <div>
+        <div data-target style="justify-self: auto">Block child with justify-self: auto</div>
+      </div>
+    </div>
+    <div class="case expect-ok" data-rule="item-no-justify-self">
+      <div class="label label-ok">item-no-justify-self ok: justify-self normal (default value)</div>
+      <div>
+        <div data-target style="justify-self: normal">Block child with justify-self: normal</div>
+      </div>
+    </div>
+    <div class="case expect-ok" data-rule="item-no-justify-self">
+      <div class="label label-ok">
+        item-no-justify-self ok: display:contents parent (grandparent is grid)
+      </div>
+      <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 8px">
+        <div style="display: contents">
+          <div data-target style="justify-self: end">
+            Child of contents wrapper (actually a grid item)
+          </div>
+        </div>
+      </div>
+    </div>
+
     <!-- ===== item-no-order: order on non-flex/grid items ===== -->
     <h2>item-no-order: order on non-flex/grid items</h2>
 
