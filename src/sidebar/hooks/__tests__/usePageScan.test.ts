@@ -10,13 +10,17 @@ function makeScanElement(
   overrides: Partial<ElementData['computedStyles']> & { tagName?: string } = {},
 ): ScanElementData {
   const { tagName = 'div', ...styles } = overrides;
+  const computedStyles: Record<string, string> = { ...DEFAULT_COMPUTED_STYLES };
+  for (const [key, value] of Object.entries(styles)) {
+    if (value !== undefined) computedStyles[key] = value;
+  }
   return {
     index,
     selector,
     tagName,
     id: '',
     classList: [],
-    computedStyles: { ...DEFAULT_COMPUTED_STYLES, ...styles },
+    computedStyles,
     parent: null,
   };
 }
