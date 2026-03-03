@@ -13,6 +13,7 @@ import './inline-no-vertical-margin.ts';
 import './item-no-flex-props.ts';
 import './item-no-float.ts';
 import './item-no-grid-props.ts';
+import './item-no-justify-self.ts';
 import './item-no-order.ts';
 import './item-no-self-align.ts';
 import './nonfloat-no-shape-outside.ts';
