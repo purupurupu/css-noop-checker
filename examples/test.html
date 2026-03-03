@@ -1116,6 +1116,82 @@
       </div>
     </div>
 
+    <!-- ===== static-no-logical-offset: logical offsets on static position ===== -->
+    <h2>static-no-logical-offset: logical offsets on static elements</h2>
+
+    <h3>Should warn</h3>
+    <div class="case expect-warn" data-rule="static-no-logical-offset">
+      <div class="label label-warn">
+        static-no-logical-offset warn: static div with inset-block-start
+      </div>
+      <div data-target style="inset-block-start: 20px">
+        This div has inset-block-start: 20px but position is static
+      </div>
+    </div>
+    <div class="case expect-warn" data-rule="static-no-logical-offset">
+      <div class="label label-warn">
+        static-no-logical-offset warn: static div with inset-inline-start
+      </div>
+      <div data-target style="inset-inline-start: 10px">
+        This div has inset-inline-start: 10px but position is static
+      </div>
+    </div>
+    <div class="case expect-warn" data-rule="static-no-logical-offset">
+      <div class="label label-warn">
+        static-no-logical-offset warn: static div with all logical offsets
+      </div>
+      <div
+        data-target
+        style="
+          inset-block-start: 10px;
+          inset-block-end: 10px;
+          inset-inline-start: 10px;
+          inset-inline-end: 10px;
+        "
+      >
+        All four logical offsets on a static element
+      </div>
+    </div>
+    <div class="case expect-warn" data-rule="static-no-logical-offset">
+      <div class="label label-warn">
+        static-no-logical-offset warn: inset shorthand expands to all 4 logical offsets
+      </div>
+      <div data-target style="inset: 10px">
+        inset: 10px on a static element expands to all 4 logical offsets
+      </div>
+    </div>
+
+    <h3>Should NOT warn</h3>
+    <div class="case expect-ok" data-rule="static-no-logical-offset">
+      <div class="label label-ok">static-no-logical-offset ok: relative with inset-block-start</div>
+      <div data-target style="position: relative; inset-block-start: 20px">
+        Relative + inset-block-start: 20px (valid)
+      </div>
+    </div>
+    <div class="case expect-ok" data-rule="static-no-logical-offset">
+      <div class="label label-ok">static-no-logical-offset ok: absolute with logical offsets</div>
+      <div style="position: relative">
+        <div data-target style="position: absolute; inset-block-start: 0; inset-inline-start: 0">
+          Absolute + logical offsets (valid)
+        </div>
+      </div>
+    </div>
+    <div class="case expect-ok" data-rule="static-no-logical-offset">
+      <div class="label label-ok">static-no-logical-offset ok: fixed with logical offsets</div>
+      <div
+        data-target
+        style="position: fixed; inset-block-end: 10px; inset-inline-end: 10px; visibility: hidden"
+      >
+        Fixed + logical offsets (valid)
+      </div>
+    </div>
+    <div class="case expect-ok" data-rule="static-no-logical-offset">
+      <div class="label label-ok">static-no-logical-offset ok: sticky with inset-block-start</div>
+      <div data-target style="position: sticky; inset-block-start: 0">
+        Sticky + inset-block-start: 0 (valid)
+      </div>
+    </div>
+
     <!-- ===== static-no-offset: offsets on static position ===== -->
     <h2>static-no-offset: top/right/bottom/left on static elements</h2>
 
