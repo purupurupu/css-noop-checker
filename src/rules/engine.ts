@@ -19,6 +19,7 @@ import './item-no-order.ts';
 import './item-no-self-align.ts';
 import './nonfloat-no-shape-outside.ts';
 import './nonreplaced-no-object-fit.ts';
+import './positioned-no-clear.ts';
 import './static-no-logical-offset.ts';
 import './static-no-offset.ts';
 import './static-no-z-index.ts';

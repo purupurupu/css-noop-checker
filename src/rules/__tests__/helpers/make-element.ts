@@ -70,6 +70,7 @@ export const DEFAULT_COMPUTED_STYLES: ElementData['computedStyles'] = {
   shapeOutside: 'none',
   shapeMargin: '0px',
   shapeImageThreshold: '0',
+  clear: 'none',
   borderCollapse: 'separate',
   tableLayout: 'auto',
 };
