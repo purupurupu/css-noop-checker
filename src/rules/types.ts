@@ -9,6 +9,7 @@ export interface ElementData {
   id: string;
   classList: string[];
   computedStyles: Record<string, string>;
+  inlineStyles?: Record<string, string>;
   parent: ParentData | null;
 }
 
@@ -27,6 +28,7 @@ export interface Warning {
 export interface RuleContext {
   element: ElementData;
   styles: Record<string, string>;
+  inlineStyles: Record<string, string>;
   parentStyles: Record<string, string> | null;
   isFlexItem: boolean;
   isGridItem: boolean;
@@ -37,5 +39,6 @@ export interface RuleDescriptor {
   readonly label: string;
   readonly requiredProperties: readonly string[];
   readonly requiredParentProperties?: readonly string[];
+  readonly requiredInlineProperties?: readonly string[];
   check: (ctx: RuleContext) => Warning[];
 }
