@@ -1240,6 +1240,54 @@
       </div>
     </div>
 
+    <!-- ===== positioned-no-clear: clear on absolute/fixed positioned elements ===== -->
+    <h2>positioned-no-clear: clear on absolute/fixed positioned elements</h2>
+
+    <h3>Should warn</h3>
+    <div class="case expect-warn" data-rule="positioned-no-clear">
+      <div class="label label-warn">positioned-no-clear warn: clear: both on absolute</div>
+      <div data-target style="position: absolute; clear: both; top: 0; left: 0">
+        Absolute with clear
+      </div>
+    </div>
+
+    <div class="case expect-warn" data-rule="positioned-no-clear">
+      <div class="label label-warn">positioned-no-clear warn: clear: left on fixed</div>
+      <div data-target style="position: fixed; clear: left; top: 0; left: 0; z-index: 1">
+        Fixed with clear
+      </div>
+    </div>
+
+    <div class="case expect-warn" data-rule="positioned-no-clear">
+      <div class="label label-warn">positioned-no-clear warn: clear: right on absolute</div>
+      <div data-target style="position: absolute; clear: right; top: 0; left: 0">
+        Absolute with clear: right
+      </div>
+    </div>
+
+    <h3>Should NOT warn</h3>
+    <div class="case expect-ok" data-rule="positioned-no-clear">
+      <div class="label label-ok">positioned-no-clear ok: clear on static element</div>
+      <div data-target style="clear: both">Static with clear</div>
+    </div>
+
+    <div class="case expect-ok" data-rule="positioned-no-clear">
+      <div class="label label-ok">positioned-no-clear ok: clear on relative element</div>
+      <div data-target style="position: relative; clear: both">Relative with clear</div>
+    </div>
+
+    <div class="case expect-ok" data-rule="positioned-no-clear">
+      <div class="label label-ok">positioned-no-clear ok: clear: none on absolute element</div>
+      <div data-target style="position: absolute; clear: none; top: 0; left: 0">
+        Absolute with clear: none
+      </div>
+    </div>
+
+    <div class="case expect-ok" data-rule="positioned-no-clear">
+      <div class="label label-ok">positioned-no-clear ok: clear on sticky element</div>
+      <div data-target style="position: sticky; clear: both; top: 0">Sticky with clear</div>
+    </div>
+
     <!-- ===== static-no-logical-offset: logical offsets on static position ===== -->
     <h2>static-no-logical-offset: logical offsets on static elements</h2>
 
