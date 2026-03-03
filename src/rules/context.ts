@@ -111,3 +111,7 @@ export function isDefaultFlexWrapValue(value: string): boolean {
 export function isDefaultOverflowValue(value: string): boolean {
   return value === 'visible';
 }
+
+export function isDefaultSelfAlignmentValue(value: string): boolean {
+  return value === 'auto' || value === 'normal';
+}
