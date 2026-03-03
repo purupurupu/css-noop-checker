@@ -1,4 +1,5 @@
 import type { RuleDescriptor } from './types.ts';
+import { isDefaultSelfAlignmentValue } from './context.ts';
 import { registerRule } from './registry.ts';
 
 const rule: RuleDescriptor = {
@@ -17,9 +18,7 @@ const rule: RuleDescriptor = {
     if (parentDisplay === 'contents') return [];
 
     const { alignSelf } = ctx.styles;
-    // align-self initial value is "auto" (inherits parent's align-items),
-    // but some browsers may compute it as "normal"
-    if (alignSelf === 'auto' || alignSelf === 'normal') return [];
+    if (isDefaultSelfAlignmentValue(alignSelf)) return [];
 
     return [
       {
