@@ -9,6 +9,7 @@ import './container-no-place.ts';
 import './element-no-table-props.ts';
 import './inline-no-dimensions.ts';
 import './inline-no-logical-dimensions.ts';
+import './inline-no-logical-vertical-margin.ts';
 import './inline-no-overflow.ts';
 import './inline-no-vertical-margin.ts';
 import './item-no-flex-props.ts';

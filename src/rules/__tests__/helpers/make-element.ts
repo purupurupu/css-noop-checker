@@ -29,6 +29,8 @@ export const DEFAULT_COMPUTED_STYLES: ElementData['computedStyles'] = {
   order: '0',
   marginTop: '0px',
   marginBottom: '0px',
+  marginBlockStart: '0px',
+  marginBlockEnd: '0px',
   verticalAlign: 'baseline',
   zIndex: 'auto',
   opacity: '1',
@@ -71,6 +73,7 @@ export const DEFAULT_COMPUTED_STYLES: ElementData['computedStyles'] = {
   shapeMargin: '0px',
   shapeImageThreshold: '0',
   clear: 'none',
+  writingMode: 'horizontal-tb',
   borderCollapse: 'separate',
   tableLayout: 'auto',
 };
