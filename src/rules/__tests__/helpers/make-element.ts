@@ -63,6 +63,8 @@ export const DEFAULT_COMPUTED_STYLES: ElementData['computedStyles'] = {
   overflowX: 'visible',
   overflowY: 'visible',
   resize: 'none',
+  inlineSize: 'auto',
+  blockSize: 'auto',
   objectFit: 'fill',
   objectPosition: '50% 50%',
   shapeOutside: 'none',

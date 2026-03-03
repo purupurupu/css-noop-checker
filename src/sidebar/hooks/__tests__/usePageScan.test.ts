@@ -1,5 +1,6 @@
 import { describe, it, expect } from 'vitest';
 import { groupByRule } from '../../utils/group-by-rule.ts';
+import { DEFAULT_COMPUTED_STYLES } from '../../../rules/__tests__/helpers/make-element.ts';
 import type { ScanElementData } from '../../types.ts';
 import type { ElementData } from '../../../rules/types.ts';
 
@@ -9,46 +10,17 @@ function makeScanElement(
   overrides: Partial<ElementData['computedStyles']> & { tagName?: string } = {},
 ): ScanElementData {
   const { tagName = 'div', ...styles } = overrides;
+  const computedStyles: Record<string, string> = { ...DEFAULT_COMPUTED_STYLES };
+  for (const [key, value] of Object.entries(styles)) {
+    if (value !== undefined) computedStyles[key] = value;
+  }
   return {
     index,
     selector,
     tagName,
     id: '',
     classList: [],
-    computedStyles: {
-      display: 'block',
-      width: 'auto',
-      height: 'auto',
-      gap: 'normal',
-      rowGap: 'normal',
-      columnGap: 'normal',
-      alignItems: 'normal',
-      justifyContent: 'normal',
-      justifyItems: 'normal',
-      placeItems: 'normal',
-      placeContent: 'normal',
-      columnCount: 'auto',
-      alignSelf: 'auto',
-      order: '0',
-      verticalAlign: 'baseline',
-      flexDirection: 'row',
-      flexWrap: 'nowrap',
-      gridTemplateColumns: 'none',
-      gridTemplateRows: 'none',
-      gridTemplateAreas: 'none',
-      gridAutoColumns: 'auto',
-      gridAutoRows: 'auto',
-      gridAutoFlow: 'row',
-      textOverflow: 'clip',
-      overflowX: 'visible',
-      overflowY: 'visible',
-      resize: 'none',
-      objectFit: 'fill',
-      objectPosition: '50% 50%',
-      borderCollapse: 'separate',
-      tableLayout: 'auto',
-      ...styles,
-    },
+    computedStyles,
     parent: null,
   };
 }

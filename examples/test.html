@@ -576,6 +576,57 @@
       <span data-target style="display: inline-block; width: 200px">inline-block span</span>
     </div>
 
+    <!-- ===== inline-no-logical-dimensions: inline-size/block-size on inline ===== -->
+    <h2>inline-no-logical-dimensions: inline-size/block-size on inline elements</h2>
+
+    <h3>Should warn</h3>
+    <div class="case expect-warn" data-rule="inline-no-logical-dimensions">
+      <div class="label label-warn">inline-no-logical-dimensions warn: span with inline-size</div>
+      <span data-target style="inline-size: 200px">This span has inline-size: 200px</span>
+    </div>
+    <div class="case expect-warn" data-rule="inline-no-logical-dimensions">
+      <div class="label label-warn">inline-no-logical-dimensions warn: span with block-size</div>
+      <span data-target style="block-size: 50px">This span has block-size: 50px</span>
+    </div>
+    <div class="case expect-warn" data-rule="inline-no-logical-dimensions">
+      <div class="label label-warn">
+        inline-no-logical-dimensions warn: anchor with inline-size + block-size
+      </div>
+      <a data-target href="#" style="inline-size: 100px; block-size: 30px"
+        >Link (inline-size + block-size)</a
+      >
+    </div>
+
+    <h3>Should NOT warn (false positive check)</h3>
+    <div class="case expect-ok" data-rule="inline-no-logical-dimensions">
+      <div class="label label-ok">
+        inline-no-logical-dimensions ok: img is a replaced inline element
+      </div>
+      <img
+        data-target
+        src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='60' height='40'%3E%3Crect fill='%234ec9b0' width='60' height='40'/%3E%3C/svg%3E"
+        style="inline-size: 60px; block-size: 40px"
+        alt="replaced element"
+      />
+    </div>
+    <div class="case expect-ok" data-rule="inline-no-logical-dimensions">
+      <div class="label label-ok">
+        inline-no-logical-dimensions ok: input is a replaced inline element
+      </div>
+      <input
+        data-target
+        type="text"
+        style="inline-size: 200px; block-size: 30px"
+        value="input element"
+      />
+    </div>
+    <div class="case expect-ok" data-rule="inline-no-logical-dimensions">
+      <div class="label label-ok">
+        inline-no-logical-dimensions ok: inline-block accepts inline-size
+      </div>
+      <span data-target style="display: inline-block; inline-size: 200px">inline-block span</span>
+    </div>
+
     <!-- ===== inline-no-overflow: overflow on inline ===== -->
     <h2>inline-no-overflow: overflow on inline elements</h2>
 
