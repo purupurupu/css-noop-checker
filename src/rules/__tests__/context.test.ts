@@ -55,6 +55,48 @@ describe('createRuleContext — parent-aware predicates', () => {
   });
 });
 
+describe('createRuleContext — isContents / isParentContents / parentDisplay', () => {
+  it('sets isContents to true when display is contents', () => {
+    const ctx = createRuleContext(makeElement({ display: 'contents' }));
+    expect(ctx.isContents).toBe(true);
+  });
+
+  it('sets isContents to false for block display', () => {
+    const ctx = createRuleContext(makeElement({ display: 'block' }));
+    expect(ctx.isContents).toBe(false);
+  });
+
+  it('sets isParentContents to true when parent display is contents', () => {
+    const ctx = createRuleContext(makeElement({}, { computedStyles: { display: 'contents' } }));
+    expect(ctx.isParentContents).toBe(true);
+  });
+
+  it('sets isParentContents to false when parent display is block', () => {
+    const ctx = createRuleContext(makeElement({}, { computedStyles: { display: 'block' } }));
+    expect(ctx.isParentContents).toBe(false);
+  });
+
+  it('sets isParentContents to false when parent is null', () => {
+    const ctx = createRuleContext(makeElement({}, null));
+    expect(ctx.isParentContents).toBe(false);
+  });
+
+  it('sets parentDisplay from parent computedStyles', () => {
+    const ctx = createRuleContext(makeElement({}, { computedStyles: { display: 'flex' } }));
+    expect(ctx.parentDisplay).toBe('flex');
+  });
+
+  it('defaults parentDisplay to "" when parent is null', () => {
+    const ctx = createRuleContext(makeElement({}, null));
+    expect(ctx.parentDisplay).toBe('');
+  });
+
+  it('normalizes parentDisplay to lowercase', () => {
+    const ctx = createRuleContext(makeElement({}, { computedStyles: { display: 'GRID' } }));
+    expect(ctx.parentDisplay).toBe('grid');
+  });
+});
+
 const DEFAULT_STYLES: Record<string, string> = {
   opacity: '1',
   transform: 'none',
