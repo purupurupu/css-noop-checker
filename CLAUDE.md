@@ -62,7 +62,7 @@ When adding a new rule, pick a descriptive `target` and `qualifier` — avoid nu
 
 1. Create `src/rules/<rule-id>.ts` — implement `RuleDescriptor`, call `registerRule()`, export the check function. Use `createWarning()` factory via a scoped `warn` helper for all warnings.
 2. Add side-effect import in `src/rules/engine.ts` (keep alphabetical order)
-3. Add `DEFAULT_COMPUTED_STYLES` entries in `src/rules/__tests__/helpers/make-element.ts` for any new `requiredProperties`. If the rule uses `requiredInlineProperties`, add defaults for those too. (The `DEFAULT_COMPUTED_STYLES` validation test will fail if missed.)
+3. Add `DEFAULT_COMPUTED_STYLES` entries in `src/rules/__tests__/helpers/make-element.ts` for any new `requiredProperties` (the validation test will fail if missed). If the rule uses `requiredInlineProperties`, ensure unit tests pass appropriate inline style overrides via `makeElement`'s third parameter.
 4. Add unit tests in `src/rules/__tests__/<rule-id>.test.ts`
 5. Add "should warn" and "should NOT warn" test cases to `examples/test.html` (keep alphabetical order by rule ID)
 6. Update `EXPECTED_CASE_COUNT` in `e2e/integration/rules-against-real-styles.test.ts`
@@ -113,13 +113,14 @@ Element extraction (getting computed styles from in-page elements) exists in **t
 
 **However, changes to extraction behavior itself require updating both implementations.** The two implementations currently have known divergences:
 
-| Behavior            | Extension sidebar                                            | E2E / MCP server                 |
-| ------------------- | ------------------------------------------------------------ | -------------------------------- |
-| **SKIP_TAGS**       | Shared constant from `src/rules/scan-constants.ts` (10 tags) | Same shared constant             |
-| **`display: none`** | Filters out (`cs.display === 'none'`)                        | Does not filter                  |
-| **Query scope**     | `document.body.querySelectorAll('*')`                        | `document.querySelectorAll('*')` |
-| **Selector format** | `CSS.escape()` + max 3 classes                               | `nth-of-type` + all classes      |
-| **Scan cap**        | Chunked pagination (offset/limit)                            | Single pass, 5 000 element cap   |
+Both implementations share `SKIP_TAGS` and other constants from `src/rules/scan-constants.ts`. The remaining divergences:
+
+| Behavior            | Extension sidebar                     | E2E / MCP server                 |
+| ------------------- | ------------------------------------- | -------------------------------- |
+| **`display: none`** | Filters out (`cs.display === 'none'`) | Does not filter                  |
+| **Query scope**     | `document.body.querySelectorAll('*')` | `document.querySelectorAll('*')` |
+| **Selector format** | `CSS.escape()` + max 3 classes        | `nth-of-type` + all classes      |
+| **Scan cap**        | Chunked pagination (offset/limit)     | Single pass, 5 000 element cap   |
 
 When modifying any of these behaviors, update both `build-scan-script.ts` and `extract-element-data.ts`.
 
