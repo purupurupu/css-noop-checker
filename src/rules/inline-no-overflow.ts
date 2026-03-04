@@ -1,6 +1,10 @@
-import type { RuleDescriptor } from './types.ts';
+import { type RuleDescriptor, type Warning, createWarning } from './types.ts';
 import { isDefaultOverflowValue, isReplacedInlineElement } from './context.ts';
 import { registerRule } from './registry.ts';
+
+const RULE_ID = 'inline-no-overflow' as const;
+
+const warn = (fields: Omit<Warning, 'ruleId' | 'severity'>) => createWarning(RULE_ID, fields);
 
 function describeOverflow(overflowX: string, overflowY: string): string {
   if (overflowX === overflowY) return `overflow is "${overflowX}"`;
@@ -10,7 +14,7 @@ function describeOverflow(overflowX: string, overflowY: string): string {
 }
 
 const rule: RuleDescriptor = {
-  id: 'inline-no-overflow',
+  id: RULE_ID,
   label: 'overflow on inline',
   requiredProperties: ['display', 'overflowX', 'overflowY'],
   check(ctx) {
@@ -30,14 +34,12 @@ const rule: RuleDescriptor = {
     // causes overflow-y to compute to auto), so axis-level warnings would produce
     // confusing double warnings for a single user-authored declaration.
     return [
-      {
-        ruleId: 'inline-no-overflow',
+      warn({
         property: 'overflow',
-        severity: 'warning',
         title: 'overflow has no effect on inline elements',
         details: `${describeOverflow(overflowX, overflowY)} but display is "inline". Non-replaced inline elements ignore overflow.`,
         suggestion: 'Set display: inline-block or display: block, or remove overflow.',
-      },
+      }),
     ];
   },
 };

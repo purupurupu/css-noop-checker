@@ -1,5 +1,9 @@
-import type { RuleDescriptor, Warning } from './types.ts';
+import { type RuleDescriptor, type Warning, createWarning } from './types.ts';
 import { registerRule } from './registry.ts';
+
+const RULE_ID = 'nonfloat-no-shape-outside' as const;
+
+const warn = (fields: Omit<Warning, 'ruleId' | 'severity'>) => createWarning(RULE_ID, fields);
 
 const SHAPE_PROPERTIES = [
   { key: 'shapeOutside', css: 'shape-outside', defaultValue: 'none' },
@@ -8,7 +12,7 @@ const SHAPE_PROPERTIES = [
 ] as const;
 
 const rule: RuleDescriptor = {
-  id: 'nonfloat-no-shape-outside',
+  id: RULE_ID,
   label: 'shape-outside on non-floated element',
   requiredProperties: ['cssFloat', 'shapeOutside', 'shapeMargin', 'shapeImageThreshold'],
   requiredParentProperties: ['display'],
@@ -18,7 +22,7 @@ const rule: RuleDescriptor = {
     // display:contents removes the parent's box, so the child participates in the
     // grandparent's formatting context. Without grandparent data we cannot determine
     // if float is effectively active, so bail out to avoid false positives.
-    if (ctx.parentStyles?.display === 'contents') return [];
+    if (ctx.isParentContents) return [];
 
     // Float is ignored on flex/grid items per spec, so shape properties are also no-ops.
     const floatIsActive = cssFloat !== 'none' && !ctx.isFlexItem && !ctx.isGridItem;
@@ -36,14 +40,14 @@ const rule: RuleDescriptor = {
         const suggestion = inFlexOrGrid
           ? `Remove ${css} — float is ignored on flex/grid items so this property has no effect.`
           : `Add float: left or float: right, or remove ${css}.`;
-        warnings.push({
-          ruleId: 'nonfloat-no-shape-outside',
-          property: css,
-          severity: 'warning',
-          title: `${css} has no effect`,
-          details,
-          suggestion,
-        });
+        warnings.push(
+          warn({
+            property: css,
+            title: `${css} has no effect`,
+            details,
+            suggestion,
+          }),
+        );
       }
     }
 

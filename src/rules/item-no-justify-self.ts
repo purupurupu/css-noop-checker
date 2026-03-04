@@ -1,9 +1,13 @@
-import type { RuleDescriptor } from './types.ts';
+import { type RuleDescriptor, type Warning, createWarning } from './types.ts';
 import { isDefaultSelfAlignmentValue, isFlexContainer } from './context.ts';
 import { registerRule } from './registry.ts';
 
+const RULE_ID = 'item-no-justify-self' as const;
+
+const warn = (fields: Omit<Warning, 'ruleId' | 'severity'>) => createWarning(RULE_ID, fields);
+
 const rule: RuleDescriptor = {
-  id: 'item-no-justify-self',
+  id: RULE_ID,
   label: 'justify-self outside grid layout',
   requiredProperties: ['justifySelf', 'position'],
   requiredParentProperties: ['display'],
@@ -21,22 +25,19 @@ const rule: RuleDescriptor = {
     // display:contents removes the parent's box, so the child participates in the
     // grandparent's formatting context. Without grandparent data we cannot determine
     // if this element is effectively a grid item.
-    const parentDisplay = ctx.parentStyles.display ?? 'block';
-    if (parentDisplay === 'contents') return [];
+    if (ctx.isParentContents) return [];
 
-    const suggestion = isFlexContainer(parentDisplay)
+    const suggestion = isFlexContainer(ctx.parentDisplay)
       ? 'Remove justify-self — it has no effect on flex items.'
       : 'Set display: grid or display: inline-grid on the parent element, or remove justify-self.';
 
     return [
-      {
-        ruleId: 'item-no-justify-self',
+      warn({
         property: 'justify-self',
-        severity: 'warning',
         title: 'justify-self has no effect',
-        details: `justify-self is "${justifySelf}" but parent display is "${parentDisplay}". justify-self only takes effect on grid items.`,
+        details: `justify-self is "${justifySelf}" but parent display is "${ctx.parentDisplay}". justify-self only takes effect on grid items.`,
         suggestion,
-      },
+      }),
     ];
   },
 };

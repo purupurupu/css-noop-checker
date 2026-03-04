@@ -1,8 +1,12 @@
-import type { RuleDescriptor } from './types.ts';
+import { type RuleDescriptor, type Warning, createWarning } from './types.ts';
 import { registerRule } from './registry.ts';
 
+const RULE_ID = 'positioned-no-clear' as const;
+
+const warn = (fields: Omit<Warning, 'ruleId' | 'severity'>) => createWarning(RULE_ID, fields);
+
 const rule: RuleDescriptor = {
-  id: 'positioned-no-clear',
+  id: RULE_ID,
   label: 'clear on absolute/fixed positioned element',
   requiredProperties: ['position', 'clear'],
   check(ctx) {
@@ -14,14 +18,12 @@ const rule: RuleDescriptor = {
     if (clear === 'none') return [];
 
     return [
-      {
-        ruleId: 'positioned-no-clear',
+      warn({
         property: 'clear',
-        severity: 'warning',
         title: 'clear has no effect',
         details: `clear is "${clear}" but position is "${position}". Absolute and fixed positioned elements are removed from normal flow, so clear has no effect.`,
         suggestion: 'Remove the clear property, or change position to static, relative, or sticky.',
-      },
+      }),
     ];
   },
 };

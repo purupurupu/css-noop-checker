@@ -1,7 +1,9 @@
-import type { RuleDescriptor, Warning } from './types.ts';
+import { type RuleDescriptor, type Warning, createWarning } from './types.ts';
 import { registerRule } from './registry.ts';
 
-const RULE_ID = 'nonreplaced-no-object-fit';
+const RULE_ID = 'nonreplaced-no-object-fit' as const;
+
+const warn = (fields: Omit<Warning, 'ruleId' | 'severity'>) => createWarning(RULE_ID, fields);
 
 /**
  * Elements that actually support object-fit/object-position.
@@ -30,37 +32,37 @@ const rule: RuleDescriptor = {
   label: 'object-fit/object-position on non-replaced element',
   requiredProperties: ['display', 'objectFit', 'objectPosition'],
   check(ctx) {
-    const { display, objectFit, objectPosition } = ctx.styles;
+    const { objectFit, objectPosition } = ctx.styles;
     const { tagName } = ctx.element;
 
     // display: contents elements generate no box — skip
-    if (display === 'contents') return [];
+    if (ctx.isContents) return [];
 
     if (OBJECT_FIT_ELEMENTS.has(tagName)) return [];
 
     const warnings: Warning[] = [];
 
     if (!isDefaultObjectFit(objectFit)) {
-      warnings.push({
-        ruleId: RULE_ID,
-        property: 'object-fit',
-        severity: 'warning',
-        title: 'object-fit has no effect on non-replaced elements',
-        details: `object-fit is "${objectFit}" but <${tagName}> is not a replaced element. Only replaced elements (img, video, etc.) support object-fit.`,
-        suggestion: 'Remove object-fit, or use it on a replaced element like <img> or <video>.',
-      });
+      warnings.push(
+        warn({
+          property: 'object-fit',
+          title: 'object-fit has no effect on non-replaced elements',
+          details: `object-fit is "${objectFit}" but <${tagName}> is not a replaced element. Only replaced elements (img, video, etc.) support object-fit.`,
+          suggestion: 'Remove object-fit, or use it on a replaced element like <img> or <video>.',
+        }),
+      );
     }
 
     if (!isDefaultObjectPosition(objectPosition)) {
-      warnings.push({
-        ruleId: RULE_ID,
-        property: 'object-position',
-        severity: 'warning',
-        title: 'object-position has no effect on non-replaced elements',
-        details: `object-position is "${objectPosition}" but <${tagName}> is not a replaced element. Only replaced elements (img, video, etc.) support object-position.`,
-        suggestion:
-          'Remove object-position, or use it on a replaced element like <img> or <video>.',
-      });
+      warnings.push(
+        warn({
+          property: 'object-position',
+          title: 'object-position has no effect on non-replaced elements',
+          details: `object-position is "${objectPosition}" but <${tagName}> is not a replaced element. Only replaced elements (img, video, etc.) support object-position.`,
+          suggestion:
+            'Remove object-position, or use it on a replaced element like <img> or <video>.',
+        }),
+      );
     }
 
     return warnings;

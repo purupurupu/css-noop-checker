@@ -1,6 +1,10 @@
-import type { RuleDescriptor, Warning } from './types.ts';
+import { type RuleDescriptor, type Warning, createWarning } from './types.ts';
 import { isDefaultOffsetValue } from './context.ts';
 import { registerRule } from './registry.ts';
+
+const RULE_ID = 'static-no-logical-offset' as const;
+
+const warn = (fields: Omit<Warning, 'ruleId' | 'severity'>) => createWarning(RULE_ID, fields);
 
 const LOGICAL_OFFSET_PROPERTIES = [
   { key: 'insetBlockStart', cssName: 'inset-block-start' },
@@ -10,7 +14,7 @@ const LOGICAL_OFFSET_PROPERTIES = [
 ] as const;
 
 const rule: RuleDescriptor = {
-  id: 'static-no-logical-offset',
+  id: RULE_ID,
   label: 'logical offset on static position',
   requiredProperties: ['position', ...LOGICAL_OFFSET_PROPERTIES.map((p) => p.key)],
   check(ctx) {
@@ -22,14 +26,14 @@ const rule: RuleDescriptor = {
     for (const { key, cssName } of LOGICAL_OFFSET_PROPERTIES) {
       const value = ctx.styles[key];
       if (!isDefaultOffsetValue(value)) {
-        warnings.push({
-          ruleId: 'static-no-logical-offset',
-          property: cssName,
-          severity: 'warning',
-          title: `${cssName} has no effect`,
-          details: `${cssName} is "${value}" but position is "static". Logical offsets only apply to positioned elements.`,
-          suggestion: `Set position to relative, absolute, fixed, or sticky, or remove ${cssName}.`,
-        });
+        warnings.push(
+          warn({
+            property: cssName,
+            title: `${cssName} has no effect`,
+            details: `${cssName} is "${value}" but position is "static". Logical offsets only apply to positioned elements.`,
+            suggestion: `Set position to relative, absolute, fixed, or sticky, or remove ${cssName}.`,
+          }),
+        );
       }
     }
 
