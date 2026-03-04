@@ -30,8 +30,20 @@ export interface RuleContext {
   styles: Record<string, string>;
   inlineStyles: Record<string, string>;
   parentStyles: Record<string, string> | null;
+  /** Parent's display value. Defaults to '' (empty string) when parentStyles is null, signaling absent/unknown. Only meaningful when parentStyles !== null. */
+  parentDisplay: string;
   isFlexItem: boolean;
   isGridItem: boolean;
+  isContents: boolean;
+  isParentContents: boolean;
+}
+
+/** Creates a Warning with a fixed severity of 'warning'. */
+export function createWarning(
+  ruleId: RuleId,
+  fields: Omit<Warning, 'ruleId' | 'severity'>,
+): Warning {
+  return { ruleId, severity: 'warning', ...fields };
 }
 
 export interface RuleDescriptor {

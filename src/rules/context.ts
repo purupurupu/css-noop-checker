@@ -9,15 +9,19 @@ function normalizeStyles(styles: Record<string, string>): Record<string, string>
 }
 
 export function createRuleContext(element: ElementData): RuleContext {
+  const styles = normalizeStyles(element.computedStyles);
   const parentStyles = element.parent ? normalizeStyles(element.parent.computedStyles) : null;
   const parentDisplay = parentStyles?.display ?? '';
   return {
     element,
-    styles: normalizeStyles(element.computedStyles),
+    styles,
     inlineStyles: normalizeStyles(element.inlineStyles ?? {}),
     parentStyles,
+    parentDisplay,
     isFlexItem: isFlexContainer(parentDisplay),
     isGridItem: isGridContainer(parentDisplay),
+    isContents: styles.display === 'contents',
+    isParentContents: parentDisplay === 'contents',
   };
 }
 
