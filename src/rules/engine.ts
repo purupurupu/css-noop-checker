@@ -11,6 +11,7 @@ import './inline-no-dimensions.ts';
 import './inline-no-logical-dimensions.ts';
 import './inline-no-logical-vertical-margin.ts';
 import './inline-no-overflow.ts';
+import './inline-no-text-indent.ts';
 import './inline-no-vertical-margin.ts';
 import './item-no-flex-props.ts';
 import './item-no-float.ts';

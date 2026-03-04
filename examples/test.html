@@ -728,6 +728,55 @@
       <div data-target style="overflow: hidden">block div with overflow</div>
     </div>
 
+    <!-- ===== inline-no-text-indent: text-indent on inline ===== -->
+    <h2>inline-no-text-indent: text-indent on inline elements</h2>
+
+    <h3>Should warn</h3>
+    <div class="case expect-warn" data-rule="inline-no-text-indent">
+      <div class="label label-warn">inline-no-text-indent warn: span with text-indent</div>
+      <span data-target style="text-indent: 2em">This span has text-indent: 2em</span>
+    </div>
+    <div class="case expect-warn" data-rule="inline-no-text-indent">
+      <div class="label label-warn">inline-no-text-indent warn: anchor with text-indent</div>
+      <a data-target href="#" style="text-indent: 40px">Link with text-indent: 40px</a>
+    </div>
+    <div class="case expect-warn" data-rule="inline-no-text-indent">
+      <div class="label label-warn">
+        inline-no-text-indent warn: span with negative text-indent (image replacement trick)
+      </div>
+      <span data-target style="text-indent: -9999px">Hidden text</span>
+    </div>
+
+    <h3>Should NOT warn (false positive check)</h3>
+    <div class="case expect-ok" data-rule="inline-no-text-indent">
+      <div class="label label-ok">inline-no-text-indent ok: block div accepts text-indent</div>
+      <div data-target style="text-indent: 2em">Block div with text-indent</div>
+    </div>
+    <div class="case expect-ok" data-rule="inline-no-text-indent">
+      <div class="label label-ok">inline-no-text-indent ok: inline-block accepts text-indent</div>
+      <span data-target style="display: inline-block; text-indent: 2em"
+        >inline-block span with text-indent</span
+      >
+    </div>
+    <div class="case expect-ok" data-rule="inline-no-text-indent">
+      <div class="label label-ok">inline-no-text-indent ok: img is a replaced inline element</div>
+      <img
+        data-target
+        src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='60' height='40'%3E%3Crect fill='%234ec9b0' width='60' height='40'/%3E%3C/svg%3E"
+        style="text-indent: 2em"
+        alt="replaced element"
+      />
+    </div>
+    <div class="case expect-ok" data-rule="inline-no-text-indent">
+      <div class="label label-ok">
+        inline-no-text-indent ok: inherited text-indent from parent block
+      </div>
+      <p style="text-indent: 2em">
+        This paragraph has text-indent. The <span data-target>span inside</span> inherits it but
+        should not be warned.
+      </p>
+    </div>
+
     <!-- ===== inline-no-vertical-margin: vertical margin on inline ===== -->
     <h2>inline-no-vertical-margin: vertical margin on inline elements</h2>
 
