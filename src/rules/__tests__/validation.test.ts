@@ -113,7 +113,7 @@ describe('isElementData — inlineStyles field validation', () => {
         id: '',
         classList: [],
         computedStyles: { ...VALID_STYLES },
-        inlineStyles: { cssFloat: 'left', textIndent: '0px' },
+        inlineStyles: { cssFloat: 'left', textIndent: '0px', transformOrigin: 'top left' },
         parent: null,
       }),
     ).toBe(true);
