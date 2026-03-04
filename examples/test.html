@@ -1679,6 +1679,81 @@
       <div data-target style="z-index: auto">z-index: auto — no warning expected</div>
     </div>
 
+    <!-- ===== transform-no-origin: transform-origin without transform ===== -->
+    <h2>transform-no-origin: transform-origin without transform</h2>
+
+    <h3>Should warn</h3>
+    <div class="case expect-warn" data-rule="transform-no-origin">
+      <div class="label label-warn">
+        transform-no-origin warn: transform-origin set without any transform
+      </div>
+      <div data-target style="transform-origin: top left">
+        transform-origin: top left but no transform
+      </div>
+    </div>
+    <div class="case expect-warn" data-rule="transform-no-origin">
+      <div class="label label-warn">
+        transform-no-origin warn: transform-origin center top without transform
+      </div>
+      <div data-target style="transform-origin: center top">
+        transform-origin: center top but no transform
+      </div>
+    </div>
+    <div class="case expect-warn" data-rule="transform-no-origin">
+      <div class="label label-warn">
+        transform-no-origin warn: will-change: transform-origin is not will-change: transform
+      </div>
+      <div data-target style="transform-origin: top left; will-change: transform-origin">
+        will-change: transform-origin does not suppress the warning
+      </div>
+    </div>
+
+    <h3>Should NOT warn</h3>
+    <div class="case expect-ok" data-rule="transform-no-origin">
+      <div class="label label-ok">transform-no-origin ok: transform-origin with transform</div>
+      <div data-target style="transform-origin: top left; transform: rotate(45deg)">
+        transform-origin + transform (valid)
+      </div>
+    </div>
+    <div class="case expect-ok" data-rule="transform-no-origin">
+      <div class="label label-ok">transform-no-origin ok: transform-origin with rotate</div>
+      <div data-target style="transform-origin: top left; rotate: 45deg">
+        transform-origin + rotate (valid)
+      </div>
+    </div>
+    <div class="case expect-ok" data-rule="transform-no-origin">
+      <div class="label label-ok">transform-no-origin ok: transform-origin with scale</div>
+      <div data-target style="transform-origin: top left; scale: 1.5">
+        transform-origin + scale (valid)
+      </div>
+    </div>
+    <div class="case expect-ok" data-rule="transform-no-origin">
+      <div class="label label-ok">transform-no-origin ok: transform-origin with offset-path</div>
+      <div data-target style="transform-origin: top left; offset-path: path('M 0 0 L 100 100')">
+        transform-origin + offset-path (valid)
+      </div>
+    </div>
+    <div class="case expect-ok" data-rule="transform-no-origin">
+      <div class="label label-ok">transform-no-origin ok: will-change includes transform</div>
+      <div data-target style="transform-origin: top left; will-change: transform">
+        transform-origin + will-change: transform (valid)
+      </div>
+    </div>
+    <div class="case expect-ok" data-rule="transform-no-origin">
+      <div class="label label-ok">
+        transform-no-origin ok: transform-origin with will-change list including transform
+      </div>
+      <div data-target style="transform-origin: top left; will-change: opacity, transform">
+        transform-origin + will-change list (valid)
+      </div>
+    </div>
+    <div class="case expect-ok" data-rule="transform-no-origin">
+      <div class="label label-ok">
+        transform-no-origin ok: default transform-origin (no warning)
+      </div>
+      <div data-target>default transform-origin — no warning expected</div>
+    </div>
+
     <!-- ===== visible-overflow-no-resize: resize on visible overflow ===== -->
     <h2>visible-overflow-no-resize: resize on visible overflow</h2>
 
