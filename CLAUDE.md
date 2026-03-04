@@ -58,7 +58,15 @@ Rule IDs follow Stylelint's `thing-no-qualifier` pattern — the de facto standa
 
 When adding a new rule, pick a descriptive `target` and `qualifier` — avoid numbered IDs like `D-1` or `C-2`.
 
-When adding a new rule, also add "should warn" and "should NOT warn" test cases to `examples/test.html` so the rule can be verified both manually in Chrome DevTools and automatically via `pnpm test:e2e`.
+#### New Rule Checklist
+
+1. Create `src/rules/<rule-id>.ts` — implement `RuleDescriptor`, call `registerRule()`, export the check function. Use `createWarning()` factory via a scoped `warn` helper for all warnings.
+2. Add side-effect import in `src/rules/engine.ts` (keep alphabetical order)
+3. Add `DEFAULT_COMPUTED_STYLES` entries in `src/rules/__tests__/helpers/make-element.ts` for any new `requiredProperties`. If the rule uses `requiredInlineProperties`, add defaults for those too. (The `DEFAULT_COMPUTED_STYLES` validation test will fail if missed.)
+4. Add unit tests in `src/rules/__tests__/<rule-id>.test.ts`
+5. Add "should warn" and "should NOT warn" test cases to `examples/test.html` (keep alphabetical order by rule ID)
+6. Update `EXPECTED_CASE_COUNT` in `e2e/integration/rules-against-real-styles.test.ts`
+7. Run `pnpm test` and `pnpm test:e2e` to verify
 
 #### test.html Test Case Format
 
@@ -105,13 +113,13 @@ Element extraction (getting computed styles from in-page elements) exists in **t
 
 **However, changes to extraction behavior itself require updating both implementations.** The two implementations currently have known divergences:
 
-| Behavior            | Extension sidebar                                        | E2E / MCP server                  |
-| ------------------- | -------------------------------------------------------- | --------------------------------- |
-| **SKIP_TAGS**       | 7 tags (`SCRIPT STYLE NOSCRIPT TEMPLATE BASE LINK META`) | 11 tags (adds `HEAD BR HR TITLE`) |
-| **`display: none`** | Filters out (`cs.display === 'none'`)                    | Does not filter                   |
-| **Query scope**     | `document.body.querySelectorAll('*')`                    | `document.querySelectorAll('*')`  |
-| **Selector format** | `CSS.escape()` + max 3 classes                           | `nth-of-type` + all classes       |
-| **Scan cap**        | Chunked pagination (offset/limit)                        | Single pass, 5 000 element cap    |
+| Behavior            | Extension sidebar                                            | E2E / MCP server                 |
+| ------------------- | ------------------------------------------------------------ | -------------------------------- |
+| **SKIP_TAGS**       | Shared constant from `src/rules/scan-constants.ts` (10 tags) | Same shared constant             |
+| **`display: none`** | Filters out (`cs.display === 'none'`)                        | Does not filter                  |
+| **Query scope**     | `document.body.querySelectorAll('*')`                        | `document.querySelectorAll('*')` |
+| **Selector format** | `CSS.escape()` + max 3 classes                               | `nth-of-type` + all classes      |
+| **Scan cap**        | Chunked pagination (offset/limit)                            | Single pass, 5 000 element cap   |
 
 When modifying any of these behaviors, update both `build-scan-script.ts` and `extract-element-data.ts`.
 
