@@ -1,10 +1,11 @@
 import { useState, useCallback, useRef } from 'react';
 import type { ScanStatus, ScanElementData, ScanGroup, ScanProgress } from '../types.ts';
+import { SCAN_CHUNK_SIZE } from '../../rules/scan-constants.ts';
 import { groupByRule } from '../utils/group-by-rule.ts';
 import { buildScanScript } from './build-scan-script.ts';
 import { isChunkResult } from './scan-validation.ts';
 
-const CHUNK_SIZE = 200;
+// Sidebar uses chunked pagination with a higher cap than the e2e single-pass scan.
 const MAX_ELEMENTS = 10_000;
 
 export function usePageScan() {
@@ -27,7 +28,7 @@ export function usePageScan() {
     function processChunk(offset: number) {
       if (scanId !== scanIdRef.current) return;
 
-      const limit = Math.min(CHUNK_SIZE, MAX_ELEMENTS - offset);
+      const limit = Math.min(SCAN_CHUNK_SIZE, MAX_ELEMENTS - offset);
       if (limit <= 0) {
         setGroups(groupByRule(allElements));
         setStatus('done');
@@ -53,7 +54,7 @@ export function usePageScan() {
 
           allElements.push(...result.results);
           const total = Math.min(result.total, MAX_ELEMENTS);
-          const nextOffset = offset + CHUNK_SIZE;
+          const nextOffset = offset + SCAN_CHUNK_SIZE;
           setProgress({ scanned: Math.min(nextOffset, total), total });
 
           if (nextOffset >= total) {

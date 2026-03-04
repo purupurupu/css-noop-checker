@@ -1,15 +1,19 @@
-import type { RuleDescriptor } from './types.ts';
+import { type RuleDescriptor, type Warning, createWarning } from './types.ts';
 import { registerRule } from './registry.ts';
 
+const RULE_ID = 'visible-overflow-no-text-overflow' as const;
+
+const warn = (fields: Omit<Warning, 'ruleId' | 'severity'>) => createWarning(RULE_ID, fields);
+
 const rule: RuleDescriptor = {
-  id: 'visible-overflow-no-text-overflow',
+  id: RULE_ID,
   label: 'text-overflow on visible overflow',
   requiredProperties: ['display', 'textOverflow', 'overflowX'],
   check(ctx) {
-    const { display, textOverflow, overflowX } = ctx.styles;
+    const { textOverflow, overflowX } = ctx.styles;
 
     // display:contents elements have no box, so overflow is irrelevant
-    if (display === 'contents') return [];
+    if (ctx.isContents) return [];
 
     // Only flag when text-overflow is explicitly set to a non-default value
     if (textOverflow === 'clip') return [];
@@ -18,15 +22,13 @@ const rule: RuleDescriptor = {
     if (overflowX !== 'visible') return [];
 
     return [
-      {
-        ruleId: 'visible-overflow-no-text-overflow',
+      warn({
         property: 'text-overflow',
-        severity: 'warning',
         title: 'text-overflow has no effect',
         details: `text-overflow is "${textOverflow}" but overflow-x is "visible". Set overflow: hidden (or clip/scroll/auto) for text-overflow to work.`,
         suggestion:
           'Add overflow: hidden to make text-overflow take effect. Also add white-space: nowrap if you want single-line ellipsis truncation.',
-      },
+      }),
     ];
   },
 };

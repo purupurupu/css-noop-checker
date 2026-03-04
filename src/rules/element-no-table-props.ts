@@ -1,5 +1,9 @@
-import type { RuleDescriptor, Warning } from './types.ts';
+import { type RuleDescriptor, type Warning, createWarning } from './types.ts';
 import { registerRule } from './registry.ts';
+
+const RULE_ID = 'element-no-table-props' as const;
+
+const warn = (fields: Omit<Warning, 'ruleId' | 'severity'>) => createWarning(RULE_ID, fields);
 
 const TABLE_DISPLAYS = new Set([
   'table',
@@ -20,28 +24,28 @@ const TABLE_PROPERTIES = [
 ] as const;
 
 const rule: RuleDescriptor = {
-  id: 'element-no-table-props',
+  id: RULE_ID,
   label: 'table props on non-table',
   requiredProperties: ['display', ...TABLE_PROPERTIES.map((p) => p.key)],
   check(ctx) {
     const { display } = ctx.styles;
 
     if (TABLE_DISPLAYS.has(display)) return [];
-    if (display === 'contents') return [];
+    if (ctx.isContents) return [];
 
     const warnings: Warning[] = [];
 
     for (const { key, cssName, defaultValue } of TABLE_PROPERTIES) {
       const value = ctx.styles[key];
       if (value !== defaultValue) {
-        warnings.push({
-          ruleId: 'element-no-table-props',
-          property: cssName,
-          severity: 'warning',
-          title: `${cssName} has no effect on non-table elements`,
-          details: `${cssName} is "${value}" but display is "${display}". These properties only apply to elements with display: table or display: inline-table.`,
-          suggestion: `Set display: table or display: inline-table on this element, or remove ${cssName}.`,
-        });
+        warnings.push(
+          warn({
+            property: cssName,
+            title: `${cssName} has no effect on non-table elements`,
+            details: `${cssName} is "${value}" but display is "${display}". These properties only apply to elements with display: table or display: inline-table.`,
+            suggestion: `Set display: table or display: inline-table on this element, or remove ${cssName}.`,
+          }),
+        );
       }
     }
 

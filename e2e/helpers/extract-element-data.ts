@@ -9,6 +9,7 @@ import {
   getAllRequiredProperties,
 } from '../../src/rules/registry.ts';
 import { isElementData } from '../../src/rules/validation.ts';
+import { MAX_SCAN_ELEMENTS, SKIP_TAGS } from '../../src/rules/scan-constants.ts';
 
 /**
  * Browser-side function serialized into page.evaluate() calls.
@@ -146,11 +147,15 @@ export interface ScanResult {
   truncated: boolean;
 }
 
-const MAX_ELEMENTS = 5000;
-
 /**
  * Scan all elements on a page, extracting computed styles for each.
- * Caps at MAX_ELEMENTS to avoid hanging on large pages.
+ * Caps at MAX_SCAN_ELEMENTS to avoid hanging on large pages.
+ *
+ * Intentional divergences from src/sidebar/hooks/build-scan-script.ts:
+ * - Does NOT filter `display: none` elements (e2e tests need to verify all states)
+ * - Scopes to `document.querySelectorAll('*')` (includes <head> descendants)
+ * - Uses `nth-of-type` + all classes for selector (more precise for debugging)
+ * - Single-pass scan (no chunking needed in Playwright's evaluate context)
  */
 export async function scanAllElements(page: Page): Promise<ScanResult> {
   const properties = getAllRequiredProperties();
@@ -160,7 +165,7 @@ export async function scanAllElements(page: Page): Promise<ScanResult> {
   // Extraction logic mirrors buildExtractFn() but runs inline within the
   // page.evaluate() loop to avoid per-element serialization overhead.
   const results = await page.evaluate(
-    ({ properties, parentProperties, inlineProperties, maxElements }) => {
+    ({ properties, parentProperties, inlineProperties, maxElements, skipTags }) => {
       // CSSStyleDeclaration supports camelCase bracket access at runtime,
       // but TypeScript's type definition lacks a string index signature.
       function readStyleProp(cs: CSSStyleDeclaration, prop: string): string | undefined {
@@ -168,21 +173,7 @@ export async function scanAllElements(page: Page): Promise<ScanResult> {
         return typeof val === 'string' ? val : undefined;
       }
 
-      // Non-rendered elements where getComputedStyle() may return null properties.
-      // These can never have meaningful CSS no-op violations, so skip them.
-      const SKIP_TAGS = new Set([
-        'SCRIPT',
-        'STYLE',
-        'HEAD',
-        'META',
-        'LINK',
-        'TEMPLATE',
-        'NOSCRIPT',
-        'BR',
-        'HR',
-        'TITLE',
-        'BASE',
-      ]);
+      const SKIP_TAGS = new Set(skipTags);
 
       const allElements = document.querySelectorAll('*');
       const total = allElements.length;
@@ -269,7 +260,13 @@ export async function scanAllElements(page: Page): Promise<ScanResult> {
 
       return { elements: scanned, totalOnPage: total, truncated: scanned.length >= maxElements };
     },
-    { properties, parentProperties, inlineProperties, maxElements: MAX_ELEMENTS },
+    {
+      properties,
+      parentProperties,
+      inlineProperties,
+      maxElements: MAX_SCAN_ELEMENTS,
+      skipTags: [...SKIP_TAGS] as string[],
+    },
   );
 
   return results;

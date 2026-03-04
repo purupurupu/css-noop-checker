@@ -1,7 +1,11 @@
-import type { RuleDescriptor } from './types.ts';
+import { type RuleDescriptor, type Warning, createWarning } from './types.ts';
 import { isDefaultZIndexValue } from './context.ts';
 import { isStackingContext } from './stacking-context.ts';
 import { registerRule } from './registry.ts';
+
+const RULE_ID = 'static-no-z-index' as const;
+
+const warn = (fields: Omit<Warning, 'ruleId' | 'severity'>) => createWarning(RULE_ID, fields);
 
 /**
  * Properties that may create a stacking context (checked by isStackingContext).
@@ -23,7 +27,7 @@ const STACKING_CONTEXT_PROPERTIES = [
 ] as const;
 
 const rule: RuleDescriptor = {
-  id: 'static-no-z-index',
+  id: RULE_ID,
   label: 'z-index on non-stacking context',
   requiredProperties: ['position', 'zIndex', ...STACKING_CONTEXT_PROPERTIES],
   requiredParentProperties: ['display'],
@@ -41,21 +45,18 @@ const rule: RuleDescriptor = {
     // display:contents removes the parent's box, so the child participates in the
     // grandparent's formatting context. Without grandparent data we cannot determine
     // if this element is effectively a flex/grid item.
-    const parentDisplay = ctx.parentStyles?.display ?? '';
-    if (parentDisplay === 'contents') return [];
+    if (ctx.isParentContents) return [];
 
     // z-index works on any element that creates a stacking context
     if (isStackingContext(ctx.styles)) return [];
 
     return [
-      {
-        ruleId: 'static-no-z-index',
+      warn({
         property: 'z-index',
-        severity: 'warning',
         title: 'z-index has no effect',
         details: `z-index is "${zIndex}" but position is "static" and this element does not create a stacking context. z-index requires a positioned element, flex/grid item, or stacking context.`,
         suggestion: 'Set position to relative, absolute, fixed, or sticky, or remove z-index.',
-      },
+      }),
     ];
   },
 };

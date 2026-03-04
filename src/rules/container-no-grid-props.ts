@@ -1,6 +1,10 @@
-import type { RuleDescriptor, Warning } from './types.ts';
+import { type RuleDescriptor, type Warning, createWarning } from './types.ts';
 import { isGridContainer } from './context.ts';
 import { registerRule } from './registry.ts';
+
+const RULE_ID = 'container-no-grid-props' as const;
+
+const warn = (fields: Omit<Warning, 'ruleId' | 'severity'>) => createWarning(RULE_ID, fields);
 
 const GRID_CONTAINER_PROPERTIES = [
   { key: 'gridTemplateColumns', cssName: 'grid-template-columns', defaultValue: 'none' },
@@ -12,7 +16,7 @@ const GRID_CONTAINER_PROPERTIES = [
 ] as const;
 
 const rule: RuleDescriptor = {
-  id: 'container-no-grid-props',
+  id: RULE_ID,
   label: 'grid container props on non-grid',
   requiredProperties: ['display', ...GRID_CONTAINER_PROPERTIES.map((p) => p.key)],
   check(ctx) {
@@ -27,22 +31,22 @@ const rule: RuleDescriptor = {
     // pattern uses grid-template-* on a flex container.
     if (isGridContainer(display)) return [];
     // display:contents removes the element's box; grid properties are inapplicable.
-    if (display === 'contents') return [];
+    if (ctx.isContents) return [];
 
     const warnings: Warning[] = [];
 
     for (const { key, cssName, defaultValue } of GRID_CONTAINER_PROPERTIES) {
       const value = ctx.styles[key];
       if (value !== defaultValue) {
-        warnings.push({
-          ruleId: 'container-no-grid-props',
-          property: cssName,
-          severity: 'warning',
-          title: `${cssName} has no effect`,
-          details: `${cssName} is "${value}" but display is "${display}". ${cssName} works on grid containers only.`,
-          suggestion:
-            'Set display: grid or display: inline-grid on this element, or remove this property.',
-        });
+        warnings.push(
+          warn({
+            property: cssName,
+            title: `${cssName} has no effect`,
+            details: `${cssName} is "${value}" but display is "${display}". ${cssName} works on grid containers only.`,
+            suggestion:
+              'Set display: grid or display: inline-grid on this element, or remove this property.',
+          }),
+        );
       }
     }
 

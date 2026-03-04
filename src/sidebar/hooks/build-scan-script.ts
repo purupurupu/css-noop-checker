@@ -3,8 +3,20 @@ import {
   generateParentStyleExtractFragment,
   generateStyleExtractFragment,
 } from '../../rules/css-properties.ts';
+import { SKIP_TAGS } from '../../rules/scan-constants.ts';
 
-/** Builds the eval script that scans a chunk of page elements for CSS noop analysis. */
+/** Pre-computed SKIP object literal — avoids re-running map+join on every buildScanScript call. */
+const SKIP_OBJECT_LITERAL = SKIP_TAGS.map((t) => `${t}:1`).join(',');
+
+/**
+ * Builds the eval script that scans a chunk of page elements for CSS noop analysis.
+ *
+ * Intentional divergences from e2e/helpers/extract-element-data.ts scanAllElements():
+ * - Filters out `display: none` elements (extension UX: hidden elements are not interesting)
+ * - Scopes to `document.body.querySelectorAll('*')` (avoids <head> children)
+ * - Uses `CSS.escape()` + max 3 classes for selector (compact display in sidebar)
+ * - Chunked pagination via offset/limit (avoids blocking the inspected page)
+ */
 export function buildScanScript(offset: number, limit: number): string {
   const parentFragment = generateParentStyleExtractFragment();
   const parentBlock = parentFragment
@@ -30,7 +42,7 @@ export function buildScanScript(offset: number, limit: number): string {
     : '';
 
   return `(function(offset, limit) {
-  var SKIP = {SCRIPT:1,STYLE:1,NOSCRIPT:1,TEMPLATE:1,BASE:1,LINK:1,META:1};
+  var SKIP = {${SKIP_OBJECT_LITERAL}};
   if (!document.body) return { results: [], total: 0 };
   var els = document.body.querySelectorAll('*');
   var total = els.length;

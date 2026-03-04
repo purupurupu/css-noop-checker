@@ -1,5 +1,9 @@
-import type { RuleDescriptor } from './types.ts';
+import { type RuleDescriptor, type Warning, createWarning } from './types.ts';
 import { registerRule } from './registry.ts';
+
+const RULE_ID = 'visible-overflow-no-resize' as const;
+
+const warn = (fields: Omit<Warning, 'ruleId' | 'severity'>) => createWarning(RULE_ID, fields);
 
 /**
  * Overflow values that enable resize to work.
@@ -67,17 +71,17 @@ function describeSuggestion(resize: string): string {
 }
 
 const rule: RuleDescriptor = {
-  id: 'visible-overflow-no-resize',
+  id: RULE_ID,
   label: 'resize on visible overflow',
   requiredProperties: ['display', 'resize', 'overflowX', 'overflowY'],
   check(ctx) {
-    const { display, resize, overflowX, overflowY } = ctx.styles;
+    const { resize, overflowX, overflowY } = ctx.styles;
 
     // resize: none is the default — nothing to flag
     if (resize === 'none') return [];
 
     // display:contents elements have no box, so resize can't apply
-    if (display === 'contents') return [];
+    if (ctx.isContents) return [];
 
     // Browsers special-case <textarea>: resize works even when overflow is visible.
     // A page may explicitly set overflow: visible on a textarea, but browsers still
@@ -87,14 +91,12 @@ const rule: RuleDescriptor = {
     if (!isOverflowBlockingResize(resize, overflowX, overflowY)) return [];
 
     return [
-      {
-        ruleId: 'visible-overflow-no-resize',
+      warn({
         property: 'resize',
-        severity: 'warning',
         title: 'resize has no effect',
         details: `resize: ${resize} has no effect because ${describeAffectedAxes(resize, overflowX, overflowY)}.`,
         suggestion: describeSuggestion(resize),
-      },
+      }),
     ];
   },
 };

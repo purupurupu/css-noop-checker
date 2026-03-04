@@ -1,8 +1,12 @@
-import type { RuleDescriptor } from './types.ts';
+import { type RuleDescriptor, type Warning, createWarning } from './types.ts';
 import { registerRule } from './registry.ts';
 
+const RULE_ID = 'positioned-no-float' as const;
+
+const warn = (fields: Omit<Warning, 'ruleId' | 'severity'>) => createWarning(RULE_ID, fields);
+
 const rule: RuleDescriptor = {
-  id: 'positioned-no-float',
+  id: RULE_ID,
   label: 'float on out-of-flow positioned element',
   requiredProperties: ['position'],
   requiredInlineProperties: ['cssFloat'],
@@ -20,15 +24,13 @@ const rule: RuleDescriptor = {
     if (inlineFloat === '' || inlineFloat === 'none') return [];
 
     return [
-      {
-        ruleId: 'positioned-no-float',
+      warn({
         property: 'float',
-        severity: 'warning',
         title: 'float has no effect',
         details: `float is "${inlineFloat}" but position is "${position}". Float is ignored on out-of-flow (absolute/fixed) positioned elements per the CSS specification (the browser computes float to "none"). Note: only inline styles are detected; float from stylesheets cannot be checked.`,
         suggestion:
           'Remove the float property — out-of-flow elements (position: absolute or fixed) are removed from normal flow and do not float.',
-      },
+      }),
     ];
   },
 };
