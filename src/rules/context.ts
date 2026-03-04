@@ -103,6 +103,10 @@ export function isDefaultZIndexValue(value: string): boolean {
   return value === 'auto';
 }
 
+export function isDefaultTextIndentValue(value: string): boolean {
+  return value === '0px';
+}
+
 export function isDefaultFlexDirectionValue(value: string): boolean {
   return value === 'row';
 }
