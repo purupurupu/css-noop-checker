@@ -73,6 +73,7 @@ export const DEFAULT_COMPUTED_STYLES: ElementData['computedStyles'] = {
   shapeMargin: '0px',
   shapeImageThreshold: '0',
   clear: 'none',
+  textIndent: '0px',
   writingMode: 'horizontal-tb',
   borderCollapse: 'separate',
   tableLayout: 'auto',
