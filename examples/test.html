@@ -1352,6 +1352,62 @@
       </div>
     </div>
 
+    <!-- ===== outline-no-style: outline properties without visible outline-style ===== -->
+    <h2>outline-no-style: outline-width/color/offset without outline-style</h2>
+
+    <h3>Should warn</h3>
+    <div class="case expect-warn" data-rule="outline-no-style">
+      <div class="label label-warn">outline-no-style warn: outline-width without outline-style</div>
+      <div data-target style="outline-width: 2px">
+        Element with outline-width but no outline-style (invisible)
+      </div>
+    </div>
+    <div class="case expect-warn" data-rule="outline-no-style">
+      <div class="label label-warn">outline-no-style warn: outline-color without outline-style</div>
+      <div data-target style="outline-color: red">
+        Element with outline-color but no outline-style (invisible)
+      </div>
+    </div>
+    <div class="case expect-warn" data-rule="outline-no-style">
+      <div class="label label-warn">
+        outline-no-style warn: outline-offset without outline-style
+      </div>
+      <div data-target style="outline-offset: 4px">
+        Element with outline-offset but no outline-style (invisible)
+      </div>
+    </div>
+    <h3>Should NOT warn</h3>
+    <div class="case expect-ok" data-rule="outline-no-style">
+      <div class="label label-ok">outline-no-style ok: outline-width with outline-style solid</div>
+      <div data-target style="outline-width: 2px; outline-style: solid; outline-color: red">
+        Element with outline-width and outline-style: solid (visible)
+      </div>
+    </div>
+    <div class="case expect-ok" data-rule="outline-no-style">
+      <div class="label label-ok">outline-no-style ok: outline shorthand with style</div>
+      <div data-target style="outline: 2px solid red">
+        Element with outline shorthand including a style (visible)
+      </div>
+    </div>
+    <div class="case expect-ok" data-rule="outline-no-style">
+      <div class="label label-ok">outline-no-style ok: outline-width with outline-style auto</div>
+      <div data-target style="outline-width: 2px; outline-style: auto">
+        Element with outline-style: auto (native focus ring, visible)
+      </div>
+    </div>
+    <div class="case expect-ok" data-rule="outline-no-style">
+      <div class="label label-ok">
+        outline-no-style ok: outline-width: 0 skipped (zero-width already invisible)
+      </div>
+      <div data-target style="outline-width: 0px">
+        Element with outline-width: 0 — zero-width outline is already invisible
+      </div>
+    </div>
+    <div class="case expect-ok" data-rule="outline-no-style">
+      <div class="label label-ok">outline-no-style ok: no outline properties set</div>
+      <div data-target>Element with no outline properties (nothing to warn about)</div>
+    </div>
+
     <!-- ===== positioned-no-clear: clear on absolute/fixed positioned elements ===== -->
     <h2>positioned-no-clear: clear on absolute/fixed positioned elements</h2>
 
