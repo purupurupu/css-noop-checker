@@ -1352,6 +1352,55 @@
       </div>
     </div>
 
+    <!-- ===== outline-no-style: outline properties without outline-style ===== -->
+    <h2>outline-no-style: outline properties without outline-style</h2>
+
+    <h3>Should warn</h3>
+    <div class="case expect-warn" data-rule="outline-no-style">
+      <div class="label label-warn">outline-no-style warn: outline-width without outline-style</div>
+      <div data-target style="outline-width: 3px">
+        This element has outline-width but no outline-style
+      </div>
+    </div>
+    <div class="case expect-warn" data-rule="outline-no-style">
+      <div class="label label-warn">outline-no-style warn: outline-color without outline-style</div>
+      <div data-target style="outline-color: red">
+        This element has outline-color but no outline-style
+      </div>
+    </div>
+    <div class="case expect-warn" data-rule="outline-no-style">
+      <div class="label label-warn">
+        outline-no-style warn: outline-offset without outline-style
+      </div>
+      <div data-target style="outline-offset: 5px">
+        This element has outline-offset but no outline-style
+      </div>
+    </div>
+    <div class="case expect-warn" data-rule="outline-no-style">
+      <div class="label label-warn">
+        outline-no-style warn: all outline properties without outline-style
+      </div>
+      <div data-target style="outline-width: 2px; outline-color: blue; outline-offset: 4px">
+        This element has all outline properties but no outline-style
+      </div>
+    </div>
+
+    <h3>Should NOT warn</h3>
+    <div class="case expect-ok" data-rule="outline-no-style">
+      <div class="label label-ok">outline-no-style ok: outline-style is solid</div>
+      <div data-target style="outline-width: 3px; outline-style: solid; outline-color: red">
+        Visible outline
+      </div>
+    </div>
+    <div class="case expect-ok" data-rule="outline-no-style">
+      <div class="label label-ok">outline-no-style ok: outline shorthand with style</div>
+      <div data-target style="outline: 2px dashed blue">Outline shorthand includes style</div>
+    </div>
+    <div class="case expect-ok" data-rule="outline-no-style">
+      <div class="label label-ok">outline-no-style ok: no inline outline properties</div>
+      <div data-target>No outline properties set</div>
+    </div>
+
     <!-- ===== positioned-no-clear: clear on absolute/fixed positioned elements ===== -->
     <h2>positioned-no-clear: clear on absolute/fixed positioned elements</h2>
 
