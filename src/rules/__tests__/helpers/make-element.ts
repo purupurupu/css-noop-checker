@@ -77,6 +77,7 @@ export const DEFAULT_COMPUTED_STYLES: ElementData['computedStyles'] = {
   rotate: 'none',
   scale: 'none',
   offsetPath: 'none',
+  outlineStyle: 'none',
   writingMode: 'horizontal-tb',
   borderCollapse: 'separate',
   tableLayout: 'auto',
