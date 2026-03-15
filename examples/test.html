@@ -182,6 +182,72 @@
       </div>
     </div>
 
+    <!-- ===== container-no-columns: multi-column on flex/grid ===== -->
+    <h2>container-no-columns: column properties on flex/grid containers</h2>
+
+    <h3>Should warn</h3>
+    <div class="case expect-warn" data-rule="container-no-columns">
+      <div class="label label-warn">container-no-columns warn: flex with column-count</div>
+      <div data-target style="display: flex; column-count: 3">
+        <div>Child 1</div>
+        <div>Child 2</div>
+        <div>Child 3</div>
+      </div>
+    </div>
+    <div class="case expect-warn" data-rule="container-no-columns">
+      <div class="label label-warn">container-no-columns warn: flex with column-width</div>
+      <div data-target style="display: flex; column-width: 200px">
+        <div>Child 1</div>
+        <div>Child 2</div>
+      </div>
+    </div>
+    <div class="case expect-warn" data-rule="container-no-columns">
+      <div class="label label-warn">container-no-columns warn: grid with column-count</div>
+      <div data-target style="display: grid; column-count: 2">
+        <div>Child 1</div>
+        <div>Child 2</div>
+      </div>
+    </div>
+    <div class="case expect-warn" data-rule="container-no-columns">
+      <div class="label label-warn">
+        container-no-columns warn: inline-flex with column-count and column-width via shorthand
+      </div>
+      <div data-target style="display: inline-flex; columns: 3 200px">
+        <div>Child 1</div>
+        <div>Child 2</div>
+      </div>
+    </div>
+
+    <h3>Should NOT warn</h3>
+    <div class="case expect-ok" data-rule="container-no-columns">
+      <div class="label label-ok">container-no-columns ok: block with column-count (valid)</div>
+      <div data-target style="column-count: 3">
+        The quick brown fox jumps over the lazy dog. Pack my box with five dozen liquor jugs. How
+        vexingly quick daft zebras jump.
+      </div>
+    </div>
+    <div class="case expect-ok" data-rule="container-no-columns">
+      <div class="label label-ok">container-no-columns ok: block with column-width (valid)</div>
+      <div data-target style="column-width: 200px">
+        The quick brown fox jumps over the lazy dog. Pack my box with five dozen liquor jugs. How
+        vexingly quick daft zebras jump.
+      </div>
+    </div>
+    <div class="case expect-ok" data-rule="container-no-columns">
+      <div class="label label-ok">container-no-columns ok: flex with default column values</div>
+      <div data-target style="display: flex">
+        <div>Child 1</div>
+        <div>Child 2</div>
+      </div>
+    </div>
+    <div class="case expect-ok" data-rule="container-no-columns">
+      <div class="label label-ok">container-no-columns ok: grid with default column values</div>
+      <div data-target style="display: grid">
+        <div>Child 1</div>
+        <div>Child 2</div>
+      </div>
+    </div>
+
     <!-- ===== container-no-flex-props: flex-direction/wrap on non-flex ===== -->
     <h2>container-no-flex-props: flex-direction/wrap on non-flex elements</h2>
 
