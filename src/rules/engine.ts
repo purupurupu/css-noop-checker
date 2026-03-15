@@ -1,6 +1,7 @@
 // Rule registration (side-effect imports)
 import './block-no-vertical-align.ts';
 import './container-no-align.ts';
+import './container-no-columns.ts';
 import './container-no-flex-props.ts';
 import './container-no-gap.ts';
 import './container-no-grid-props.ts';
