@@ -9,7 +9,7 @@ const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const TEST_HTML = `file://${path.resolve(__dirname, '../../examples/test.html')}`;
 
 // Update this when adding/removing test cases in test.html.
-const EXPECTED_CASE_COUNT = 238;
+const EXPECTED_CASE_COUNT = 247;
 
 const registeredRuleIds = new Set(getRules().map((r) => r.id));
 
@@ -26,6 +26,20 @@ test.describe('rules against real browser computed styles', () => {
     });
 
     expect(placeContent).toBe('normal');
+  });
+
+  test('canary: animationTimingFunction returns "ease" not cubic-bezier', async ({ page }) => {
+    await page.goto('about:blank');
+
+    const timingFunction = await page.evaluate(() => {
+      const div = document.createElement('div');
+      document.body.appendChild(div);
+      const value = getComputedStyle(div).animationTimingFunction;
+      div.remove();
+      return value;
+    });
+
+    expect(timingFunction).toBe('ease');
   });
 
   test('all test cases produce expected warnings', async ({ page }) => {
