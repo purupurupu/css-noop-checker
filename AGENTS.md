@@ -4,8 +4,8 @@
 
 ```
 src/
-  rules/           19 detection rules + engine, registry, context, types
-  sidebar/         DevTools sidebar React UI (components, hooks)
+  rules/           Detection rules + engine, registry, context, types
+  sidebar/         DevTools sidebar React UI (see src/sidebar/ for details)
   devtools.ts      Extension entrypoint — creates the sidebar pane
 e2e/
   helpers/         Playwright extraction helpers (shared with MCP server)

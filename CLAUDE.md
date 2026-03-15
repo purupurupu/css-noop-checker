@@ -135,8 +135,7 @@ New rules are automatically covered when test cases are added to `test.html` wit
 
 ### Sidebar UI (`src/sidebar/`)
 
-- `hooks/useSelectedElement.ts` — Chrome DevTools bridge: `$0` eval with 150ms debounce, `requestIdRef` stale response guard, `isElementData()` runtime validation
-- `components/` — PanelHeader, WarningList, WarningCard, PanelFooter
+React app rendered in the DevTools sidebar pane. See `src/sidebar/components/` and `src/sidebar/hooks/` for the full list.
 
 ### Build Constraints
 
