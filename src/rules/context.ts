@@ -122,3 +122,7 @@ export function isDefaultOverflowValue(value: string): boolean {
 export function isDefaultSelfAlignmentValue(value: string): boolean {
   return value === 'auto' || value === 'normal';
 }
+
+export function willChangeIncludes(willChange: string, ...tokens: string[]): boolean {
+  return willChange.split(',').some((v) => tokens.includes(v.trim()));
+}

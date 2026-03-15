@@ -1,13 +1,10 @@
 import { type RuleDescriptor, type Warning, createWarning } from './types.ts';
 import { registerRule } from './registry.ts';
+import { willChangeIncludes } from './context.ts';
 
 const RULE_ID = 'transform-no-origin' as const;
 
 const warn = (fields: Omit<Warning, 'ruleId' | 'severity'>) => createWarning(RULE_ID, fields);
-
-function willChangeIncludesTransform(willChange: string): boolean {
-  return willChange.split(',').some((v) => v.trim() === 'transform');
-}
 
 function hasActiveTransform(styles: Record<string, string>): boolean {
   const t = styles['transform'];
@@ -39,7 +36,7 @@ const rule: RuleDescriptor = {
     if (hasActiveTransform(ctx.styles)) return [];
 
     // will-change: transform means a transform may be applied dynamically
-    if (willChangeIncludesTransform(ctx.styles['willChange'] ?? 'auto')) return [];
+    if (willChangeIncludes(ctx.styles['willChange'] ?? 'auto', 'transform')) return [];
 
     // offset-path (CSS Motion Path) also uses transform-origin as anchor
     if (ctx.styles['offsetPath'] !== 'none') return [];
