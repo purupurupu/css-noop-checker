@@ -117,6 +117,7 @@ describe('isElementData — inlineStyles field validation', () => {
           cssFloat: 'left',
           textIndent: '0px',
           transformOrigin: 'top left',
+          perspectiveOrigin: '',
           outlineWidth: '',
           outlineColor: '',
           outlineOffset: '',

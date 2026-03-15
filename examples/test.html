@@ -1542,6 +1542,65 @@
       <div data-target>No outline properties set</div>
     </div>
 
+    <!-- ===== perspective-no-origin: perspective-origin without perspective ===== -->
+    <h2>perspective-no-origin: perspective-origin without perspective</h2>
+
+    <h3>Should warn</h3>
+    <div class="case expect-warn" data-rule="perspective-no-origin">
+      <div class="label label-warn">
+        perspective-no-origin warn: perspective-origin set without perspective
+      </div>
+      <div data-target style="perspective-origin: top left">
+        perspective-origin: top left but no perspective
+      </div>
+    </div>
+    <div class="case expect-warn" data-rule="perspective-no-origin">
+      <div class="label label-warn">
+        perspective-no-origin warn: perspective-origin center top without perspective
+      </div>
+      <div data-target style="perspective-origin: center top">
+        perspective-origin: center top but no perspective
+      </div>
+    </div>
+    <div class="case expect-warn" data-rule="perspective-no-origin">
+      <div class="label label-warn">
+        perspective-no-origin warn: will-change: perspective-origin is not will-change: perspective
+      </div>
+      <div data-target style="perspective-origin: top left; will-change: perspective-origin">
+        will-change: perspective-origin does not suppress the warning
+      </div>
+    </div>
+
+    <h3>Should NOT warn</h3>
+    <div class="case expect-ok" data-rule="perspective-no-origin">
+      <div class="label label-ok">
+        perspective-no-origin ok: perspective-origin with perspective
+      </div>
+      <div data-target style="perspective-origin: top left; perspective: 500px">
+        perspective-origin + perspective (valid)
+      </div>
+    </div>
+    <div class="case expect-ok" data-rule="perspective-no-origin">
+      <div class="label label-ok">perspective-no-origin ok: will-change includes perspective</div>
+      <div data-target style="perspective-origin: top left; will-change: perspective">
+        perspective-origin + will-change: perspective (valid)
+      </div>
+    </div>
+    <div class="case expect-ok" data-rule="perspective-no-origin">
+      <div class="label label-ok">
+        perspective-no-origin ok: perspective-origin with will-change list including perspective
+      </div>
+      <div data-target style="perspective-origin: top left; will-change: opacity, perspective">
+        perspective-origin + will-change list (valid)
+      </div>
+    </div>
+    <div class="case expect-ok" data-rule="perspective-no-origin">
+      <div class="label label-ok">
+        perspective-no-origin ok: default perspective-origin (no warning)
+      </div>
+      <div data-target>default perspective-origin — no warning expected</div>
+    </div>
+
     <!-- ===== positioned-no-clear: clear on absolute/fixed positioned elements ===== -->
     <h2>positioned-no-clear: clear on absolute/fixed positioned elements</h2>
 
