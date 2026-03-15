@@ -24,6 +24,7 @@ import './item-no-self-align.ts';
 import './nonfloat-no-shape-outside.ts';
 import './nonreplaced-no-object-fit.ts';
 import './outline-no-style.ts';
+import './perspective-no-origin.ts';
 import './positioned-no-clear.ts';
 import './positioned-no-float.ts';
 import './static-no-logical-offset.ts';
