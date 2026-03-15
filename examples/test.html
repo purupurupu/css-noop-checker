@@ -56,6 +56,81 @@
     <h1>CSS Noop Checker - Test Cases</h1>
     <p>Select each element in DevTools and check the sidebar results.</p>
 
+    <!-- ===== animation-no-sub-props: animation properties without animation-name ===== -->
+    <h2>animation-no-sub-props: animation properties without animation-name</h2>
+
+    <h3>Should warn</h3>
+    <div class="case expect-warn" data-rule="animation-no-sub-props">
+      <div class="label label-warn">
+        animation-no-sub-props warn: animation-duration without animation-name
+      </div>
+      <div data-target style="animation-duration: 2s">Animated duration but no name</div>
+    </div>
+    <div class="case expect-warn" data-rule="animation-no-sub-props">
+      <div class="label label-warn">
+        animation-no-sub-props warn: animation-delay without animation-name
+      </div>
+      <div data-target style="animation-delay: 1s">Animated delay but no name</div>
+    </div>
+    <div class="case expect-warn" data-rule="animation-no-sub-props">
+      <div class="label label-warn">
+        animation-no-sub-props warn: animation-iteration-count without animation-name
+      </div>
+      <div data-target style="animation-iteration-count: infinite">
+        Infinite iterations but no name
+      </div>
+    </div>
+    <div class="case expect-warn" data-rule="animation-no-sub-props">
+      <div class="label label-warn">
+        animation-no-sub-props warn: animation-fill-mode without animation-name
+      </div>
+      <div data-target style="animation-fill-mode: forwards">Fill mode but no name</div>
+    </div>
+    <div class="case expect-warn" data-rule="animation-no-sub-props">
+      <div class="label label-warn">
+        animation-no-sub-props warn: animation-timing-function without animation-name
+      </div>
+      <div data-target style="animation-timing-function: linear">Linear timing but no name</div>
+    </div>
+    <div class="case expect-warn" data-rule="animation-no-sub-props">
+      <div class="label label-warn">
+        animation-no-sub-props warn: animation-direction without animation-name
+      </div>
+      <div data-target style="animation-direction: reverse">Reverse direction but no name</div>
+    </div>
+    <div class="case expect-warn" data-rule="animation-no-sub-props">
+      <div class="label label-warn">
+        animation-no-sub-props warn: animation-play-state without animation-name
+      </div>
+      <div data-target style="animation-play-state: paused">Paused but no name</div>
+    </div>
+
+    <h3>Should NOT warn</h3>
+    <div class="case expect-ok" data-rule="animation-no-sub-props">
+      <div class="label label-ok">
+        animation-no-sub-props ok: animation-duration with animation-name
+      </div>
+      <style>
+        @keyframes testFade {
+          from {
+            opacity: 0;
+          }
+          to {
+            opacity: 1;
+          }
+        }
+      </style>
+      <div data-target style="animation-name: testFade; animation-duration: 2s">
+        Has both name and duration
+      </div>
+    </div>
+    <div class="case expect-ok" data-rule="animation-no-sub-props">
+      <div class="label label-ok">
+        animation-no-sub-props ok: default animation properties (no name)
+      </div>
+      <div data-target>No animation properties set at all</div>
+    </div>
+
     <!-- ===== block-no-vertical-align: vertical-align on block-level elements ===== -->
     <h2>block-no-vertical-align: vertical-align on block-level elements</h2>
 
