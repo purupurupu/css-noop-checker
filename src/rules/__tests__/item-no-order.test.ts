@@ -65,4 +65,30 @@ describe('item-no-order', () => {
     );
     expect(warnings).toHaveLength(0);
   });
+
+  it('warns when order is set on child of inline-block container', () => {
+    const warnings = checkOrder(
+      createRuleContext(
+        makeElement({ order: '1' }, { computedStyles: { display: 'inline-block' } }),
+      ),
+    );
+    expect(warnings).toHaveLength(1);
+    expect(warnings[0].details).toContain('inline-block');
+  });
+
+  it('warns when order is set on child of table container', () => {
+    const warnings = checkOrder(
+      createRuleContext(makeElement({ order: '1' }, { computedStyles: { display: 'table' } })),
+    );
+    expect(warnings).toHaveLength(1);
+    expect(warnings[0].details).toContain('table');
+  });
+
+  it('warns when order is set on child of list-item container', () => {
+    const warnings = checkOrder(
+      createRuleContext(makeElement({ order: '1' }, { computedStyles: { display: 'list-item' } })),
+    );
+    expect(warnings).toHaveLength(1);
+    expect(warnings[0].details).toContain('list-item');
+  });
 });
