@@ -599,6 +599,26 @@
         <div>Child</div>
       </div>
     </div>
+    <div class="case expect-warn" data-rule="container-no-place">
+      <div class="label label-warn">container-no-place warn: inline-block with place-content</div>
+      <div data-target style="display: inline-block; place-content: center">
+        <div>Child</div>
+      </div>
+    </div>
+    <div class="case expect-warn" data-rule="container-no-place">
+      <div class="label label-warn">container-no-place warn: table with place-items</div>
+      <div data-target style="display: table; place-items: center">
+        <div style="display: table-row"><div style="display: table-cell">Cell</div></div>
+      </div>
+    </div>
+    <div class="case expect-warn" data-rule="container-no-place">
+      <div class="label label-warn">
+        container-no-place warn: both place-content and place-items on block
+      </div>
+      <div data-target style="place-content: center; place-items: center">
+        <div>Child</div>
+      </div>
+    </div>
 
     <h3>Should NOT warn</h3>
     <div class="case expect-ok" data-rule="container-no-place">
@@ -617,6 +637,22 @@
         style="display: flex; place-content: center; height: 80px; background: #f0f0f0"
       >
         <div>Flex child</div>
+      </div>
+    </div>
+    <div class="case expect-ok" data-rule="container-no-place">
+      <div class="label label-ok">
+        container-no-place ok: inline-grid container with place-items
+      </div>
+      <div data-target style="display: inline-grid; place-items: center; height: 80px">
+        <div>Inline-grid child</div>
+      </div>
+    </div>
+    <div class="case expect-ok" data-rule="container-no-place">
+      <div class="label label-ok">
+        container-no-place ok: inline-flex container with place-content
+      </div>
+      <div data-target style="display: inline-flex; place-content: center; height: 80px">
+        <div>Inline-flex child</div>
       </div>
     </div>
 
@@ -1232,6 +1268,22 @@
         <div data-target style="order: 1">Block child with order (no effect)</div>
       </div>
     </div>
+    <div class="case expect-warn" data-rule="item-no-order">
+      <div class="label label-warn">
+        item-no-order warn: order on child of inline-block container
+      </div>
+      <div style="display: inline-block">
+        <div data-target style="order: 3">Inline-block child with order (no effect)</div>
+      </div>
+    </div>
+    <div class="case expect-warn" data-rule="item-no-order">
+      <div class="label label-warn">
+        item-no-order warn: negative order on child of block container
+      </div>
+      <div>
+        <div data-target style="order: -1">Block child with negative order (no effect)</div>
+      </div>
+    </div>
 
     <h3>Should NOT warn</h3>
     <div class="case expect-ok" data-rule="item-no-order">
@@ -1256,6 +1308,19 @@
         <div style="display: contents">
           <div data-target style="order: 1">Child of contents wrapper (actually a flex item)</div>
         </div>
+      </div>
+    </div>
+    <div class="case expect-ok" data-rule="item-no-order">
+      <div class="label label-ok">item-no-order ok: inline-flex item with order</div>
+      <div style="display: inline-flex; gap: 8px">
+        <div data-target style="order: 2">Inline-flex child with order (valid)</div>
+        <div>Child 2</div>
+      </div>
+    </div>
+    <div class="case expect-ok" data-rule="item-no-order">
+      <div class="label label-ok">item-no-order ok: order 0 (default value)</div>
+      <div>
+        <div data-target style="order: 0">Block child with order: 0 (default, no warning)</div>
       </div>
     </div>
 
