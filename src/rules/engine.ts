@@ -27,6 +27,7 @@ import './outline-no-style.ts';
 import './perspective-no-origin.ts';
 import './positioned-no-clear.ts';
 import './positioned-no-float.ts';
+import './scroll-snap-no-align-without-type.ts';
 import './static-no-logical-offset.ts';
 import './static-no-offset.ts';
 import './static-no-z-index.ts';
