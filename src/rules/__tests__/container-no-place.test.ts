@@ -11,6 +11,22 @@ describe('container-no-place: place-content', () => {
     expect(warnings[0].title).toContain('place-content');
   });
 
+  it('warns when place-content is set on inline element', () => {
+    const warnings = checkPlace(
+      createRuleContext(makeElement({ display: 'inline', placeContent: 'center' })),
+    );
+    expect(warnings).toHaveLength(1);
+    expect(warnings[0].details).toContain('inline');
+  });
+
+  it('warns when place-content is set on table element', () => {
+    const warnings = checkPlace(
+      createRuleContext(makeElement({ display: 'table', placeContent: 'center' })),
+    );
+    expect(warnings).toHaveLength(1);
+    expect(warnings[0].details).toContain('table');
+  });
+
   it('skips grid containers', () => {
     const warnings = checkPlace(
       createRuleContext(makeElement({ display: 'grid', placeContent: 'center' })),
@@ -61,6 +77,22 @@ describe('container-no-place: place-items', () => {
     expect(warnings[0].title).toContain('place-items');
   });
 
+  it('warns when place-items is set on inline-block element', () => {
+    const warnings = checkPlace(
+      createRuleContext(makeElement({ display: 'inline-block', placeItems: 'center' })),
+    );
+    expect(warnings).toHaveLength(1);
+    expect(warnings[0].details).toContain('inline-block');
+  });
+
+  it('warns when place-items is set on table element', () => {
+    const warnings = checkPlace(
+      createRuleContext(makeElement({ display: 'table', placeItems: 'center' })),
+    );
+    expect(warnings).toHaveLength(1);
+    expect(warnings[0].details).toContain('table');
+  });
+
   it('skips grid containers', () => {
     const warnings = checkPlace(
       createRuleContext(makeElement({ display: 'grid', placeItems: 'center' })),
@@ -71,6 +103,13 @@ describe('container-no-place: place-items', () => {
   it('skips flex containers', () => {
     const warnings = checkPlace(
       createRuleContext(makeElement({ display: 'flex', placeItems: 'center' })),
+    );
+    expect(warnings).toHaveLength(0);
+  });
+
+  it('skips inline-flex containers', () => {
+    const warnings = checkPlace(
+      createRuleContext(makeElement({ display: 'inline-flex', placeItems: 'center' })),
     );
     expect(warnings).toHaveLength(0);
   });
@@ -86,7 +125,9 @@ describe('container-no-place: place-items', () => {
     );
     expect(warnings).toHaveLength(0);
   });
+});
 
+describe('container-no-place: edge cases', () => {
   it('warns for both place-content and place-items on block', () => {
     const warnings = checkPlace(
       createRuleContext(makeElement({ placeContent: 'center', placeItems: 'center' })),
