@@ -27,7 +27,7 @@ describe('isElementData — parent field validation', () => {
         id: '',
         classList: [],
         computedStyles: { ...VALID_STYLES },
-        parent: { computedStyles: { display: 'flex' } },
+        parent: { computedStyles: { display: 'flex', scrollSnapType: 'none' } },
       }),
     ).toBe(true);
   });

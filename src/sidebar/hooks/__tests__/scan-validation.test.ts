@@ -84,7 +84,9 @@ describe('isScanElementData', () => {
     it('accepts valid parent with computedStyles', () => {
       expect(
         isScanElementData(
-          makeValidScanElement({ parent: { computedStyles: { display: 'flex' } } }),
+          makeValidScanElement({
+            parent: { computedStyles: { display: 'flex', scrollSnapType: 'none' } },
+          }),
         ),
       ).toBe(true);
     });
