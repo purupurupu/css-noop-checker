@@ -1716,6 +1716,92 @@
       <div data-target style="position: sticky; float: left; top: 0">Sticky + float</div>
     </div>
 
+    <!-- ===== scroll-snap-no-align-without-type: scroll-snap child properties without scroll-snap-type on parent ===== -->
+    <h2>
+      scroll-snap-no-align-without-type: scroll-snap child properties without scroll-snap-type on
+      parent
+    </h2>
+
+    <h3>Should warn</h3>
+    <div class="case expect-warn" data-rule="scroll-snap-no-align-without-type">
+      <div class="label label-warn">
+        scroll-snap-no-align-without-type warn: scroll-snap-align start without parent
+        scroll-snap-type
+      </div>
+      <div style="overflow: auto; width: 200px; height: 100px">
+        <div data-target style="scroll-snap-align: start">snap child</div>
+      </div>
+    </div>
+    <div class="case expect-warn" data-rule="scroll-snap-no-align-without-type">
+      <div class="label label-warn">
+        scroll-snap-no-align-without-type warn: scroll-snap-align center without parent
+        scroll-snap-type
+      </div>
+      <div style="overflow: auto; width: 200px; height: 100px">
+        <div data-target style="scroll-snap-align: center">snap child</div>
+      </div>
+    </div>
+    <div class="case expect-warn" data-rule="scroll-snap-no-align-without-type">
+      <div class="label label-warn">
+        scroll-snap-no-align-without-type warn: scroll-snap-align end without parent
+        scroll-snap-type
+      </div>
+      <div style="overflow: auto; width: 200px; height: 100px">
+        <div data-target style="scroll-snap-align: end">snap child</div>
+      </div>
+    </div>
+    <div class="case expect-warn" data-rule="scroll-snap-no-align-without-type">
+      <div class="label label-warn">
+        scroll-snap-no-align-without-type warn: scroll-snap-stop always without parent
+        scroll-snap-type
+      </div>
+      <div style="overflow: auto; width: 200px; height: 100px">
+        <div data-target style="scroll-snap-stop: always">snap child</div>
+      </div>
+    </div>
+
+    <h3>Should NOT warn</h3>
+    <div class="case expect-ok" data-rule="scroll-snap-no-align-without-type">
+      <div class="label label-ok">
+        scroll-snap-no-align-without-type ok: parent has scroll-snap-type y mandatory
+      </div>
+      <div style="overflow: auto; width: 200px; height: 100px; scroll-snap-type: y mandatory">
+        <div data-target style="scroll-snap-align: start">snap child</div>
+      </div>
+    </div>
+    <div class="case expect-ok" data-rule="scroll-snap-no-align-without-type">
+      <div class="label label-ok">
+        scroll-snap-no-align-without-type ok: parent has scroll-snap-type x proximity
+      </div>
+      <div style="overflow: auto; width: 200px; height: 100px; scroll-snap-type: x proximity">
+        <div data-target style="scroll-snap-align: start">snap child</div>
+      </div>
+    </div>
+    <div class="case expect-ok" data-rule="scroll-snap-no-align-without-type">
+      <div class="label label-ok">
+        scroll-snap-no-align-without-type ok: scroll-snap-align none (default)
+      </div>
+      <div style="overflow: auto; width: 200px; height: 100px">
+        <div data-target style="scroll-snap-align: none">snap child</div>
+      </div>
+    </div>
+    <div class="case expect-ok" data-rule="scroll-snap-no-align-without-type">
+      <div class="label label-ok">
+        scroll-snap-no-align-without-type ok: scroll-snap-stop with parent scroll-snap-type
+      </div>
+      <div style="overflow: auto; width: 200px; height: 100px; scroll-snap-type: y mandatory">
+        <div data-target style="scroll-snap-stop: always">snap child</div>
+      </div>
+    </div>
+    <div class="case expect-ok" data-rule="scroll-snap-no-align-without-type">
+      <div class="label label-ok">
+        scroll-snap-no-align-without-type ok: scroll-snap-stop normal (default)
+      </div>
+      <div style="overflow: auto; width: 200px; height: 100px">
+        <div data-target style="scroll-snap-stop: normal">snap child</div>
+      </div>
+    </div>
+
     <!-- ===== static-no-logical-offset: logical offsets on static position ===== -->
     <h2>static-no-logical-offset: logical offsets on static elements</h2>
 

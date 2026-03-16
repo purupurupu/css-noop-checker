@@ -86,6 +86,8 @@ export const DEFAULT_COMPUTED_STYLES: ElementData['computedStyles'] = {
   animationFillMode: 'none',
   animationPlayState: 'running',
   outlineStyle: 'none',
+  scrollSnapAlign: 'none',
+  scrollSnapStop: 'normal',
   writingMode: 'horizontal-tb',
   borderCollapse: 'separate',
   tableLayout: 'auto',
