@@ -68,7 +68,7 @@ React 19 · TypeScript 5.9 · Vite 7 · Oxlint / Oxfmt · Vitest · Playwright �
 
 ## Contributing
 
-Contributions are welcome! See the contributor guide in [`AGENTS.md`](./AGENTS.md) for project structure, adding new rules, coding style, and PR conventions.
+Contributions are welcome! See [`CONTRIBUTING.md`](./CONTRIBUTING.md) for setup, adding new rules, coding style, and PR conventions.
 
 ## License
 

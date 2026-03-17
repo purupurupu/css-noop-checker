@@ -1,24 +1,34 @@
-# AI Agent Instructions
+# Contributing to CSS Noop Checker
 
-> **Human contributors:** see [CONTRIBUTING.md](./CONTRIBUTING.md) for the full contributor guide.
+Thank you for your interest in contributing! The most common contribution is adding a new detection rule.
 
-This file provides context for AI coding agents (Cursor, Copilot, Windsurf, etc.) working in this repository.
+## Getting Started
 
-## Project Structure
+### Prerequisites
 
+- [Node.js 24](https://nodejs.org/) (managed via [mise](https://mise.jdx.dev/) — see `.mise.toml`)
+- [pnpm 10](https://pnpm.io/)
+
+### Setup
+
+```bash
+git clone https://github.com/purupurupu/css-noop-checker.git
+cd css-noop-checker
+pnpm install
+pnpm build
 ```
-src/
-  rules/           Detection rules + engine, registry, context, types
-  sidebar/         DevTools sidebar React UI (see src/sidebar/ for details)
-  devtools.ts      Extension entrypoint — creates the sidebar pane
-e2e/
-  helpers/         Playwright extraction helpers (shared with MCP server)
-  integration/     Browser integration tests against examples/test.html
-mcp-server/        Standalone MCP server (separate package.json, pnpm workspace)
-examples/
-  test.html        Test cases for all rules — used by both manual testing and e2e
-public/
-  manifest.json    Chrome extension manifest (MV3)
+
+To run browser integration tests, install Playwright's Chromium:
+
+```bash
+pnpm exec playwright install chromium
+```
+
+Verify everything works:
+
+```bash
+pnpm test        # unit tests
+pnpm test:e2e    # browser integration tests
 ```
 
 ## Adding a New Rule
@@ -86,6 +96,23 @@ pnpm test:e2e      # browser integration tests
 
 No changes to the extraction layer are needed — both the extension and MCP server dynamically read `registry.ts` for required CSS properties.
 
+## Project Structure
+
+```
+src/
+  rules/           Detection rules + engine, registry, context, types
+  sidebar/         DevTools sidebar React UI
+  devtools.ts      Extension entrypoint — creates the sidebar pane
+e2e/
+  helpers/         Playwright extraction helpers (shared with MCP server)
+  integration/     Browser integration tests against examples/test.html
+mcp-server/        Standalone MCP server (separate package.json, pnpm workspace)
+examples/
+  test.html        Test cases for all rules — used by both manual testing and e2e
+public/
+  manifest.json    Chrome extension manifest (MV3)
+```
+
 ## Code Style
 
 - ESM modules, `import type` for type-only imports (`verbatimModuleSyntax`)
@@ -111,3 +138,7 @@ pnpm build          # type-check + build
 pnpm test           # unit tests
 pnpm test:e2e       # integration tests
 ```
+
+## Code of Conduct
+
+This project follows the [Contributor Covenant Code of Conduct](./CODE_OF_CONDUCT.md). By participating, you are expected to uphold this code.
