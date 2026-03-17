@@ -1,4 +1,8 @@
-# Contributor Guide
+# AI Agent Instructions
+
+> **Human contributors:** see [CONTRIBUTING.md](./CONTRIBUTING.md) for the full contributor guide.
+
+This file provides context for AI coding agents (Cursor, Copilot, Windsurf, etc.) working in this repository.
 
 ## Project Structure
 
@@ -82,18 +86,6 @@ pnpm test:e2e      # browser integration tests
 
 No changes to the extraction layer are needed — both the extension and MCP server dynamically read `registry.ts` for required CSS properties.
 
-## Pre-PR Checklist
-
-See [README.md — Commands](./README.md#commands) for the full command list. Before opening a PR, run:
-
-```bash
-pnpm fmt            # format
-pnpm lint           # lint
-pnpm build          # type-check + build
-pnpm test           # unit tests
-pnpm test:e2e       # integration tests
-```
-
 ## Code Style
 
 - ESM modules, `import type` for type-only imports (`verbatimModuleSyntax`)
@@ -109,3 +101,13 @@ pnpm test:e2e       # integration tests
 - PR title: under 70 chars, format `<type>: <concise description>`
 - PR body: `## Summary` (bullet points) + `## Test plan` (checklist)
 - Write everything in English
+
+## Pre-PR Checklist
+
+```bash
+pnpm fmt            # format
+pnpm lint           # lint
+pnpm build          # type-check + build
+pnpm test           # unit tests
+pnpm test:e2e       # integration tests
+```
