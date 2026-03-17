@@ -19,13 +19,14 @@ All tasks are independent and can be executed in parallel.
 ### Task 1: Create CONTRIBUTING.md
 
 **Files:**
+
 - Create: `CONTRIBUTING.md`
 
 - [ ] **Step 1: Create CONTRIBUTING.md**
 
 Write the file with this exact content:
 
-```markdown
+````markdown
 # Contributing to CSS Noop Checker
 
 Thank you for your interest in contributing! The most common contribution is adding a new detection rule.
@@ -45,6 +46,7 @@ cd css-noop-checker
 pnpm install
 pnpm build
 ```
+````
 
 To run browser integration tests, install Playwright's Chromium:
 
@@ -170,20 +172,22 @@ pnpm test:e2e       # integration tests
 ## Code of Conduct
 
 This project follows the [Contributor Covenant Code of Conduct](./CODE_OF_CONDUCT.md). By participating, you are expected to uphold this code.
-```
+
+````
 
 - [ ] **Step 2: Commit**
 
 ```bash
 git add CONTRIBUTING.md
 git commit -m "docs: add CONTRIBUTING.md for human contributors"
-```
+````
 
 ---
 
 ### Task 2: Rewrite AGENTS.md
 
 **Files:**
+
 - Modify: `AGENTS.md`
 
 - [ ] **Step 1: Rewrite AGENTS.md**
@@ -198,21 +202,22 @@ Replace the entire file with:
 This file provides context for AI coding agents (Cursor, Copilot, Windsurf, etc.) working in this repository.
 
 ## Project Structure
+```
 
-```
 src/
-  rules/           Detection rules + engine, registry, context, types
-  sidebar/         DevTools sidebar React UI (see src/sidebar/ for details)
-  devtools.ts      Extension entrypoint — creates the sidebar pane
+rules/ Detection rules + engine, registry, context, types
+sidebar/ DevTools sidebar React UI (see src/sidebar/ for details)
+devtools.ts Extension entrypoint — creates the sidebar pane
 e2e/
-  helpers/         Playwright extraction helpers (shared with MCP server)
-  integration/     Browser integration tests against examples/test.html
-mcp-server/        Standalone MCP server (separate package.json, pnpm workspace)
+helpers/ Playwright extraction helpers (shared with MCP server)
+integration/ Browser integration tests against examples/test.html
+mcp-server/ Standalone MCP server (separate package.json, pnpm workspace)
 examples/
-  test.html        Test cases for all rules — used by both manual testing and e2e
+test.html Test cases for all rules — used by both manual testing and e2e
 public/
-  manifest.json    Chrome extension manifest (MV3)
-```
+manifest.json Chrome extension manifest (MV3)
+
+````
 
 ## Adding a New Rule
 
@@ -238,7 +243,7 @@ registerRule({
     return [];
   },
 });
-```
+````
 
 ### 2. Register in engine.ts
 
@@ -304,20 +309,22 @@ pnpm build          # type-check + build
 pnpm test           # unit tests
 pnpm test:e2e       # integration tests
 ```
-```
+
+````
 
 - [ ] **Step 2: Commit**
 
 ```bash
 git add AGENTS.md
 git commit -m "docs: refocus AGENTS.md as AI agent instructions"
-```
+````
 
 ---
 
 ### Task 3: Create CODE_OF_CONDUCT.md
 
 **Files:**
+
 - Create: `CODE_OF_CONDUCT.md`
 
 - [ ] **Step 1: Create CODE_OF_CONDUCT.md**
@@ -336,6 +343,7 @@ git commit -m "docs: add Contributor Covenant Code of Conduct v2.1"
 ### Task 4: Update README.md Contributing link
 
 **Files:**
+
 - Modify: `README.md:69-71`
 
 - [ ] **Step 1: Update the Contributing section link**

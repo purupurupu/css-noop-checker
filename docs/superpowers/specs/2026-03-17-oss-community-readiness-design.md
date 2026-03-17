@@ -27,11 +27,11 @@ Improve the project's discoverability and contributor onboarding experience by a
 
 Three files serve overlapping but distinct audiences:
 
-| File | Audience | Auto-loaded by | Purpose |
-|------|----------|----------------|---------|
-| `CLAUDE.md` | Claude Code | Claude Code (always) | Detailed project context, commands, architecture. Authoritative source of truth. |
-| `AGENTS.md` | AI agents (Cursor, Copilot, etc.) | Convention-based (agents look for this filename) | Concise project structure + rule checklist + code style. |
-| `CONTRIBUTING.md` | Human contributors | GitHub UI (auto-linked on issues/PRs) | Onboarding, prerequisites, full guide with explanations. |
+| File              | Audience                          | Auto-loaded by                                   | Purpose                                                                          |
+| ----------------- | --------------------------------- | ------------------------------------------------ | -------------------------------------------------------------------------------- |
+| `CLAUDE.md`       | Claude Code                       | Claude Code (always)                             | Detailed project context, commands, architecture. Authoritative source of truth. |
+| `AGENTS.md`       | AI agents (Cursor, Copilot, etc.) | Convention-based (agents look for this filename) | Concise project structure + rule checklist + code style.                         |
+| `CONTRIBUTING.md` | Human contributors                | GitHub UI (auto-linked on issues/PRs)            | Onboarding, prerequisites, full guide with explanations.                         |
 
 Content duplication across these files is **intentional**. AI agents perform better with inline content than link-following, and CLAUDE.md is only available to Claude Code. Each file is self-contained for its audience.
 
@@ -66,6 +66,7 @@ Migrates the human-readable content from AGENTS.md into the GitHub-conventional 
 ```
 
 Key additions beyond what AGENTS.md has today:
+
 - **Getting Started** section with prerequisites, setup commands, and Playwright browser install
 - Link to Code of Conduct
 
@@ -95,6 +96,7 @@ Refocused as instructions for AI coding agents (Claude Code, Cursor, Copilot, et
 ```
 
 Changes from current AGENTS.md:
+
 - Title: "Contributor Guide" → "AI Agent Instructions"
 - Added human contributor redirect at top
 - Pre-PR Checklist **retained** (non-Claude agents need it; only CLAUDE.md is auto-loaded by Claude Code)
@@ -107,6 +109,7 @@ Contributor Covenant v2.1, verbatim. Contact method: repository owner's email ad
 ### 4. GitHub Metadata
 
 Set via `gh repo edit`:
+
 - **Description:** `Chrome DevTools extension that detects CSS properties with no effect`
 - **Topics:** `css`, `devtools`, `chrome-extension`, `linter`, `model-context-protocol`, `react`, `typescript`, `developer-tools`
 
@@ -115,6 +118,7 @@ Note: Using `model-context-protocol` instead of `mcp` for topic discoverability 
 ### 5. README.md Changes
 
 Minimal update:
+
 - **Contributing section:** Change link target from AGENTS.md to CONTRIBUTING.md
 
 No TODO comments or placeholders in README — keeps it presentable. Screenshot tracking goes to a GitHub issue instead.
@@ -125,14 +129,14 @@ Create a GitHub issue to track adding visual demos to README. This keeps the REA
 
 ## File Impact
 
-| File | Action |
-|------|--------|
-| `CONTRIBUTING.md` | Create (new) |
-| `AGENTS.md` | Rewrite (reframe for AI agents) |
+| File                 | Action                                  |
+| -------------------- | --------------------------------------- |
+| `CONTRIBUTING.md`    | Create (new)                            |
+| `AGENTS.md`          | Rewrite (reframe for AI agents)         |
 | `CODE_OF_CONDUCT.md` | Create (new, Contributor Covenant v2.1) |
-| `README.md` | Edit (update Contributing link) |
-| GitHub repo settings | Edit via `gh repo edit` |
-| GitHub issue | Create (screenshot tracking) |
+| `README.md`          | Edit (update Contributing link)         |
+| GitHub repo settings | Edit via `gh repo edit`                 |
+| GitHub issue         | Create (screenshot tracking)            |
 
 ## Non-Goals
 
