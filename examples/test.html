@@ -1889,6 +1889,80 @@
       <div data-target style="position: sticky; float: left; top: 0">Sticky + float</div>
     </div>
 
+    <!-- ===== scroll-no-scroll-padding: scroll-padding on non-scroll container ===== -->
+    <h2>scroll-no-scroll-padding: scroll-padding on non-scroll containers</h2>
+
+    <h3>Should warn</h3>
+    <div class="case expect-warn" data-rule="scroll-no-scroll-padding">
+      <div class="label label-warn">
+        scroll-no-scroll-padding warn: scroll-padding-top on non-scroll container
+      </div>
+      <div data-target style="scroll-padding-top: 10px">scroll-padding without overflow</div>
+    </div>
+    <div class="case expect-warn" data-rule="scroll-no-scroll-padding">
+      <div class="label label-warn">
+        scroll-no-scroll-padding warn: scroll-padding-left on non-scroll container
+      </div>
+      <div data-target style="scroll-padding-left: 20px">scroll-padding without overflow</div>
+    </div>
+    <div class="case expect-warn" data-rule="scroll-no-scroll-padding">
+      <div class="label label-warn">
+        scroll-no-scroll-padding warn: scroll-padding-block-start on non-scroll container
+      </div>
+      <div data-target style="scroll-padding-block-start: 10px">
+        scroll-padding logical without overflow
+      </div>
+    </div>
+    <div class="case expect-warn" data-rule="scroll-no-scroll-padding">
+      <div class="label label-warn">
+        scroll-no-scroll-padding warn: scroll-padding on element with overflow clip
+      </div>
+      <div data-target style="overflow: clip; scroll-padding-top: 10px">
+        scroll-padding with overflow clip
+      </div>
+    </div>
+
+    <h3>Should NOT warn</h3>
+    <div class="case expect-ok" data-rule="scroll-no-scroll-padding">
+      <div class="label label-ok">
+        scroll-no-scroll-padding ok: scroll-padding-top on overflow auto container
+      </div>
+      <div
+        data-target
+        style="overflow: auto; width: 200px; height: 100px; scroll-padding-top: 10px"
+      >
+        <div style="height: 300px">tall content</div>
+      </div>
+    </div>
+    <div class="case expect-ok" data-rule="scroll-no-scroll-padding">
+      <div class="label label-ok">
+        scroll-no-scroll-padding ok: scroll-padding-top on overflow scroll container
+      </div>
+      <div
+        data-target
+        style="overflow: scroll; width: 200px; height: 100px; scroll-padding-top: 10px"
+      >
+        <div style="height: 300px">tall content</div>
+      </div>
+    </div>
+    <div class="case expect-ok" data-rule="scroll-no-scroll-padding">
+      <div class="label label-ok">
+        scroll-no-scroll-padding ok: scroll-padding-top on overflow hidden container
+      </div>
+      <div
+        data-target
+        style="overflow: hidden; width: 200px; height: 100px; scroll-padding-top: 10px"
+      >
+        <div style="height: 300px">tall content</div>
+      </div>
+    </div>
+    <div class="case expect-ok" data-rule="scroll-no-scroll-padding">
+      <div class="label label-ok">
+        scroll-no-scroll-padding ok: no scroll-padding set (default auto)
+      </div>
+      <div data-target>no scroll-padding</div>
+    </div>
+
     <!-- ===== scroll-snap-no-align-without-type: scroll-snap child properties without scroll-snap-type on parent ===== -->
     <h2>
       scroll-snap-no-align-without-type: scroll-snap child properties without scroll-snap-type on
