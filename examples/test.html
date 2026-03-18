@@ -867,6 +867,62 @@
       >
     </div>
 
+    <!-- ===== inline-no-min-max-logical-dimensions: min/max inline-size/block-size on inline ===== -->
+    <h2>inline-no-min-max-logical-dimensions: min/max inline-size/block-size on inline elements</h2>
+
+    <h3>Should warn</h3>
+    <div class="case expect-warn" data-rule="inline-no-min-max-logical-dimensions">
+      <div class="label label-warn">
+        inline-no-min-max-logical-dimensions warn: span with min-inline-size
+      </div>
+      <span data-target style="min-inline-size: 100px">This span has min-inline-size: 100px</span>
+    </div>
+    <div class="case expect-warn" data-rule="inline-no-min-max-logical-dimensions">
+      <div class="label label-warn">
+        inline-no-min-max-logical-dimensions warn: span with max-inline-size
+      </div>
+      <span data-target style="max-inline-size: 500px">This span has max-inline-size: 500px</span>
+    </div>
+    <div class="case expect-warn" data-rule="inline-no-min-max-logical-dimensions">
+      <div class="label label-warn">
+        inline-no-min-max-logical-dimensions warn: span with min-block-size
+      </div>
+      <span data-target style="min-block-size: 50px">This span has min-block-size: 50px</span>
+    </div>
+    <div class="case expect-warn" data-rule="inline-no-min-max-logical-dimensions">
+      <div class="label label-warn">
+        inline-no-min-max-logical-dimensions warn: anchor with max-block-size
+      </div>
+      <a data-target href="#" style="max-block-size: 300px">Link with max-block-size: 300px</a>
+    </div>
+
+    <h3>Should NOT warn (false positive check)</h3>
+    <div class="case expect-ok" data-rule="inline-no-min-max-logical-dimensions">
+      <div class="label label-ok">
+        inline-no-min-max-logical-dimensions ok: img is a replaced inline element
+      </div>
+      <img
+        data-target
+        style="min-inline-size: 100px"
+        src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7"
+        alt="replaced element"
+      />
+    </div>
+    <div class="case expect-ok" data-rule="inline-no-min-max-logical-dimensions">
+      <div class="label label-ok">
+        inline-no-min-max-logical-dimensions ok: input is a replaced inline element
+      </div>
+      <input data-target style="max-inline-size: 200px" type="text" value="input element" />
+    </div>
+    <div class="case expect-ok" data-rule="inline-no-min-max-logical-dimensions">
+      <div class="label label-ok">
+        inline-no-min-max-logical-dimensions ok: inline-block accepts min-inline-size
+      </div>
+      <span data-target style="display: inline-block; min-inline-size: 100px"
+        >inline-block span</span
+      >
+    </div>
+
     <!-- ===== inline-no-overflow: overflow on inline ===== -->
     <h2>inline-no-overflow: overflow on inline elements</h2>
 
