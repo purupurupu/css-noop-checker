@@ -8,6 +8,7 @@ export const DEFAULT_COMPUTED_STYLES: ElementData['computedStyles'] = {
   gap: 'normal',
   rowGap: 'normal',
   columnGap: 'normal',
+  alignContent: 'normal',
   alignItems: 'normal',
   justifyContent: 'normal',
   justifyItems: 'normal',
