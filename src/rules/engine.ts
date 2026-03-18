@@ -25,6 +25,7 @@ import './item-no-grid-props.ts';
 import './item-no-justify-self.ts';
 import './item-no-order.ts';
 import './item-no-self-align.ts';
+import './multicol-no-column-rule.ts';
 import './nonfloat-no-shape-outside.ts';
 import './nonreplaced-no-object-fit.ts';
 import './outline-no-style.ts';
