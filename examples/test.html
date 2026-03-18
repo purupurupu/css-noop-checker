@@ -1717,6 +1717,77 @@
       </div>
     </div>
 
+    <!-- ===== multicol-no-column-rule: column-rule/column-fill on non-multicol ===== -->
+    <h2>multicol-no-column-rule: column-rule/column-fill on non-multicol container</h2>
+
+    <h3>Should warn</h3>
+    <div class="case expect-warn" data-rule="multicol-no-column-rule">
+      <div class="label label-warn">
+        multicol-no-column-rule warn: column-rule-style on block without columns
+      </div>
+      <div data-target style="column-rule-style: solid">No multi-column layout here.</div>
+    </div>
+    <div class="case expect-warn" data-rule="multicol-no-column-rule">
+      <div class="label label-warn">
+        multicol-no-column-rule warn: column-rule shorthand on block without columns
+      </div>
+      <div data-target style="column-rule: 2px solid red">No multi-column layout here.</div>
+    </div>
+    <div class="case expect-warn" data-rule="multicol-no-column-rule">
+      <div class="label label-warn">
+        multicol-no-column-rule warn: column-fill on block without columns
+      </div>
+      <div data-target style="column-fill: auto">No multi-column layout here.</div>
+    </div>
+    <div class="case expect-warn" data-rule="multicol-no-column-rule">
+      <div class="label label-warn">
+        multicol-no-column-rule warn: column-rule-width and column-rule-style on block without
+        columns
+      </div>
+      <div data-target style="column-rule-width: 3px; column-rule-style: solid">
+        No multi-column layout here.
+      </div>
+    </div>
+    <div class="case expect-warn" data-rule="multicol-no-column-rule">
+      <div class="label label-warn">
+        multicol-no-column-rule warn: column-rule on flex without columns
+      </div>
+      <div data-target style="display: flex; column-rule: 1px dashed blue">
+        <div>Child</div>
+      </div>
+    </div>
+    <div class="case expect-warn" data-rule="multicol-no-column-rule">
+      <div class="label label-warn">
+        multicol-no-column-rule warn: column-rule on flex with column-count (column-count ignored on
+        flex)
+      </div>
+      <div data-target style="display: flex; column-count: 3; column-rule: 1px solid black">
+        <div>Child</div>
+      </div>
+    </div>
+
+    <h3>Should NOT warn</h3>
+    <div class="case expect-ok" data-rule="multicol-no-column-rule">
+      <div class="label label-ok">
+        multicol-no-column-rule ok: column-rule with column-count (valid multicol)
+      </div>
+      <div data-target style="column-count: 3; column-rule: 2px solid red">
+        The quick brown fox jumps over the lazy dog. Pack my box with five dozen liquor jugs.
+      </div>
+    </div>
+    <div class="case expect-ok" data-rule="multicol-no-column-rule">
+      <div class="label label-ok">
+        multicol-no-column-rule ok: column-fill with column-width (valid multicol)
+      </div>
+      <div data-target style="column-width: 200px; column-fill: auto">
+        The quick brown fox jumps over the lazy dog. Pack my box with five dozen liquor jugs.
+      </div>
+    </div>
+    <div class="case expect-ok" data-rule="multicol-no-column-rule">
+      <div class="label label-ok">multicol-no-column-rule ok: no column-rule properties set</div>
+      <div data-target style="display: block">Just a normal block element.</div>
+    </div>
+
     <!-- ===== nonfloat-no-shape-outside: shape-outside on non-floated elements ===== -->
     <h2>nonfloat-no-shape-outside: shape-outside on non-floated elements</h2>
 
