@@ -656,6 +656,146 @@
       </div>
     </div>
 
+    <!-- ===== contents-no-box-props: box properties on display:contents ===== -->
+    <h2>contents-no-box-props: box properties on display:contents</h2>
+
+    <h3>Should warn</h3>
+    <div class="case expect-warn" data-rule="contents-no-box-props">
+      <div class="label label-warn">contents-no-box-props warn: width on display:contents</div>
+      <div data-target style="display: contents; width: 200px">
+        <span>Child of contents element</span>
+      </div>
+    </div>
+    <div class="case expect-warn" data-rule="contents-no-box-props">
+      <div class="label label-warn">contents-no-box-props warn: height on display:contents</div>
+      <div data-target style="display: contents; height: 100px">
+        <span>Child of contents element</span>
+      </div>
+    </div>
+    <div class="case expect-warn" data-rule="contents-no-box-props">
+      <div class="label label-warn">contents-no-box-props warn: margin on display:contents</div>
+      <div data-target style="display: contents; margin: 10px">
+        <span>Child of contents element</span>
+      </div>
+    </div>
+    <div class="case expect-warn" data-rule="contents-no-box-props">
+      <div class="label label-warn">contents-no-box-props warn: padding on display:contents</div>
+      <div data-target style="display: contents; padding: 10px">
+        <span>Child of contents element</span>
+      </div>
+    </div>
+    <div class="case expect-warn" data-rule="contents-no-box-props">
+      <div class="label label-warn">
+        contents-no-box-props warn: border-width on display:contents
+      </div>
+      <div data-target style="display: contents; border: 1px solid black">
+        <span>Child of contents element</span>
+      </div>
+    </div>
+    <div class="case expect-warn" data-rule="contents-no-box-props">
+      <div class="label label-warn">
+        contents-no-box-props warn: background-color on display:contents
+      </div>
+      <div data-target style="display: contents; background-color: red">
+        <span>Child of contents element</span>
+      </div>
+    </div>
+    <div class="case expect-warn" data-rule="contents-no-box-props">
+      <div class="label label-warn">
+        contents-no-box-props warn: background-image on display:contents
+      </div>
+      <div data-target style="display: contents; background-image: linear-gradient(red, blue)">
+        <span>Child of contents element</span>
+      </div>
+    </div>
+    <div class="case expect-warn" data-rule="contents-no-box-props">
+      <div class="label label-warn">
+        contents-no-box-props warn: logical margin on display:contents
+      </div>
+      <div data-target style="display: contents; margin-block: 10px; margin-inline: 20px">
+        <span>Child of contents element</span>
+      </div>
+    </div>
+    <div class="case expect-warn" data-rule="contents-no-box-props">
+      <div class="label label-warn">
+        contents-no-box-props warn: logical padding on display:contents
+      </div>
+      <div data-target style="display: contents; padding-block: 10px; padding-inline: 20px">
+        <span>Child of contents element</span>
+      </div>
+    </div>
+    <div class="case expect-warn" data-rule="contents-no-box-props">
+      <div class="label label-warn">
+        contents-no-box-props warn: logical border-width on display:contents
+      </div>
+      <div
+        data-target
+        style="
+          display: contents;
+          border-block-start: 1px solid black;
+          border-inline-end: 2px solid red;
+        "
+      >
+        <span>Child of contents element</span>
+      </div>
+    </div>
+    <div class="case expect-warn" data-rule="contents-no-box-props">
+      <div class="label label-warn">
+        contents-no-box-props warn: inline-size/block-size on display:contents
+      </div>
+      <div data-target style="display: contents; inline-size: 200px; block-size: 100px">
+        <span>Child of contents element</span>
+      </div>
+    </div>
+    <div class="case expect-warn" data-rule="contents-no-box-props">
+      <div class="label label-warn">
+        contents-no-box-props warn: min/max width on display:contents
+      </div>
+      <div data-target style="display: contents; min-width: 100px; max-width: 500px">
+        <span>Child of contents element</span>
+      </div>
+    </div>
+    <div class="case expect-warn" data-rule="contents-no-box-props">
+      <div class="label label-warn">
+        contents-no-box-props warn: min/max height on display:contents
+      </div>
+      <div data-target style="display: contents; min-height: 50px; max-height: 300px">
+        <span>Child of contents element</span>
+      </div>
+    </div>
+    <div class="case expect-warn" data-rule="contents-no-box-props">
+      <div class="label label-warn">
+        contents-no-box-props warn: min/max inline-size on display:contents
+      </div>
+      <div data-target style="display: contents; min-inline-size: 100px; max-inline-size: 500px">
+        <span>Child of contents element</span>
+      </div>
+    </div>
+    <div class="case expect-warn" data-rule="contents-no-box-props">
+      <div class="label label-warn">
+        contents-no-box-props warn: min/max block-size on display:contents
+      </div>
+      <div data-target style="display: contents; min-block-size: 50px; max-block-size: 300px">
+        <span>Child of contents element</span>
+      </div>
+    </div>
+
+    <h3>Should NOT warn</h3>
+    <div class="case expect-ok" data-rule="contents-no-box-props">
+      <div class="label label-ok">contents-no-box-props ok: display:block with box properties</div>
+      <div data-target style="display: block; width: 200px; margin: 10px; padding: 5px">
+        Block element with box props
+      </div>
+    </div>
+    <div class="case expect-ok" data-rule="contents-no-box-props">
+      <div class="label label-ok">
+        contents-no-box-props ok: display:contents with no box properties
+      </div>
+      <div data-target style="display: contents">
+        <span>Child of contents element (no box props set)</span>
+      </div>
+    </div>
+
     <!-- ===== element-no-table-props: table props on non-table elements ===== -->
     <h2>element-no-table-props: table props on non-table elements</h2>
 
