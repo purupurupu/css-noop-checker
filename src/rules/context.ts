@@ -126,3 +126,14 @@ export function isDefaultSelfAlignmentValue(value: string): boolean {
 export function willChangeIncludes(willChange: string, ...tokens: string[]): boolean {
   return willChange.split(',').some((v) => tokens.includes(v.trim()));
 }
+
+/** True when column-count/column-width actually establish a multi-column layout.
+ *  Flex/grid containers ignore column-count/column-width, so they are never multicol. */
+export function isMulticolContainer(
+  display: string,
+  columnCount: string,
+  columnWidth: string,
+): boolean {
+  if (isFlexOrGridContainer(display)) return false;
+  return columnCount !== 'auto' || columnWidth !== 'auto';
+}

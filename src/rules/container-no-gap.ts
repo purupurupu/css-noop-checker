@@ -1,5 +1,5 @@
 import { type RuleDescriptor, type Warning, createWarning } from './types.ts';
-import { isDefaultGapLikeValue, isFlexOrGridContainer } from './context.ts';
+import { isDefaultGapLikeValue, isFlexOrGridContainer, isMulticolContainer } from './context.ts';
 import { registerRule } from './registry.ts';
 
 const RULE_ID = 'container-no-gap' as const;
@@ -21,8 +21,8 @@ const rule: RuleDescriptor = {
     const hasGap = !isDefaultGapLikeValue(gap);
     const hasRowGap = !isDefaultGapLikeValue(rowGap);
     const hasColumnGap = !isDefaultGapLikeValue(columnGap);
-    const isMultiColumnContainer = columnCount !== 'auto' || (columnWidth ?? 'auto') !== 'auto';
-    const columnGapHasNoEffect = hasColumnGap && !isMultiColumnContainer;
+    const columnGapHasNoEffect =
+      hasColumnGap && !isMulticolContainer(display, columnCount, columnWidth);
 
     if (hasGap && hasRowGap && columnGapHasNoEffect && rowGap === columnGap) {
       warnings.push(
