@@ -257,6 +257,102 @@
       </div>
     </div>
 
+    <!-- ===== container-no-align-content: align-content on single-line flex ===== -->
+    <h2>container-no-align-content: align-content on single-line flex containers</h2>
+
+    <h3>Should warn</h3>
+    <div class="case expect-warn" data-rule="container-no-align-content">
+      <div class="label label-warn">
+        container-no-align-content warn: flex nowrap with align-content
+      </div>
+      <div
+        data-target
+        style="
+          display: flex;
+          flex-wrap: nowrap;
+          align-content: center;
+          height: 60px;
+          background: #f0f0f0;
+        "
+      >
+        <div>Child</div>
+      </div>
+    </div>
+    <div class="case expect-warn" data-rule="container-no-align-content">
+      <div class="label label-warn">
+        container-no-align-content warn: inline-flex nowrap with align-content
+      </div>
+      <span
+        data-target
+        style="
+          display: inline-flex;
+          align-content: space-between;
+          height: 60px;
+          background: #f0f0f0;
+        "
+      >
+        <span>Child</span>
+      </span>
+    </div>
+
+    <h3>Should NOT warn</h3>
+    <div class="case expect-ok" data-rule="container-no-align-content">
+      <div class="label label-ok">container-no-align-content ok: flex wrap with align-content</div>
+      <div
+        data-target
+        style="
+          display: flex;
+          flex-wrap: wrap;
+          align-content: center;
+          height: 60px;
+          background: #f0f0f0;
+        "
+      >
+        <div>Child 1</div>
+        <div>Child 2</div>
+      </div>
+    </div>
+    <div class="case expect-ok" data-rule="container-no-align-content">
+      <div class="label label-ok">
+        container-no-align-content ok: flex wrap-reverse with align-content
+      </div>
+      <div
+        data-target
+        style="
+          display: flex;
+          flex-wrap: wrap-reverse;
+          align-content: center;
+          height: 60px;
+          background: #f0f0f0;
+        "
+      >
+        <div>Child 1</div>
+        <div>Child 2</div>
+      </div>
+    </div>
+    <div class="case expect-ok" data-rule="container-no-align-content">
+      <div class="label label-ok">
+        container-no-align-content ok: grid container with align-content
+      </div>
+      <div
+        data-target
+        style="display: grid; align-content: center; height: 60px; background: #f0f0f0"
+      >
+        <div>Grid child</div>
+      </div>
+    </div>
+    <div class="case expect-ok" data-rule="container-no-align-content">
+      <div class="label label-ok">
+        container-no-align-content ok: flex nowrap with align-content stretch (effective default)
+      </div>
+      <div
+        data-target
+        style="display: flex; flex-wrap: nowrap; align-content: stretch; height: 60px"
+      >
+        <div>Child</div>
+      </div>
+    </div>
+
     <!-- ===== container-no-columns: multi-column on flex/grid ===== -->
     <h2>container-no-columns: column properties on flex/grid containers</h2>
 
