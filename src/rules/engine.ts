@@ -31,6 +31,7 @@ import './nonfloat-no-shape-outside.ts';
 import './nonreplaced-no-aspect-ratio.ts';
 import './nonreplaced-no-object-fit.ts';
 import './nontable-no-border-spacing.ts';
+import './nontable-no-empty-cells.ts';
 import './outline-no-style.ts';
 import './perspective-no-origin.ts';
 import './positioned-no-clear.ts';

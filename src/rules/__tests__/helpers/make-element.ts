@@ -134,6 +134,7 @@ export const DEFAULT_COMPUTED_STYLES: ElementData['computedStyles'] = {
   writingMode: 'horizontal-tb',
   borderCollapse: 'separate',
   borderSpacing: '0px 0px',
+  emptyCells: 'show',
   tableLayout: 'auto',
 };
 

@@ -43,6 +43,7 @@ function makeBaseStyles(overrides: Record<string, string> = {}): Record<string, 
     scrollPaddingInlineEnd: 'auto',
     borderCollapse: 'separate',
     borderSpacing: '0px 0px',
+    emptyCells: 'show',
     tableLayout: 'auto',
     ...overrides,
   };
