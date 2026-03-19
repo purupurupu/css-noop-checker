@@ -12,6 +12,7 @@ import './container-no-justify-items.ts';
 import './container-no-place.ts';
 import './contents-no-box-props.ts';
 import './element-no-table-props.ts';
+import './inline-no-box-sizing.ts';
 import './inline-no-dimensions.ts';
 import './inline-no-logical-dimensions.ts';
 import './inline-no-logical-vertical-margin.ts';
