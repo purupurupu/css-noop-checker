@@ -79,6 +79,7 @@ export const DEFAULT_COMPUTED_STYLES: ElementData['computedStyles'] = {
   maxWidth: 'none',
   minHeight: '0px',
   maxHeight: 'none',
+  aspectRatio: 'auto',
   objectFit: 'fill',
   objectPosition: '50% 50%',
   shapeOutside: 'none',
