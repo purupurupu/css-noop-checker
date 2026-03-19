@@ -28,6 +28,7 @@ import './item-no-order.ts';
 import './item-no-self-align.ts';
 import './multicol-no-column-rule.ts';
 import './nonfloat-no-shape-outside.ts';
+import './nonreplaced-no-aspect-ratio.ts';
 import './nonreplaced-no-object-fit.ts';
 import './nontable-no-border-spacing.ts';
 import './outline-no-style.ts';

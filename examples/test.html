@@ -1903,6 +1903,77 @@
       <div data-target>Non-floated element with default shape-outside: none (no warning)</div>
     </div>
 
+    <!-- ===== nonreplaced-no-aspect-ratio: aspect-ratio on inline non-replaced elements ===== -->
+    <h2>nonreplaced-no-aspect-ratio: aspect-ratio on inline non-replaced elements</h2>
+
+    <h3>Should warn</h3>
+    <div class="case expect-warn" data-rule="nonreplaced-no-aspect-ratio">
+      <div class="label label-warn">
+        nonreplaced-no-aspect-ratio warn: inline span with aspect-ratio
+      </div>
+      <span data-target style="aspect-ratio: 16 / 9"
+        >Inline span with aspect-ratio (no effect)</span
+      >
+    </div>
+    <div class="case expect-warn" data-rule="nonreplaced-no-aspect-ratio">
+      <div class="label label-warn">
+        nonreplaced-no-aspect-ratio warn: inline a with aspect-ratio
+      </div>
+      <a data-target style="aspect-ratio: 1 / 1" href="#"
+        >Inline link with aspect-ratio (no effect)</a
+      >
+    </div>
+
+    <h3>Should NOT warn</h3>
+    <div class="case expect-ok" data-rule="nonreplaced-no-aspect-ratio">
+      <div class="label label-ok">nonreplaced-no-aspect-ratio ok: block div with aspect-ratio</div>
+      <div data-target style="aspect-ratio: 16 / 9; width: 200px; background: #f0f0f0">
+        Block div with aspect-ratio (valid)
+      </div>
+    </div>
+    <div class="case expect-ok" data-rule="nonreplaced-no-aspect-ratio">
+      <div class="label label-ok">
+        nonreplaced-no-aspect-ratio ok: inline-block span with aspect-ratio
+      </div>
+      <span
+        data-target
+        style="display: inline-block; aspect-ratio: 4 / 3; width: 100px; background: #f0f0f0"
+      >
+        Inline-block span with aspect-ratio (valid)
+      </span>
+    </div>
+    <div class="case expect-ok" data-rule="nonreplaced-no-aspect-ratio">
+      <div class="label label-ok">
+        nonreplaced-no-aspect-ratio ok: flex container with aspect-ratio
+      </div>
+      <div
+        data-target
+        style="display: flex; aspect-ratio: 4 / 3; width: 200px; background: #f0f0f0"
+      >
+        Flex container with aspect-ratio (valid)
+      </div>
+    </div>
+    <div class="case expect-ok" data-rule="nonreplaced-no-aspect-ratio">
+      <div class="label label-ok">
+        nonreplaced-no-aspect-ratio ok: inline img with aspect-ratio (replaced element)
+      </div>
+      <img data-target style="aspect-ratio: 1 / 1; width: 50px" src="" alt="replaced element" />
+    </div>
+    <div class="case expect-ok" data-rule="nonreplaced-no-aspect-ratio">
+      <div class="label label-ok">
+        nonreplaced-no-aspect-ratio ok: inline span with default aspect-ratio (auto)
+      </div>
+      <span data-target style="aspect-ratio: auto">Inline span with default aspect-ratio</span>
+    </div>
+    <div class="case expect-ok" data-rule="nonreplaced-no-aspect-ratio">
+      <div class="label label-ok">
+        nonreplaced-no-aspect-ratio ok: display:contents skipped (no box)
+      </div>
+      <div data-target style="display: contents; aspect-ratio: 16 / 9">
+        Contents element with aspect-ratio (skipped)
+      </div>
+    </div>
+
     <!-- ===== nonreplaced-no-object-fit: object-fit/object-position on non-replaced elements ===== -->
     <h2>nonreplaced-no-object-fit: object-fit/object-position on non-replaced elements</h2>
 
