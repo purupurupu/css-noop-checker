@@ -1,6 +1,7 @@
 // Rule registration (side-effect imports)
 import './animation-no-sub-props.ts';
 import './block-no-vertical-align.ts';
+import './collapsed-table-no-border-spacing.ts';
 import './container-no-align.ts';
 import './container-no-align-content.ts';
 import './container-no-columns.ts';
