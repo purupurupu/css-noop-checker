@@ -9,7 +9,7 @@ const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const TEST_HTML = `file://${path.resolve(__dirname, '../../examples/test.html')}`;
 
 // Update this when adding/removing test cases in test.html.
-const EXPECTED_CASE_COUNT = 352;
+const EXPECTED_CASE_COUNT = 356;
 
 const registeredRuleIds = new Set(getRules().map((r) => r.id));
 

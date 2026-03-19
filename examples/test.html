@@ -209,6 +209,59 @@
       </table>
     </div>
 
+    <!-- ===== collapsed-table-no-border-spacing: border-spacing on collapsed table ===== -->
+    <h2>collapsed-table-no-border-spacing: border-spacing on collapsed table</h2>
+
+    <h3>Should warn</h3>
+    <div class="case expect-warn" data-rule="collapsed-table-no-border-spacing">
+      <div class="label label-warn">
+        collapsed-table-no-border-spacing warn: border-spacing on collapsed table
+      </div>
+      <table data-target style="border-collapse: collapse; border-spacing: 10px">
+        <tr>
+          <td>Cell</td>
+          <td>Cell</td>
+        </tr>
+      </table>
+    </div>
+    <div class="case expect-warn" data-rule="collapsed-table-no-border-spacing">
+      <div class="label label-warn">
+        collapsed-table-no-border-spacing warn: border-spacing on collapsed inline-table
+      </div>
+      <div
+        data-target
+        style="display: inline-table; border-collapse: collapse; border-spacing: 8px"
+      >
+        <div style="display: table-row">
+          <div style="display: table-cell">Cell</div>
+        </div>
+      </div>
+    </div>
+
+    <h3>Should NOT warn</h3>
+    <div class="case expect-ok" data-rule="collapsed-table-no-border-spacing">
+      <div class="label label-ok">
+        collapsed-table-no-border-spacing ok: border-spacing with border-collapse:separate
+      </div>
+      <table data-target style="border-collapse: separate; border-spacing: 10px">
+        <tr>
+          <td>Cell</td>
+          <td>Cell</td>
+        </tr>
+      </table>
+    </div>
+    <div class="case expect-ok" data-rule="collapsed-table-no-border-spacing">
+      <div class="label label-ok">
+        collapsed-table-no-border-spacing ok: collapsed table with default border-spacing
+      </div>
+      <table data-target style="border-collapse: collapse">
+        <tr>
+          <td>Cell</td>
+          <td>Cell</td>
+        </tr>
+      </table>
+    </div>
+
     <!-- ===== container-no-align: alignment on non-flex/grid ===== -->
     <h2>container-no-align: alignment on non-flex/grid containers</h2>
 
