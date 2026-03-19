@@ -2653,6 +2653,98 @@
       <div data-target style="display: block; margin: 10px">block with margin — OK</div>
     </div>
 
+    <!-- ===== table-no-padding: no-op padding on table internals ===== -->
+    <h2>table-no-padding: no-op padding on table internals</h2>
+
+    <h3>Should warn</h3>
+    <div class="case expect-warn" data-rule="table-no-padding">
+      <div class="label label-warn">table-no-padding warn: padding on table-row</div>
+      <div data-target style="display: table-row; padding: 10px">
+        display: table-row with padding
+      </div>
+    </div>
+    <div class="case expect-warn" data-rule="table-no-padding">
+      <div class="label label-warn">table-no-padding warn: padding on table-row-group</div>
+      <div data-target style="display: table-row-group; padding: 10px">
+        display: table-row-group with padding
+      </div>
+    </div>
+    <div class="case expect-warn" data-rule="table-no-padding">
+      <div class="label label-warn">table-no-padding warn: padding on table-header-group</div>
+      <div data-target style="display: table-header-group; padding: 10px">
+        display: table-header-group with padding
+      </div>
+    </div>
+    <div class="case expect-warn" data-rule="table-no-padding">
+      <div class="label label-warn">table-no-padding warn: padding on table-footer-group</div>
+      <div data-target style="display: table-footer-group; padding: 10px">
+        display: table-footer-group with padding
+      </div>
+    </div>
+    <div class="case expect-warn" data-rule="table-no-padding">
+      <div class="label label-warn">table-no-padding warn: padding on col element</div>
+      <table>
+        <colgroup>
+          <col data-target style="padding: 10px" />
+        </colgroup>
+        <tbody>
+          <tr>
+            <td>cell</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+    <div class="case expect-warn" data-rule="table-no-padding">
+      <div class="label label-warn">table-no-padding warn: padding on colgroup element</div>
+      <table>
+        <colgroup data-target style="padding: 10px">
+          <col />
+        </colgroup>
+        <tbody>
+          <tr>
+            <td>cell</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+    <div class="case expect-warn" data-rule="table-no-padding">
+      <div class="label label-warn">table-no-padding warn: logical padding on colgroup element</div>
+      <table>
+        <colgroup data-target style="padding-block-start: 10px">
+          <col />
+        </colgroup>
+        <tbody>
+          <tr>
+            <td>cell</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <h3>Should NOT warn</h3>
+    <div class="case expect-ok" data-rule="table-no-padding">
+      <div class="label label-ok">table-no-padding ok: padding on table-cell</div>
+      <div data-target style="display: table-cell; padding: 10px">
+        display: table-cell with padding (valid)
+      </div>
+    </div>
+    <div class="case expect-ok" data-rule="table-no-padding">
+      <div class="label label-ok">table-no-padding ok: padding on table</div>
+      <div data-target style="display: table; padding: 10px">
+        display: table with padding (valid)
+      </div>
+    </div>
+    <div class="case expect-ok" data-rule="table-no-padding">
+      <div class="label label-ok">table-no-padding ok: padding on inline-table</div>
+      <div data-target style="display: inline-table; padding: 10px">
+        display: inline-table with padding (valid)
+      </div>
+    </div>
+    <div class="case expect-ok" data-rule="table-no-padding">
+      <div class="label label-ok">table-no-padding ok: table-row with no padding</div>
+      <div data-target style="display: table-row">display: table-row without padding (valid)</div>
+    </div>
+
     <!-- ===== transform-no-origin: transform-origin without transform ===== -->
     <h2>transform-no-origin: transform-origin without transform</h2>
 

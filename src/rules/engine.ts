@@ -38,6 +38,7 @@ import './static-no-logical-offset.ts';
 import './static-no-offset.ts';
 import './static-no-z-index.ts';
 import './table-no-margin.ts';
+import './table-no-padding.ts';
 import './transform-no-origin.ts';
 import './visible-overflow-no-resize.ts';
 import './visible-overflow-no-text-overflow.ts';
