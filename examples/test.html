@@ -2026,6 +2026,70 @@
       </div>
     </div>
 
+    <!-- ===== nontable-no-border-spacing: border-spacing on non-table elements ===== -->
+    <h2>nontable-no-border-spacing: border-spacing on non-table elements</h2>
+
+    <h3>Should warn</h3>
+    <div class="case expect-warn" data-rule="nontable-no-border-spacing">
+      <div class="label label-warn">
+        nontable-no-border-spacing warn: border-spacing on block element
+      </div>
+      <div data-target style="border-spacing: 10px">Block with border-spacing (no effect)</div>
+    </div>
+    <div class="case expect-warn" data-rule="nontable-no-border-spacing">
+      <div class="label label-warn">
+        nontable-no-border-spacing warn: border-spacing on inline element
+      </div>
+      <span data-target style="border-spacing: 5px">Inline with border-spacing (no effect)</span>
+    </div>
+    <div class="case expect-warn" data-rule="nontable-no-border-spacing">
+      <div class="label label-warn">
+        nontable-no-border-spacing warn: border-spacing on flex container
+      </div>
+      <div data-target style="display: flex; border-spacing: 8px">
+        <span>Flex child</span>
+      </div>
+    </div>
+    <div class="case expect-warn" data-rule="nontable-no-border-spacing">
+      <div class="label label-warn">
+        nontable-no-border-spacing warn: border-spacing on table-cell (only table/inline-table
+        applies)
+      </div>
+      <div style="display: table">
+        <div data-target style="display: table-cell; border-spacing: 6px">
+          Cell with border-spacing
+        </div>
+      </div>
+    </div>
+
+    <h3>Should NOT warn</h3>
+    <div class="case expect-ok" data-rule="nontable-no-border-spacing">
+      <div class="label label-ok">
+        nontable-no-border-spacing ok: border-spacing on display:table
+      </div>
+      <div data-target style="display: table; border-spacing: 10px">
+        <div style="display: table-row">
+          <div style="display: table-cell">Cell</div>
+        </div>
+      </div>
+    </div>
+    <div class="case expect-ok" data-rule="nontable-no-border-spacing">
+      <div class="label label-ok">
+        nontable-no-border-spacing ok: border-spacing on display:inline-table
+      </div>
+      <div data-target style="display: inline-table; border-spacing: 5px">
+        <div style="display: table-row">
+          <div style="display: table-cell">Cell</div>
+        </div>
+      </div>
+    </div>
+    <div class="case expect-ok" data-rule="nontable-no-border-spacing">
+      <div class="label label-ok">
+        nontable-no-border-spacing ok: default border-spacing on block element
+      </div>
+      <div data-target>Block with default border-spacing (no warning)</div>
+    </div>
+
     <!-- ===== outline-no-style: outline properties without outline-style ===== -->
     <h2>outline-no-style: outline properties without outline-style</h2>
 
