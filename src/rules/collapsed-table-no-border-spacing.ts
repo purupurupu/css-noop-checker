@@ -9,6 +9,7 @@ const rule: RuleDescriptor = {
   id: RULE_ID,
   label: 'border-spacing on collapsed table',
   requiredProperties: ['display', 'borderCollapse', 'borderSpacing'],
+  requiredInlineProperties: ['borderSpacing'],
   check(ctx) {
     const { display, borderCollapse, borderSpacing } = ctx.styles;
 
@@ -20,6 +21,11 @@ const rule: RuleDescriptor = {
 
     // Chrome serializes the default as '0px 0px'; check both forms defensively
     if (borderSpacing === '0px 0px' || borderSpacing === '0px') return [];
+
+    // border-spacing is inherited and has a UA default of 2px on tables.
+    // Only warn when the author explicitly set it (inline style).
+    const inlineBorderSpacing = ctx.inlineStyles.borderSpacing ?? '';
+    if (inlineBorderSpacing === '') return [];
 
     return [
       warn({
