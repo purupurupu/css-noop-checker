@@ -1006,6 +1006,50 @@
       </div>
     </div>
 
+    <!-- ===== inline-no-box-sizing: box-sizing on inline ===== -->
+    <h2>inline-no-box-sizing: box-sizing on inline elements</h2>
+
+    <h3>Should warn</h3>
+    <div class="case expect-warn" data-rule="inline-no-box-sizing">
+      <div class="label label-warn">inline-no-box-sizing warn: span with box-sizing border-box</div>
+      <span data-target style="box-sizing: border-box">This span has box-sizing: border-box</span>
+    </div>
+    <div class="case expect-warn" data-rule="inline-no-box-sizing">
+      <div class="label label-warn">
+        inline-no-box-sizing warn: anchor with box-sizing border-box
+      </div>
+      <a data-target href="#" style="box-sizing: border-box">Link (box-sizing: border-box)</a>
+    </div>
+
+    <h3>Should NOT warn (false positive check)</h3>
+    <div class="case expect-ok" data-rule="inline-no-box-sizing">
+      <div class="label label-ok">inline-no-box-sizing ok: img is a replaced inline element</div>
+      <img
+        data-target
+        src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='60' height='40'%3E%3Crect fill='%234ec9b0' width='60' height='40'/%3E%3C/svg%3E"
+        style="box-sizing: border-box"
+        alt="replaced element"
+      />
+    </div>
+    <div class="case expect-ok" data-rule="inline-no-box-sizing">
+      <div class="label label-ok">inline-no-box-sizing ok: inline-block accepts box-sizing</div>
+      <span
+        data-target
+        style="display: inline-block; box-sizing: border-box; width: 100px; height: 30px"
+        >inline-block span</span
+      >
+    </div>
+    <div class="case expect-ok" data-rule="inline-no-box-sizing">
+      <div class="label label-ok">inline-no-box-sizing ok: block div accepts box-sizing</div>
+      <div data-target style="box-sizing: border-box">block div with box-sizing</div>
+    </div>
+    <div class="case expect-ok" data-rule="inline-no-box-sizing">
+      <div class="label label-ok">
+        inline-no-box-sizing ok: content-box inline style is an intentional reset
+      </div>
+      <span data-target style="box-sizing: content-box">span with box-sizing: content-box</span>
+    </div>
+
     <!-- ===== inline-no-dimensions: width/height on inline ===== -->
     <h2>inline-no-dimensions: width/height on inline elements</h2>
 
