@@ -132,6 +132,7 @@ export const DEFAULT_COMPUTED_STYLES: ElementData['computedStyles'] = {
   scrollSnapStop: 'normal',
   writingMode: 'horizontal-tb',
   borderCollapse: 'separate',
+  borderSpacing: '0px 0px',
   tableLayout: 'auto',
 };
 
