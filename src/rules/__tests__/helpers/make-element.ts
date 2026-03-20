@@ -131,7 +131,6 @@ export const DEFAULT_COMPUTED_STYLES: ElementData['computedStyles'] = {
   scrollPaddingInlineEnd: 'auto',
   scrollSnapAlign: 'none',
   scrollSnapStop: 'normal',
-  writingMode: 'horizontal-tb',
   boxSizing: 'content-box',
   borderCollapse: 'separate',
   borderSpacing: '0px 0px',
