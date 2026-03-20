@@ -32,6 +32,7 @@ const rule: RuleDescriptor = {
   requiredProperties: ['position', 'zIndex', ...STACKING_CONTEXT_PROPERTIES],
   requiredParentProperties: ['display'],
   check(ctx) {
+    if (ctx.isContents) return [];
     const { zIndex, position } = ctx.styles;
 
     if (isDefaultZIndexValue(zIndex)) return [];

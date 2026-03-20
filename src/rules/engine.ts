@@ -11,6 +11,7 @@ import './container-no-grid-props.ts';
 import './container-no-justify-items.ts';
 import './container-no-place.ts';
 import './contents-no-box-props.ts';
+import './contents-no-position.ts';
 import './element-no-table-props.ts';
 import './inline-no-box-sizing.ts';
 import './inline-no-dimensions.ts';
