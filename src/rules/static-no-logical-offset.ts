@@ -18,6 +18,7 @@ const rule: RuleDescriptor = {
   label: 'logical offset on static position',
   requiredProperties: ['position', ...LOGICAL_OFFSET_PROPERTIES.map((p) => p.key)],
   check(ctx) {
+    if (ctx.isContents) return [];
     const { position } = ctx.styles;
     if (position !== 'static') return [];
 

@@ -13,6 +13,7 @@ const rule: RuleDescriptor = {
   label: 'offset on static position',
   requiredProperties: ['position', ...OFFSET_PROPERTIES],
   check(ctx) {
+    if (ctx.isContents) return [];
     const { position } = ctx.styles;
     if (position !== 'static') return [];
 
