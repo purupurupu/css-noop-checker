@@ -39,16 +39,16 @@ CSS Noop Checker finds CSS properties that have **no visible effect** on the ele
 
 ### Container (flex/grid)
 
-| Rule                                                                      | Description                              |
-| ------------------------------------------------------------------------- | ---------------------------------------- |
-| [`container-no-align`](./src/rules/container-no-align.ts)                 | align/justify on non-flex/grid           |
-| [`container-no-align-content`](./src/rules/container-no-align-content.ts) | align-content on single-line flex        |
-| [`container-no-columns`](./src/rules/container-no-columns.ts)             | column properties on flex/grid container |
-| [`container-no-flex-props`](./src/rules/container-no-flex-props.ts)       | flex-direction/wrap on non-flex          |
-| [`container-no-gap`](./src/rules/container-no-gap.ts)                     | gap on non-flex/grid                     |
-| [`container-no-grid-props`](./src/rules/container-no-grid-props.ts)       | grid container props on non-grid         |
-| [`container-no-justify-items`](./src/rules/container-no-justify-items.ts) | justify-items on non-grid                |
-| [`container-no-place`](./src/rules/container-no-place.ts)                 | place-\* on non-flex/grid                |
+| Rule                                                                      | Description                                 |
+| ------------------------------------------------------------------------- | ------------------------------------------- |
+| [`container-no-align`](./src/rules/container-no-align.ts)                 | align/justify on non-flex/grid/multi-column |
+| [`container-no-align-content`](./src/rules/container-no-align-content.ts) | align-content on single-line flex           |
+| [`container-no-columns`](./src/rules/container-no-columns.ts)             | column properties on flex/grid container    |
+| [`container-no-flex-props`](./src/rules/container-no-flex-props.ts)       | flex-direction/wrap on non-flex             |
+| [`container-no-gap`](./src/rules/container-no-gap.ts)                     | gap on non-flex/grid                        |
+| [`container-no-grid-props`](./src/rules/container-no-grid-props.ts)       | grid container props on non-grid            |
+| [`container-no-justify-items`](./src/rules/container-no-justify-items.ts) | justify-items on non-grid                   |
+| [`container-no-place`](./src/rules/container-no-place.ts)                 | place-\* on non-flex/grid                   |
 
 ### Item (flex/grid)
 

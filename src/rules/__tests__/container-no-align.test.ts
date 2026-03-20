@@ -58,4 +58,32 @@ describe('container-no-align: alignment', () => {
     );
     expect(warnings).toHaveLength(0);
   });
+
+  it('skips justify-content on multi-column container (column-count)', () => {
+    const warnings = checkAlignment(
+      createRuleContext(makeElement({ columnCount: '3', justifyContent: 'center' })),
+    );
+    expect(warnings).toHaveLength(0);
+  });
+
+  it('skips justify-content on multi-column container (column-width)', () => {
+    const warnings = checkAlignment(
+      createRuleContext(makeElement({ columnWidth: '200px', justifyContent: 'space-between' })),
+    );
+    expect(warnings).toHaveLength(0);
+  });
+
+  it('still warns align-items on multi-column container', () => {
+    const warnings = checkAlignment(
+      createRuleContext(makeElement({ columnCount: '3', alignItems: 'center' })),
+    );
+    expect(warnings).toHaveLength(1);
+    expect(warnings[0].title).toContain('align-items');
+  });
+
+  it('warns justify-content on block without multicol', () => {
+    const warnings = checkAlignment(createRuleContext(makeElement({ justifyContent: 'center' })));
+    expect(warnings).toHaveLength(1);
+    expect(warnings[0].title).toContain('justify-content');
+  });
 });
