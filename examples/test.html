@@ -1232,22 +1232,26 @@
         >Link (margin-block-start + margin-block-end)</a
       >
     </div>
-    <div class="case expect-warn" data-rule="inline-no-logical-vertical-margin">
+    <div
+      class="case expect-warn"
+      data-rule="inline-no-logical-vertical-margin"
+      style="writing-mode: vertical-rl"
+    >
       <div class="label label-warn">
-        inline-no-logical-vertical-margin warn: vertical-rl writing mode (margin-block is still
-        block-axis)
+        inline-no-logical-vertical-margin warn: inherited vertical-rl writing mode (margin-block is
+        still block-axis)
       </div>
-      <span data-target style="writing-mode: vertical-rl; margin-block-start: 20px"
-        >vertical-rl span</span
-      >
+      <span data-target style="margin-block-start: 20px">vertical-rl span</span>
     </div>
-    <div class="case expect-warn" data-rule="inline-no-logical-vertical-margin">
+    <div
+      class="case expect-warn"
+      data-rule="inline-no-logical-vertical-margin"
+      style="writing-mode: vertical-lr"
+    >
       <div class="label label-warn">
-        inline-no-logical-vertical-margin warn: vertical-lr writing mode
+        inline-no-logical-vertical-margin warn: inherited vertical-lr writing mode
       </div>
-      <span data-target style="writing-mode: vertical-lr; margin-block-end: 15px"
-        >vertical-lr span</span
-      >
+      <span data-target style="margin-block-end: 15px">vertical-lr span</span>
     </div>
 
     <h3>Should NOT warn (false positive check)</h3>
