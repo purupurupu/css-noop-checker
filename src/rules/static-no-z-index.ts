@@ -28,7 +28,7 @@ const STACKING_CONTEXT_PROPERTIES = [
 
 const rule: RuleDescriptor = {
   id: RULE_ID,
-  label: 'z-index on non-stacking context',
+  label: 'z-index on static non-flex/grid element',
   requiredProperties: ['position', 'zIndex', ...STACKING_CONTEXT_PROPERTIES],
   requiredParentProperties: ['display'],
   check(ctx) {
