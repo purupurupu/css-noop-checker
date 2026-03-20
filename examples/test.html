@@ -289,6 +289,38 @@
         <div>Child (horizontally centered, but NOT vertically centered)</div>
       </div>
     </div>
+    <div class="case expect-warn" data-rule="container-no-align">
+      <div class="label label-warn">
+        container-no-align warn: multicol container with align-items
+      </div>
+      <div
+        data-target
+        style="column-count: 3; align-items: center; height: 120px; background: #f0f0f0"
+      >
+        <p>Column 1</p>
+        <p>Column 2</p>
+        <p>Column 3</p>
+      </div>
+    </div>
+    <div class="case expect-warn" data-rule="container-no-align">
+      <div class="label label-warn">
+        container-no-align warn: multicol container with both align-items and justify-content (only
+        align-items warns)
+      </div>
+      <div
+        data-target
+        style="
+          column-count: 2;
+          align-items: center;
+          justify-content: center;
+          height: 120px;
+          background: #f0f0f0;
+        "
+      >
+        <p>Column 1</p>
+        <p>Column 2</p>
+      </div>
+    </div>
 
     <h3>Should NOT warn</h3>
     <div class="case expect-ok" data-rule="container-no-align">
@@ -307,6 +339,19 @@
         style="display: grid; align-items: center; height: 60px; background: #f0f0f0"
       >
         <div>Grid child</div>
+      </div>
+    </div>
+    <div class="case expect-ok" data-rule="container-no-align">
+      <div class="label label-ok">
+        container-no-align ok: multicol container with justify-content
+      </div>
+      <div
+        data-target
+        style="column-count: 3; justify-content: center; height: 120px; background: #f0f0f0"
+      >
+        <p>Column 1 content</p>
+        <p>Column 2 content</p>
+        <p>Column 3 content</p>
       </div>
     </div>
 
