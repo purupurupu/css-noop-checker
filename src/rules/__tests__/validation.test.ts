@@ -114,6 +114,7 @@ describe('isElementData — inlineStyles field validation', () => {
         classList: [],
         computedStyles: { ...VALID_STYLES },
         inlineStyles: {
+          borderCollapse: '',
           borderSpacing: '',
           boxSizing: '',
           emptyCells: '',
