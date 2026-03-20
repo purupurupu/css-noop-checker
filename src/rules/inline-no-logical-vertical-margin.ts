@@ -9,15 +9,12 @@ const warn = (fields: Omit<Warning, 'ruleId' | 'severity'>) => createWarning(RUL
 const rule: RuleDescriptor = {
   id: RULE_ID,
   label: 'margin-block on inline',
-  requiredProperties: ['display', 'writingMode', 'marginBlockStart', 'marginBlockEnd'],
+  requiredProperties: ['display', 'marginBlockStart', 'marginBlockEnd'],
   check(ctx) {
-    const { display, writingMode, marginBlockStart, marginBlockEnd } = ctx.styles;
+    const { display, marginBlockStart, marginBlockEnd } = ctx.styles;
     const { tagName } = ctx.element;
 
     if (display !== 'inline') return [];
-    // In vertical/sideways writing modes, margin-block maps to the horizontal axis,
-    // which does apply to inline elements — only warn in horizontal-tb.
-    if (writingMode !== 'horizontal-tb') return [];
     if (isReplacedInlineElement(tagName)) return [];
 
     const warnings: Warning[] = [];

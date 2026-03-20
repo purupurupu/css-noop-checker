@@ -1277,6 +1277,27 @@
         >Link (margin-block-start + margin-block-end)</a
       >
     </div>
+    <div
+      class="case expect-warn"
+      data-rule="inline-no-logical-vertical-margin"
+      style="writing-mode: vertical-rl"
+    >
+      <div class="label label-warn">
+        inline-no-logical-vertical-margin warn: inherited vertical-rl writing mode (margin-block is
+        still block-axis)
+      </div>
+      <span data-target style="margin-block-start: 20px">vertical-rl span</span>
+    </div>
+    <div
+      class="case expect-warn"
+      data-rule="inline-no-logical-vertical-margin"
+      style="writing-mode: vertical-lr"
+    >
+      <div class="label label-warn">
+        inline-no-logical-vertical-margin warn: inherited vertical-lr writing mode
+      </div>
+      <span data-target style="margin-block-end: 15px">vertical-lr span</span>
+    </div>
 
     <h3>Should NOT warn (false positive check)</h3>
     <div class="case expect-ok" data-rule="inline-no-logical-vertical-margin">
@@ -1303,15 +1324,6 @@
         inline-no-logical-vertical-margin ok: block div accepts margin-block
       </div>
       <div data-target style="margin-block-start: 20px">block div with margin-block-start</div>
-    </div>
-    <div class="case expect-ok" data-rule="inline-no-logical-vertical-margin">
-      <div class="label label-ok">
-        inline-no-logical-vertical-margin ok: vertical writing mode (margin-block maps to
-        horizontal)
-      </div>
-      <span data-target style="writing-mode: vertical-rl; margin-block-start: 20px"
-        >vertical-rl span</span
-      >
     </div>
 
     <!-- ===== inline-no-min-max-dimensions: min/max width/height on inline ===== -->

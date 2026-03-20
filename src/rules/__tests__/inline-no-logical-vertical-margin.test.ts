@@ -10,6 +10,8 @@ function makeElement(
   return _makeElement({ tagName: 'span', display: 'inline', ...overrides });
 }
 
+// margin-block-* is always block-axis per CSS Logical Properties L1,
+// so this rule fires regardless of writing mode.
 describe('inline-no-logical-vertical-margin: margin-block on inline elements', () => {
   it('warns when margin-block-start is set on inline element', () => {
     const warnings = checkInlineLogicalVerticalMargin(
@@ -72,20 +74,6 @@ describe('inline-no-logical-vertical-margin: margin-block on inline elements', (
 
   it('skips when margin-block-start and margin-block-end are 0px', () => {
     const warnings = checkInlineLogicalVerticalMargin(createRuleContext(makeElement({})));
-    expect(warnings).toHaveLength(0);
-  });
-
-  it('skips in vertical writing mode (margin-block maps to horizontal axis)', () => {
-    const warnings = checkInlineLogicalVerticalMargin(
-      createRuleContext(makeElement({ writingMode: 'vertical-rl', marginBlockStart: '20px' })),
-    );
-    expect(warnings).toHaveLength(0);
-  });
-
-  it('skips in vertical-lr writing mode', () => {
-    const warnings = checkInlineLogicalVerticalMargin(
-      createRuleContext(makeElement({ writingMode: 'vertical-lr', marginBlockEnd: '15px' })),
-    );
     expect(warnings).toHaveLength(0);
   });
 });
