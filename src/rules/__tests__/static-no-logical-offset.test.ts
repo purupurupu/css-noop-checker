@@ -95,6 +95,13 @@ describe('static-no-logical-offset', () => {
     expect(warnings[0].property).toBe('inset-block-start');
   });
 
+  it('does not warn on display:contents element', () => {
+    const warnings = checkStaticLogicalOffset(
+      createRuleContext(makeElement({ display: 'contents', insetBlockStart: '10px' })),
+    );
+    expect(warnings).toHaveLength(0);
+  });
+
   it('includes suggestion with positioning alternatives', () => {
     const warnings = checkStaticLogicalOffset(
       createRuleContext(makeElement({ insetBlockStart: '10px' })),

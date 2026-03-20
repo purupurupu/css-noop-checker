@@ -73,6 +73,13 @@ describe('static-no-offset', () => {
     expect(warnings[0].property).toBe('top');
   });
 
+  it('does not warn on display:contents element', () => {
+    const warnings = checkStaticPositionOffset(
+      createRuleContext(makeElement({ display: 'contents', top: '10px' })),
+    );
+    expect(warnings).toHaveLength(0);
+  });
+
   it('includes suggestion with positioning alternatives', () => {
     const warnings = checkStaticPositionOffset(createRuleContext(makeElement({ top: '10px' })));
     expect(warnings[0].suggestion).toContain('relative');

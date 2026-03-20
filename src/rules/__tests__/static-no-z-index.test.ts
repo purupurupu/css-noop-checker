@@ -213,6 +213,13 @@ describe('static-no-z-index', () => {
     expect(warnings).toHaveLength(0);
   });
 
+  it('does not warn on display:contents element', () => {
+    const warnings = checkStaticZIndex(
+      createRuleContext(makeElement({ display: 'contents', zIndex: '10' })),
+    );
+    expect(warnings).toHaveLength(0);
+  });
+
   it('includes suggestion with positioning alternatives', () => {
     const warnings = checkStaticZIndex(createRuleContext(makeElement({ zIndex: '5' })));
     expect(warnings[0].suggestion).toContain('relative');
