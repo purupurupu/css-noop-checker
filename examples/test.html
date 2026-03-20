@@ -945,6 +945,75 @@
       </div>
     </div>
 
+    <!-- ===== contents-no-position: positioning on display:contents ===== -->
+    <h2>contents-no-position: positioning on display:contents</h2>
+
+    <h3>Should warn</h3>
+    <div class="case expect-warn" data-rule="contents-no-position">
+      <div class="label label-warn">contents-no-position warn: position on display:contents</div>
+      <div data-target style="display: contents; position: relative">
+        <span>Position relative on contents</span>
+      </div>
+    </div>
+    <div class="case expect-warn" data-rule="contents-no-position">
+      <div class="label label-warn">contents-no-position warn: top on display:contents</div>
+      <div data-target style="display: contents; top: 10px">
+        <span>Top offset on contents</span>
+      </div>
+    </div>
+    <div class="case expect-warn" data-rule="contents-no-position">
+      <div class="label label-warn">contents-no-position warn: z-index on display:contents</div>
+      <div data-target style="display: contents; z-index: 1">
+        <span>Z-index on contents</span>
+      </div>
+    </div>
+    <div class="case expect-warn" data-rule="contents-no-position">
+      <div class="label label-warn">
+        contents-no-position warn: inset-block-start on display:contents
+      </div>
+      <div data-target style="display: contents; inset-block-start: 10px">
+        <span>Logical offset on contents</span>
+      </div>
+    </div>
+    <div class="case expect-warn" data-rule="contents-no-position">
+      <div class="label label-warn">
+        contents-no-position warn: position relative with top on display:contents
+      </div>
+      <div data-target style="display: contents; position: relative; top: 10px">
+        <span>Combined position + offset on contents</span>
+      </div>
+    </div>
+
+    <h3>Should NOT warn</h3>
+    <div class="case expect-ok" data-rule="contents-no-position">
+      <div class="label label-ok">contents-no-position ok: display:block with position</div>
+      <div data-target style="display: block; position: relative; top: 10px">
+        Block element with positioning
+      </div>
+    </div>
+    <div class="case expect-ok" data-rule="contents-no-position">
+      <div class="label label-ok">
+        contents-no-position ok: display:contents with position static
+      </div>
+      <div data-target style="display: contents; position: static">
+        <span>Contents element with explicit position: static</span>
+      </div>
+    </div>
+    <div class="case expect-ok" data-rule="contents-no-position">
+      <div class="label label-ok">
+        contents-no-position ok: display:contents with no positioning
+      </div>
+      <div data-target style="display: contents">
+        <span>Contents element with default positioning</span>
+      </div>
+    </div>
+    <div class="case expect-ok" data-rule="contents-no-position">
+      <div class="label label-ok">contents-no-position ok: positioned non-contents element</div>
+      <div data-target style="display: block; position: absolute; top: 10px; z-index: 2">
+        Positioned block element
+      </div>
+    </div>
+
     <!-- ===== element-no-table-props: table props on non-table elements ===== -->
     <h2>element-no-table-props: table props on non-table elements</h2>
 
