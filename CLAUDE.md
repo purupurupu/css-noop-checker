@@ -67,7 +67,8 @@ When adding a new rule, pick a descriptive `target` and `qualifier` — avoid nu
 5. Add "should warn" and "should NOT warn" test cases to `examples/test.html` (keep alphabetical order by rule ID)
 6. Update `EXPECTED_CASE_COUNT` in `e2e/integration/rules-against-real-styles.test.ts`
 7. Update the Detected Patterns table in `README.md`
-8. Run `pnpm test` and `pnpm test:e2e` to verify
+8. Add `docs/rules/<rule-id>.md` — explain why the property combination is a no-op, with examples (see existing docs for the template)
+9. Run `pnpm test` and `pnpm test:e2e` to verify
 
 #### test.html Test Case Format
 
