@@ -8,7 +8,7 @@ const warn = (fields: Omit<Warning, 'ruleId' | 'severity'>) => createWarning(RUL
 
 const rule: RuleDescriptor = {
   id: RULE_ID,
-  label: 'justify-self outside grid layout',
+  label: 'justify-self on non-grid, non-positioned element',
   requiredProperties: ['justifySelf', 'position'],
   requiredParentProperties: ['display'],
   check(ctx) {

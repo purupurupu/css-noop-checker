@@ -52,7 +52,7 @@ const ALL_PADDING_KEYS = PADDING_PAIRS.flatMap((p) => [p.physical.key, p.logical
 
 const rule: RuleDescriptor = {
   id: RULE_ID,
-  label: 'no-op padding on table internals',
+  label: 'padding on table internals',
   requiredProperties: ['display', ...ALL_PADDING_KEYS],
   check(ctx) {
     const { display } = ctx.styles;
