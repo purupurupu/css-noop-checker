@@ -7,32 +7,42 @@ interface WarningListProps {
   status: AnalysisStatus;
 }
 
+const summaryTextByStatus: Record<string, string> = {
+  error: 'Analysis failed. Try selecting another element.',
+  analyzing: 'Analyzing...',
+};
+
 export function WarningList({ warnings, status }: WarningListProps) {
-  if (status === 'no-selection') {
-    return null;
-  }
+  const isNoSelection = status === 'no-selection';
+  const showCards = status === 'ready' && warnings.length > 0;
 
-  if (status === 'error') {
-    return (
-      <div className="warning-list__message warning-list__message--error">
-        Analysis failed. Try selecting another element.
-      </div>
-    );
-  }
+  const summaryText = isNoSelection
+    ? ''
+    : (summaryTextByStatus[status] ??
+      (warnings.length === 0
+        ? 'No issues detected.'
+        : `${warnings.length} issue${warnings.length === 1 ? '' : 's'} detected.`));
 
-  if (status === 'analyzing') {
-    return <div className="warning-list__message">Analyzing...</div>;
-  }
-
-  if (warnings.length === 0) {
-    return <div className="warning-list__message">No issues detected.</div>;
-  }
+  const messageClassName = [
+    'warning-list__message',
+    status === 'error' && 'warning-list__message--error',
+    (isNoSelection || showCards) && 'warning-list__message--sr-only',
+  ]
+    .filter(Boolean)
+    .join(' ');
 
   return (
-    <div className="warning-list">
-      {warnings.map((w) => (
-        <WarningCard key={`${w.ruleId}-${w.property}`} warning={w} />
-      ))}
-    </div>
+    <>
+      <div role="status" aria-live="polite" className="warning-list__live-region">
+        <div className={messageClassName}>{summaryText}</div>
+      </div>
+      {showCards && (
+        <div className="warning-list">
+          {warnings.map((w) => (
+            <WarningCard key={`${w.ruleId}-${w.property}`} warning={w} />
+          ))}
+        </div>
+      )}
+    </>
   );
 }
