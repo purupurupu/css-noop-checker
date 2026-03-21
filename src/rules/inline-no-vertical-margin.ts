@@ -1,5 +1,5 @@
 import { type RuleDescriptor, type Warning, createWarning } from './types.ts';
-import { isDefaultMarginValue, isReplacedInlineElement } from './context.ts';
+import { isDefaultMarginValue, isReplacedInlineElement, isVerticalWritingMode } from './context.ts';
 import { registerRule } from './registry.ts';
 
 const RULE_ID = 'inline-no-vertical-margin' as const;
@@ -9,13 +9,16 @@ const warn = (fields: Omit<Warning, 'ruleId' | 'severity'>) => createWarning(RUL
 const rule: RuleDescriptor = {
   id: RULE_ID,
   label: 'vertical margin on inline',
-  requiredProperties: ['display', 'marginTop', 'marginBottom'],
+  requiredProperties: ['display', 'writingMode', 'marginTop', 'marginBottom'],
   check(ctx) {
-    const { display, marginTop, marginBottom } = ctx.styles;
+    const { display, writingMode, marginTop, marginBottom } = ctx.styles;
     const { tagName } = ctx.element;
 
     if (display !== 'inline') return [];
     if (isReplacedInlineElement(tagName)) return [];
+    // In vertical writing modes, margin-top/margin-bottom map to inline-axis
+    // margins which DO apply to inline elements. Skip to avoid false positives.
+    if (isVerticalWritingMode(writingMode)) return [];
 
     const warnings: Warning[] = [];
 
