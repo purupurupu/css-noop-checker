@@ -2612,7 +2612,6 @@
       </div>
       <div data-target>no scroll-padding</div>
     </div>
-
     <!-- ===== scroll-snap-no-align-without-type: scroll-snap child properties without scroll-snap-type on parent ===== -->
     <h2>
       scroll-snap-no-align-without-type: scroll-snap child properties without scroll-snap-type on
@@ -2917,6 +2916,36 @@
     <div class="case expect-ok" data-rule="static-no-z-index">
       <div class="label label-ok">static-no-z-index ok: z-index auto (default, no check)</div>
       <div data-target style="z-index: auto">z-index: auto — no warning expected</div>
+    </div>
+    <div class="case expect-ok" data-rule="static-no-z-index">
+      <div class="label label-ok">static-no-z-index ok: rotate creates stacking context</div>
+      <div data-target style="rotate: 45deg; z-index: 5">
+        rotate + z-index (valid stacking context)
+      </div>
+    </div>
+    <div class="case expect-ok" data-rule="static-no-z-index">
+      <div class="label label-ok">static-no-z-index ok: scale creates stacking context</div>
+      <div data-target style="scale: 1.5; z-index: 5">scale + z-index (valid stacking context)</div>
+    </div>
+    <div class="case expect-ok" data-rule="static-no-z-index">
+      <div class="label label-ok">static-no-z-index ok: translate creates stacking context</div>
+      <div data-target style="translate: 0 100px; z-index: 5">
+        translate + z-index (valid stacking context)
+      </div>
+    </div>
+    <div class="case expect-ok" data-rule="static-no-z-index">
+      <div class="label label-ok">
+        static-no-z-index ok: content-visibility auto creates stacking context
+      </div>
+      <div data-target style="content-visibility: auto; z-index: 5">
+        content-visibility: auto + z-index (valid stacking context)
+      </div>
+    </div>
+    <div class="case expect-ok" data-rule="static-no-z-index">
+      <div class="label label-ok">static-no-z-index ok: offset-path creates stacking context</div>
+      <div data-target style="offset-path: circle(50%); z-index: 5">
+        offset-path + z-index (valid stacking context)
+      </div>
     </div>
 
     <!-- ===== table-no-margin: margin on internal table elements ===== -->
