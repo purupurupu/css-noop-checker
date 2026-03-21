@@ -358,7 +358,11 @@ body {
 .scan-violation-row:focus-visible {
   background: var(--bg-hover);
   border-left-color: var(--warning-color);
-  outline: none;
+}
+
+.scan-violation-row:focus-visible {
+  outline: 2px solid var(--text-element);
+  outline-offset: 1px;
 }
 
 .scan-violation-row__selector {
