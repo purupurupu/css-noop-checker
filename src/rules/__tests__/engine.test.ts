@@ -25,7 +25,7 @@ describe('analyzeElement (integration)', () => {
       makeElement({
         rowGap: '10px',
         alignItems: 'center',
-        placeContent: 'center',
+        placeItems: 'center',
       }),
     );
     expect(warnings.length).toBeGreaterThanOrEqual(3);

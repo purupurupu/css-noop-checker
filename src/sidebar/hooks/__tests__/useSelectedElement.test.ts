@@ -113,7 +113,6 @@ describe('isElementData', () => {
       'justifyContent',
       'justifyItems',
       'placeItems',
-      'placeContent',
       'columnCount',
       'columnWidth',
       'position',

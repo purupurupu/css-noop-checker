@@ -3,66 +3,15 @@ import { checkPlace } from '../container-no-place.ts';
 import { createRuleContext } from '../context.ts';
 import { makeElement } from './helpers/make-element.ts';
 
-describe('container-no-place: place-content', () => {
-  it('warns when place-content is set on block element', () => {
+describe('container-no-place: place-content not checked (align-content works in block layout)', () => {
+  it('does not warn when place-content is set on block element', () => {
     const warnings = checkPlace(createRuleContext(makeElement({ placeContent: 'center' })));
-    expect(warnings).toHaveLength(1);
-    expect(warnings[0].ruleId).toBe('container-no-place');
-    expect(warnings[0].title).toContain('place-content');
+    expect(warnings).toHaveLength(0);
   });
 
-  it('warns when place-content is set on inline element', () => {
+  it('does not warn when place-content is set on inline element', () => {
     const warnings = checkPlace(
       createRuleContext(makeElement({ display: 'inline', placeContent: 'center' })),
-    );
-    expect(warnings).toHaveLength(1);
-    expect(warnings[0].details).toContain('inline');
-  });
-
-  it('warns when place-content is set on table element', () => {
-    const warnings = checkPlace(
-      createRuleContext(makeElement({ display: 'table', placeContent: 'center' })),
-    );
-    expect(warnings).toHaveLength(1);
-    expect(warnings[0].details).toContain('table');
-  });
-
-  it('skips grid containers', () => {
-    const warnings = checkPlace(
-      createRuleContext(makeElement({ display: 'grid', placeContent: 'center' })),
-    );
-    expect(warnings).toHaveLength(0);
-  });
-
-  it('skips flex containers', () => {
-    const warnings = checkPlace(
-      createRuleContext(makeElement({ display: 'flex', placeContent: 'center' })),
-    );
-    expect(warnings).toHaveLength(0);
-  });
-
-  it('skips inline-flex containers', () => {
-    const warnings = checkPlace(
-      createRuleContext(makeElement({ display: 'inline-flex', placeContent: 'start' })),
-    );
-    expect(warnings).toHaveLength(0);
-  });
-
-  it('skips inline-grid containers', () => {
-    const warnings = checkPlace(
-      createRuleContext(makeElement({ display: 'inline-grid', placeContent: 'end' })),
-    );
-    expect(warnings).toHaveLength(0);
-  });
-
-  it('skips when values are normal', () => {
-    const warnings = checkPlace(createRuleContext(makeElement({})));
-    expect(warnings).toHaveLength(0);
-  });
-
-  it('skips display: contents elements', () => {
-    const warnings = checkPlace(
-      createRuleContext(makeElement({ display: 'contents', placeContent: 'center' })),
     );
     expect(warnings).toHaveLength(0);
   });
@@ -128,10 +77,19 @@ describe('container-no-place: place-items', () => {
 });
 
 describe('container-no-place: edge cases', () => {
-  it('warns for both place-content and place-items on block', () => {
+  it('only warns for place-items when both set on block (place-content is not checked)', () => {
     const warnings = checkPlace(
       createRuleContext(makeElement({ placeContent: 'center', placeItems: 'center' })),
     );
-    expect(warnings).toHaveLength(2);
+    expect(warnings).toHaveLength(1);
+    expect(warnings[0].property).toBe('place-items');
+  });
+
+  it('still warns place-items on multi-column container', () => {
+    const warnings = checkPlace(
+      createRuleContext(makeElement({ columnCount: '3', placeItems: 'center' })),
+    );
+    expect(warnings).toHaveLength(1);
+    expect(warnings[0].property).toBe('place-items');
   });
 });

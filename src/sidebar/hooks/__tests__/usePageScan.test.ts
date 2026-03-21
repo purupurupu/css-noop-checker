@@ -55,7 +55,7 @@ describe('groupByRule', () => {
 
   it('sorts groups by rule ID', () => {
     const elements = [
-      makeScanElement(0, 'div.z', { placeContent: 'center' }),
+      makeScanElement(0, 'div.z', { placeItems: 'center' }),
       makeScanElement(1, 'div.a', { rowGap: '10px' }),
       makeScanElement(2, 'span.b', { tagName: 'span', display: 'inline', width: '50px' }),
     ];
@@ -66,7 +66,7 @@ describe('groupByRule', () => {
 
   it('places element in multiple groups when it triggers multiple rules', () => {
     const elements = [
-      makeScanElement(0, 'div.multi', { alignItems: 'center', placeContent: 'center' }),
+      makeScanElement(0, 'div.multi', { alignItems: 'center', placeItems: 'center' }),
     ];
     const groups = groupByRule(elements);
     expect(groups).toHaveLength(2);
