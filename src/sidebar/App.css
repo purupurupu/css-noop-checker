@@ -260,6 +260,13 @@ body {
   color: var(--text);
 }
 
+.scan-summary__clear:focus-visible {
+  color: var(--text);
+  background: var(--bg-hover);
+  outline: 2px solid var(--text-element);
+  outline-offset: 1px;
+}
+
 /* Scan rule group */
 .scan-rule-group__header {
   display: flex;
@@ -279,6 +286,13 @@ body {
 
 .scan-rule-group__header:hover {
   color: var(--text-bright);
+}
+
+.scan-rule-group__header:focus-visible {
+  color: var(--text-bright);
+  background: var(--bg-hover);
+  outline: 2px solid var(--text-element);
+  outline-offset: 1px;
 }
 
 .scan-rule-group__chevron {
