@@ -52,6 +52,13 @@ describe('inline-no-dimensions: inline dimensions', () => {
     expect(warnings).toHaveLength(0);
   });
 
+  it('skips replaced inline elements (svg)', () => {
+    const warnings = checkInlineDimensions(
+      createRuleContext(makeElement({ tagName: 'svg', width: '200px', height: '100px' })),
+    );
+    expect(warnings).toHaveLength(0);
+  });
+
   it('skips non-inline display', () => {
     const warnings = checkInlineDimensions(
       createRuleContext(makeElement({ display: 'inline-block', width: '200px' })),
