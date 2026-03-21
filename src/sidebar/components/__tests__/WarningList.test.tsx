@@ -17,9 +17,11 @@ const makeWarning = (overrides: Partial<Warning> = {}): Warning => ({
 });
 
 describe('WarningList', () => {
-  it('returns null when status is no-selection', () => {
+  it('renders empty live region when status is no-selection', () => {
     const { container } = render(<WarningList warnings={[]} status="no-selection" />);
-    expect(container.innerHTML).toBe('');
+    const liveRegion = container.querySelector('[role="status"]');
+    expect(liveRegion).not.toBeNull();
+    expect(liveRegion!.textContent).toBe('');
   });
 
   it('shows error message when status is error', () => {
@@ -35,6 +37,26 @@ describe('WarningList', () => {
   it('shows "No issues detected" when status is ready with empty warnings', () => {
     render(<WarningList warnings={[]} status="ready" />);
     screen.getByText('No issues detected.');
+  });
+
+  it('has role="status" on error message', () => {
+    const { container } = render(<WarningList warnings={[]} status="error" />);
+    expect(container.querySelector('[role="status"]')).not.toBeNull();
+  });
+
+  it('has role="status" on analyzing message', () => {
+    const { container } = render(<WarningList warnings={[]} status="analyzing" />);
+    expect(container.querySelector('[role="status"]')).not.toBeNull();
+  });
+
+  it('has role="status" on no-issues message', () => {
+    const { container } = render(<WarningList warnings={[]} status="ready" />);
+    expect(container.querySelector('[role="status"]')).not.toBeNull();
+  });
+
+  it('has role="status" on warning list container', () => {
+    const { container } = render(<WarningList warnings={[makeWarning()]} status="ready" />);
+    expect(container.querySelector('[role="status"]')).not.toBeNull();
   });
 
   it('renders WarningCard for each warning when ready with warnings', () => {

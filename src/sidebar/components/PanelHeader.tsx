@@ -41,7 +41,10 @@ export function PanelHeader({
 
   return (
     <header className="panel-header">
-      <code className="panel-header__selector">
+      <code
+        className="panel-header__selector"
+        title={elementData ? formatSelector(elementData) : undefined}
+      >
         {elementData ? formatSelector(elementData) : 'No element selected'}
       </code>
       <div className="panel-header__actions">

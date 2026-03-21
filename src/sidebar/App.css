@@ -109,6 +109,23 @@ body {
   color: var(--error-color);
 }
 
+.warning-list__live-region {
+  position: relative;
+  overflow: hidden;
+}
+
+.warning-list__message--sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+}
+
 /* Warning card */
 .warning-card {
   background: var(--bg-card);
@@ -277,6 +294,13 @@ body {
   color: var(--text);
 }
 
+.scan-summary__clear:focus-visible {
+  color: var(--text);
+  background: var(--bg-hover);
+  outline: 2px solid var(--text-element);
+  outline-offset: 1px;
+}
+
 /* Scan rule group */
 .scan-rule-group__header {
   display: flex;
@@ -296,6 +320,13 @@ body {
 
 .scan-rule-group__header:hover {
   color: var(--text-bright);
+}
+
+.scan-rule-group__header:focus-visible {
+  color: var(--text-bright);
+  background: var(--bg-hover);
+  outline: 2px solid var(--text-element);
+  outline-offset: 1px;
 }
 
 .scan-rule-group__chevron {
@@ -361,7 +392,11 @@ body {
 .scan-violation-row:focus-visible {
   background: var(--bg-hover);
   border-left-color: var(--warning-color);
-  outline: none;
+}
+
+.scan-violation-row:focus-visible {
+  outline: 2px solid var(--text-element);
+  outline-offset: 1px;
 }
 
 .scan-violation-row__selector {
