@@ -1,15 +1,16 @@
 const CONTAIN_RE = /\b(layout|paint|strict|content)\b/;
 const WILL_CHANGE_RE =
-  /\b(transform|transform-style|opacity|filter|backdrop-filter|perspective|clip-path|z-index|isolation|mix-blend-mode|mask|contain)\b/;
+  /\b(transform|rotate|scale|translate|transform-style|opacity|filter|backdrop-filter|perspective|clip-path|z-index|isolation|mix-blend-mode|mask|contain|offset-path|content-visibility)\b/;
 
 /**
  * Returns true when computed styles indicate the element likely creates a stacking
  * context via CSS properties (callers handle position and flex/grid item status
  * separately).
  *
- * Covers the most common triggers: opacity, transform, filter, backdrop-filter,
- * perspective, clip-path, isolation, mix-blend-mode, contain, mask,
- * container-type, transform-style, and will-change.
+ * Covers the most common triggers: opacity, transform, rotate, scale, translate,
+ * filter, backdrop-filter, perspective, clip-path, isolation, mix-blend-mode,
+ * contain, mask, container-type, offset-path, content-visibility, transform-style,
+ * and will-change.
  */
 export function isStackingContext(styles: Record<string, string>): boolean {
   const opacity = styles['opacity'];
@@ -17,6 +18,16 @@ export function isStackingContext(styles: Record<string, string>): boolean {
 
   const transform = styles['transform'];
   if (transform !== undefined && transform !== 'none') return true;
+
+  // CSS Transforms Level 2 individual properties also create stacking contexts
+  const rotate = styles['rotate'];
+  if (rotate !== undefined && rotate !== 'none') return true;
+
+  const scale = styles['scale'];
+  if (scale !== undefined && scale !== 'none') return true;
+
+  const translate = styles['translate'];
+  if (translate !== undefined && translate !== 'none') return true;
 
   const filter = styles['filter'];
   if (filter !== undefined && filter !== 'none') return true;
@@ -40,6 +51,14 @@ export function isStackingContext(styles: Record<string, string>): boolean {
 
   const containerType = styles['containerType'];
   if (containerType !== undefined && containerType !== 'normal') return true;
+
+  // offset-path (CSS Motion Path) creates a stacking context
+  const offsetPath = styles['offsetPath'];
+  if (offsetPath !== undefined && offsetPath !== 'none') return true;
+
+  // content-visibility: auto or hidden creates a stacking context (CSS Containment Level 2)
+  const contentVisibility = styles['contentVisibility'];
+  if (contentVisibility === 'auto' || contentVisibility === 'hidden') return true;
 
   // transform-style: preserve-3d creates a stacking context
   if (styles['transformStyle'] === 'preserve-3d') return true;

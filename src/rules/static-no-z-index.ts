@@ -14,6 +14,9 @@ const warn = (fields: Omit<Warning, 'ruleId' | 'severity'>) => createWarning(RUL
 const STACKING_CONTEXT_PROPERTIES = [
   'opacity',
   'transform',
+  'rotate',
+  'scale',
+  'translate',
   'filter',
   'backdropFilter',
   'perspective',
@@ -25,6 +28,8 @@ const STACKING_CONTEXT_PROPERTIES = [
   'contain',
   'willChange',
   'transformStyle',
+  'offsetPath',
+  'contentVisibility',
 ] as const;
 
 const rule: RuleDescriptor = {
