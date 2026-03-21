@@ -1,10 +1,10 @@
 # item-no-justify-self
 
-Detects `justify-self` on non-grid, non-positioned elements where it has no effect.
+Detects `justify-self` on elements where it has no effect (non-grid, non-flex, non-positioned).
 
 ## Why this is a no-op
 
-The `justify-self` property only applies to grid items and absolutely/fixed-positioned elements. In a block or flex formatting context, `justify-self` is ignored by the browser. Flex items should use `margin` or container-level `justify-content` instead.
+The `justify-self` property applies to grid items, flex items (since Chrome 129), and absolutely/fixed-positioned elements. In a block formatting context, `justify-self` is ignored by the browser.
 
 ## Properties involved
 
@@ -17,9 +17,9 @@ The `justify-self` property only applies to grid items and absolutely/fixed-posi
 ### Warn
 
 ```html
-<!-- Parent is not a grid container -->
-<div style="display: flex">
-  <div style="justify-self: center">No effect on flex items</div>
+<!-- Parent is not a grid/flex container and element is not positioned -->
+<div>
+  <div style="justify-self: center">No effect in block layout</div>
 </div>
 ```
 
@@ -30,8 +30,13 @@ The `justify-self` property only applies to grid items and absolutely/fixed-posi
 <div style="display: grid">
   <div style="justify-self: center">Works in grid</div>
 </div>
+
+<!-- Parent is a flex container (supported since Chrome 129) -->
+<div style="display: flex">
+  <div style="justify-self: center">Works in flex</div>
+</div>
 ```
 
 ## Common scenarios
 
-Developers often set `justify-self` expecting it to work like `align-self` in flexbox. Unlike `align-self`, `justify-self` is only recognized by grid layout and positioned elements.
+Developers may set `justify-self` on a child of a block container expecting it to work like in flex or grid layout.
