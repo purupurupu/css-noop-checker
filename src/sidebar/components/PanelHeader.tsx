@@ -1,6 +1,6 @@
 import type { ElementData, Warning } from '../../rules/types.ts';
 import type { AnalysisStatus } from '../hooks/useSelectedElement.ts';
-import type { ScanStatus } from '../types.ts';
+import type { ScanStatus, ViewMode } from '../types.ts';
 import { CopyJsonButton } from './CopyJsonButton.tsx';
 
 interface PanelHeaderProps {
@@ -8,6 +8,7 @@ interface PanelHeaderProps {
   status: AnalysisStatus;
   scanStatus: ScanStatus;
   warnings: Warning[];
+  viewMode: ViewMode;
   onScan: () => void;
 }
 
@@ -30,10 +31,13 @@ export function PanelHeader({
   status,
   scanStatus,
   warnings,
+  viewMode,
   onScan,
 }: PanelHeaderProps) {
   const isScanning = scanStatus === 'scanning';
-  const showCopyJson = status === 'ready' && scanStatus !== 'done' && warnings.length > 0;
+  // Allowlist: only show in element view. New ViewModes hide the button by default.
+  const showScanButton = viewMode === 'element';
+  const showCopyJson = viewMode === 'element' && status === 'ready' && warnings.length > 0;
 
   return (
     <header className="panel-header">
@@ -45,14 +49,16 @@ export function PanelHeader({
           {STATUS_LABELS[status]}
         </span>
         {showCopyJson && <CopyJsonButton data={warnings} />}
-        <button
-          className={`panel-action-button${isScanning ? ' panel-action-button--scanning' : ''}`}
-          onClick={onScan}
-          disabled={isScanning}
-          type="button"
-        >
-          {isScanning ? 'Scanning\u2026' : 'Scan Page'}
-        </button>
+        {showScanButton && (
+          <button
+            className={`panel-action-button${isScanning ? ' panel-action-button--scanning' : ''}`}
+            onClick={onScan}
+            disabled={isScanning}
+            type="button"
+          >
+            {isScanning ? 'Scanning\u2026' : 'Scan Page'}
+          </button>
+        )}
       </div>
     </header>
   );
