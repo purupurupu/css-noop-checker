@@ -1,10 +1,12 @@
 # container-no-justify-items
 
-Detects `justify-items` on non-grid containers.
+Detects `justify-items` on non-flex/grid containers where it has no effect.
 
 ## Why this is a no-op
 
-The `justify-items` property sets the default `justify-self` for all items inside a container, but it only has a visible effect in grid layout. In flex layout, inline alignment of items along the main axis is controlled by `justify-content`, not `justify-items`. On block-level elements, `justify-items` is similarly ignored since there is no inline-axis item alignment mechanism.
+The `justify-items` property sets the default `justify-self` for all items inside a container. It has a visible effect in both grid and flex layout (flex support since Chrome 129). On block-level elements, `justify-items` is ignored since there is no inline-axis item alignment mechanism.
+
+**Exception:** The `legacy` keyword (e.g. `justify-items: legacy center`) is always meaningful — it propagates `justify-self` resolution to descendants regardless of the container's display type.
 
 ## Properties involved
 
@@ -16,15 +18,16 @@ The `justify-items` property sets the default `justify-self` for all items insid
 ### Warn
 
 ```html
-<div style="display: flex; justify-items: center">Items not centered by this property</div>
+<div style="justify-items: center">No effect on block container</div>
 ```
 
 ### OK
 
 ```html
 <div style="display: grid; justify-items: center">Grid items centered horizontally</div>
+<div style="display: flex; justify-items: center">Flex items use justify-self: center</div>
 ```
 
 ## Common scenarios
 
-Developers often set `justify-items` on flex containers expecting it to center items, confusing it with `justify-content`. On flex containers, use `justify-content` for main-axis distribution instead.
+Developers sometimes set `justify-items` on block-level elements expecting it to center content.
