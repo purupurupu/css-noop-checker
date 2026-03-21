@@ -227,6 +227,69 @@ describe('static-no-z-index', () => {
     expect(warnings).toHaveLength(0);
   });
 
+  it('does not warn when rotate is set (creates stacking context)', () => {
+    const warnings = checkStaticZIndex(
+      createRuleContext(makeElement({ zIndex: '10', rotate: '45deg' })),
+    );
+    expect(warnings).toHaveLength(0);
+  });
+
+  it('does not warn when scale is set (creates stacking context)', () => {
+    const warnings = checkStaticZIndex(
+      createRuleContext(makeElement({ zIndex: '10', scale: '1.5' })),
+    );
+    expect(warnings).toHaveLength(0);
+  });
+
+  it('does not warn when translate is set (creates stacking context)', () => {
+    const warnings = checkStaticZIndex(
+      createRuleContext(makeElement({ zIndex: '10', translate: '0 100px' })),
+    );
+    expect(warnings).toHaveLength(0);
+  });
+
+  it('does not warn when will-change is rotate (creates stacking context)', () => {
+    const warnings = checkStaticZIndex(
+      createRuleContext(makeElement({ zIndex: '10', willChange: 'rotate' })),
+    );
+    expect(warnings).toHaveLength(0);
+  });
+
+  it('does not warn when will-change is scale (creates stacking context)', () => {
+    const warnings = checkStaticZIndex(
+      createRuleContext(makeElement({ zIndex: '10', willChange: 'scale' })),
+    );
+    expect(warnings).toHaveLength(0);
+  });
+
+  it('does not warn when will-change is translate (creates stacking context)', () => {
+    const warnings = checkStaticZIndex(
+      createRuleContext(makeElement({ zIndex: '10', willChange: 'translate' })),
+    );
+    expect(warnings).toHaveLength(0);
+  });
+
+  it('does not warn when content-visibility is auto (creates stacking context)', () => {
+    const warnings = checkStaticZIndex(
+      createRuleContext(makeElement({ zIndex: '10', contentVisibility: 'auto' })),
+    );
+    expect(warnings).toHaveLength(0);
+  });
+
+  it('does not warn when content-visibility is hidden (creates stacking context)', () => {
+    const warnings = checkStaticZIndex(
+      createRuleContext(makeElement({ zIndex: '10', contentVisibility: 'hidden' })),
+    );
+    expect(warnings).toHaveLength(0);
+  });
+
+  it('does not warn when offset-path is set (creates stacking context)', () => {
+    const warnings = checkStaticZIndex(
+      createRuleContext(makeElement({ zIndex: '10', offsetPath: 'circle(50%)' })),
+    );
+    expect(warnings).toHaveLength(0);
+  });
+
   it('does not warn on display:contents element', () => {
     const warnings = checkStaticZIndex(
       createRuleContext(makeElement({ display: 'contents', zIndex: '10' })),
