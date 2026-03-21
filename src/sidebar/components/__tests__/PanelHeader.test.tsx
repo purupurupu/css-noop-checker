@@ -3,7 +3,7 @@ import { describe, it, expect, vi, beforeEach, afterEach } from 'vitest';
 import { render, screen, fireEvent, cleanup } from '@testing-library/react';
 import type { ElementData, Warning } from '../../../rules/types.ts';
 import type { AnalysisStatus } from '../../hooks/useSelectedElement.ts';
-import type { ScanStatus } from '../../types.ts';
+import type { ScanStatus, ViewMode } from '../../types.ts';
 import { PanelHeader } from '../PanelHeader.tsx';
 
 afterEach(cleanup);
@@ -28,6 +28,7 @@ describe('PanelHeader', () => {
     status,
     scanStatus,
     warnings,
+    viewMode: 'element' as ViewMode,
     onScan: vi.fn(),
   };
 
@@ -122,6 +123,16 @@ describe('PanelHeader', () => {
     expect(onScan).not.toHaveBeenCalled();
   });
 
+  it('hides Scan Page button when viewMode is "scan"', () => {
+    render(<PanelHeader {...defaultProps} viewMode="scan" />);
+    expect(screen.queryByText('Scan Page')).toBeNull();
+  });
+
+  it('hides Scan Page button when viewMode is "scan-detail"', () => {
+    render(<PanelHeader {...defaultProps} viewMode="scan-detail" />);
+    expect(screen.queryByText('Scan Page')).toBeNull();
+  });
+
   describe('Copy JSON button visibility', () => {
     const warning: Warning = {
       ruleId: 'inline-no-dimensions',
@@ -132,28 +143,34 @@ describe('PanelHeader', () => {
       suggestion: 'Use display: inline-block or block',
     };
 
-    it('shows Copy JSON when status=ready, scanStatus!=done, and warnings exist', () => {
-      render(
-        <PanelHeader {...defaultProps} status="ready" scanStatus="idle" warnings={[warning]} />,
-      );
+    it('shows Copy JSON when viewMode=element, status=ready, and warnings exist', () => {
+      render(<PanelHeader {...defaultProps} status="ready" warnings={[warning]} />);
       expect(screen.queryByLabelText('Copy JSON to clipboard')).not.toBeNull();
     });
 
     it('hides Copy JSON when warnings are empty', () => {
-      render(<PanelHeader {...defaultProps} status="ready" scanStatus="idle" warnings={[]} />);
+      render(<PanelHeader {...defaultProps} status="ready" warnings={[]} />);
       expect(screen.queryByLabelText('Copy JSON to clipboard')).toBeNull();
     });
 
     it('hides Copy JSON when status is not ready', () => {
-      render(
-        <PanelHeader {...defaultProps} status="analyzing" scanStatus="idle" warnings={[warning]} />,
-      );
+      render(<PanelHeader {...defaultProps} status="analyzing" warnings={[warning]} />);
       expect(screen.queryByLabelText('Copy JSON to clipboard')).toBeNull();
     });
 
-    it('hides Copy JSON when scanStatus is done (scan results have their own button)', () => {
+    it('hides Copy JSON when viewMode is scan', () => {
+      render(<PanelHeader {...defaultProps} viewMode="scan" status="ready" warnings={[warning]} />);
+      expect(screen.queryByLabelText('Copy JSON to clipboard')).toBeNull();
+    });
+
+    it('hides Copy JSON when viewMode is scan-detail', () => {
       render(
-        <PanelHeader {...defaultProps} status="ready" scanStatus="done" warnings={[warning]} />,
+        <PanelHeader
+          {...defaultProps}
+          viewMode="scan-detail"
+          status="ready"
+          warnings={[warning]}
+        />,
       );
       expect(screen.queryByLabelText('Copy JSON to clipboard')).toBeNull();
     });

@@ -8,9 +8,7 @@ import { WarningList } from './components/WarningList.tsx';
 import { ScanResultsPanel } from './components/ScanResultsPanel.tsx';
 import { ScanViolationDetailView } from './components/ScanViolationDetailView.tsx';
 import { PanelFooter } from './components/PanelFooter.tsx';
-import type { ScanViolation } from './types.ts';
-
-type ViewMode = 'element' | 'scan' | 'scan-detail';
+import type { ScanViolation, ViewMode } from './types.ts';
 
 function App() {
   const { data, status } = useSelectedElement();
@@ -92,6 +90,7 @@ function App() {
         status={status}
         scanStatus={scanStatus}
         warnings={warnings}
+        viewMode={viewMode}
         onScan={handleScan}
       />
       {renderContent()}

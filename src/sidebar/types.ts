@@ -1,5 +1,7 @@
 import type { ElementData, RuleId, Warning } from '../rules/types.ts';
 
+export type ViewMode = 'element' | 'scan' | 'scan-detail';
+
 export type ScanStatus = 'idle' | 'scanning' | 'done' | 'error';
 
 /** Element data collected during a page-wide scan, extended with scan-specific fields. */
