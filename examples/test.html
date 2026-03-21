@@ -610,8 +610,8 @@
       </div>
     </div>
 
-    <!-- ===== container-no-justify-items: justify-items on non-grid ===== -->
-    <h2>container-no-justify-items: justify-items on non-grid containers</h2>
+    <!-- ===== container-no-justify-items: justify-items on non-flex/grid ===== -->
+    <h2>container-no-justify-items: justify-items on non-flex/grid containers</h2>
 
     <h3>Should warn</h3>
     <div class="case expect-warn" data-rule="container-no-justify-items">
@@ -624,20 +624,20 @@
     </div>
     <div class="case expect-warn" data-rule="container-no-justify-items">
       <div class="label label-warn">
-        container-no-justify-items warn: display:flex with justify-items
-      </div>
-      <div data-target style="display: flex; justify-items: center">
-        <div>Child</div>
-      </div>
-    </div>
-    <div class="case expect-warn" data-rule="container-no-justify-items">
-      <div class="label label-warn">
         container-no-justify-items warn: display:inline with justify-items
       </div>
       <span data-target style="justify-items: center">Child</span>
     </div>
 
     <h3>Should NOT warn</h3>
+    <div class="case expect-ok" data-rule="container-no-justify-items">
+      <div class="label label-ok">
+        container-no-justify-items ok: flex container with justify-items (works since Chrome 129)
+      </div>
+      <div data-target style="display: flex; justify-items: center">
+        <div>Child</div>
+      </div>
+    </div>
     <div class="case expect-ok" data-rule="container-no-justify-items">
       <div class="label label-ok">
         container-no-justify-items ok: grid container with justify-items
@@ -686,20 +686,8 @@
 
     <h3>Should warn</h3>
     <div class="case expect-warn" data-rule="container-no-place">
-      <div class="label label-warn">container-no-place warn: display:block with place-content</div>
-      <div data-target style="place-content: center">
-        <div>Child</div>
-      </div>
-    </div>
-    <div class="case expect-warn" data-rule="container-no-place">
       <div class="label label-warn">container-no-place warn: display:block with place-items</div>
       <div data-target style="place-items: center">
-        <div>Child</div>
-      </div>
-    </div>
-    <div class="case expect-warn" data-rule="container-no-place">
-      <div class="label label-warn">container-no-place warn: inline-block with place-content</div>
-      <div data-target style="display: inline-block; place-content: center">
         <div>Child</div>
       </div>
     </div>
@@ -711,7 +699,7 @@
     </div>
     <div class="case expect-warn" data-rule="container-no-place">
       <div class="label label-warn">
-        container-no-place warn: both place-content and place-items on block
+        container-no-place warn: place-items on block (place-content part works via align-content)
       </div>
       <div data-target style="place-content: center; place-items: center">
         <div>Child</div>
@@ -719,6 +707,14 @@
     </div>
 
     <h3>Should NOT warn</h3>
+    <div class="case expect-ok" data-rule="container-no-place">
+      <div class="label label-ok">
+        container-no-place ok: place-content on block (align-content works in block layout)
+      </div>
+      <div data-target style="place-content: center">
+        <div>Child</div>
+      </div>
+    </div>
     <div class="case expect-ok" data-rule="container-no-place">
       <div class="label label-ok">container-no-place ok: grid container with place-items</div>
       <div
@@ -1100,6 +1096,12 @@
       <input data-target type="text" style="width: 200px; height: 30px" value="input element" />
     </div>
     <div class="case expect-ok" data-rule="inline-no-dimensions">
+      <div class="label label-ok">inline-no-dimensions ok: svg is a replaced inline element</div>
+      <svg data-target style="width: 100px; height: 50px" viewBox="0 0 100 50">
+        <rect width="100" height="50" fill="#ccc" />
+      </svg>
+    </div>
+    <div class="case expect-ok" data-rule="inline-no-dimensions">
       <div class="label label-ok">inline-no-dimensions ok: inline-block accepts width</div>
       <span data-target style="display: inline-block; width: 200px">inline-block span</span>
     </div>
@@ -1470,6 +1472,14 @@
       </div>
       <div data-target style="margin-top: 20px">block div with margin-top</div>
     </div>
+    <div class="case expect-ok" data-rule="inline-no-vertical-margin">
+      <div class="label label-ok">
+        inline-no-vertical-margin ok: vertical writing mode (margin-top is inline-axis)
+      </div>
+      <div style="writing-mode: vertical-rl">
+        <span data-target style="margin-top: 20px">vertical text with margin-top</span>
+      </div>
+    </div>
 
     <!-- ===== item-no-flex-props: flex item props on children of non-flex containers ===== -->
     <h2>item-no-flex-props: flex item props on children of non-flex containers</h2>
@@ -1656,8 +1666,8 @@
       </div>
     </div>
 
-    <!-- ===== item-no-justify-self: justify-self outside grid layout ===== -->
-    <h2>item-no-justify-self: justify-self outside grid layout</h2>
+    <!-- ===== item-no-justify-self: justify-self outside grid/flex layout ===== -->
+    <h2>item-no-justify-self: justify-self outside grid/flex layout</h2>
 
     <h3>Should warn</h3>
     <div class="case expect-warn" data-rule="item-no-justify-self">
@@ -1670,16 +1680,16 @@
         </div>
       </div>
     </div>
-    <div class="case expect-warn" data-rule="item-no-justify-self">
-      <div class="label label-warn">
-        item-no-justify-self warn: justify-self on child of flex container
-      </div>
-      <div style="display: flex; gap: 8px">
-        <div data-target style="justify-self: center">Flex child with justify-self (no effect)</div>
-      </div>
-    </div>
 
     <h3>Should NOT warn</h3>
+    <div class="case expect-ok" data-rule="item-no-justify-self">
+      <div class="label label-ok">
+        item-no-justify-self ok: flex item with justify-self (works since Chrome 129)
+      </div>
+      <div style="display: flex; gap: 8px">
+        <div data-target style="justify-self: center">Flex child with justify-self (valid)</div>
+      </div>
+    </div>
     <div class="case expect-ok" data-rule="item-no-justify-self">
       <div class="label label-ok">item-no-justify-self ok: grid item with justify-self</div>
       <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 8px">
@@ -2877,6 +2887,14 @@
       </div>
     </div>
     <div class="case expect-ok" data-rule="static-no-z-index">
+      <div class="label label-ok">
+        static-no-z-index ok: transform-style: preserve-3d creates stacking context
+      </div>
+      <div data-target style="transform-style: preserve-3d; z-index: 5">
+        transform-style: preserve-3d + z-index (valid stacking context)
+      </div>
+    </div>
+    <div class="case expect-ok" data-rule="static-no-z-index">
       <div class="label label-ok">static-no-z-index ok: filter creates stacking context</div>
       <div data-target style="filter: blur(0px); z-index: 5">
         filter + z-index (valid stacking context)
@@ -3247,6 +3265,25 @@
       </div>
     </div>
 
+    <div class="case expect-warn" data-rule="visible-overflow-no-text-overflow">
+      <div class="label label-warn">
+        visible-overflow-no-text-overflow warn: vertical writing mode with overflow-y visible
+      </div>
+      <div
+        data-target
+        style="
+          writing-mode: vertical-rl;
+          text-overflow: ellipsis;
+          overflow-x: hidden;
+          white-space: nowrap;
+          height: 60px;
+          width: 40px;
+        "
+      >
+        Vertical text (overflow-y still visible)
+      </div>
+    </div>
+
     <h3>Should NOT warn</h3>
     <div class="case expect-ok" data-rule="visible-overflow-no-text-overflow">
       <div class="label label-ok">
@@ -3317,6 +3354,24 @@
         <div data-target style="display: contents; text-overflow: ellipsis">
           <span>Child of contents element</span>
         </div>
+      </div>
+    </div>
+    <div class="case expect-ok" data-rule="visible-overflow-no-text-overflow">
+      <div class="label label-ok">
+        visible-overflow-no-text-overflow ok: vertical writing mode with overflow-y hidden
+      </div>
+      <div
+        data-target
+        style="
+          writing-mode: vertical-rl;
+          text-overflow: ellipsis;
+          overflow-y: hidden;
+          white-space: nowrap;
+          height: 60px;
+          width: 40px;
+        "
+      >
+        Vertical text with ellipsis truncation
       </div>
     </div>
 
