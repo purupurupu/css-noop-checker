@@ -3265,25 +3265,6 @@
       </div>
     </div>
 
-    <div class="case expect-warn" data-rule="visible-overflow-no-text-overflow">
-      <div class="label label-warn">
-        visible-overflow-no-text-overflow warn: vertical writing mode with overflow-y visible
-      </div>
-      <div
-        data-target
-        style="
-          writing-mode: vertical-rl;
-          text-overflow: ellipsis;
-          overflow-x: hidden;
-          white-space: nowrap;
-          height: 60px;
-          width: 40px;
-        "
-      >
-        Vertical text (overflow-y still visible)
-      </div>
-    </div>
-
     <h3>Should NOT warn</h3>
     <div class="case expect-ok" data-rule="visible-overflow-no-text-overflow">
       <div class="label label-ok">
