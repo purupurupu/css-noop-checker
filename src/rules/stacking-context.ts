@@ -1,6 +1,6 @@
 const CONTAIN_RE = /\b(layout|paint|strict|content)\b/;
 const WILL_CHANGE_RE =
-  /\b(transform|opacity|filter|backdrop-filter|perspective|clip-path|z-index|isolation|mix-blend-mode|mask|contain)\b/;
+  /\b(transform|transform-style|opacity|filter|backdrop-filter|perspective|clip-path|z-index|isolation|mix-blend-mode|mask|contain)\b/;
 
 /**
  * Returns true when computed styles indicate the element likely creates a stacking
@@ -9,7 +9,7 @@ const WILL_CHANGE_RE =
  *
  * Covers the most common triggers: opacity, transform, filter, backdrop-filter,
  * perspective, clip-path, isolation, mix-blend-mode, contain, mask,
- * container-type, and will-change.
+ * container-type, transform-style, and will-change.
  */
 export function isStackingContext(styles: Record<string, string>): boolean {
   const opacity = styles['opacity'];
@@ -40,6 +40,9 @@ export function isStackingContext(styles: Record<string, string>): boolean {
 
   const containerType = styles['containerType'];
   if (containerType !== undefined && containerType !== 'normal') return true;
+
+  // transform-style: preserve-3d creates a stacking context
+  if (styles['transformStyle'] === 'preserve-3d') return true;
 
   // contain: layout | paint | strict | content create a stacking context;
   // size and style alone do not.

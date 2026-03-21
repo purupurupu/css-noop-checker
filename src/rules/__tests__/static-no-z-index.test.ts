@@ -213,6 +213,20 @@ describe('static-no-z-index', () => {
     expect(warnings).toHaveLength(0);
   });
 
+  it('does not warn when transform-style is preserve-3d (creates stacking context)', () => {
+    const warnings = checkStaticZIndex(
+      createRuleContext(makeElement({ zIndex: '10', transformStyle: 'preserve-3d' })),
+    );
+    expect(warnings).toHaveLength(0);
+  });
+
+  it('does not warn when will-change is transform-style (creates stacking context)', () => {
+    const warnings = checkStaticZIndex(
+      createRuleContext(makeElement({ zIndex: '10', willChange: 'transform-style' })),
+    );
+    expect(warnings).toHaveLength(0);
+  });
+
   it('does not warn on display:contents element', () => {
     const warnings = checkStaticZIndex(
       createRuleContext(makeElement({ display: 'contents', zIndex: '10' })),
