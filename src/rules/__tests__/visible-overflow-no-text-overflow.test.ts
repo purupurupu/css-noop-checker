@@ -58,4 +58,48 @@ describe('visible-overflow-no-text-overflow', () => {
     );
     expect(warnings).toHaveLength(0);
   });
+
+  it('warns based on overflowY in vertical writing mode', () => {
+    const warnings = checkVisibleOverflowTextOverflow(
+      createRuleContext(
+        makeElement({
+          textOverflow: 'ellipsis',
+          writingMode: 'vertical-rl',
+          overflowX: 'hidden',
+          overflowY: 'visible',
+        }),
+      ),
+    );
+    expect(warnings).toHaveLength(1);
+    expect(warnings[0].details).toContain('overflow-y');
+  });
+
+  it('does not warn in vertical mode when overflowY is hidden', () => {
+    const warnings = checkVisibleOverflowTextOverflow(
+      createRuleContext(
+        makeElement({
+          textOverflow: 'ellipsis',
+          writingMode: 'vertical-rl',
+          overflowX: 'visible',
+          overflowY: 'hidden',
+        }),
+      ),
+    );
+    expect(warnings).toHaveLength(0);
+  });
+
+  it('warns based on overflowX in horizontal writing mode (default)', () => {
+    const warnings = checkVisibleOverflowTextOverflow(
+      createRuleContext(
+        makeElement({
+          textOverflow: 'ellipsis',
+          writingMode: 'horizontal-tb',
+          overflowX: 'visible',
+          overflowY: 'hidden',
+        }),
+      ),
+    );
+    expect(warnings).toHaveLength(1);
+    expect(warnings[0].details).toContain('overflow-x');
+  });
 });

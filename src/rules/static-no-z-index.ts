@@ -24,6 +24,7 @@ const STACKING_CONTEXT_PROPERTIES = [
   'containerType',
   'contain',
   'willChange',
+  'transformStyle',
 ] as const;
 
 const rule: RuleDescriptor = {

@@ -68,6 +68,13 @@ describe('nonreplaced-no-object-fit', () => {
     expect(warnings).toHaveLength(0);
   });
 
+  it('does not warn on svg', () => {
+    const warnings = checkNonreplacedObjectFit(
+      createRuleContext(makeElement({ tagName: 'svg', objectFit: 'cover' })),
+    );
+    expect(warnings).toHaveLength(0);
+  });
+
   it('warns on audio (UA widget, object-fit has no effect)', () => {
     const warnings = checkNonreplacedObjectFit(
       createRuleContext(makeElement({ tagName: 'audio', objectFit: 'cover' })),

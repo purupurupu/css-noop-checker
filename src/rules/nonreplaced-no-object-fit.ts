@@ -17,7 +17,7 @@ const warn = (fields: Omit<Warning, 'ruleId' | 'severity'>) => createWarning(RUL
  * false positives for object-position, at the cost of missing a valid
  * object-fit warning on these elements (a deliberate false negative).
  */
-const OBJECT_FIT_ELEMENTS = new Set(['img', 'video', 'canvas', 'embed', 'object', 'iframe']);
+const OBJECT_FIT_ELEMENTS = new Set(['img', 'video', 'canvas', 'svg', 'embed', 'object', 'iframe']);
 
 function isDefaultObjectFit(value: string): boolean {
   return value === 'fill';

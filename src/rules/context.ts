@@ -70,6 +70,7 @@ const REPLACED_INLINE_ELEMENTS = new Set([
   'button',
   'meter',
   'progress',
+  'svg',
 ]);
 
 export function isReplacedInlineElement(tagName: string): boolean {
@@ -121,6 +122,16 @@ export function isDefaultOverflowValue(value: string): boolean {
 
 export function isDefaultSelfAlignmentValue(value: string): boolean {
   return value === 'auto' || value === 'normal';
+}
+
+/** True when writing-mode is vertical or sideways (block axis is horizontal). */
+export function isVerticalWritingMode(writingMode: string): boolean {
+  return (
+    writingMode === 'vertical-rl' ||
+    writingMode === 'vertical-lr' ||
+    writingMode === 'sideways-rl' ||
+    writingMode === 'sideways-lr'
+  );
 }
 
 export function willChangeIncludes(willChange: string, ...tokens: string[]): boolean {

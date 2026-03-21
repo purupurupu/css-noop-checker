@@ -74,4 +74,39 @@ describe('inline-no-vertical-margin: vertical margin on inline elements', () => 
     const warnings = checkInlineVerticalMargin(createRuleContext(makeElement({})));
     expect(warnings).toHaveLength(0);
   });
+
+  it('skips in vertical-rl writing mode (margin-top/bottom are inline-axis)', () => {
+    const warnings = checkInlineVerticalMargin(
+      createRuleContext(makeElement({ writingMode: 'vertical-rl', marginTop: '20px' })),
+    );
+    expect(warnings).toHaveLength(0);
+  });
+
+  it('skips in vertical-lr writing mode', () => {
+    const warnings = checkInlineVerticalMargin(
+      createRuleContext(makeElement({ writingMode: 'vertical-lr', marginBottom: '15px' })),
+    );
+    expect(warnings).toHaveLength(0);
+  });
+
+  it('skips in sideways-rl writing mode', () => {
+    const warnings = checkInlineVerticalMargin(
+      createRuleContext(makeElement({ writingMode: 'sideways-rl', marginTop: '10px' })),
+    );
+    expect(warnings).toHaveLength(0);
+  });
+
+  it('skips in sideways-lr writing mode', () => {
+    const warnings = checkInlineVerticalMargin(
+      createRuleContext(makeElement({ writingMode: 'sideways-lr', marginBottom: '10px' })),
+    );
+    expect(warnings).toHaveLength(0);
+  });
+
+  it('warns in horizontal-tb writing mode (default)', () => {
+    const warnings = checkInlineVerticalMargin(
+      createRuleContext(makeElement({ writingMode: 'horizontal-tb', marginTop: '20px' })),
+    );
+    expect(warnings).toHaveLength(1);
+  });
 });

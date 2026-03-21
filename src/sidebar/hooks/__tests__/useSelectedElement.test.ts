@@ -113,7 +113,6 @@ describe('isElementData', () => {
       'justifyContent',
       'justifyItems',
       'placeItems',
-      'placeContent',
       'columnCount',
       'columnWidth',
       'position',
@@ -164,6 +163,8 @@ describe('isElementData', () => {
       'shapeOutside',
       'shapeMargin',
       'shapeImageThreshold',
+      'writingMode',
+      'transformStyle',
     ];
     for (const key of requiredKeys) {
       const styles = { ...validData.computedStyles };

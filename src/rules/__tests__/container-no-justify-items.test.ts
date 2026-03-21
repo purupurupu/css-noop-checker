@@ -12,19 +12,18 @@ describe('container-no-justify-items', () => {
     expect(warnings[0].title).toContain('justify-items');
   });
 
-  it('warns when justify-items is set on flex container', () => {
+  it('skips flex containers (justify-items works on flex since Chrome 129)', () => {
     const warnings = checkJustifyItems(
       createRuleContext(makeElement({ display: 'flex', justifyItems: 'center' })),
     );
-    expect(warnings).toHaveLength(1);
-    expect(warnings[0].ruleId).toBe('container-no-justify-items');
+    expect(warnings).toHaveLength(0);
   });
 
-  it('warns when justify-items is set on inline-flex container', () => {
+  it('skips inline-flex containers', () => {
     const warnings = checkJustifyItems(
       createRuleContext(makeElement({ display: 'inline-flex', justifyItems: 'start' })),
     );
-    expect(warnings).toHaveLength(1);
+    expect(warnings).toHaveLength(0);
   });
 
   it('skips grid containers', () => {
@@ -81,18 +80,10 @@ describe('container-no-justify-items', () => {
     expect(warnings[0].details).toContain('end');
   });
 
-  it('suggests removal for flex containers', () => {
-    const warnings = checkJustifyItems(
-      createRuleContext(makeElement({ display: 'flex', justifyItems: 'center' })),
-    );
-    expect(warnings).toHaveLength(1);
-    expect(warnings[0].suggestion).toContain('Remove justify-items');
-    expect(warnings[0].suggestion).toContain('justify-content');
-  });
-
-  it('suggests grid for non-flex containers', () => {
+  it('suggests flex or grid for non-flex/grid containers', () => {
     const warnings = checkJustifyItems(createRuleContext(makeElement({ justifyItems: 'center' })));
     expect(warnings).toHaveLength(1);
+    expect(warnings[0].suggestion).toContain('display: flex');
     expect(warnings[0].suggestion).toContain('display: grid');
   });
 });

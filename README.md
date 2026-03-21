@@ -46,19 +46,19 @@ CSS Noop Checker finds CSS properties that have **no visible effect** on the ele
 | [`container-no-flex-props`](./src/rules/container-no-flex-props.ts)       | flex-direction/wrap on non-flex             |
 | [`container-no-gap`](./src/rules/container-no-gap.ts)                     | gap on non-flex/grid                        |
 | [`container-no-grid-props`](./src/rules/container-no-grid-props.ts)       | grid container props on non-grid            |
-| [`container-no-justify-items`](./src/rules/container-no-justify-items.ts) | justify-items on non-grid                   |
-| [`container-no-place`](./src/rules/container-no-place.ts)                 | place-\* on non-flex/grid                   |
+| [`container-no-justify-items`](./src/rules/container-no-justify-items.ts) | justify-items on non-flex/grid              |
+| [`container-no-place`](./src/rules/container-no-place.ts)                 | place-items on non-flex/grid                |
 
 ### Item (flex/grid)
 
-| Rule                                                          | Description                                      |
-| ------------------------------------------------------------- | ------------------------------------------------ |
-| [`item-no-flex-props`](./src/rules/item-no-flex-props.ts)     | flex item props on non-flex child                |
-| [`item-no-float`](./src/rules/item-no-float.ts)               | float on flex/grid item                          |
-| [`item-no-grid-props`](./src/rules/item-no-grid-props.ts)     | grid item props on non-grid child                |
-| [`item-no-justify-self`](./src/rules/item-no-justify-self.ts) | justify-self on non-grid, non-positioned element |
-| [`item-no-order`](./src/rules/item-no-order.ts)               | order on non-flex/grid item                      |
-| [`item-no-self-align`](./src/rules/item-no-self-align.ts)     | align-self on non-flex/grid item                 |
+| Rule                                                          | Description                                           |
+| ------------------------------------------------------------- | ----------------------------------------------------- |
+| [`item-no-flex-props`](./src/rules/item-no-flex-props.ts)     | flex item props on non-flex child                     |
+| [`item-no-float`](./src/rules/item-no-float.ts)               | float on flex/grid item                               |
+| [`item-no-grid-props`](./src/rules/item-no-grid-props.ts)     | grid item props on non-grid child                     |
+| [`item-no-justify-self`](./src/rules/item-no-justify-self.ts) | justify-self on non-flex/grid, non-positioned element |
+| [`item-no-order`](./src/rules/item-no-order.ts)               | order on non-flex/grid item                           |
+| [`item-no-self-align`](./src/rules/item-no-self-align.ts)     | align-self on non-flex/grid item                      |
 
 ### Static positioning
 
