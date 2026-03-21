@@ -118,6 +118,7 @@ CSS Noop Checker finds CSS properties that have **no visible effect** on the ele
 | Rule                                                                        | Description                                        |
 | --------------------------------------------------------------------------- | -------------------------------------------------- |
 | [`contents-no-box-props`](./src/rules/contents-no-box-props.ts)             | box properties on display:contents                 |
+| [`contents-no-position`](./src/rules/contents-no-position.ts)               | positioning on display:contents                    |
 | [`multicol-no-column-rule`](./src/rules/multicol-no-column-rule.ts)         | column-rule/column-fill on non-multicol container  |
 | [`nonfloat-no-shape-outside`](./src/rules/nonfloat-no-shape-outside.ts)     | shape-outside on non-floated element               |
 | [`nonreplaced-no-aspect-ratio`](./src/rules/nonreplaced-no-aspect-ratio.ts) | aspect-ratio on inline non-replaced element        |
