@@ -163,6 +163,8 @@ describe('isElementData', () => {
       'shapeOutside',
       'shapeMargin',
       'shapeImageThreshold',
+      'writingMode',
+      'transformStyle',
     ];
     for (const key of requiredKeys) {
       const styles = { ...validData.computedStyles };
