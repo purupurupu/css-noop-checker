@@ -42,6 +42,16 @@ const rule: RuleDescriptor = {
     // display:contents generates no box — cannot be a scroll container
     if (ctx.isContents) return [];
 
+    // The <html> element is special: when its overflow is visible, the viewport
+    // itself acts as the scroll container. scroll-padding on <html> targets
+    // viewport scrolling and IS effective.
+    if (ctx.element.tagName === 'html') return [];
+
+    // The <body> element's overflow is propagated to the viewport when <html>
+    // has overflow: visible (CSS Overflow spec). In that scenario, <body> acts
+    // as the viewport scroll container and scroll-padding IS effective.
+    if (ctx.element.tagName === 'body') return [];
+
     const overflowX = ctx.styles['overflowX'] ?? 'visible';
     const overflowY = ctx.styles['overflowY'] ?? 'visible';
 
