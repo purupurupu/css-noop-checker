@@ -80,6 +80,20 @@ describe('scroll-no-scroll-padding', () => {
       expect(warnings).toHaveLength(0);
     });
 
+    it('does not warn on <html> element (viewport is scroll container)', () => {
+      const warnings = checkScrollNoScrollPadding(
+        createRuleContext(makeElement({ tagName: 'html', scrollPaddingTop: '10px' })),
+      );
+      expect(warnings).toHaveLength(0);
+    });
+
+    it('does not warn on <body> element (overflow propagates to viewport)', () => {
+      const warnings = checkScrollNoScrollPadding(
+        createRuleContext(makeElement({ tagName: 'body', scrollPaddingTop: '10px' })),
+      );
+      expect(warnings).toHaveLength(0);
+    });
+
     it('does not warn when only one overflow axis is a scroll container', () => {
       const warnings = checkScrollNoScrollPadding(
         createRuleContext(

@@ -16,8 +16,9 @@ const rule: RuleDescriptor = {
     // display:contents elements have no box, so overflow is irrelevant
     if (ctx.isContents) return [];
 
-    // Only flag when text-overflow is explicitly set to a non-default value
-    if (textOverflow === 'clip') return [];
+    // Only flag when text-overflow is explicitly set to a non-default value.
+    // Chrome may serialize the two-value syntax default as 'clip clip'.
+    if (textOverflow === 'clip' || textOverflow === 'clip clip') return [];
 
     // text-overflow clips in the inline direction.
     // In horizontal writing modes the inline axis is horizontal (overflowX).
