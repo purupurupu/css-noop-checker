@@ -22,6 +22,13 @@ describe('visible-overflow-no-text-overflow', () => {
     expect(warnings).toHaveLength(0);
   });
 
+  it('does not warn when textOverflow is "clip clip" (two-value default)', () => {
+    const warnings = checkVisibleOverflowTextOverflow(
+      createRuleContext(makeElement({ textOverflow: 'clip clip', overflowX: 'visible' })),
+    );
+    expect(warnings).toHaveLength(0);
+  });
+
   it('does not warn when overflowX is hidden', () => {
     const warnings = checkVisibleOverflowTextOverflow(
       createRuleContext(makeElement({ textOverflow: 'ellipsis', overflowX: 'hidden' })),
