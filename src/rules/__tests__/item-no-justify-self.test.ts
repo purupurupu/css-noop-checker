@@ -4,14 +4,53 @@ import { createRuleContext } from '../context.ts';
 import { makeChildElement as makeElement } from './helpers/make-element.ts';
 
 describe('item-no-justify-self', () => {
-  it('warns when justify-self is set on child of block container', () => {
-    const warnings = checkJustifySelf(createRuleContext(makeElement({ justifySelf: 'center' })));
+  it('warns when justify-self is set on child of table container', () => {
+    const warnings = checkJustifySelf(
+      createRuleContext(
+        makeElement({ justifySelf: 'center' }, { computedStyles: { display: 'table' } }),
+      ),
+    );
     expect(warnings).toHaveLength(1);
     expect(warnings[0].ruleId).toBe('item-no-justify-self');
     expect(warnings[0].property).toBe('justify-self');
-    expect(warnings[0].details).toContain('block');
+    expect(warnings[0].details).toContain('table');
     expect(warnings[0].suggestion).toContain('display: grid');
     expect(warnings[0].suggestion).not.toContain('margin-inline');
+  });
+
+  it.each(['inline', 'inline-table', 'inline-block', 'inline-flex', 'inline-grid'])(
+    'warns when %s child has justify-self in block parent',
+    (display) => {
+      const warnings = checkJustifySelf(
+        createRuleContext(makeElement({ justifySelf: 'center', display })),
+      );
+      expect(warnings).toHaveLength(1);
+      expect(warnings[0].property).toBe('justify-self');
+    },
+  );
+
+  it('warns when child is in a multi-column block parent', () => {
+    const warnings = checkJustifySelf(
+      createRuleContext(
+        makeElement(
+          { justifySelf: 'center' },
+          { computedStyles: { display: 'block', columnCount: '2' } },
+        ),
+      ),
+    );
+    expect(warnings).toHaveLength(1);
+  });
+
+  it('warns when child is in a multi-column parent (column-width)', () => {
+    const warnings = checkJustifySelf(
+      createRuleContext(
+        makeElement(
+          { justifySelf: 'center' },
+          { computedStyles: { display: 'block', columnWidth: '200px' } },
+        ),
+      ),
+    );
+    expect(warnings).toHaveLength(1);
   });
 
   it('skips flex items (justify-self works on flex items since Chrome 129)', () => {
@@ -71,6 +110,39 @@ describe('item-no-justify-self', () => {
 
   it('skips when justify-self is normal', () => {
     const warnings = checkJustifySelf(createRuleContext(makeElement({ justifySelf: 'normal' })));
+    expect(warnings).toHaveLength(0);
+  });
+
+  // Block layout skip cases (Chrome 119+) — parent display determines block formatting context
+  it('skips block-level child in block parent (Chrome 119+)', () => {
+    const warnings = checkJustifySelf(createRuleContext(makeElement({ justifySelf: 'center' })));
+    expect(warnings).toHaveLength(0);
+  });
+
+  it('skips child in inline-block parent', () => {
+    const warnings = checkJustifySelf(
+      createRuleContext(
+        makeElement({ justifySelf: 'center' }, { computedStyles: { display: 'inline-block' } }),
+      ),
+    );
+    expect(warnings).toHaveLength(0);
+  });
+
+  it('skips child in flow-root parent', () => {
+    const warnings = checkJustifySelf(
+      createRuleContext(
+        makeElement({ justifySelf: 'center' }, { computedStyles: { display: 'flow-root' } }),
+      ),
+    );
+    expect(warnings).toHaveLength(0);
+  });
+
+  it('skips child in list-item parent', () => {
+    const warnings = checkJustifySelf(
+      createRuleContext(
+        makeElement({ justifySelf: 'center' }, { computedStyles: { display: 'list-item' } }),
+      ),
+    );
     expect(warnings).toHaveLength(0);
   });
 

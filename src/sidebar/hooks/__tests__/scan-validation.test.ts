@@ -85,7 +85,14 @@ describe('isScanElementData', () => {
       expect(
         isScanElementData(
           makeValidScanElement({
-            parent: { computedStyles: { display: 'flex', scrollSnapType: 'none' } },
+            parent: {
+              computedStyles: {
+                display: 'flex',
+                scrollSnapType: 'none',
+                columnCount: 'auto',
+                columnWidth: 'auto',
+              },
+            },
           }),
         ),
       ).toBe(true);
