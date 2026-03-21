@@ -1666,22 +1666,84 @@
       </div>
     </div>
 
-    <!-- ===== item-no-justify-self: justify-self outside grid/flex layout ===== -->
-    <h2>item-no-justify-self: justify-self outside grid/flex layout</h2>
+    <!-- ===== item-no-justify-self: justify-self outside flex/grid/block/positioned context ===== -->
+    <h2>item-no-justify-self: justify-self outside flex/grid/block/positioned context</h2>
 
     <h3>Should warn</h3>
     <div class="case expect-warn" data-rule="item-no-justify-self">
       <div class="label label-warn">
-        item-no-justify-self warn: justify-self on child of block container
+        item-no-justify-self warn: justify-self on child of table container
+      </div>
+      <div style="display: table">
+        <div data-target style="justify-self: center">
+          Table child with justify-self (no effect)
+        </div>
+      </div>
+    </div>
+    <div class="case expect-warn" data-rule="item-no-justify-self">
+      <div class="label label-warn">
+        item-no-justify-self warn: inline child with justify-self in block parent
       </div>
       <div>
-        <div data-target style="justify-self: center">
-          Block child with justify-self (no effect)
+        <span data-target style="justify-self: center">
+          Inline child with justify-self (no effect on inline boxes)
+        </span>
+      </div>
+    </div>
+    <div class="case expect-warn" data-rule="item-no-justify-self">
+      <div class="label label-warn">
+        item-no-justify-self warn: justify-self in multi-column block parent
+      </div>
+      <div style="column-count: 2">
+        <div data-target style="justify-self: center">Child of multicol parent (no effect)</div>
+      </div>
+    </div>
+    <div class="case expect-warn" data-rule="item-no-justify-self">
+      <div class="label label-warn">
+        item-no-justify-self warn: inline-block child with justify-self in block parent
+      </div>
+      <div>
+        <div data-target style="display: inline-block; width: 100px; justify-self: center">
+          inline-block child (no effect)
         </div>
       </div>
     </div>
 
     <h3>Should NOT warn</h3>
+    <div class="case expect-ok" data-rule="item-no-justify-self">
+      <div class="label label-ok">
+        item-no-justify-self ok: block layout child (works since Chrome 119)
+      </div>
+      <div>
+        <div data-target style="justify-self: center">
+          Block child with justify-self (valid since Chrome 119)
+        </div>
+      </div>
+    </div>
+    <div class="case expect-ok" data-rule="item-no-justify-self">
+      <div class="label label-ok">item-no-justify-self ok: child in inline-block parent</div>
+      <div style="display: inline-block; width: 200px">
+        <div data-target style="justify-self: center">
+          Child of inline-block parent (valid since Chrome 119)
+        </div>
+      </div>
+    </div>
+    <div class="case expect-ok" data-rule="item-no-justify-self">
+      <div class="label label-ok">item-no-justify-self ok: child in flow-root parent</div>
+      <div style="display: flow-root">
+        <div data-target style="justify-self: center">
+          Child of flow-root parent (valid since Chrome 119)
+        </div>
+      </div>
+    </div>
+    <div class="case expect-ok" data-rule="item-no-justify-self">
+      <div class="label label-ok">item-no-justify-self ok: child in list-item parent</div>
+      <div style="display: list-item">
+        <div data-target style="justify-self: center">
+          Child of list-item parent (valid since Chrome 119)
+        </div>
+      </div>
+    </div>
     <div class="case expect-ok" data-rule="item-no-justify-self">
       <div class="label label-ok">
         item-no-justify-self ok: flex item with justify-self (works since Chrome 129)
