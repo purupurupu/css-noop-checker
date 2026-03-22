@@ -2530,22 +2530,29 @@
     <h3>Should warn</h3>
     <div class="case expect-warn" data-rule="positioned-no-clear">
       <div class="label label-warn">positioned-no-clear warn: clear: both on absolute</div>
-      <div data-target style="position: absolute; clear: both; top: 0; left: 0">
-        Absolute with clear
+      <div style="position: relative; height: 40px; background: #f0f0f0">
+        <div data-target style="position: absolute; clear: both; top: 0; left: 0">
+          Absolute with clear
+        </div>
       </div>
     </div>
 
     <div class="case expect-warn" data-rule="positioned-no-clear">
       <div class="label label-warn">positioned-no-clear warn: clear: left on fixed</div>
-      <div data-target style="position: fixed; clear: left; top: 0; left: 0; z-index: 1">
-        Fixed with clear
+      <!-- transform creates containing block for position:fixed child -->
+      <div style="transform: translateZ(0); height: 40px; background: #f0f0f0">
+        <div data-target style="position: fixed; clear: left; top: 0; left: 0; z-index: 1">
+          Fixed with clear
+        </div>
       </div>
     </div>
 
     <div class="case expect-warn" data-rule="positioned-no-clear">
       <div class="label label-warn">positioned-no-clear warn: clear: right on absolute</div>
-      <div data-target style="position: absolute; clear: right; top: 0; left: 0">
-        Absolute with clear: right
+      <div style="position: relative; height: 40px; background: #f0f0f0">
+        <div data-target style="position: absolute; clear: right; top: 0; left: 0">
+          Absolute with clear: right
+        </div>
       </div>
     </div>
 
@@ -2562,8 +2569,10 @@
 
     <div class="case expect-ok" data-rule="positioned-no-clear">
       <div class="label label-ok">positioned-no-clear ok: clear: none on absolute element</div>
-      <div data-target style="position: absolute; clear: none; top: 0; left: 0">
-        Absolute with clear: none
+      <div style="position: relative; height: 40px; background: #f0f0f0">
+        <div data-target style="position: absolute; clear: none; top: 0; left: 0">
+          Absolute with clear: none
+        </div>
       </div>
     </div>
 
@@ -2580,7 +2589,7 @@
       <div class="label label-warn">
         positioned-no-float warn: float left on absolute positioned element
       </div>
-      <div style="position: relative; height: 40px">
+      <div style="position: relative; height: 40px; background: #f0f0f0">
         <div data-target style="position: absolute; float: left">
           Absolute with float: left (no effect)
         </div>
@@ -2590,7 +2599,7 @@
       <div class="label label-warn">
         positioned-no-float warn: float right on absolute positioned element
       </div>
-      <div style="position: relative; height: 40px">
+      <div style="position: relative; height: 40px; background: #f0f0f0">
         <div data-target style="position: absolute; float: right">
           Absolute with float: right (no effect)
         </div>
@@ -2600,8 +2609,11 @@
       <div class="label label-warn">
         positioned-no-float warn: float left on fixed positioned element
       </div>
-      <div data-target style="position: fixed; float: left; top: -9999px; left: -9999px">
-        Fixed with float: left (no effect)
+      <!-- transform creates containing block for position:fixed child -->
+      <div style="transform: translateZ(0); height: 40px; background: #f0f0f0">
+        <div data-target style="position: fixed; float: left; top: 0; left: 0">
+          Fixed with float: left (no effect)
+        </div>
       </div>
     </div>
 
@@ -2630,7 +2642,7 @@
       <div class="label label-ok">
         positioned-no-float ok: absolute positioned element without float (default)
       </div>
-      <div style="position: relative; height: 40px">
+      <div style="position: relative; height: 40px; background: #f0f0f0">
         <div data-target style="position: absolute">Absolute without float — no warning</div>
       </div>
     </div>
