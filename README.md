@@ -5,6 +5,8 @@
 
 Chrome DevTools (Elements sidebar) extension that detects CSS properties that currently have no effect on the selected element.
 
+![Demo](./docs/demo.gif)
+
 ## Features
 
 - **Selected-element mode** — inspects the currently selected element in DevTools
