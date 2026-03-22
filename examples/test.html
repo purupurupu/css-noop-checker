@@ -268,15 +268,15 @@
     <h3>Should warn</h3>
     <div class="case expect-warn" data-rule="container-no-align">
       <div class="label label-warn">container-no-align warn: display:block with align-items</div>
-      <div data-target style="align-items: center">
-        <div>Child</div>
+      <div data-target style="align-items: center; height: 80px; background: #f0f0f0">
+        <div>Child (not vertically centered — align-items has no effect on block)</div>
       </div>
     </div>
     <div class="case expect-warn" data-rule="container-no-align">
       <div class="label label-warn">
         container-no-align warn: display:block with justify-content
       </div>
-      <div data-target style="justify-content: space-between">
+      <div data-target style="justify-content: space-between; height: 80px; background: #f0f0f0">
         <div>Child 1</div>
         <div>Child 2</div>
       </div>
@@ -286,7 +286,7 @@
         container-no-align warn: place-items on block (align-items part has no effect)
       </div>
       <div data-target style="place-items: center; height: 120px; background: #f0f0f0">
-        <div>Child (horizontally centered, but NOT vertically centered)</div>
+        <div>Child (not centered — align-items has no effect in block layout)</div>
       </div>
     </div>
     <div class="case expect-warn" data-rule="container-no-align">
@@ -361,33 +361,36 @@
     <h3>Should warn</h3>
     <div class="case expect-warn" data-rule="container-no-columns">
       <div class="label label-warn">container-no-columns warn: flex with column-count</div>
-      <div data-target style="display: flex; column-count: 3">
-        <div>Child 1</div>
-        <div>Child 2</div>
-        <div>Child 3</div>
+      <div data-target style="display: flex; column-count: 3; background: #f0f0f0; gap: 4px">
+        <div style="background: #ddd; padding: 4px">Child 1</div>
+        <div style="background: #ddd; padding: 4px">Child 2</div>
+        <div style="background: #ddd; padding: 4px">Child 3</div>
       </div>
     </div>
     <div class="case expect-warn" data-rule="container-no-columns">
       <div class="label label-warn">container-no-columns warn: flex with column-width</div>
-      <div data-target style="display: flex; column-width: 200px">
-        <div>Child 1</div>
-        <div>Child 2</div>
+      <div data-target style="display: flex; column-width: 200px; background: #f0f0f0; gap: 4px">
+        <div style="background: #ddd; padding: 4px">Child 1</div>
+        <div style="background: #ddd; padding: 4px">Child 2</div>
       </div>
     </div>
     <div class="case expect-warn" data-rule="container-no-columns">
       <div class="label label-warn">container-no-columns warn: grid with column-count</div>
-      <div data-target style="display: grid; column-count: 2">
-        <div>Child 1</div>
-        <div>Child 2</div>
+      <div data-target style="display: grid; column-count: 2; background: #f0f0f0; gap: 4px">
+        <div style="background: #ddd; padding: 4px">Child 1</div>
+        <div style="background: #ddd; padding: 4px">Child 2</div>
       </div>
     </div>
     <div class="case expect-warn" data-rule="container-no-columns">
       <div class="label label-warn">
         container-no-columns warn: inline-flex with column-count and column-width via shorthand
       </div>
-      <div data-target style="display: inline-flex; columns: 3 200px">
-        <div>Child 1</div>
-        <div>Child 2</div>
+      <div
+        data-target
+        style="display: inline-flex; columns: 3 200px; background: #f0f0f0; gap: 4px"
+      >
+        <div style="background: #ddd; padding: 4px">Child 1</div>
+        <div style="background: #ddd; padding: 4px">Child 2</div>
       </div>
     </div>
 
@@ -427,25 +430,27 @@
     <h3>Should warn</h3>
     <div class="case expect-warn" data-rule="container-no-flex-props">
       <div class="label label-warn">container-no-flex-props warn: block with flex-direction</div>
-      <div data-target style="flex-direction: column">
-        <div>Child 1</div>
-        <div>Child 2</div>
+      <div data-target style="flex-direction: column; background: #f0f0f0">
+        <div style="background: #ddd; padding: 4px">
+          Child 1 (still stacked — flex-direction ignored)
+        </div>
+        <div style="background: #ddd; padding: 4px">Child 2</div>
       </div>
     </div>
     <div class="case expect-warn" data-rule="container-no-flex-props">
       <div class="label label-warn">container-no-flex-props warn: block with flex-wrap</div>
-      <div data-target style="flex-wrap: wrap">
-        <div>Child 1</div>
-        <div>Child 2</div>
+      <div data-target style="flex-wrap: wrap; background: #f0f0f0">
+        <div style="background: #ddd; padding: 4px">Child 1 (no wrapping — flex-wrap ignored)</div>
+        <div style="background: #ddd; padding: 4px">Child 2</div>
       </div>
     </div>
     <div class="case expect-warn" data-rule="container-no-flex-props">
       <div class="label label-warn">
         container-no-flex-props warn: block with flex-flow shorthand
       </div>
-      <div data-target style="flex-flow: column wrap">
-        <div>Child 1</div>
-        <div>Child 2</div>
+      <div data-target style="flex-flow: column wrap; background: #f0f0f0">
+        <div style="background: #ddd; padding: 4px">Child 1 (flex-flow ignored)</div>
+        <div style="background: #ddd; padding: 4px">Child 2</div>
       </div>
     </div>
 
@@ -499,16 +504,16 @@
     <h3>Should warn</h3>
     <div class="case expect-warn" data-rule="container-no-gap">
       <div class="label label-warn">container-no-gap warn: display:block with gap</div>
-      <div data-target style="gap: 10px">
-        <div>Child 1</div>
-        <div>Child 2</div>
+      <div data-target style="gap: 10px; background: #f0f0f0">
+        <div style="background: #ddd; padding: 4px">Child 1</div>
+        <div style="background: #ddd; padding: 4px">Child 2</div>
       </div>
     </div>
     <div class="case expect-warn" data-rule="container-no-gap">
       <div class="label label-warn">container-no-gap warn: display:block with row-gap</div>
-      <div data-target style="row-gap: 20px">
-        <div>Child 1</div>
-        <div>Child 2</div>
+      <div data-target style="row-gap: 20px; background: #f0f0f0">
+        <div style="background: #ddd; padding: 4px">Child 1</div>
+        <div style="background: #ddd; padding: 4px">Child 2</div>
       </div>
     </div>
 
@@ -554,25 +559,27 @@
       <div class="label label-warn">
         container-no-grid-props warn: block with grid-template-columns
       </div>
-      <div data-target style="grid-template-columns: 1fr 1fr">
-        <div>Child 1</div>
-        <div>Child 2</div>
+      <div data-target style="grid-template-columns: 1fr 1fr; background: #f0f0f0">
+        <div style="background: #ddd; padding: 4px">Child 1 (not in grid columns — ignored)</div>
+        <div style="background: #ddd; padding: 4px">Child 2</div>
       </div>
     </div>
     <div class="case expect-warn" data-rule="container-no-grid-props">
       <div class="label label-warn">container-no-grid-props warn: block with grid-auto-flow</div>
-      <div data-target style="grid-auto-flow: column">
-        <div>Child 1</div>
-        <div>Child 2</div>
+      <div data-target style="grid-auto-flow: column; background: #f0f0f0">
+        <div style="background: #ddd; padding: 4px">
+          Child 1 (still stacked — grid-auto-flow ignored)
+        </div>
+        <div style="background: #ddd; padding: 4px">Child 2</div>
       </div>
     </div>
     <div class="case expect-warn" data-rule="container-no-grid-props">
       <div class="label label-warn">
         container-no-grid-props warn: flex with grid-template-columns
       </div>
-      <div data-target style="display: flex; grid-template-columns: 1fr 1fr">
-        <div>Child 1</div>
-        <div>Child 2</div>
+      <div data-target style="display: flex; grid-template-columns: 1fr 1fr; background: #f0f0f0">
+        <div style="background: #ddd; padding: 4px">Child 1</div>
+        <div style="background: #ddd; padding: 4px">Child 2</div>
       </div>
     </div>
 
@@ -618,8 +625,8 @@
       <div class="label label-warn">
         container-no-justify-items warn: display:block with justify-items
       </div>
-      <div data-target style="justify-items: center">
-        <div>Child</div>
+      <div data-target style="justify-items: center; height: 80px; background: #f0f0f0">
+        <div>Child (justify-items has no effect on block container)</div>
       </div>
     </div>
     <div class="case expect-warn" data-rule="container-no-justify-items">
@@ -687,13 +694,13 @@
     <h3>Should warn</h3>
     <div class="case expect-warn" data-rule="container-no-place">
       <div class="label label-warn">container-no-place warn: display:block with place-items</div>
-      <div data-target style="place-items: center">
-        <div>Child</div>
+      <div data-target style="place-items: center; height: 80px; background: #f0f0f0">
+        <div>Child (not centered — place-items has no effect on block)</div>
       </div>
     </div>
     <div class="case expect-warn" data-rule="container-no-place">
       <div class="label label-warn">container-no-place warn: table with place-items</div>
-      <div data-target style="display: table; place-items: center">
+      <div data-target style="display: table; place-items: center; background: #f0f0f0">
         <div style="display: table-row"><div style="display: table-cell">Cell</div></div>
       </div>
     </div>
@@ -701,7 +708,10 @@
       <div class="label label-warn">
         container-no-place warn: place-items on block (place-content part works via align-content)
       </div>
-      <div data-target style="place-content: center; place-items: center">
+      <div
+        data-target
+        style="place-content: center; place-items: center; height: 80px; background: #f0f0f0"
+      >
         <div>Child</div>
       </div>
     </div>
