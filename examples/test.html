@@ -1764,11 +1764,11 @@
     <h3>Should warn</h3>
     <div class="case expect-warn" data-rule="item-no-justify-self">
       <div class="label label-warn">
-        item-no-justify-self warn: justify-self on child of table container
+        item-no-justify-self warn: justify-self on child of table-cell container
       </div>
-      <div style="display: table; width: 100%; background: #f0f0f0">
+      <div style="display: table-cell; width: 100%; background: #f0f0f0">
         <div data-target style="justify-self: center; background: #c9e0f0; padding: 4px">
-          Table child with justify-self (no effect)
+          Table-cell child with justify-self (no effect)
         </div>
       </div>
     </div>
@@ -1805,8 +1805,27 @@
         </div>
       </div>
     </div>
+    <div class="case expect-warn" data-rule="item-no-justify-self">
+      <div class="label label-warn">item-no-justify-self warn: flex item with justify-self</div>
+      <div style="display: flex; gap: 8px">
+        <div data-target style="justify-self: center">Flex child with justify-self (no effect)</div>
+      </div>
+    </div>
 
     <h3>Should NOT warn</h3>
+    <div class="case expect-ok" data-rule="item-no-justify-self">
+      <div class="label label-ok">
+        item-no-justify-self ok: justify-self on child of table container
+      </div>
+      <div style="display: table; width: 100%; background: #f0f0f0">
+        <div
+          data-target
+          style="justify-self: center; background: #c9e0f0; padding: 4px; width: fit-content"
+        >
+          Table child with justify-self
+        </div>
+      </div>
+    </div>
     <div class="case expect-ok" data-rule="item-no-justify-self">
       <div class="label label-ok">
         item-no-justify-self ok: block layout child (works since Chrome 119)
@@ -1839,12 +1858,6 @@
         <div data-target style="justify-self: center">
           Child of list-item parent (valid since Chrome 119)
         </div>
-      </div>
-    </div>
-    <div class="case expect-warn" data-rule="item-no-justify-self">
-      <div class="label label-warn">item-no-justify-self warn: flex item with justify-self</div>
-      <div style="display: flex; gap: 8px">
-        <div data-target style="justify-self: center">Flex child with justify-self (no effect)</div>
       </div>
     </div>
     <div class="case expect-ok" data-rule="item-no-justify-self">

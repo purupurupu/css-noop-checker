@@ -35,6 +35,10 @@ function isNonBlockLevelBox(display: string): boolean {
   );
 }
 
+function isTableWrapperDisplay(display: string): boolean {
+  return display === 'table' || display === 'inline-table';
+}
+
 const rule: RuleDescriptor = {
   id: RULE_ID,
   label: 'justify-self outside flex/grid/block/positioned context',
@@ -56,6 +60,10 @@ const rule: RuleDescriptor = {
     // if this element is effectively a flex/grid item.
     if (ctx.isParentContents) return [];
 
+    // Chromium applies justify-self to children of table wrappers
+    // (display: table / inline-table), but not to table-internal boxes.
+    if (isTableWrapperDisplay(ctx.parentDisplay)) return [];
+
     // justify-self works in block layout (Chrome 119+), but only on block-level boxes.
     // Non-block-level children and multi-column containers are excluded.
     if (isBlockLayoutDisplay(ctx.parentDisplay)) {
@@ -75,9 +83,9 @@ const rule: RuleDescriptor = {
       warn({
         property: 'justify-self',
         title: 'justify-self has no effect',
-        details: `justify-self is "${justifySelf}" but parent display is "${ctx.parentDisplay}". In Chromium, justify-self takes effect on grid items, block-level elements in block layout, or absolutely/fixed-positioned elements. It does not affect flex items.`,
+        details: `justify-self is "${justifySelf}" but parent display is "${ctx.parentDisplay}". In Chromium, justify-self takes effect on grid items, children of table wrappers, block-level elements in block layout, or absolutely/fixed-positioned elements. It does not affect flex items or table-internal boxes.`,
         suggestion:
-          'Use a grid parent, a block-layout parent with a block-level child, or absolute/fixed positioning. Otherwise, remove justify-self.',
+          'Use a grid parent, a table wrapper, a block-layout parent with a block-level child, or absolute/fixed positioning. Otherwise, remove justify-self.',
       }),
     ];
   },
