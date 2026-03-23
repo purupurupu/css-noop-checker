@@ -4,7 +4,7 @@ Detects animation properties without `animation-name`.
 
 ## Why this is a no-op
 
-Animation sub-properties such as `animation-duration`, `animation-delay`, and `animation-timing-function` configure how an animation runs, but they have no visible effect unless an `animation-name` is set. Without a named `@keyframes` animation to reference, the browser has nothing to animate.
+Animation sub-properties such as `animation-duration`, `animation-delay`, and `animation-timing-function` configure how an animation runs, but they have no visible effect unless at least one `animation-name` layer is active. When every `animation-name` layer is `none`, the browser has nothing to animate.
 
 ## Properties involved
 
@@ -23,6 +23,7 @@ Animation sub-properties such as `animation-duration`, `animation-delay`, and `a
 
 ```html
 <div style="animation-duration: 2s; animation-delay: 0.5s">No animation runs</div>
+<div style="animation-name: none, none; animation-duration: 2s, 1s">Still no animation runs</div>
 ```
 
 ### OK
