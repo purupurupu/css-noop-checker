@@ -33,6 +33,8 @@ describe('isElementData — parent field validation', () => {
             scrollSnapType: 'none',
             columnCount: 'auto',
             columnWidth: 'auto',
+            overflowX: 'visible',
+            overflowY: 'visible',
           },
         },
       }),

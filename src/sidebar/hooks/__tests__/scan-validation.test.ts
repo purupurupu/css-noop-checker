@@ -91,6 +91,8 @@ describe('isScanElementData', () => {
                 scrollSnapType: 'none',
                 columnCount: 'auto',
                 columnWidth: 'auto',
+                overflowX: 'visible',
+                overflowY: 'visible',
               },
             },
           }),

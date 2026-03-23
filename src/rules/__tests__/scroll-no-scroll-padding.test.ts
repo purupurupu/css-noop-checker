@@ -89,7 +89,37 @@ describe('scroll-no-scroll-padding', () => {
 
     it('does not warn on <body> element (overflow propagates to viewport)', () => {
       const warnings = checkScrollNoScrollPadding(
-        createRuleContext(makeElement({ tagName: 'body', scrollPaddingTop: '10px' })),
+        createRuleContext(
+          makeElement(
+            { tagName: 'body', scrollPaddingTop: '10px' },
+            { computedStyles: { overflowX: 'visible', overflowY: 'visible' } },
+          ),
+        ),
+      );
+      expect(warnings).toHaveLength(0);
+    });
+
+    it('warns on <body> when <html> establishes its own scroll container', () => {
+      const warnings = checkScrollNoScrollPadding(
+        createRuleContext(
+          makeElement(
+            { tagName: 'body', scrollPaddingTop: '10px' },
+            { computedStyles: { overflowX: 'hidden', overflowY: 'hidden' } },
+          ),
+        ),
+      );
+      expect(warnings).toHaveLength(1);
+      expect(warnings[0].property).toBe('scroll-padding-top');
+    });
+
+    it('does not warn on <body> when it is itself scrollable, even if <html> is hidden', () => {
+      const warnings = checkScrollNoScrollPadding(
+        createRuleContext(
+          makeElement(
+            { tagName: 'body', overflowY: 'auto', scrollPaddingTop: '10px' },
+            { computedStyles: { overflowX: 'hidden', overflowY: 'hidden' } },
+          ),
+        ),
       );
       expect(warnings).toHaveLength(0);
     });

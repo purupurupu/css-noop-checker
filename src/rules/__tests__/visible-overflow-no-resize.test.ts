@@ -103,6 +103,20 @@ describe('visible-overflow-no-resize', () => {
       );
       expect(warnings).toHaveLength(1);
     });
+
+    it('does not warn in vertical writing mode when overflow-y is safe', () => {
+      const warnings = checkVisibleOverflowResize(
+        createRuleContext(
+          makeElement({
+            resize: 'inline',
+            writingMode: 'vertical-rl',
+            overflowX: 'visible',
+            overflowY: 'hidden',
+          }),
+        ),
+      );
+      expect(warnings).toHaveLength(0);
+    });
   });
 
   describe('resize: vertical', () => {
@@ -143,6 +157,36 @@ describe('visible-overflow-no-resize', () => {
         ),
       );
       expect(warnings).toHaveLength(1);
+    });
+
+    it('warns in vertical writing mode when overflow-x is visible', () => {
+      const warnings = checkVisibleOverflowResize(
+        createRuleContext(
+          makeElement({
+            resize: 'block',
+            writingMode: 'vertical-rl',
+            overflowX: 'visible',
+            overflowY: 'hidden',
+          }),
+        ),
+      );
+      expect(warnings).toHaveLength(1);
+      expect(warnings[0].details).toContain('vertical writing mode');
+      expect(warnings[0].details).toContain('overflow-x');
+    });
+
+    it('does not warn in vertical writing mode when overflow-x is safe', () => {
+      const warnings = checkVisibleOverflowResize(
+        createRuleContext(
+          makeElement({
+            resize: 'block',
+            writingMode: 'vertical-rl',
+            overflowX: 'auto',
+            overflowY: 'visible',
+          }),
+        ),
+      );
+      expect(warnings).toHaveLength(0);
     });
   });
 

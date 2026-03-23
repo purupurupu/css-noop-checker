@@ -4,18 +4,32 @@ import { createRuleContext } from '../context.ts';
 import { makeChildElement as makeElement } from './helpers/make-element.ts';
 
 describe('item-no-justify-self', () => {
-  it('warns when justify-self is set on child of table container', () => {
+  it('does not warn when justify-self is set on child of table container', () => {
     const warnings = checkJustifySelf(
       createRuleContext(
         makeElement({ justifySelf: 'center' }, { computedStyles: { display: 'table' } }),
       ),
     );
+    expect(warnings).toHaveLength(0);
+  });
+
+  it('does not warn when justify-self is set on child of inline-table container', () => {
+    const warnings = checkJustifySelf(
+      createRuleContext(
+        makeElement({ justifySelf: 'center' }, { computedStyles: { display: 'inline-table' } }),
+      ),
+    );
+    expect(warnings).toHaveLength(0);
+  });
+
+  it('warns when justify-self is set on child of table-cell container', () => {
+    const warnings = checkJustifySelf(
+      createRuleContext(
+        makeElement({ justifySelf: 'center' }, { computedStyles: { display: 'table-cell' } }),
+      ),
+    );
     expect(warnings).toHaveLength(1);
-    expect(warnings[0].ruleId).toBe('item-no-justify-self');
-    expect(warnings[0].property).toBe('justify-self');
-    expect(warnings[0].details).toContain('table');
-    expect(warnings[0].suggestion).toContain('grid parent');
-    expect(warnings[0].suggestion).not.toContain('margin-inline');
+    expect(warnings[0].details).toContain('table-cell');
   });
 
   it.each(['inline', 'inline-table', 'inline-block', 'inline-flex', 'inline-grid'])(

@@ -1,4 +1,5 @@
 import { type RuleDescriptor, type Warning, createWarning } from './types.ts';
+import { isVerticalWritingMode } from './context.ts';
 import { registerRule } from './registry.ts';
 
 const RULE_ID = 'visible-overflow-no-resize' as const;
@@ -19,37 +20,52 @@ function isResizeSafeOverflow(value: string): boolean {
 /**
  * Check whether the relevant overflow axis blocks resize.
  *
- * Note: inline/block mapping assumes horizontal writing mode (the default).
- * In vertical writing modes (`writing-mode: vertical-rl` / `vertical-lr`),
- * the inline and block axes are swapped. This is a known limitation — vertical
- * writing mode + `resize: inline`/`block` is extremely rare in practice.
- *
  * - `horizontal` / `inline` → only overflowX matters
  * - `vertical` / `block` → only overflowY matters
  * - `both` (or anything else) → only warn when BOTH axes are unsafe
  *   (one safe axis is sufficient for resize to work)
  */
-function isOverflowBlockingResize(resize: string, overflowX: string, overflowY: string): boolean {
+function isOverflowBlockingResize(
+  resize: string,
+  overflowX: string,
+  overflowY: string,
+  writingMode: string,
+): boolean {
+  const vertical = isVerticalWritingMode(writingMode);
   switch (resize) {
     case 'horizontal':
-    case 'inline':
       return !isResizeSafeOverflow(overflowX);
     case 'vertical':
-    case 'block':
       return !isResizeSafeOverflow(overflowY);
+    case 'inline':
+      return !isResizeSafeOverflow(vertical ? overflowY : overflowX);
+    case 'block':
+      return !isResizeSafeOverflow(vertical ? overflowX : overflowY);
     default:
       return !isResizeSafeOverflow(overflowX) && !isResizeSafeOverflow(overflowY);
   }
 }
 
-function describeAffectedAxes(resize: string, overflowX: string, overflowY: string): string {
+function describeAffectedAxes(
+  resize: string,
+  overflowX: string,
+  overflowY: string,
+  writingMode: string,
+): string {
+  const vertical = isVerticalWritingMode(writingMode);
   switch (resize) {
     case 'horizontal':
-    case 'inline':
       return `overflow-x is "${overflowX}" (needs auto, scroll, or hidden)`;
     case 'vertical':
-    case 'block':
       return `overflow-y is "${overflowY}" (needs auto, scroll, or hidden)`;
+    case 'inline':
+      return vertical
+        ? `overflow-y is "${overflowY}" (needs auto, scroll, or hidden in vertical writing mode)`
+        : `overflow-x is "${overflowX}" (needs auto, scroll, or hidden)`;
+    case 'block':
+      return vertical
+        ? `overflow-x is "${overflowX}" (needs auto, scroll, or hidden in vertical writing mode)`
+        : `overflow-y is "${overflowY}" (needs auto, scroll, or hidden)`;
     default:
       return overflowX === overflowY
         ? `overflow is "${overflowX}" (needs auto, scroll, or hidden)`
@@ -57,14 +73,21 @@ function describeAffectedAxes(resize: string, overflowX: string, overflowY: stri
   }
 }
 
-function describeSuggestion(resize: string): string {
+function describeSuggestion(resize: string, writingMode: string): string {
+  const vertical = isVerticalWritingMode(writingMode);
   switch (resize) {
     case 'horizontal':
-    case 'inline':
       return 'Set overflow-x to auto, scroll, or hidden to make the element resizable.';
     case 'vertical':
-    case 'block':
       return 'Set overflow-y to auto, scroll, or hidden to make the element resizable.';
+    case 'inline':
+      return vertical
+        ? 'Set overflow-y to auto, scroll, or hidden to make the element resizable in the inline axis.'
+        : 'Set overflow-x to auto, scroll, or hidden to make the element resizable.';
+    case 'block':
+      return vertical
+        ? 'Set overflow-x to auto, scroll, or hidden to make the element resizable in the block axis.'
+        : 'Set overflow-y to auto, scroll, or hidden to make the element resizable.';
     default:
       return 'Set overflow-x or overflow-y to auto, scroll, or hidden to make the element resizable.';
   }
@@ -73,9 +96,9 @@ function describeSuggestion(resize: string): string {
 const rule: RuleDescriptor = {
   id: RULE_ID,
   label: 'resize on visible overflow',
-  requiredProperties: ['display', 'resize', 'overflowX', 'overflowY'],
+  requiredProperties: ['display', 'resize', 'overflowX', 'overflowY', 'writingMode'],
   check(ctx) {
-    const { resize, overflowX, overflowY } = ctx.styles;
+    const { resize, overflowX, overflowY, writingMode } = ctx.styles;
 
     // resize: none is the default — nothing to flag
     if (resize === 'none') return [];
@@ -88,14 +111,14 @@ const rule: RuleDescriptor = {
     // allow resize in that case, so we skip the warning entirely.
     if (ctx.element.tagName === 'textarea') return [];
 
-    if (!isOverflowBlockingResize(resize, overflowX, overflowY)) return [];
+    if (!isOverflowBlockingResize(resize, overflowX, overflowY, writingMode)) return [];
 
     return [
       warn({
         property: 'resize',
         title: 'resize has no effect',
-        details: `resize: ${resize} has no effect because ${describeAffectedAxes(resize, overflowX, overflowY)}.`,
-        suggestion: describeSuggestion(resize),
+        details: `resize: ${resize} has no effect because ${describeAffectedAxes(resize, overflowX, overflowY, writingMode)}.`,
+        suggestion: describeSuggestion(resize, writingMode),
       }),
     ];
   },

@@ -96,4 +96,62 @@ test.describe('rules against real browser computed styles', () => {
       }
     }
   });
+
+  test('scroll-no-scroll-padding warns on body when html overflow is hidden', async ({ page }) => {
+    await page.setContent(`
+      <!doctype html>
+      <style>
+        html { overflow: hidden; }
+        body { margin: 0; scroll-padding-top: 20px; }
+      </style>
+      <div>content</div>
+    `);
+
+    const data = await extractElementData(page.locator('body'));
+    const warnings = analyzeElement(data);
+
+    expect(warnings.some((w) => w.ruleId === 'scroll-no-scroll-padding')).toBe(true);
+  });
+
+  test('visible-overflow-no-resize respects vertical writing mode for resize:inline', async ({
+    page,
+  }) => {
+    await page.setContent(`
+      <!doctype html>
+      <style>
+        #target {
+          writing-mode: vertical-rl;
+          resize: inline;
+          overflow-x: visible;
+          overflow-y: hidden;
+          width: 120px;
+          height: 120px;
+        }
+      </style>
+      <div id="target">content</div>
+    `);
+
+    const data = await extractElementData(page.locator('#target'));
+    const warnings = analyzeElement(data);
+
+    expect(warnings.some((w) => w.ruleId === 'visible-overflow-no-resize')).toBe(false);
+  });
+
+  test('animation-no-sub-props warns when all animation-name layers are none', async ({ page }) => {
+    await page.setContent(`
+      <!doctype html>
+      <style>
+        #target {
+          animation-name: none, none;
+          animation-duration: 2s, 1s;
+        }
+      </style>
+      <div id="target">content</div>
+    `);
+
+    const data = await extractElementData(page.locator('#target'));
+    const warnings = analyzeElement(data);
+
+    expect(warnings.some((w) => w.ruleId === 'animation-no-sub-props')).toBe(true);
+  });
 });

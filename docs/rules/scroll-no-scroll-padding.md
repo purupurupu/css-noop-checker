@@ -6,6 +6,11 @@ Detects scroll-padding on non-scroll containers.
 
 The `scroll-padding` properties only apply to scroll containers -- elements whose `overflow` is `auto`, `scroll`, or `hidden`. When overflow is `visible` or `clip`, the element does not establish a scroll container, so any scroll-padding values are ignored by the browser.
 
+Special viewport cases:
+
+- On `<html>`, `scroll-padding` targets viewport scrolling and is meaningful.
+- On `<body>`, `scroll-padding` is only treated as meaningful when the root `<html>` element still has `overflow: visible`; otherwise the root establishes its own scroll container and the body's scroll-padding does not apply automatically.
+
 ## Properties involved
 
 - `scroll-padding-top`

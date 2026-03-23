@@ -31,7 +31,3 @@ The CSS properties `border-collapse` and `table-layout` are defined to apply onl
 ## Common scenarios
 
 This often happens when table-related styles are applied via a CSS class to a non-table element, or when refactoring a `<table>` layout to `<div>` elements without removing table-specific properties.
-
-## Known limitation
-
-The current rule implementation exempts all table display types (`table-cell`, `table-row`, etc.), but `border-collapse` and `table-layout` only apply to `table` and `inline-table`. Elements with `display: table-cell` or `display: table-row` are not flagged. See [#155](https://github.com/purupurupu/css-noop-checker/issues/155).

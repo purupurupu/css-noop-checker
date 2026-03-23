@@ -38,6 +38,7 @@ const rule: RuleDescriptor = {
     'overflowY',
     ...SCROLL_PADDING_PROPERTIES.map((p) => p.key),
   ],
+  requiredParentProperties: ['overflowX', 'overflowY'],
   check(ctx) {
     // display:contents generates no box — cannot be a scroll container
     if (ctx.isContents) return [];
@@ -47,10 +48,14 @@ const rule: RuleDescriptor = {
     // viewport scrolling and IS effective.
     if (ctx.element.tagName === 'html') return [];
 
-    // The <body> element's overflow is propagated to the viewport when <html>
-    // has overflow: visible (CSS Overflow spec). In that scenario, <body> acts
-    // as the viewport scroll container and scroll-padding IS effective.
-    if (ctx.element.tagName === 'body') return [];
+    // The <body> element's overflow is propagated to the viewport only while
+    // the root element remains overflow: visible. If <html> establishes its
+    // own scroll container, body scroll-padding is not automatically effective.
+    if (ctx.element.tagName === 'body') {
+      const rootOverflowX = ctx.parentStyles?.overflowX ?? 'visible';
+      const rootOverflowY = ctx.parentStyles?.overflowY ?? 'visible';
+      if (rootOverflowX === 'visible' && rootOverflowY === 'visible') return [];
+    }
 
     const overflowX = ctx.styles['overflowX'] ?? 'visible';
     const overflowY = ctx.styles['overflowY'] ?? 'visible';

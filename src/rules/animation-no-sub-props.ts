@@ -16,6 +16,13 @@ const ANIMATION_PROPERTIES = [
   { key: 'animationPlayState', cssName: 'animation-play-state', defaultValue: 'running' },
 ] as const;
 
+function hasActiveAnimationName(animationName: string): boolean {
+  return animationName
+    .split(',')
+    .map((name) => name.trim())
+    .some((name) => name !== 'none' && name !== '');
+}
+
 const rule: RuleDescriptor = {
   id: RULE_ID,
   label: 'animation properties without animation-name',
@@ -23,10 +30,9 @@ const rule: RuleDescriptor = {
   check(ctx) {
     const animationName = ctx.styles['animationName'] ?? 'none';
 
-    // Only trigger when animationName is exactly 'none' (single-value case).
-    // Multi-animation scenarios (e.g. "slide, none") are out of scope — at least
-    // one animation is active, so sub-properties are not entirely no-op.
-    if (animationName !== 'none') return [];
+    // Multi-animation values are only actionable when every animation-name layer
+    // is "none". Cases like "slide, none" still have at least one active layer.
+    if (hasActiveAnimationName(animationName)) return [];
 
     // will-change: animation-name or animation means a name may be toggled via JS
     if (willChangeIncludes(ctx.styles['willChange'] ?? 'auto', 'animation-name', 'animation'))
