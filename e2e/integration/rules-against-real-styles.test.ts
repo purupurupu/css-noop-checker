@@ -96,4 +96,20 @@ test.describe('rules against real browser computed styles', () => {
       }
     }
   });
+
+  test('scroll-no-scroll-padding warns on body when html overflow is hidden', async ({ page }) => {
+    await page.setContent(`
+      <!doctype html>
+      <style>
+        html { overflow: hidden; }
+        body { margin: 0; scroll-padding-top: 20px; }
+      </style>
+      <div>content</div>
+    `);
+
+    const data = await extractElementData(page.locator('body'));
+    const warnings = analyzeElement(data);
+
+    expect(warnings.some((w) => w.ruleId === 'scroll-no-scroll-padding')).toBe(true);
+  });
 });
