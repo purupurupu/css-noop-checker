@@ -20,7 +20,7 @@ function hasActiveAnimationName(animationName: string): boolean {
   return animationName
     .split(',')
     .map((name) => name.trim())
-    .some((name) => name !== 'none');
+    .some((name) => name !== 'none' && name !== '');
 }
 
 const rule: RuleDescriptor = {
