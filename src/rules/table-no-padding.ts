@@ -1,6 +1,6 @@
 import { type RuleDescriptor, type Warning, createWarning } from './types.ts';
 import { registerRule } from './registry.ts';
-import { isDefaultMarginValue } from './context.ts';
+import { isZeroPx } from './context.ts';
 
 const RULE_ID = 'table-no-padding' as const;
 
@@ -76,8 +76,8 @@ const rule: RuleDescriptor = {
     for (const { physical, logical } of PADDING_PAIRS) {
       const physicalValue = ctx.styles[physical.key];
       const logicalValue = ctx.styles[logical.key];
-      const physicalNonDefault = !isDefaultMarginValue(physicalValue);
-      const logicalNonDefault = !isDefaultMarginValue(logicalValue);
+      const physicalNonDefault = !isZeroPx(physicalValue);
+      const logicalNonDefault = !isZeroPx(logicalValue);
 
       // Physical: skip when logical counterpart is also non-default (prefer logical to avoid double-warnings)
       if (physicalNonDefault && !logicalNonDefault) {
