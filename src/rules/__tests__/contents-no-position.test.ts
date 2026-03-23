@@ -126,4 +126,148 @@ describe('contents-no-position', () => {
     expect(warnings[0].suggestion).toContain('block');
     expect(warnings[0].suggestion).toContain('flex');
   });
+
+  // Writing-mode aware dedup tests
+  it('deduplicates right→insetBlockStart in vertical-rl writing mode', () => {
+    const warnings = checkContentsPosition(
+      createRuleContext(
+        makeElement({
+          display: 'contents',
+          writingMode: 'vertical-rl',
+          right: '10px',
+          insetBlockStart: '10px',
+        }),
+      ),
+    );
+    // In vertical-rl, right maps to insetBlockStart
+    expect(warnings.map((w) => w.property)).toEqual(['inset-block-start']);
+  });
+
+  it('deduplicates top→insetInlineStart in vertical-rl writing mode', () => {
+    const warnings = checkContentsPosition(
+      createRuleContext(
+        makeElement({
+          display: 'contents',
+          writingMode: 'vertical-rl',
+          top: '10px',
+          insetInlineStart: '10px',
+        }),
+      ),
+    );
+    // In vertical-rl, top maps to insetInlineStart
+    expect(warnings.map((w) => w.property)).toEqual(['inset-inline-start']);
+  });
+
+  it('does not skip top when insetBlockStart is set in vertical-rl (different axes)', () => {
+    const warnings = checkContentsPosition(
+      createRuleContext(
+        makeElement({
+          display: 'contents',
+          writingMode: 'vertical-rl',
+          top: '10px',
+          insetBlockStart: '10px',
+        }),
+      ),
+    );
+    // In vertical-rl, top maps to insetInlineStart, not insetBlockStart
+    // So top should NOT be skipped due to insetBlockStart
+    const props = warnings.map((w) => w.property);
+    expect(props).toContain('top');
+    expect(props).toContain('inset-block-start');
+  });
+
+  it('deduplicates left→insetBlockStart in vertical-lr writing mode', () => {
+    const warnings = checkContentsPosition(
+      createRuleContext(
+        makeElement({
+          display: 'contents',
+          writingMode: 'vertical-lr',
+          left: '10px',
+          insetBlockStart: '10px',
+        }),
+      ),
+    );
+    // In vertical-lr, left maps to insetBlockStart
+    expect(warnings.map((w) => w.property)).toEqual(['inset-block-start']);
+  });
+
+  it('deduplicates bottom→insetInlineStart in sideways-lr writing mode', () => {
+    const warnings = checkContentsPosition(
+      createRuleContext(
+        makeElement({
+          display: 'contents',
+          writingMode: 'sideways-lr',
+          bottom: '10px',
+          insetInlineStart: '10px',
+        }),
+      ),
+    );
+    // In sideways-lr, bottom maps to insetInlineStart
+    expect(warnings.map((w) => w.property)).toEqual(['inset-inline-start']);
+  });
+
+  // RTL direction tests
+  it('deduplicates left→insetInlineEnd in horizontal-tb + rtl', () => {
+    const warnings = checkContentsPosition(
+      createRuleContext(
+        makeElement({
+          display: 'contents',
+          direction: 'rtl',
+          left: '10px',
+          insetInlineEnd: '10px',
+        }),
+      ),
+    );
+    // In RTL, left maps to insetInlineEnd (not insetInlineStart)
+    expect(warnings.map((w) => w.property)).toEqual(['inset-inline-end']);
+  });
+
+  it('deduplicates right→insetInlineStart in horizontal-tb + rtl', () => {
+    const warnings = checkContentsPosition(
+      createRuleContext(
+        makeElement({
+          display: 'contents',
+          direction: 'rtl',
+          right: '10px',
+          insetInlineStart: '10px',
+        }),
+      ),
+    );
+    // In RTL, right maps to insetInlineStart (not insetInlineEnd)
+    expect(warnings.map((w) => w.property)).toEqual(['inset-inline-start']);
+  });
+
+  it('does not skip left when insetInlineStart is set in rtl (different mapping)', () => {
+    const warnings = checkContentsPosition(
+      createRuleContext(
+        makeElement({
+          display: 'contents',
+          direction: 'rtl',
+          left: '10px',
+          insetInlineStart: '10px',
+        }),
+      ),
+    );
+    // In RTL, left maps to insetInlineEnd, not insetInlineStart
+    // So left should NOT be skipped due to insetInlineStart
+    const props = warnings.map((w) => w.property);
+    expect(props).toContain('left');
+    expect(props).toContain('inset-inline-start');
+  });
+
+  it('deduplicates top→insetInlineEnd in vertical-rl + rtl', () => {
+    const warnings = checkContentsPosition(
+      createRuleContext(
+        makeElement({
+          display: 'contents',
+          writingMode: 'vertical-rl',
+          direction: 'rtl',
+          top: '10px',
+          insetInlineEnd: '10px',
+        }),
+      ),
+    );
+    // In vertical-rl + rtl, top maps to insetInlineEnd (not insetInlineStart)
+    expect(warnings.map((w) => w.property)).toEqual(['inset-inline-end']);
+  });
 });

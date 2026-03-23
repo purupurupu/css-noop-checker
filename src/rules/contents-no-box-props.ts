@@ -1,5 +1,5 @@
 import { type RuleDescriptor, type Warning, createWarning } from './types.ts';
-import { isDefaultInlineSizeValue, isZeroPx } from './context.ts';
+import { getPhysicalLogicalMap, isDefaultInlineSizeValue, isZeroPx } from './context.ts';
 import { registerRule } from './registry.ts';
 
 const RULE_ID = 'contents-no-box-props' as const;
@@ -25,6 +25,8 @@ const rule: RuleDescriptor = {
   label: 'box properties on display:contents',
   requiredProperties: [
     'display',
+    'writingMode',
+    'direction',
     // Physical sizing
     'width',
     'height',
@@ -78,37 +80,39 @@ const rule: RuleDescriptor = {
 
     const warnings: Warning[] = [];
     const s = ctx.styles;
+    const map = getPhysicalLogicalMap(s.writingMode, s.direction);
 
-    // Skip physical property when its logical counterpart is also non-default,
-    // since browsers resolve both to the same computed value in horizontal writing mode.
-    const bothNonDefault = (physical: string, logical: string, isDefault: (v: string) => boolean) =>
-      !isDefault(physical) && !isDefault(logical);
+    // Skip physical property when the logical counterpart that maps to it
+    // (based on writing-mode) is also non-default, to avoid duplicate warnings.
+    const shouldSkipPhysical = (
+      physicalKey: keyof typeof map,
+      isDefault: (v: string) => boolean,
+    ) => {
+      const logicalKey = map[physicalKey];
+      return !isDefault(s[physicalKey]) && !isDefault(s[logicalKey]);
+    };
 
-    // Sizing dedup
-    const skipWidth = bothNonDefault(s.width, s.inlineSize, isDefaultInlineSizeValue);
-    const skipHeight = bothNonDefault(s.height, s.blockSize, isDefaultInlineSizeValue);
-    const skipMinWidth = bothNonDefault(s.minWidth, s.minInlineSize, isZeroPx);
-    const skipMaxWidth = bothNonDefault(s.maxWidth, s.maxInlineSize, isDefaultNoneValue);
-    const skipMinHeight = bothNonDefault(s.minHeight, s.minBlockSize, isZeroPx);
-    const skipMaxHeight = bothNonDefault(s.maxHeight, s.maxBlockSize, isDefaultNoneValue);
+    const skipWidth = shouldSkipPhysical('width', isDefaultInlineSizeValue);
+    const skipHeight = shouldSkipPhysical('height', isDefaultInlineSizeValue);
+    const skipMinWidth = shouldSkipPhysical('minWidth', isZeroPx);
+    const skipMaxWidth = shouldSkipPhysical('maxWidth', isDefaultNoneValue);
+    const skipMinHeight = shouldSkipPhysical('minHeight', isZeroPx);
+    const skipMaxHeight = shouldSkipPhysical('maxHeight', isDefaultNoneValue);
 
-    // Margin dedup
-    const skipMarginTop = bothNonDefault(s.marginTop, s.marginBlockStart, isZeroPx);
-    const skipMarginBottom = bothNonDefault(s.marginBottom, s.marginBlockEnd, isZeroPx);
-    const skipMarginRight = bothNonDefault(s.marginRight, s.marginInlineEnd, isZeroPx);
-    const skipMarginLeft = bothNonDefault(s.marginLeft, s.marginInlineStart, isZeroPx);
+    const skipMarginTop = shouldSkipPhysical('marginTop', isZeroPx);
+    const skipMarginBottom = shouldSkipPhysical('marginBottom', isZeroPx);
+    const skipMarginRight = shouldSkipPhysical('marginRight', isZeroPx);
+    const skipMarginLeft = shouldSkipPhysical('marginLeft', isZeroPx);
 
-    // Padding dedup
-    const skipPaddingTop = bothNonDefault(s.paddingTop, s.paddingBlockStart, isZeroPx);
-    const skipPaddingBottom = bothNonDefault(s.paddingBottom, s.paddingBlockEnd, isZeroPx);
-    const skipPaddingRight = bothNonDefault(s.paddingRight, s.paddingInlineEnd, isZeroPx);
-    const skipPaddingLeft = bothNonDefault(s.paddingLeft, s.paddingInlineStart, isZeroPx);
+    const skipPaddingTop = shouldSkipPhysical('paddingTop', isZeroPx);
+    const skipPaddingBottom = shouldSkipPhysical('paddingBottom', isZeroPx);
+    const skipPaddingRight = shouldSkipPhysical('paddingRight', isZeroPx);
+    const skipPaddingLeft = shouldSkipPhysical('paddingLeft', isZeroPx);
 
-    // Border-width dedup
-    const skipBorderTop = bothNonDefault(s.borderTopWidth, s.borderBlockStartWidth, isZeroPx);
-    const skipBorderBottom = bothNonDefault(s.borderBottomWidth, s.borderBlockEndWidth, isZeroPx);
-    const skipBorderRight = bothNonDefault(s.borderRightWidth, s.borderInlineEndWidth, isZeroPx);
-    const skipBorderLeft = bothNonDefault(s.borderLeftWidth, s.borderInlineStartWidth, isZeroPx);
+    const skipBorderTop = shouldSkipPhysical('borderTopWidth', isZeroPx);
+    const skipBorderBottom = shouldSkipPhysical('borderBottomWidth', isZeroPx);
+    const skipBorderRight = shouldSkipPhysical('borderRightWidth', isZeroPx);
+    const skipBorderLeft = shouldSkipPhysical('borderLeftWidth', isZeroPx);
 
     const boxProps: Array<[string, string, (v: string) => boolean, string, boolean?]> = [
       // Physical sizing (skip when logical counterpart is also non-default)

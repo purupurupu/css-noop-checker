@@ -33,6 +33,16 @@ Elements with `display: contents` do not generate a principal box. They behave a
 </div>
 ```
 
+## Writing-mode and direction aware dedup
+
+When both a physical property (e.g. `width`) and its logical counterpart are set, the rule suppresses the physical warning to avoid duplicates. The physical↔logical mapping depends on both `writing-mode` and `direction`:
+
+- In `horizontal-tb` (default): `width`↔`inline-size`, `height`↔`block-size`, `margin-top`↔`margin-block-start`, etc.
+- In vertical writing modes (`vertical-rl`, `vertical-lr`, `sideways-rl`, `sideways-lr`): the axes swap — `width`↔`block-size`, `height`↔`inline-size`, `margin-top`↔`margin-inline-start`, etc.
+- When `direction: rtl`, inline-start and inline-end swap. For example, `margin-left` maps to `margin-inline-end` (not `margin-inline-start`) and `margin-right` maps to `margin-inline-start` (not `margin-inline-end`). Block-axis and sizing mappings are unaffected.
+
+This ensures correct dedup regardless of writing direction and text direction.
+
 ## Common scenarios
 
 This arises when using `display: contents` to flatten a wrapper for flex/grid layout while forgetting to move box-model styles to a child or parent element that still generates a box.
