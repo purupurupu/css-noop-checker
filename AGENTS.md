@@ -73,11 +73,7 @@ Add both "should warn" and "should NOT warn" cases. Sections are ordered alphabe
 </div>
 ```
 
-### 4. Update `EXPECTED_CASE_COUNT`
-
-In `e2e/integration/rules-against-real-styles.test.ts`, increment the `EXPECTED_CASE_COUNT` constant by the number of test cases you added.
-
-### 5. Run tests
+### 4. Run tests
 
 ```bash
 pnpm test          # unit tests
