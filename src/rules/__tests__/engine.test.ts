@@ -23,6 +23,7 @@ describe('analyzeElement (integration)', () => {
   it('detects multiple issues on a single element', () => {
     const warnings = analyzeElement(
       makeElement({
+        display: 'inline',
         rowGap: '10px',
         alignItems: 'center',
         placeItems: 'center',

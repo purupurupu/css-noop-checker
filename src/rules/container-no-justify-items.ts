@@ -1,5 +1,5 @@
 import { type RuleDescriptor, type Warning, createWarning } from './types.ts';
-import { isDefaultAlignmentValue, isFlexOrGridContainer } from './context.ts';
+import { isBlockLayoutDisplay, isDefaultAlignmentValue, isGridContainer } from './context.ts';
 import { registerRule } from './registry.ts';
 
 const RULE_ID = 'container-no-justify-items' as const;
@@ -8,12 +8,12 @@ const warn = (fields: Omit<Warning, 'ruleId' | 'severity'>) => createWarning(RUL
 
 const rule: RuleDescriptor = {
   id: RULE_ID,
-  label: 'justify-items on non-flex/grid container',
+  label: 'justify-items outside grid/block layout',
   requiredProperties: ['display', 'justifyItems'],
   check(ctx) {
     const { display, justifyItems } = ctx.styles;
-    // justify-items works on both grid and flex containers (flex support since Chrome 129)
-    if (isFlexOrGridContainer(display)) return [];
+    // Chromium applies justify-items in grid and block layout, but not flex layout.
+    if (isGridContainer(display) || isBlockLayoutDisplay(display)) return [];
     if (ctx.isContents) return [];
     if (isDefaultAlignmentValue(justifyItems)) return [];
     // "legacy" keyword propagates justify-items to descendants for justify-self: auto
@@ -24,8 +24,9 @@ const rule: RuleDescriptor = {
       warn({
         property: 'justify-items',
         title: 'justify-items has no effect',
-        details: `justify-items is "${justifyItems}" but display is "${display}". justify-items only has a visible effect on flex/grid containers.`,
-        suggestion: 'Set display: flex or display: grid on this element, or remove justify-items.',
+        details: `justify-items is "${justifyItems}" but display is "${display}". In Chromium, justify-items has a visible effect in grid or block layout containers, but not in flex, inline, or table layout.`,
+        suggestion:
+          'Use display: grid or a block-layout container such as block/inline-block/flow-root, or remove justify-items.',
       }),
     ];
   },

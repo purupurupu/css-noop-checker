@@ -14,7 +14,7 @@ describe('item-no-justify-self', () => {
     expect(warnings[0].ruleId).toBe('item-no-justify-self');
     expect(warnings[0].property).toBe('justify-self');
     expect(warnings[0].details).toContain('table');
-    expect(warnings[0].suggestion).toContain('display: grid');
+    expect(warnings[0].suggestion).toContain('grid parent');
     expect(warnings[0].suggestion).not.toContain('margin-inline');
   });
 
@@ -53,22 +53,22 @@ describe('item-no-justify-self', () => {
     expect(warnings).toHaveLength(1);
   });
 
-  it('skips flex items (justify-self works on flex items since Chrome 129)', () => {
+  it('warns on flex items', () => {
     const warnings = checkJustifySelf(
       createRuleContext(
         makeElement({ justifySelf: 'center' }, { computedStyles: { display: 'flex' } }),
       ),
     );
-    expect(warnings).toHaveLength(0);
+    expect(warnings).toHaveLength(1);
   });
 
-  it('skips inline-flex items', () => {
+  it('warns on inline-flex items', () => {
     const warnings = checkJustifySelf(
       createRuleContext(
         makeElement({ justifySelf: 'end' }, { computedStyles: { display: 'inline-flex' } }),
       ),
     );
-    expect(warnings).toHaveLength(0);
+    expect(warnings).toHaveLength(1);
   });
 
   it('skips grid items (parent is grid)', () => {

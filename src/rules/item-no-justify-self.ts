@@ -1,20 +1,14 @@
 import { type RuleDescriptor, type Warning, createWarning } from './types.ts';
-import { isDefaultSelfAlignmentValue, isMulticolContainer } from './context.ts';
+import {
+  isBlockLayoutDisplay,
+  isDefaultSelfAlignmentValue,
+  isMulticolContainer,
+} from './context.ts';
 import { registerRule } from './registry.ts';
 
 const RULE_ID = 'item-no-justify-self' as const;
 
 const warn = (fields: Omit<Warning, 'ruleId' | 'severity'>) => createWarning(RULE_ID, fields);
-
-/** Parent display values that establish a block formatting context where justify-self works (Chrome 119+). */
-function isBlockLayout(display: string): boolean {
-  return (
-    display === 'block' ||
-    display === 'inline-block' ||
-    display === 'flow-root' ||
-    display === 'list-item'
-  );
-}
 
 /**
  * Child display values that do NOT generate a block-level box.
@@ -48,8 +42,6 @@ const rule: RuleDescriptor = {
   requiredParentProperties: ['display', 'columnCount', 'columnWidth'],
   check(ctx) {
     if (ctx.isGridItem) return [];
-    // justify-self works on flex items (supported since Chrome 129)
-    if (ctx.isFlexItem) return [];
     if (!ctx.parentStyles) return [];
 
     const { justifySelf } = ctx.styles;
@@ -66,7 +58,7 @@ const rule: RuleDescriptor = {
 
     // justify-self works in block layout (Chrome 119+), but only on block-level boxes.
     // Non-block-level children and multi-column containers are excluded.
-    if (isBlockLayout(ctx.parentDisplay)) {
+    if (isBlockLayoutDisplay(ctx.parentDisplay)) {
       if (
         !isNonBlockLevelBox(ctx.styles.display) &&
         !isMulticolContainer(
@@ -83,9 +75,9 @@ const rule: RuleDescriptor = {
       warn({
         property: 'justify-self',
         title: 'justify-self has no effect',
-        details: `justify-self is "${justifySelf}" but parent display is "${ctx.parentDisplay}". justify-self only takes effect on grid items, flex items (Chrome 129+), block-level elements (Chrome 119+), or absolutely-positioned elements (Chrome 105+).`,
+        details: `justify-self is "${justifySelf}" but parent display is "${ctx.parentDisplay}". In Chromium, justify-self takes effect on grid items, block-level elements in block layout, or absolutely/fixed-positioned elements. It does not affect flex items.`,
         suggestion:
-          'Set display: grid or display: flex on the parent element, or use a block layout container. Otherwise, remove justify-self.',
+          'Use a grid parent, a block-layout parent with a block-level child, or absolute/fixed positioning. Otherwise, remove justify-self.',
       }),
     ];
   },
