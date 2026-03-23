@@ -1,9 +1,5 @@
 import { type RuleDescriptor, type Warning, createWarning } from './types.ts';
-import {
-  getPhysicalLogicalMap,
-  isDefaultInlineSizeValue,
-  isZeroPx,
-} from './context.ts';
+import { getPhysicalLogicalMap, isDefaultInlineSizeValue, isZeroPx } from './context.ts';
 import { registerRule } from './registry.ts';
 
 const RULE_ID = 'contents-no-box-props' as const;
