@@ -621,26 +621,26 @@
     <h2>container-no-justify-items: justify-items on non-flex/grid containers</h2>
 
     <h3>Should warn</h3>
-    <div class="case expect-ok" data-rule="container-no-justify-items">
-      <div class="label label-ok">container-no-justify-items ok: block with justify-items</div>
-      <div data-target style="justify-items: center; height: 80px; background: #f0f0f0">
-        <div style="width: 60px; background: #c9e0f0">Child centered by justify-items</div>
-      </div>
-    </div>
     <div class="case expect-warn" data-rule="container-no-justify-items">
       <div class="label label-warn">
         container-no-justify-items warn: display:inline with justify-items
       </div>
       <span data-target style="justify-items: center">Child</span>
     </div>
-
-    <h3>Should NOT warn</h3>
     <div class="case expect-warn" data-rule="container-no-justify-items">
       <div class="label label-warn">
         container-no-justify-items warn: flex container with justify-items
       </div>
       <div data-target style="display: flex; justify-items: center">
         <div>Child</div>
+      </div>
+    </div>
+
+    <h3>Should NOT warn</h3>
+    <div class="case expect-ok" data-rule="container-no-justify-items">
+      <div class="label label-ok">container-no-justify-items ok: block with justify-items</div>
+      <div data-target style="justify-items: center; height: 80px; background: #f0f0f0">
+        <div style="width: 60px; background: #c9e0f0">Child centered by justify-items</div>
       </div>
     </div>
     <div class="case expect-ok" data-rule="container-no-justify-items">
