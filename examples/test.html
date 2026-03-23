@@ -690,16 +690,36 @@
     <h2>container-no-place: place-* on non-flex/grid</h2>
 
     <h3>Should warn</h3>
-    <div class="case expect-ok" data-rule="container-no-place">
-      <div class="label label-ok">container-no-place ok: display:block with place-items</div>
-      <div data-target style="place-items: center; height: 80px; background: #f0f0f0">
-        <div style="width: 60px; background: #c9e0f0">Child centered by place-items</div>
-      </div>
+    <div class="case expect-warn" data-rule="container-no-place">
+      <div class="label label-warn">container-no-place warn: inline with place-items</div>
+      <span data-target style="display: inline; place-items: center">Inline text</span>
     </div>
     <div class="case expect-warn" data-rule="container-no-place">
       <div class="label label-warn">container-no-place warn: table with place-items</div>
-      <div data-target style="display: table; place-items: center; background: #f0f0f0">
+      <div
+        data-target
+        style="display: table; place-items: center; height: 80px; background: #f0f0f0"
+      >
         <div style="display: table-row"><div style="display: table-cell">Cell</div></div>
+      </div>
+    </div>
+    <div class="case expect-warn" data-rule="container-no-place">
+      <div class="label label-warn">container-no-place warn: table-cell with place-items</div>
+      <div
+        data-target
+        style="display: table-cell; place-items: center; height: 80px; background: #f0f0f0"
+      >
+        Cell content
+      </div>
+    </div>
+
+    <h3>Should NOT warn</h3>
+    <div class="case expect-ok" data-rule="container-no-place">
+      <div class="label label-ok">
+        container-no-place ok: block with place-items (justify-items half effective)
+      </div>
+      <div data-target style="place-items: center; height: 80px; background: #f0f0f0">
+        <div style="width: 60px; background: #c9e0f0">Child centered by place-items</div>
       </div>
     </div>
     <div class="case expect-ok" data-rule="container-no-place">
@@ -713,18 +733,18 @@
         <div style="width: 60px; background: #c9e0f0">Child</div>
       </div>
     </div>
-
-    <h3>Should NOT warn</h3>
     <div class="case expect-ok" data-rule="container-no-place">
       <div class="label label-ok">
-        container-no-place ok: place-content on block (align-content works in block layout)
+        container-no-place ok: place-content is not checked (align-content half is effective)
       </div>
-      <div data-target style="place-content: center">
+      <div data-target style="place-content: center; height: 80px; background: #f0f0f0">
         <div>Child</div>
       </div>
     </div>
     <div class="case expect-ok" data-rule="container-no-place">
-      <div class="label label-ok">container-no-place ok: grid container with place-items</div>
+      <div class="label label-ok">
+        container-no-place ok: grid with place-items (both halves effective)
+      </div>
       <div
         data-target
         style="display: grid; place-items: center; height: 80px; background: #f0f0f0"
@@ -733,17 +753,25 @@
       </div>
     </div>
     <div class="case expect-ok" data-rule="container-no-place">
-      <div class="label label-ok">container-no-place ok: flex container with place-content</div>
+      <div class="label label-ok">
+        container-no-place ok: place-content is not checked (both halves effective on flex)
+      </div>
       <div
         data-target
-        style="display: flex; place-content: center; height: 80px; background: #f0f0f0"
+        style="
+          display: flex;
+          flex-wrap: wrap;
+          place-content: center;
+          height: 80px;
+          background: #f0f0f0;
+        "
       >
         <div>Flex child</div>
       </div>
     </div>
     <div class="case expect-ok" data-rule="container-no-place">
       <div class="label label-ok">
-        container-no-place ok: inline-grid container with place-items
+        container-no-place ok: inline-grid with place-items (both halves effective)
       </div>
       <div data-target style="display: inline-grid; place-items: center; height: 80px">
         <div>Inline-grid child</div>
@@ -751,9 +779,12 @@
     </div>
     <div class="case expect-ok" data-rule="container-no-place">
       <div class="label label-ok">
-        container-no-place ok: inline-flex container with place-content
+        container-no-place ok: place-content is not checked (both halves effective on inline-flex)
       </div>
-      <div data-target style="display: inline-flex; place-content: center; height: 80px">
+      <div
+        data-target
+        style="display: inline-flex; flex-wrap: wrap; place-content: center; height: 80px"
+      >
         <div>Inline-flex child</div>
       </div>
     </div>
