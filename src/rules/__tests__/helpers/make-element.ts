@@ -48,6 +48,7 @@ export const DEFAULT_COMPUTED_STYLES: ElementData['computedStyles'] = {
   contain: 'none',
   willChange: 'auto',
   writingMode: 'horizontal-tb',
+  direction: 'ltr',
   transformStyle: 'flat',
   flexDirection: 'row',
   flexWrap: 'nowrap',

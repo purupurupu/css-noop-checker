@@ -291,4 +291,225 @@ describe('contents-no-box-props: box properties on display:contents', () => {
     const warnings = checkContentsBoxProps(createRuleContext(makeElement({})));
     expect(warnings).toHaveLength(0);
   });
+
+  // Writing-mode aware dedup tests
+  it('deduplicates width→blockSize in vertical-rl writing mode', () => {
+    const warnings = checkContentsBoxProps(
+      createRuleContext(
+        makeElement({
+          writingMode: 'vertical-rl',
+          width: '200px',
+          blockSize: '200px',
+        }),
+      ),
+    );
+    const props = warnings.map((w) => w.property);
+    expect(props).not.toContain('width');
+    expect(props).toContain('block-size');
+  });
+
+  it('deduplicates height→inlineSize in vertical-rl writing mode', () => {
+    const warnings = checkContentsBoxProps(
+      createRuleContext(
+        makeElement({
+          writingMode: 'vertical-rl',
+          height: '100px',
+          inlineSize: '100px',
+        }),
+      ),
+    );
+    const props = warnings.map((w) => w.property);
+    expect(props).not.toContain('height');
+    expect(props).toContain('inline-size');
+  });
+
+  it('does not skip width when inlineSize is set in vertical-rl (different axes)', () => {
+    const warnings = checkContentsBoxProps(
+      createRuleContext(
+        makeElement({
+          writingMode: 'vertical-rl',
+          width: '200px',
+          inlineSize: '200px',
+        }),
+      ),
+    );
+    const props = warnings.map((w) => w.property);
+    // In vertical-rl, width maps to blockSize, not inlineSize
+    // So width should NOT be skipped (its counterpart blockSize is at default)
+    expect(props).toContain('width');
+    expect(props).toContain('inline-size');
+  });
+
+  it('deduplicates margin-right→marginBlockStart in vertical-rl writing mode', () => {
+    const warnings = checkContentsBoxProps(
+      createRuleContext(
+        makeElement({
+          writingMode: 'vertical-rl',
+          marginRight: '10px',
+          marginBlockStart: '10px',
+        }),
+      ),
+    );
+    const props = warnings.map((w) => w.property);
+    expect(props).not.toContain('margin-right');
+    expect(props).toContain('margin-block-start');
+  });
+
+  it('deduplicates margin-left→marginBlockStart in vertical-lr writing mode', () => {
+    const warnings = checkContentsBoxProps(
+      createRuleContext(
+        makeElement({
+          writingMode: 'vertical-lr',
+          marginLeft: '10px',
+          marginBlockStart: '10px',
+        }),
+      ),
+    );
+    const props = warnings.map((w) => w.property);
+    expect(props).not.toContain('margin-left');
+    expect(props).toContain('margin-block-start');
+  });
+
+  it('deduplicates padding-top→paddingInlineStart in vertical-rl writing mode', () => {
+    const warnings = checkContentsBoxProps(
+      createRuleContext(
+        makeElement({
+          writingMode: 'vertical-rl',
+          paddingTop: '10px',
+          paddingInlineStart: '10px',
+        }),
+      ),
+    );
+    const props = warnings.map((w) => w.property);
+    expect(props).not.toContain('padding-top');
+    expect(props).toContain('padding-inline-start');
+  });
+
+  it('deduplicates border-right-width→borderBlockStartWidth in vertical-rl writing mode', () => {
+    const warnings = checkContentsBoxProps(
+      createRuleContext(
+        makeElement({
+          writingMode: 'vertical-rl',
+          borderRightWidth: '1px',
+          borderBlockStartWidth: '1px',
+        }),
+      ),
+    );
+    const props = warnings.map((w) => w.property);
+    expect(props).not.toContain('border-right-width');
+    expect(props).toContain('border-block-start-width');
+  });
+
+  it('deduplicates correctly in sideways-lr writing mode', () => {
+    const warnings = checkContentsBoxProps(
+      createRuleContext(
+        makeElement({
+          writingMode: 'sideways-lr',
+          marginBottom: '10px',
+          marginInlineStart: '10px',
+        }),
+      ),
+    );
+    const props = warnings.map((w) => w.property);
+    // In sideways-lr, bottom maps to inlineStart
+    expect(props).not.toContain('margin-bottom');
+    expect(props).toContain('margin-inline-start');
+  });
+
+  // RTL direction tests
+  it('deduplicates margin-left→marginInlineEnd in horizontal-tb + rtl', () => {
+    const warnings = checkContentsBoxProps(
+      createRuleContext(
+        makeElement({
+          direction: 'rtl',
+          marginLeft: '10px',
+          marginInlineEnd: '10px',
+        }),
+      ),
+    );
+    const props = warnings.map((w) => w.property);
+    // In RTL, left maps to inline-end (not inline-start)
+    expect(props).not.toContain('margin-left');
+    expect(props).toContain('margin-inline-end');
+  });
+
+  it('deduplicates margin-right→marginInlineStart in horizontal-tb + rtl', () => {
+    const warnings = checkContentsBoxProps(
+      createRuleContext(
+        makeElement({
+          direction: 'rtl',
+          marginRight: '10px',
+          marginInlineStart: '10px',
+        }),
+      ),
+    );
+    const props = warnings.map((w) => w.property);
+    // In RTL, right maps to inline-start (not inline-end)
+    expect(props).not.toContain('margin-right');
+    expect(props).toContain('margin-inline-start');
+  });
+
+  it('does not skip margin-left when marginInlineStart is set in rtl (different axes)', () => {
+    const warnings = checkContentsBoxProps(
+      createRuleContext(
+        makeElement({
+          direction: 'rtl',
+          marginLeft: '10px',
+          marginInlineStart: '10px',
+        }),
+      ),
+    );
+    const props = warnings.map((w) => w.property);
+    // In RTL, left maps to inline-end, not inline-start
+    // So margin-left should NOT be skipped due to marginInlineStart
+    expect(props).toContain('margin-left');
+    expect(props).toContain('margin-inline-start');
+  });
+
+  it('deduplicates padding-left→paddingInlineEnd in rtl', () => {
+    const warnings = checkContentsBoxProps(
+      createRuleContext(
+        makeElement({
+          direction: 'rtl',
+          paddingLeft: '10px',
+          paddingInlineEnd: '10px',
+        }),
+      ),
+    );
+    const props = warnings.map((w) => w.property);
+    expect(props).not.toContain('padding-left');
+    expect(props).toContain('padding-inline-end');
+  });
+
+  it('deduplicates border-left-width→borderInlineEndWidth in rtl', () => {
+    const warnings = checkContentsBoxProps(
+      createRuleContext(
+        makeElement({
+          direction: 'rtl',
+          borderLeftWidth: '1px',
+          borderInlineEndWidth: '1px',
+        }),
+      ),
+    );
+    const props = warnings.map((w) => w.property);
+    expect(props).not.toContain('border-left-width');
+    expect(props).toContain('border-inline-end-width');
+  });
+
+  it('deduplicates top→marginInlineEnd in vertical-rl + rtl', () => {
+    const warnings = checkContentsBoxProps(
+      createRuleContext(
+        makeElement({
+          writingMode: 'vertical-rl',
+          direction: 'rtl',
+          marginTop: '10px',
+          marginInlineEnd: '10px',
+        }),
+      ),
+    );
+    const props = warnings.map((w) => w.property);
+    // In vertical-rl + rtl, top maps to inline-end (not inline-start)
+    expect(props).not.toContain('margin-top');
+    expect(props).toContain('margin-inline-end');
+  });
 });
