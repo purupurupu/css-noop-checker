@@ -63,6 +63,10 @@ Compare the three layers and report gaps:
 
 Report any gaps found before proceeding to Playwright.
 
+### Prerequisites
+
+If running in a **git worktree**, `node_modules` may not exist. Run `pnpm install` first if `pnpm test` fails with "command not found" errors.
+
 ### Step 3 — Playwright Verification
 
 Write a **temporary** Playwright test at `e2e/integration/verify-<rule-id>.test.ts`:
@@ -137,23 +141,23 @@ test('verify <RULE_ID> cases in detail', async ({ page }) => {
 
 Replace `<RULE_ID>` with the actual rule ID. Filter `relevantStyles` to only the properties declared in the rule's `requiredProperties` for readability.
 
-Run:
+Run (use `PLAYWRIGHT_FORCE_TTY=0` and pipe through `cat` to capture `console.log` output in non-TTY environments):
 
 ```bash
-pnpm playwright test e2e/integration/verify-<rule-id>.test.ts
+PLAYWRIGHT_FORCE_TTY=0 pnpm test:e2e e2e/integration/verify-<rule-id>.test.ts --reporter=line 2>&1 | cat
 ```
 
 ### Step 4 — Run Unit Tests
 
 ```bash
-pnpm vitest run src/rules/__tests__/<rule-id>.test.ts
+pnpm test src/rules/__tests__/<rule-id>.test.ts
 ```
 
 Check for failures. If a unit test fails but Playwright passes (or vice versa), the unit test's assumptions may be wrong — investigate the divergence.
 
 ### Step 5 — Clean Up and Report
 
-1. **Delete** the temporary Playwright test file
+1. **Delete** the temporary Playwright test file with `rm -f` (use `-f` to avoid interactive confirmation prompts)
 2. **Report** results in this format:
 
 ```
