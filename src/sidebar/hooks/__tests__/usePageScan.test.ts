@@ -66,7 +66,11 @@ describe('groupByRule', () => {
 
   it('places element in multiple groups when it triggers multiple rules', () => {
     const elements = [
-      makeScanElement(0, 'div.multi', { alignItems: 'center', placeItems: 'center' }),
+      makeScanElement(0, 'div.multi', {
+        display: 'inline',
+        alignItems: 'center',
+        placeItems: 'center',
+      }),
     ];
     const groups = groupByRule(elements);
     expect(groups).toHaveLength(2);

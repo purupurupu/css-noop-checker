@@ -621,12 +621,10 @@
     <h2>container-no-justify-items: justify-items on non-flex/grid containers</h2>
 
     <h3>Should warn</h3>
-    <div class="case expect-warn" data-rule="container-no-justify-items">
-      <div class="label label-warn">
-        container-no-justify-items warn: display:block with justify-items
-      </div>
+    <div class="case expect-ok" data-rule="container-no-justify-items">
+      <div class="label label-ok">container-no-justify-items ok: block with justify-items</div>
       <div data-target style="justify-items: center; height: 80px; background: #f0f0f0">
-        <div>Child (justify-items has no effect on block container)</div>
+        <div style="width: 60px; background: #c9e0f0">Child centered by justify-items</div>
       </div>
     </div>
     <div class="case expect-warn" data-rule="container-no-justify-items">
@@ -637,9 +635,9 @@
     </div>
 
     <h3>Should NOT warn</h3>
-    <div class="case expect-ok" data-rule="container-no-justify-items">
-      <div class="label label-ok">
-        container-no-justify-items ok: flex container with justify-items (works since Chrome 129)
+    <div class="case expect-warn" data-rule="container-no-justify-items">
+      <div class="label label-warn">
+        container-no-justify-items warn: flex container with justify-items
       </div>
       <div data-target style="display: flex; justify-items: center">
         <div>Child</div>
@@ -692,10 +690,10 @@
     <h2>container-no-place: place-* on non-flex/grid</h2>
 
     <h3>Should warn</h3>
-    <div class="case expect-warn" data-rule="container-no-place">
-      <div class="label label-warn">container-no-place warn: display:block with place-items</div>
+    <div class="case expect-ok" data-rule="container-no-place">
+      <div class="label label-ok">container-no-place ok: display:block with place-items</div>
       <div data-target style="place-items: center; height: 80px; background: #f0f0f0">
-        <div>Child (not centered — place-items has no effect on block)</div>
+        <div style="width: 60px; background: #c9e0f0">Child centered by place-items</div>
       </div>
     </div>
     <div class="case expect-warn" data-rule="container-no-place">
@@ -704,15 +702,15 @@
         <div style="display: table-row"><div style="display: table-cell">Cell</div></div>
       </div>
     </div>
-    <div class="case expect-warn" data-rule="container-no-place">
-      <div class="label label-warn">
-        container-no-place warn: place-items on block (place-content part works via align-content)
+    <div class="case expect-ok" data-rule="container-no-place">
+      <div class="label label-ok">
+        container-no-place ok: place-content and place-items on block
       </div>
       <div
         data-target
         style="place-content: center; place-items: center; height: 80px; background: #f0f0f0"
       >
-        <div>Child</div>
+        <div style="width: 60px; background: #c9e0f0">Child</div>
       </div>
     </div>
 
@@ -1843,12 +1841,10 @@
         </div>
       </div>
     </div>
-    <div class="case expect-ok" data-rule="item-no-justify-self">
-      <div class="label label-ok">
-        item-no-justify-self ok: flex item with justify-self (works since Chrome 129)
-      </div>
+    <div class="case expect-warn" data-rule="item-no-justify-self">
+      <div class="label label-warn">item-no-justify-self warn: flex item with justify-self</div>
       <div style="display: flex; gap: 8px">
-        <div data-target style="justify-self: center">Flex child with justify-self (valid)</div>
+        <div data-target style="justify-self: center">Flex child with justify-self (no effect)</div>
       </div>
     </div>
     <div class="case expect-ok" data-rule="item-no-justify-self">

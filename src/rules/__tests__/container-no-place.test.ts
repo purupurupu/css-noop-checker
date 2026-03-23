@@ -18,21 +18,15 @@ describe('container-no-place: place-content not checked (align-content works in 
 });
 
 describe('container-no-place: place-items', () => {
-  it('warns when place-items is set on block element', () => {
-    const warnings = checkPlace(createRuleContext(makeElement({ placeItems: 'center' })));
-    expect(warnings).toHaveLength(1);
-    expect(warnings[0].ruleId).toBe('container-no-place');
-    expect(warnings[0].property).toBe('place-items');
-    expect(warnings[0].title).toContain('place-items');
-  });
-
-  it('warns when place-items is set on inline-block element', () => {
-    const warnings = checkPlace(
-      createRuleContext(makeElement({ display: 'inline-block', placeItems: 'center' })),
-    );
-    expect(warnings).toHaveLength(1);
-    expect(warnings[0].details).toContain('inline-block');
-  });
+  it.each(['block', 'inline-block', 'flow-root', 'list-item'])(
+    'skips %s layout because place-items is effective there in Chromium',
+    (display) => {
+      const warnings = checkPlace(
+        createRuleContext(makeElement({ display, placeItems: 'center' })),
+      );
+      expect(warnings).toHaveLength(0);
+    },
+  );
 
   it('warns when place-items is set on table element', () => {
     const warnings = checkPlace(
@@ -49,14 +43,14 @@ describe('container-no-place: place-items', () => {
     expect(warnings).toHaveLength(0);
   });
 
-  it('skips flex containers', () => {
+  it('skips flex containers because the align-items half is effective', () => {
     const warnings = checkPlace(
       createRuleContext(makeElement({ display: 'flex', placeItems: 'center' })),
     );
     expect(warnings).toHaveLength(0);
   });
 
-  it('skips inline-flex containers', () => {
+  it('skips inline-flex containers because the align-items half is effective', () => {
     const warnings = checkPlace(
       createRuleContext(makeElement({ display: 'inline-flex', placeItems: 'center' })),
     );
@@ -77,19 +71,17 @@ describe('container-no-place: place-items', () => {
 });
 
 describe('container-no-place: edge cases', () => {
-  it('only warns for place-items when both set on block (place-content is not checked)', () => {
+  it('still ignores place-content when both are set on block', () => {
     const warnings = checkPlace(
       createRuleContext(makeElement({ placeContent: 'center', placeItems: 'center' })),
     );
-    expect(warnings).toHaveLength(1);
-    expect(warnings[0].property).toBe('place-items');
+    expect(warnings).toHaveLength(0);
   });
 
-  it('still warns place-items on multi-column container', () => {
+  it('skips place-items on multi-column block container', () => {
     const warnings = checkPlace(
       createRuleContext(makeElement({ columnCount: '3', placeItems: 'center' })),
     );
-    expect(warnings).toHaveLength(1);
-    expect(warnings[0].property).toBe('place-items');
+    expect(warnings).toHaveLength(0);
   });
 });

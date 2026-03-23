@@ -37,6 +37,19 @@ export function isFlexOrGridContainer(display: string): boolean {
   return isFlexContainer(display) || isGridContainer(display);
 }
 
+/**
+ * Block-layout containers where Chromium applies justify-items/place-items and
+ * where block-level children can use justify-self.
+ */
+export function isBlockLayoutDisplay(display: string): boolean {
+  return (
+    display === 'block' ||
+    display === 'inline-block' ||
+    display === 'flow-root' ||
+    display === 'list-item'
+  );
+}
+
 export function isDefaultGapLikeValue(value: string): boolean {
   return value === '0px' || value === 'normal';
 }
