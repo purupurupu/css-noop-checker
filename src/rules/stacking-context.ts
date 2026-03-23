@@ -33,7 +33,8 @@ export function isStackingContext(styles: Record<string, string>): boolean {
   if (filter !== undefined && filter !== 'none') return true;
 
   const backdropFilter = styles['backdropFilter'];
-  if (backdropFilter !== undefined && backdropFilter !== 'none') return true;
+  if (backdropFilter !== undefined && backdropFilter !== 'none' && backdropFilter !== '')
+    return true;
 
   const perspective = styles['perspective'];
   if (perspective !== undefined && perspective !== 'none') return true;
