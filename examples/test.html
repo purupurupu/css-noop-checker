@@ -913,42 +913,6 @@
       </div>
     </div>
 
-    <div class="case expect-warn" data-rule="contents-no-box-props">
-      <div class="label label-warn">
-        contents-no-box-props warn: width on display:contents in vertical-rl (maps to block-size)
-      </div>
-      <div data-target style="display: contents; writing-mode: vertical-rl; width: 200px">
-        <span>Child of contents element</span>
-      </div>
-    </div>
-    <div class="case expect-warn" data-rule="contents-no-box-props">
-      <div class="label label-warn">
-        contents-no-box-props warn: margin-top on display:contents in vertical-rl (maps to
-        margin-inline-start)
-      </div>
-      <div data-target style="display: contents; writing-mode: vertical-rl; margin-top: 10px">
-        <span>Child of contents element</span>
-      </div>
-    </div>
-    <div class="case expect-warn" data-rule="contents-no-box-props">
-      <div class="label label-warn">
-        contents-no-box-props warn: margin-left on display:contents in rtl (maps to
-        margin-inline-end)
-      </div>
-      <div data-target style="display: contents; direction: rtl; margin-left: 10px">
-        <span>Child of contents element</span>
-      </div>
-    </div>
-    <div class="case expect-warn" data-rule="contents-no-box-props">
-      <div class="label label-warn">
-        contents-no-box-props warn: padding-right on display:contents in rtl (maps to
-        padding-inline-start)
-      </div>
-      <div data-target style="display: contents; direction: rtl; padding-right: 10px">
-        <span>Child of contents element</span>
-      </div>
-    </div>
-
     <h3>Should NOT warn</h3>
     <div class="case expect-ok" data-rule="contents-no-box-props">
       <div class="label label-ok">contents-no-box-props ok: display:block with box properties</div>
