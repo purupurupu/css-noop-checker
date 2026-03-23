@@ -65,10 +65,9 @@ When adding a new rule, pick a descriptive `target` and `qualifier` — avoid nu
 3. Add `DEFAULT_COMPUTED_STYLES` entries in `src/rules/__tests__/helpers/make-element.ts` for any new `requiredProperties` (the validation test will fail if missed). If the rule uses `requiredInlineProperties`, ensure unit tests pass appropriate inline style overrides via `makeElement`'s third parameter.
 4. Add unit tests in `src/rules/__tests__/<rule-id>.test.ts`
 5. Add "should warn" and "should NOT warn" test cases to `examples/test.html` (keep alphabetical order by rule ID)
-6. Update `EXPECTED_CASE_COUNT` in `e2e/integration/rules-against-real-styles.test.ts`
-7. Update the Detected Patterns table in `README.md`
-8. Add `docs/rules/<rule-id>.md` — explain why the property combination is a no-op, with examples (see existing docs for the template)
-9. Run `pnpm test` and `pnpm test:e2e` to verify
+6. Update the Detected Patterns table in `README.md`
+7. Add `docs/rules/<rule-id>.md` — explain why the property combination is a no-op, with examples (see existing docs for the template)
+8. Run `pnpm test` and `pnpm test:e2e` to verify
 
 #### test.html Test Case Format
 
@@ -92,7 +91,6 @@ Each test case in `examples/test.html` must include `data-target` and `data-rule
 - **`data-target`** — boolean attribute on the element to inspect (must be exactly one per `.case`)
 - For cases where the target is a nested child (e.g. flex/grid items), place `data-target` on the actual inspectable element, not the wrapper
 - **Ordering** — rule sections in `test.html` must be sorted alphabetically by rule ID (e.g. `block-no-vertical-align` before `container-no-align`). The "No issues" section stays at the end. This matches the Scan Page display order.
-- **`EXPECTED_CASE_COUNT`** — after adding or removing test cases, update the `EXPECTED_CASE_COUNT` constant in `e2e/integration/rules-against-real-styles.test.ts`. This safeguard catches accidental additions/removals.
 
 ### MCP Server (`mcp-server/`)
 
