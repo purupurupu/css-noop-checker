@@ -94,6 +94,15 @@ No changes to the extraction layer are needed — both the extension and MCP ser
 - Tests follow `*.test.ts` / `*.test.tsx` naming, colocated in `__tests__/` directories
 - Format with Oxfmt (`singleQuote`, trailing commas, `printWidth: 100`)
 
+## Rule Correctness Policy
+
+- Treat **current Chromium behavior** as the primary source of truth for whether a rule should warn. This project is a Chrome DevTools extension, so browser behavior matters more than spec-only reasoning when they differ.
+- Do **not** claim a rule is "definitely correct" just because unit tests pass. Unit tests in `src/rules/__tests__/` are fast checks, not proof.
+- When changing an existing rule or adding a nuanced rule, validate it with a **real browser repro** and update `examples/test.html` so Playwright covers the case.
+- Be careful with **shorthands** such as `place-items`: a shorthand may be partially effective even when one longhand would be a no-op. Avoid warning unless the authored declaration is effectively useless in Chromium.
+- Prefer **conservative warnings**. If Chromium behavior is ambiguous or context-dependent, avoid introducing a likely false positive.
+- If a rule still has known limitations or deliberate false negatives, document that trade-off in the rule file comments.
+
 ## Commit & PR Guidelines
 
 - Format: `<type>: <why-focused message>` — types: `feat`, `fix`, `refactor`, `chore`, `docs`, `test`

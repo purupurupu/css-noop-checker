@@ -19,6 +19,9 @@ Chrome DevTools (Elements sidebar) extension that detects CSS properties that cu
 
 CSS Noop Checker finds CSS properties that have **no visible effect** on the element they are applied to. These "no-op" declarations are not syntax errors — they are valid CSS that the browser silently ignores due to layout context. For example, `width` on an inline `<span>`, or `gap` on a non-flex/grid container.
 
+> [!NOTE]
+> Rule correctness in this project is based primarily on **current Chromium behavior**, not on spec interpretation alone. A declaration may be valid CSS, partially effective, or browser-dependent. For nuanced cases, the source of truth is the real-browser coverage in `examples/test.html` + Playwright, not unit tests alone.
+
 ### Inline
 
 | Rule                                                                                          | Description                              |
@@ -48,8 +51,8 @@ CSS Noop Checker finds CSS properties that have **no visible effect** on the ele
 | [`container-no-flex-props`](./src/rules/container-no-flex-props.ts)       | flex-direction/wrap on non-flex             |
 | [`container-no-gap`](./src/rules/container-no-gap.ts)                     | gap on non-flex/grid                        |
 | [`container-no-grid-props`](./src/rules/container-no-grid-props.ts)       | grid container props on non-grid            |
-| [`container-no-justify-items`](./src/rules/container-no-justify-items.ts) | justify-items on non-flex/grid              |
-| [`container-no-place`](./src/rules/container-no-place.ts)                 | place-items on non-flex/grid                |
+| [`container-no-justify-items`](./src/rules/container-no-justify-items.ts) | justify-items outside grid/block layout     |
+| [`container-no-place`](./src/rules/container-no-place.ts)                 | place-items outside grid/flex/block layout  |
 
 ### Item (flex/grid)
 
@@ -58,7 +61,7 @@ CSS Noop Checker finds CSS properties that have **no visible effect** on the ele
 | [`item-no-flex-props`](./src/rules/item-no-flex-props.ts)     | flex item props on non-flex child                       |
 | [`item-no-float`](./src/rules/item-no-float.ts)               | float on flex/grid item                                 |
 | [`item-no-grid-props`](./src/rules/item-no-grid-props.ts)     | grid item props on non-grid child                       |
-| [`item-no-justify-self`](./src/rules/item-no-justify-self.ts) | justify-self outside flex/grid/block/positioned context |
+| [`item-no-justify-self`](./src/rules/item-no-justify-self.ts) | justify-self outside grid/block/positioned context      |
 | [`item-no-order`](./src/rules/item-no-order.ts)               | order on non-flex/grid item                             |
 | [`item-no-self-align`](./src/rules/item-no-self-align.ts)     | align-self on non-flex/grid item                        |
 
@@ -172,6 +175,7 @@ React 19 · TypeScript 5.9 · Vite 7 · Oxlint / Oxfmt · Vitest · Playwright �
 
 - Analysis uses `getComputedStyle` and lightweight heuristics — no external network calls.
 - Rules are pure functions with zero Chrome API dependency, making them fully testable.
+- Browser integration tests are the main safeguard against false positives and false negatives in nuanced layout cases.
 - The extension targets only the current DevTools selection (`$0`) or scans all visible elements on the page.
 - Each rule file is named after its rule ID (e.g. `container-no-gap.ts`), following Stylelint's `thing-no-qualifier` naming convention.
 

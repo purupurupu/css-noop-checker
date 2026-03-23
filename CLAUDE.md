@@ -70,6 +70,31 @@ When adding a new rule, pick a descriptive `target` and `qualifier` — avoid nu
 8. Add `docs/rules/<rule-id>.md` — explain why the property combination is a no-op, with examples (see existing docs for the template)
 9. Run `pnpm test` and `pnpm test:e2e` to verify
 
+#### Rule Correctness Expectations
+
+This project should be treated as **Chromium-behavior-driven**, not purely spec-driven.
+
+- The extension analyzes styles from Chrome DevTools, so the most important question is: **does this declaration actually have an effect in current Chromium?**
+- Unit tests are necessary but not sufficient. They often encode assumptions; those assumptions can be wrong.
+- For any non-trivial rule change, add or update a **real browser case** in `examples/test.html` and verify it with Playwright.
+- Do not assume a property is a full no-op just because one aspect is ignored. Shorthands and composite features can be **partially effective**.
+  - Example pattern: `place-items` can still matter if either the `align-items` half or the `justify-items` half is effective in Chromium.
+- Prefer avoiding false positives over maximizing warning count. If behavior is conditional, context-sensitive, or unclear in Chromium, bias toward silence and document the limitation.
+- If you intentionally keep a false negative or a known limitation, say so in the rule comment with the specific trade-off.
+
+#### When Auditing or Fixing Existing Rules
+
+Use this order:
+
+1. Reproduce the case in real Chromium with a minimal layout.
+2. Confirm whether the declaration is fully ineffective, partially effective, or effective.
+3. Update the rule logic.
+4. Update unit tests that encoded the old assumption.
+5. Update `examples/test.html` and `EXPECTED_CASE_COUNT` if cases were added or removed.
+6. Run both `pnpm test` and `pnpm test:e2e`.
+
+Avoid absolute language such as "this rule is correct" unless it has been validated in Chromium and the remaining limitations are explicitly called out.
+
 #### test.html Test Case Format
 
 Each test case in `examples/test.html` must include `data-target` and `data-rule` attributes for Playwright integration tests:
