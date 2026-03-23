@@ -178,7 +178,7 @@
     </div>
     <div class="case expect-ok" data-rule="block-no-vertical-align">
       <div class="label label-ok">block-no-vertical-align ok: table-cell with vertical-align</div>
-      <table>
+      <table style="height: 60px">
         <tr>
           <td data-target style="vertical-align: middle">
             Table cell with vertical-align: middle (valid)
@@ -190,7 +190,7 @@
       <div class="label label-ok">
         block-no-vertical-align ok: tr with vertical-align (propagates to cells)
       </div>
-      <table>
+      <table style="height: 60px">
         <tr data-target style="vertical-align: middle">
           <td>Cell in row with vertical-align: middle</td>
         </tr>
@@ -200,7 +200,7 @@
       <div class="label label-ok">
         block-no-vertical-align ok: tbody with vertical-align (propagates to cells)
       </div>
-      <table>
+      <table style="height: 60px">
         <tbody data-target style="vertical-align: middle">
           <tr>
             <td>Cell in tbody with vertical-align: middle</td>
