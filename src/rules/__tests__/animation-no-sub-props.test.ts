@@ -130,6 +130,19 @@ describe('animation-no-sub-props', () => {
     expect(warnings).toHaveLength(0);
   });
 
+  it('warns when all animation-name layers are none', () => {
+    const warnings = checkAnimationNoSubProps(
+      createRuleContext(
+        makeElement({
+          animationName: 'none, none',
+          animationDuration: '2s, 1s',
+        }),
+      ),
+    );
+    expect(warnings).toHaveLength(1);
+    expect(warnings[0].property).toBe('animation-duration');
+  });
+
   it('does not warn when will-change includes animation-name', () => {
     const warnings = checkAnimationNoSubProps(
       createRuleContext(
