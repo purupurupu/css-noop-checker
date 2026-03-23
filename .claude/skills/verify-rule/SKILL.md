@@ -60,6 +60,15 @@ Compare the three layers and report gaps:
 1. **Rule properties vs test.html cases** — Does test.html have at least one `expect-warn` case per property the rule checks? Does it have `expect-ok` cases for key bypass conditions (e.g. `will-change`, parent context)?
 2. **Rule logic vs unit tests** — Do unit tests cover all branches? (early returns, edge cases like multi-value properties, `will-change` bypass)
 3. **Unit test assumptions vs defaults** — Do the `defaultValue` constants in the rule match `DEFAULT_COMPUTED_STYLES` in `make-element.ts`? Do they match what Chromium actually returns?
+4. **test.html case placement** — Are `expect-warn` cases under the "Should warn" heading and `expect-ok` cases under "Should NOT warn"? Misplaced cases are a common source of confusion.
+5. **Label accuracy** — For each test case, verify the label matches the actual behavior:
+   - **warn labels** should state **what** is ineffective (e.g. "table with place-items")
+   - **ok labels** should explain **why** the property is effective or not checked (e.g. "both halves effective", "justify-items half effective", "not checked by this rule")
+   - Labels for shorthand properties (e.g. `place-items`, `place-content`) should clarify which halves are effective and why
+   - Labels must not claim behavior that contradicts Chromium reality (e.g. claiming "both halves effective" when one half requires `flex-wrap: wrap`)
+6. **Visual verifiability** — Can you visually confirm the CSS effect (or lack thereof) in the browser? Test cases should include sufficient dimensions (`width`, `height`) and `background` to make the effect obvious. For example:
+   - An `inline-grid` container without explicit width won't visually show `justify-items: center`
+   - A flex container without `flex-wrap: wrap` won't visually show `align-content: center`
 
 Report any gaps found before proceeding to Playwright.
 
@@ -176,6 +185,11 @@ Check for failures. If a unit test fails but Playwright passes (or vice versa), 
 
 ### Unit Test Results
 [pass/fail count]
+
+### Label & Visual Check
+| Case | Label Accurate? | Visually Verifiable? | Issue |
+|------|----------------|---------------------|-------|
+| ...  | yes            | yes                 |       |
 
 ### Divergences
 [Any inconsistencies between unit tests, e2e, and real browser behavior]
