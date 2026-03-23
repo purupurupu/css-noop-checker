@@ -46,12 +46,12 @@ digraph verify {
 
 Read these files for the given `<rule-id>`:
 
-| File | Purpose |
-|---|---|
-| `src/rules/<rule-id>.ts` | Rule logic, checked properties, default values |
-| `src/rules/__tests__/<rule-id>.test.ts` | Unit test cases and assertions |
-| `examples/test.html` (grep for `data-rule="<rule-id>"`) | Browser test cases |
-| `docs/rules/<rule-id>.md` | Rule documentation (if exists) |
+| File                                                    | Purpose                                        |
+| ------------------------------------------------------- | ---------------------------------------------- |
+| `src/rules/<rule-id>.ts`                                | Rule logic, checked properties, default values |
+| `src/rules/__tests__/<rule-id>.test.ts`                 | Unit test cases and assertions                 |
+| `examples/test.html` (grep for `data-rule="<rule-id>"`) | Browser test cases                             |
+| `docs/rules/<rule-id>.md`                               | Rule documentation (if exists)                 |
 
 ### Step 2 — Cross-Check Coverage
 
@@ -103,8 +103,12 @@ test('verify <RULE_ID> cases in detail', async ({ page }) => {
     }
 
     const status = expectWarn
-      ? matching.length > 0 ? 'PASS' : 'FAIL'
-      : matching.length === 0 ? 'PASS' : 'FAIL';
+      ? matching.length > 0
+        ? 'PASS'
+        : 'FAIL'
+      : matching.length === 0
+        ? 'PASS'
+        : 'FAIL';
 
     console.log(`${status} | ${label}`);
     console.log(`  Computed: ${JSON.stringify(relevantStyles)}`);
@@ -116,7 +120,9 @@ test('verify <RULE_ID> cases in detail', async ({ page }) => {
     // Log unexpected warnings from OTHER rules
     const others = warnings.filter((w) => w.ruleId !== '<RULE_ID>');
     if (others.length > 0) {
-      console.log(`  Other rules fired: ${others.map((w) => `${w.ruleId}:${w.property}`).join(', ')}`);
+      console.log(
+        `  Other rules fired: ${others.map((w) => `${w.ruleId}:${w.property}`).join(', ')}`,
+      );
     }
     console.log('');
 
@@ -132,6 +138,7 @@ test('verify <RULE_ID> cases in detail', async ({ page }) => {
 Replace `<RULE_ID>` with the actual rule ID. Filter `relevantStyles` to only the properties declared in the rule's `requiredProperties` for readability.
 
 Run:
+
 ```bash
 pnpm playwright test e2e/integration/verify-<rule-id>.test.ts
 ```
