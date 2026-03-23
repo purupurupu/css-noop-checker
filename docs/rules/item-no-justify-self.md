@@ -7,11 +7,10 @@ Detects `justify-self` on elements where it has no effect — outside flex, grid
 The `justify-self` property applies to:
 
 - Grid items
-- Flex items (Chrome 129+)
 - Block-level children in block formatting contexts (Chrome 119+) — but **not** inline-level children or children of multi-column containers
 - Absolutely/fixed-positioned elements (Chrome 105+)
 
-In other formatting contexts (table layout, etc.) or on inline-level boxes inside block layout, `justify-self` is ignored by the browser.
+In other formatting contexts, including flex layout and table layout, or on inline-level boxes inside block layout, `justify-self` is ignored by Chromium.
 
 ## Properties involved
 
@@ -50,11 +49,6 @@ In other formatting contexts (table layout, etc.) or on inline-level boxes insid
   <div style="justify-self: center">Works in grid</div>
 </div>
 
-<!-- Parent is a flex container (supported since Chrome 129) -->
-<div style="display: flex">
-  <div style="justify-self: center">Works in flex</div>
-</div>
-
 <!-- Parent is a block container (supported since Chrome 119) -->
 <div>
   <div style="justify-self: center">Works in block layout</div>
@@ -65,4 +59,4 @@ In other formatting contexts (table layout, etc.) or on inline-level boxes insid
 
 - Setting `justify-self` on an inline element (`<span>`) inside a block container — only block-level children are affected.
 - Setting `justify-self` on a child of a multi-column container — multi-column layout does not support `justify-self`.
-- Setting `justify-self` on a child of a table or other non-standard layout container.
+- Setting `justify-self` on a flex item, table child, or other unsupported layout item.
