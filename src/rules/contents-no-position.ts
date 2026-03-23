@@ -1,5 +1,5 @@
 import { type RuleDescriptor, type Warning, createWarning } from './types.ts';
-import { isDefaultOffsetValue, isDefaultZIndexValue } from './context.ts';
+import { getPhysicalLogicalMap, isDefaultOffsetValue, isDefaultZIndexValue } from './context.ts';
 import { registerRule } from './registry.ts';
 
 const RULE_ID = 'contents-no-position' as const;
@@ -23,6 +23,8 @@ const rule: RuleDescriptor = {
   label: 'positioning on display:contents',
   requiredProperties: [
     'display',
+    'writingMode',
+    'direction',
     'position',
     ...OFFSET_PROPERTIES,
     ...LOGICAL_OFFSET_PROPERTIES.map((p) => p.key),
@@ -46,18 +48,19 @@ const rule: RuleDescriptor = {
       );
     }
 
-    // Physical offsets — skip physical when its logical counterpart is also non-default
-    // to avoid duplicate warnings. Note: the physical↔logical mapping assumes horizontal-tb
-    // writing mode (top↔block-start, left↔inline-start). In vertical writing modes the
-    // mapping differs, but we lack writing-mode data here. Same limitation as contents-no-box-props.
-    const bothNonDefault = (physical: string, logical: string) =>
-      !isDefaultOffsetValue(physical) && !isDefaultOffsetValue(logical);
+    // Skip physical property when its writing-mode-aware logical
+    // counterpart is also non-default, to avoid duplicate warnings.
+    const map = getPhysicalLogicalMap(s.writingMode, s.direction);
+    const shouldSkipPhysical = (physicalKey: keyof typeof map) => {
+      const logicalKey = map[physicalKey];
+      return !isDefaultOffsetValue(s[physicalKey]) && !isDefaultOffsetValue(s[logicalKey]);
+    };
 
     const physicalOffsets: Array<[string, string, boolean]> = [
-      ['top', s.top, bothNonDefault(s.top, s.insetBlockStart)],
-      ['right', s.right, bothNonDefault(s.right, s.insetInlineEnd)],
-      ['bottom', s.bottom, bothNonDefault(s.bottom, s.insetBlockEnd)],
-      ['left', s.left, bothNonDefault(s.left, s.insetInlineStart)],
+      ['top', s.top, shouldSkipPhysical('top')],
+      ['right', s.right, shouldSkipPhysical('right')],
+      ['bottom', s.bottom, shouldSkipPhysical('bottom')],
+      ['left', s.left, shouldSkipPhysical('left')],
     ];
 
     for (const [prop, value, skip] of physicalOffsets) {
