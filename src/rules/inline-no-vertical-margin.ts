@@ -1,5 +1,5 @@
 import { type RuleDescriptor, type Warning, createWarning } from './types.ts';
-import { isDefaultMarginValue, isReplacedInlineElement, isVerticalWritingMode } from './context.ts';
+import { isZeroPx, isReplacedInlineElement, isVerticalWritingMode } from './context.ts';
 import { registerRule } from './registry.ts';
 
 const RULE_ID = 'inline-no-vertical-margin' as const;
@@ -22,7 +22,7 @@ const rule: RuleDescriptor = {
 
     const warnings: Warning[] = [];
 
-    if (!isDefaultMarginValue(marginTop)) {
+    if (!isZeroPx(marginTop)) {
       warnings.push(
         warn({
           property: 'margin-top',
@@ -34,7 +34,7 @@ const rule: RuleDescriptor = {
       );
     }
 
-    if (!isDefaultMarginValue(marginBottom)) {
+    if (!isZeroPx(marginBottom)) {
       warnings.push(
         warn({
           property: 'margin-bottom',

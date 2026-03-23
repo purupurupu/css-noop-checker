@@ -1,5 +1,5 @@
 import { type RuleDescriptor, type Warning, createWarning } from './types.ts';
-import { isDefaultMarginValue } from './context.ts';
+import { isZeroPx } from './context.ts';
 import { registerRule } from './registry.ts';
 
 const RULE_ID = 'table-no-margin' as const;
@@ -54,8 +54,8 @@ const rule: RuleDescriptor = {
     for (const [physical, logical, cssPhy, cssLog] of MARGIN_PROPERTIES) {
       const phyVal = s[physical];
       const logVal = s[logical];
-      const phyNonDefault = !isDefaultMarginValue(phyVal);
-      const logNonDefault = !isDefaultMarginValue(logVal);
+      const phyNonDefault = !isZeroPx(phyVal);
+      const logNonDefault = !isZeroPx(logVal);
 
       // Skip physical when logical is also set — both resolve to the same axis in getComputedStyle.
       if (phyNonDefault && !logNonDefault) {

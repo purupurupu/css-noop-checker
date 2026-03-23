@@ -77,7 +77,7 @@ export function isReplacedInlineElement(tagName: string): boolean {
   return REPLACED_INLINE_ELEMENTS.has(tagName);
 }
 
-export function isDefaultMarginValue(value: string): boolean {
+export function isZeroPx(value: string): boolean {
   return value === '0px';
 }
 
