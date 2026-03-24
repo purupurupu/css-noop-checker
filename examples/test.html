@@ -2293,7 +2293,8 @@
     <h3>Should NOT warn</h3>
     <div class="case expect-ok" data-rule="nonreplaced-no-object-fit">
       <div class="label label-ok">
-        nonreplaced-no-object-fit ok: img with object-fit: cover (replaced element)
+        nonreplaced-no-object-fit ok: img with object-fit: cover — replaced element, 200x40 SVG
+        cropped to 100x100 square
       </div>
       <img
         data-target
@@ -2304,7 +2305,8 @@
     </div>
     <div class="case expect-ok" data-rule="nonreplaced-no-object-fit">
       <div class="label label-ok">
-        nonreplaced-no-object-fit ok: video with object-fit (replaced element)
+        nonreplaced-no-object-fit ok: video with object-fit — replaced element, empty but object-fit
+        applies
       </div>
       <video
         data-target
@@ -2313,7 +2315,8 @@
     </div>
     <div class="case expect-ok" data-rule="nonreplaced-no-object-fit">
       <div class="label label-ok">
-        nonreplaced-no-object-fit ok: canvas with object-fit (replaced element)
+        nonreplaced-no-object-fit ok: canvas with object-fit — replaced element, empty but
+        object-fit applies
       </div>
       <canvas
         data-target
