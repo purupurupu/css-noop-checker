@@ -2911,9 +2911,13 @@
         scroll-snap-type
       </div>
       <div style="overflow: auto; width: 200px; height: 100px; background: #e8e8e8">
-        <div data-target style="scroll-snap-align: start; background: #ddd; padding: 4px">
+        <div
+          data-target
+          style="scroll-snap-align: start; height: 100px; background: #ddd; padding: 4px"
+        >
           snap-align: start — ignored, parent has no snap type
         </div>
+        <div style="height: 100px; background: #ccc; padding: 4px">Section 2</div>
       </div>
     </div>
     <div class="case expect-warn" data-rule="scroll-snap-no-align-without-type">
@@ -2922,9 +2926,13 @@
         scroll-snap-type
       </div>
       <div style="overflow: auto; width: 200px; height: 100px; background: #e8e8e8">
-        <div data-target style="scroll-snap-align: center; background: #ddd; padding: 4px">
+        <div
+          data-target
+          style="scroll-snap-align: center; height: 100px; background: #ddd; padding: 4px"
+        >
           snap-align: center — ignored
         </div>
+        <div style="height: 100px; background: #ccc; padding: 4px">Section 2</div>
       </div>
     </div>
     <div class="case expect-warn" data-rule="scroll-snap-no-align-without-type">
@@ -2933,9 +2941,13 @@
         scroll-snap-type
       </div>
       <div style="overflow: auto; width: 200px; height: 100px; background: #e8e8e8">
-        <div data-target style="scroll-snap-align: end; background: #ddd; padding: 4px">
+        <div
+          data-target
+          style="scroll-snap-align: end; height: 100px; background: #ddd; padding: 4px"
+        >
           snap-align: end — ignored
         </div>
+        <div style="height: 100px; background: #ccc; padding: 4px">Section 2</div>
       </div>
     </div>
     <div class="case expect-warn" data-rule="scroll-snap-no-align-without-type">
@@ -2944,9 +2956,13 @@
         scroll-snap-type
       </div>
       <div style="overflow: auto; width: 200px; height: 100px; background: #e8e8e8">
-        <div data-target style="scroll-snap-stop: always; background: #ddd; padding: 4px">
+        <div
+          data-target
+          style="scroll-snap-stop: always; height: 100px; background: #ddd; padding: 4px"
+        >
           snap-stop: always — ignored
         </div>
+        <div style="height: 100px; background: #ccc; padding: 4px">Section 2</div>
       </div>
     </div>
 
