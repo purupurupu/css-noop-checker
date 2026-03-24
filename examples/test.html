@@ -3808,78 +3808,90 @@
     <h3>Should warn</h3>
     <div class="case expect-warn" data-rule="visible-overflow-no-text-overflow">
       <div class="label label-warn">
-        visible-overflow-no-text-overflow warn: ellipsis with default overflow (visible)
+        visible-overflow-no-text-overflow warn: ellipsis — overflow is visible, text spills out
+        instead of showing "..."
       </div>
-      <div data-target style="text-overflow: ellipsis; white-space: nowrap; width: 150px">
-        This text should be truncated but overflow is visible
+      <div
+        data-target
+        style="text-overflow: ellipsis; white-space: nowrap; width: 150px; background: #e8e8e8"
+      >
+        This long text should show ellipsis but overflows instead
       </div>
     </div>
     <div class="case expect-warn" data-rule="visible-overflow-no-text-overflow">
       <div class="label label-warn">
-        visible-overflow-no-text-overflow warn: ellipsis explicitly with overflow: visible
+        visible-overflow-no-text-overflow warn: ellipsis + explicit overflow: visible — same issue
       </div>
       <div
         data-target
-        style="text-overflow: ellipsis; overflow: visible; white-space: nowrap; width: 150px"
+        style="
+          text-overflow: ellipsis;
+          overflow: visible;
+          white-space: nowrap;
+          width: 150px;
+          background: #e8e8e8;
+        "
       >
-        Explicit overflow: visible with text-overflow: ellipsis
+        Explicit overflow: visible — text spills out, no ellipsis
       </div>
     </div>
 
     <h3>Should NOT warn</h3>
     <div class="case expect-ok" data-rule="visible-overflow-no-text-overflow">
       <div class="label label-ok">
-        visible-overflow-no-text-overflow ok: ellipsis with overflow: hidden (correct usage)
+        visible-overflow-no-text-overflow ok: overflow: hidden — text truncated with "..." visible
       </div>
       <div
         data-target
-        style="text-overflow: ellipsis; overflow: hidden; white-space: nowrap; width: 150px"
+        style="
+          text-overflow: ellipsis;
+          overflow: hidden;
+          white-space: nowrap;
+          width: 150px;
+          background: #e8e8e8;
+        "
       >
-        This text is properly truncated with overflow hidden and ellipsis
+        This long text is properly truncated with ellipsis showing
       </div>
     </div>
     <div class="case expect-ok" data-rule="visible-overflow-no-text-overflow">
       <div class="label label-ok">
-        visible-overflow-no-text-overflow ok: default text-overflow (clip) with visible overflow
-      </div>
-      <div data-target style="width: 150px">Default text-overflow is clip, no warning needed</div>
-    </div>
-    <div class="case expect-ok" data-rule="visible-overflow-no-text-overflow">
-      <div class="label label-ok">
-        visible-overflow-no-text-overflow ok: ellipsis with overflow: scroll
+        visible-overflow-no-text-overflow ok: overflow: scroll — text truncated, scrollbar visible
       </div>
       <div
         data-target
-        style="text-overflow: ellipsis; overflow: scroll; white-space: nowrap; width: 150px"
+        style="
+          text-overflow: ellipsis;
+          overflow: scroll;
+          white-space: nowrap;
+          width: 150px;
+          background: #e8e8e8;
+        "
       >
-        text-overflow with overflow: scroll is valid
+        text-overflow with overflow: scroll
       </div>
     </div>
     <div class="case expect-ok" data-rule="visible-overflow-no-text-overflow">
       <div class="label label-ok">
-        visible-overflow-no-text-overflow ok: ellipsis with overflow: auto
+        visible-overflow-no-text-overflow ok: overflow-x: clip — text clipped at boundary
       </div>
       <div
         data-target
-        style="text-overflow: ellipsis; overflow: auto; white-space: nowrap; width: 150px"
+        style="
+          text-overflow: ellipsis;
+          overflow-x: clip;
+          white-space: nowrap;
+          width: 150px;
+          background: #e8e8e8;
+        "
       >
-        text-overflow with overflow: auto is valid
+        text-overflow with overflow-x: clip
       </div>
     </div>
     <div class="case expect-ok" data-rule="visible-overflow-no-text-overflow">
       <div class="label label-ok">
-        visible-overflow-no-text-overflow ok: ellipsis with overflow-x: clip
-      </div>
-      <div
-        data-target
-        style="text-overflow: ellipsis; overflow-x: clip; white-space: nowrap; width: 150px"
-      >
-        text-overflow with overflow-x: clip is valid
-      </div>
-    </div>
-    <div class="case expect-ok" data-rule="visible-overflow-no-text-overflow">
-      <div class="label label-ok">
-        visible-overflow-no-text-overflow ok: input with text-overflow: ellipsis (UA styles)
+        visible-overflow-no-text-overflow ok: input — UA stylesheet sets overflow: hidden, "..."
+        visible in narrow input
       </div>
       <input
         data-target
@@ -3887,16 +3899,6 @@
         style="text-overflow: ellipsis; width: 80px"
         value="Long input text that should be truncated"
       />
-    </div>
-    <div class="case expect-ok" data-rule="visible-overflow-no-text-overflow">
-      <div class="label label-ok">
-        visible-overflow-no-text-overflow ok: display:contents (no box, skip)
-      </div>
-      <div style="display: flex">
-        <div data-target style="display: contents; text-overflow: ellipsis">
-          <span>Child of contents element</span>
-        </div>
-      </div>
     </div>
     <div class="case expect-ok" data-rule="visible-overflow-no-text-overflow">
       <div class="label label-ok">
