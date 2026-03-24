@@ -3068,23 +3068,25 @@
     <h3>Should warn</h3>
     <div class="case expect-warn" data-rule="static-no-logical-offset">
       <div class="label label-warn">
-        static-no-logical-offset warn: static div with inset-block-start
+        static-no-logical-offset warn: static div with inset-block-start — stays in place (offset
+        ignored)
       </div>
-      <div data-target style="inset-block-start: 20px">
-        This div has inset-block-start: 20px but position is static
-      </div>
-    </div>
-    <div class="case expect-warn" data-rule="static-no-logical-offset">
-      <div class="label label-warn">
-        static-no-logical-offset warn: static div with inset-inline-start
-      </div>
-      <div data-target style="inset-inline-start: 10px">
-        This div has inset-inline-start: 10px but position is static
+      <div data-target style="inset-block-start: 20px; background: #ffcccc; height: 30px">
+        inset-block-start: 20px but static — not moved
       </div>
     </div>
     <div class="case expect-warn" data-rule="static-no-logical-offset">
       <div class="label label-warn">
-        static-no-logical-offset warn: static div with all logical offsets
+        static-no-logical-offset warn: static div with inset-inline-start — stays in place (offset
+        ignored)
+      </div>
+      <div data-target style="inset-inline-start: 10px; background: #ffcccc; height: 30px">
+        inset-inline-start: 10px but static — not moved
+      </div>
+    </div>
+    <div class="case expect-warn" data-rule="static-no-logical-offset">
+      <div class="label label-warn">
+        static-no-logical-offset warn: static div with all logical offsets — stays in place
       </div>
       <div
         data-target
@@ -3093,32 +3095,50 @@
           inset-block-end: 10px;
           inset-inline-start: 10px;
           inset-inline-end: 10px;
+          background: #ffcccc;
+          height: 30px;
         "
       >
-        All four logical offsets on a static element
+        All four logical offsets on static — not moved
       </div>
     </div>
     <div class="case expect-warn" data-rule="static-no-logical-offset">
       <div class="label label-warn">
-        static-no-logical-offset warn: inset shorthand expands to all 4 logical offsets
+        static-no-logical-offset warn: inset shorthand on static — stays in place
       </div>
-      <div data-target style="inset: 10px">
-        inset: 10px on a static element expands to all 4 logical offsets
+      <div data-target style="inset: 10px; background: #ffcccc; height: 30px">
+        inset: 10px on static — not moved
       </div>
     </div>
 
     <h3>Should NOT warn</h3>
     <div class="case expect-ok" data-rule="static-no-logical-offset">
-      <div class="label label-ok">static-no-logical-offset ok: relative with inset-block-start</div>
-      <div data-target style="position: relative; inset-block-start: 20px">
-        Relative + inset-block-start: 20px (valid)
+      <div class="label label-ok">
+        static-no-logical-offset ok: relative with inset-block-start — shifted down 20px
+      </div>
+      <div
+        data-target
+        style="position: relative; inset-block-start: 20px; background: #ccffcc; height: 30px"
+      >
+        Relative + inset-block-start: 20px — shifted down
       </div>
     </div>
     <div class="case expect-ok" data-rule="static-no-logical-offset">
-      <div class="label label-ok">static-no-logical-offset ok: absolute with logical offsets</div>
-      <div style="position: relative">
-        <div data-target style="position: absolute; inset-block-start: 0; inset-inline-start: 0">
-          Absolute + logical offsets (valid)
+      <div class="label label-ok">
+        static-no-logical-offset ok: absolute with logical offsets — pinned to top-left of parent
+      </div>
+      <div style="position: relative; height: 50px; background: #f0f0f0">
+        <div
+          data-target
+          style="
+            position: absolute;
+            inset-block-start: 0;
+            inset-inline-start: 0;
+            background: #ccffcc;
+            height: 30px;
+          "
+        >
+          Absolute + logical offsets — pinned top-left
         </div>
       </div>
     </div>
@@ -3133,7 +3153,7 @@
     </div>
     <div class="case expect-ok" data-rule="static-no-logical-offset">
       <div class="label label-ok">static-no-logical-offset ok: sticky with inset-block-start</div>
-      <div data-target style="position: sticky; inset-block-start: 0">
+      <div data-target style="position: sticky; inset-block-start: 0; background: #ccffcc">
         Sticky + inset-block-start: 0 (valid)
       </div>
     </div>
@@ -3143,32 +3163,44 @@
 
     <h3>Should warn</h3>
     <div class="case expect-warn" data-rule="static-no-offset">
-      <div class="label label-warn">static-no-offset warn: static div with top</div>
-      <div data-target style="top: 20px">This div has top: 20px but position is static</div>
+      <div class="label label-warn">static-no-offset warn: static div with top: 20px</div>
+      <div data-target style="top: 20px; background: #e8e8e8; padding: 4px">
+        static — top: 20px ignored, element stays in normal flow
+      </div>
     </div>
     <div class="case expect-warn" data-rule="static-no-offset">
-      <div class="label label-warn">static-no-offset warn: static div with left</div>
-      <div data-target style="left: 10px">This div has left: 10px but position is static</div>
+      <div class="label label-warn">static-no-offset warn: static div with left: 10px</div>
+      <div data-target style="left: 10px; background: #e8e8e8; padding: 4px">
+        static — left: 10px ignored, element stays in normal flow
+      </div>
     </div>
     <div class="case expect-warn" data-rule="static-no-offset">
-      <div class="label label-warn">static-no-offset warn: static div with all offsets</div>
-      <div data-target style="top: 10px; right: 10px; bottom: 10px; left: 10px">
-        All four offsets on a static element
+      <div class="label label-warn">static-no-offset warn: static div with all four offsets</div>
+      <div
+        data-target
+        style="top: 10px; right: 10px; bottom: 10px; left: 10px; background: #e8e8e8; padding: 4px"
+      >
+        static — all offsets ignored
       </div>
     </div>
 
     <h3>Should NOT warn</h3>
     <div class="case expect-ok" data-rule="static-no-offset">
-      <div class="label label-ok">static-no-offset ok: relative with top</div>
-      <div data-target style="position: relative; top: 20px">Relative + top: 20px (valid)</div>
+      <div class="label label-ok">
+        static-no-offset ok: position: relative + top: 20px — element shifts 20px down from normal
+        position
+      </div>
+      <div data-target style="position: relative; top: 20px; background: #e8e8e8; padding: 4px">
+        relative — top: 20px shifts element down
+      </div>
     </div>
     <div class="case expect-ok" data-rule="static-no-offset">
-      <div class="label label-ok">static-no-offset ok: relative with top + left</div>
-      <div data-target style="position: relative; top: 0; left: 0">Relative + offsets (valid)</div>
-    </div>
-    <div class="case expect-ok" data-rule="static-no-offset">
-      <div class="label label-ok">static-no-offset ok: sticky with top</div>
-      <div data-target style="position: sticky; top: 0">Sticky + top: 0 (valid)</div>
+      <div class="label label-ok">
+        static-no-offset ok: position: sticky + top: 0 — sticks to top of scroll container on scroll
+      </div>
+      <div data-target style="position: sticky; top: 0; background: #e8e8e8; padding: 4px">
+        sticky — top: 0 sticks on scroll
+      </div>
     </div>
 
     <!-- ===== static-no-z-index: z-index on non-stacking-context elements ===== -->
