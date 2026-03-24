@@ -3342,83 +3342,127 @@
     <h3>Should warn</h3>
     <div class="case expect-warn" data-rule="table-no-margin">
       <div class="label label-warn">table-no-margin warn: margin-top on table-row</div>
-      <div data-target style="display: table-row; margin-top: 10px">table-row with margin-top</div>
+      <div style="display: table; background: #e8e8e8">
+        <div data-target style="display: table-row; margin-top: 10px">
+          <div style="display: table-cell; padding: 4px">table-row — margin-top: 10px ignored</div>
+        </div>
+      </div>
     </div>
     <div class="case expect-warn" data-rule="table-no-margin">
       <div class="label label-warn">table-no-margin warn: margin on table-row-group</div>
-      <div data-target style="display: table-row-group; margin: 10px">
-        table-row-group with margin
-      </div>
-    </div>
-    <div class="case expect-warn" data-rule="table-no-margin">
-      <div class="label label-warn">table-no-margin warn: margin on table-column</div>
-      <div data-target style="display: table-column; margin-left: 10px">
-        table-column with margin-left
-      </div>
-    </div>
-    <div class="case expect-warn" data-rule="table-no-margin">
-      <div class="label label-warn">table-no-margin warn: margin on table-header-group</div>
-      <div data-target style="display: table-header-group; margin-bottom: 10px">
-        table-header-group with margin-bottom
-      </div>
-    </div>
-    <div class="case expect-warn" data-rule="table-no-margin">
-      <div class="label label-warn">table-no-margin warn: margin on table-footer-group</div>
-      <div data-target style="display: table-footer-group; margin-top: 20px">
-        table-footer-group with margin-top
-      </div>
-    </div>
-    <div class="case expect-warn" data-rule="table-no-margin">
-      <div class="label label-warn">table-no-margin warn: margin on table-column-group</div>
-      <div data-target style="display: table-column-group; margin: 10px">
-        table-column-group with margin
-      </div>
-    </div>
-    <div class="case expect-warn" data-rule="table-no-margin">
-      <div class="label label-warn">table-no-margin warn: margin-block-start on table-row</div>
-      <div data-target style="display: table-row; margin-block-start: 10px">
-        table-row with margin-block-start
-      </div>
-    </div>
-    <div class="case expect-warn" data-rule="table-no-margin">
-      <div class="label label-warn">table-no-margin warn: margin-inline-start on table-row</div>
-      <div data-target style="display: table-row; margin-inline-start: 10px">
-        table-row with margin-inline-start
+      <div style="display: table; background: #e8e8e8">
+        <div data-target style="display: table-row-group; margin: 10px">
+          <div style="display: table-row">
+            <div style="display: table-cell; padding: 4px">
+              table-row-group — margin: 10px ignored
+            </div>
+          </div>
+        </div>
       </div>
     </div>
     <div class="case expect-warn" data-rule="table-no-margin">
       <div class="label label-warn">table-no-margin warn: margin on table-cell</div>
-      <div data-target style="display: table-cell; margin: 10px">table-cell with margin</div>
+      <div style="display: table; background: #e8e8e8">
+        <div style="display: table-row">
+          <div data-target style="display: table-cell; margin: 10px; padding: 4px">
+            table-cell — margin: 10px ignored
+          </div>
+          <div style="display: table-cell; padding: 4px; border-left: 1px solid #999">Cell 2</div>
+        </div>
+      </div>
+    </div>
+    <div class="case expect-warn" data-rule="table-no-margin">
+      <div class="label label-warn">table-no-margin warn: margin-block-start on table-row</div>
+      <div style="display: table; background: #e8e8e8">
+        <div data-target style="display: table-row; margin-block-start: 10px">
+          <div style="display: table-cell; padding: 4px">
+            table-row — margin-block-start: 10px ignored
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="case expect-warn" data-rule="table-no-margin">
+      <div class="label label-warn">table-no-margin warn: margin on table-column</div>
+      <div data-target style="display: table-column; margin-left: 10px; background: #e8e8e8">
+        table-column — margin-left: 10px ignored
+      </div>
+    </div>
+    <div class="case expect-warn" data-rule="table-no-margin">
+      <div class="label label-warn">table-no-margin warn: margin on table-header-group</div>
+      <div style="display: table; background: #e8e8e8">
+        <div data-target style="display: table-header-group; margin-bottom: 10px">
+          <div style="display: table-row">
+            <div style="display: table-cell; padding: 4px">
+              table-header-group — margin-bottom: 10px ignored
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="case expect-warn" data-rule="table-no-margin">
+      <div class="label label-warn">table-no-margin warn: margin on table-footer-group</div>
+      <div style="display: table; background: #e8e8e8">
+        <div data-target style="display: table-footer-group; margin-top: 20px">
+          <div style="display: table-row">
+            <div style="display: table-cell; padding: 4px">
+              table-footer-group — margin-top: 20px ignored
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="case expect-warn" data-rule="table-no-margin">
+      <div class="label label-warn">table-no-margin warn: margin on table-column-group</div>
+      <div data-target style="display: table-column-group; margin: 10px; background: #e8e8e8">
+        table-column-group — margin: 10px ignored
+      </div>
+    </div>
+    <div class="case expect-warn" data-rule="table-no-margin">
+      <div class="label label-warn">table-no-margin warn: margin-inline-start on table-row</div>
+      <div style="display: table; background: #e8e8e8">
+        <div data-target style="display: table-row; margin-inline-start: 10px">
+          <div style="display: table-cell; padding: 4px">
+            table-row — margin-inline-start: 10px ignored
+          </div>
+        </div>
+      </div>
     </div>
 
     <h3>Should NOT warn</h3>
     <div class="case expect-ok" data-rule="table-no-margin">
       <div class="label label-ok">
-        table-no-margin ok: table-caption with margin (margins apply)
+        table-no-margin ok: table-caption — margin creates visible space around caption
       </div>
-      <div data-target style="display: table-caption; margin: 10px">
-        table-caption with margin — OK
+      <div style="display: table; background: #e8e8e8">
+        <div
+          data-target
+          style="display: table-caption; margin: 10px; background: white; padding: 4px"
+        >
+          table-caption — margin: 10px applies
+        </div>
+        <div style="display: table-row">
+          <div style="display: table-cell; padding: 4px">Cell</div>
+        </div>
       </div>
-    </div>
-    <div class="case expect-ok" data-rule="table-no-margin">
-      <div class="label label-ok">table-no-margin ok: margin on display:table (margins apply)</div>
-      <div data-target style="display: table; margin: 10px">table with margin — OK</div>
     </div>
     <div class="case expect-ok" data-rule="table-no-margin">
       <div class="label label-ok">
-        table-no-margin ok: margin on display:inline-table (margins apply)
+        table-no-margin ok: display: table — margin creates visible space around table box
       </div>
-      <div data-target style="display: inline-table; margin: 10px">
-        inline-table with margin — OK
+      <div data-target style="display: table; margin: 10px; background: #e8e8e8; padding: 4px">
+        table — margin: 10px applies
       </div>
     </div>
     <div class="case expect-ok" data-rule="table-no-margin">
-      <div class="label label-ok">table-no-margin ok: table-row with no margin</div>
-      <div data-target style="display: table-row">table-row without margin — OK</div>
-    </div>
-    <div class="case expect-ok" data-rule="table-no-margin">
-      <div class="label label-ok">table-no-margin ok: margin on display:block</div>
-      <div data-target style="display: block; margin: 10px">block with margin — OK</div>
+      <div class="label label-ok">
+        table-no-margin ok: display: inline-table — margin creates visible space around inline-table
+      </div>
+      <div
+        data-target
+        style="display: inline-table; margin: 10px; background: #e8e8e8; padding: 4px"
+      >
+        inline-table — margin: 10px applies
+      </div>
     </div>
 
     <!-- ===== table-no-padding: no-op padding on table internals ===== -->
