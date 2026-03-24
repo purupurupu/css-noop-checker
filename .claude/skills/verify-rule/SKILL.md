@@ -62,11 +62,12 @@ Compare the three layers and report gaps:
 2. **Rule logic vs unit tests** — Do unit tests cover all branches? (early returns, edge cases like multi-value properties, `will-change` bypass)
 3. **Unit test assumptions vs defaults** — Do the `defaultValue` constants in the rule match `DEFAULT_COMPUTED_STYLES` in `make-element.ts`? Do they match what Chromium actually returns?
 4. **test.html case placement** — Are `expect-warn` cases under the "Should warn" heading and `expect-ok` cases under "Should NOT warn"? Misplaced cases are a common source of confusion.
-5. **Label accuracy** — For each test case, verify the label matches the actual behavior:
-   - **warn labels** should state **what** is ineffective (e.g. "table with place-items")
-   - **ok labels** should explain **why** the property is effective or not checked (e.g. "both halves effective", "justify-items half effective", "not checked by this rule")
+5. **Label accuracy** — Labels are the primary way users understand each test case. They should be self-explanatory without needing to inspect the element:
+   - **warn labels** should state **what** is ineffective (e.g. "div with object-fit: cover", "inline span with aspect-ratio")
+   - **ok labels** should explain **why** the property is effective AND **what to expect visually** (e.g. "img with object-fit: cover — replaced element, 200x40 SVG cropped to 100x100 square", "video with object-fit — replaced element, empty but object-fit applies")
    - Labels for shorthand properties (e.g. `place-items`, `place-content`) should clarify which halves are effective and why
    - Labels must not claim behavior that contradicts Chromium reality (e.g. claiming "both halves effective" when one half requires `flex-wrap: wrap`)
+   - When an ok case has limited visual verifiability (e.g. empty video/canvas), the label should acknowledge this so viewers aren't confused
 6. **Visual verifiability** — Can you visually confirm the CSS effect (or lack thereof) in the browser? Test cases should include sufficient dimensions (`width`, `height`) and `background` to make the effect obvious. For example:
    - An `inline-grid` container without explicit width won't visually show `justify-items: center`
    - A flex container without `flex-wrap: wrap` won't visually show `align-content: center`
