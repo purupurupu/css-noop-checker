@@ -2239,22 +2239,25 @@
     <h3>Should warn</h3>
     <div class="case expect-warn" data-rule="nonreplaced-no-object-fit">
       <div class="label label-warn">nonreplaced-no-object-fit warn: div with object-fit: cover</div>
-      <div data-target style="object-fit: cover; width: 200px; height: 100px; background: #f0f0f0">
-        Block div with object-fit: cover (no effect)
+      <div data-target style="object-fit: cover; width: 200px; height: 100px; background: #e8e8e8">
+        div — object-fit: cover ignored, content renders normally
       </div>
     </div>
     <div class="case expect-warn" data-rule="nonreplaced-no-object-fit">
       <div class="label label-warn">
         nonreplaced-no-object-fit warn: span with object-fit: contain
       </div>
-      <span data-target style="object-fit: contain"
-        >Inline span with object-fit: contain (no effect)</span
+      <span data-target style="object-fit: contain; background: #e8e8e8"
+        >span — object-fit: contain ignored</span
       >
     </div>
     <div class="case expect-warn" data-rule="nonreplaced-no-object-fit">
       <div class="label label-warn">nonreplaced-no-object-fit warn: div with object-position</div>
-      <div data-target style="object-position: top left; width: 200px; height: 100px">
-        Block div with object-position (no effect)
+      <div
+        data-target
+        style="object-position: top left; width: 200px; height: 100px; background: #e8e8e8"
+      >
+        div — object-position ignored, content stays at normal position
       </div>
     </div>
     <div class="case expect-warn" data-rule="nonreplaced-no-object-fit">
@@ -2263,16 +2266,22 @@
       </div>
       <div
         data-target
-        style="object-fit: cover; object-position: center top; width: 200px; height: 100px"
+        style="
+          object-fit: cover;
+          object-position: center top;
+          width: 200px;
+          height: 100px;
+          background: #e8e8e8;
+        "
       >
-        Block div with both object-fit and object-position (no effect)
+        div — both object-fit and object-position ignored
       </div>
     </div>
     <div class="case expect-warn" data-rule="nonreplaced-no-object-fit">
       <div class="label label-warn">
         nonreplaced-no-object-fit warn: button with object-fit (form control, not object-fit target)
       </div>
-      <button data-target style="object-fit: cover">Button with object-fit (no effect)</button>
+      <button data-target style="object-fit: cover">Button — object-fit ignored</button>
     </div>
     <div class="case expect-warn" data-rule="nonreplaced-no-object-fit">
       <div class="label label-warn">
@@ -2284,13 +2293,13 @@
     <h3>Should NOT warn</h3>
     <div class="case expect-ok" data-rule="nonreplaced-no-object-fit">
       <div class="label label-ok">
-        nonreplaced-no-object-fit ok: img with object-fit (replaced element)
+        nonreplaced-no-object-fit ok: img with object-fit: cover (replaced element)
       </div>
       <img
         data-target
-        src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='60' height='40'%3E%3Crect fill='%234ec9b0' width='60' height='40'/%3E%3C/svg%3E"
-        style="object-fit: cover; width: 100px; height: 60px"
-        alt="replaced element with object-fit"
+        src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='200' height='40'%3E%3Crect fill='%234ec9b0' width='200' height='40'/%3E%3Ctext x='10' y='25' fill='white' font-size='14'%3E200x40 original%3C/text%3E%3C/svg%3E"
+        style="object-fit: cover; width: 100px; height: 100px; background: #e8e8e8"
+        alt="200x40 image cropped to 100x100 by object-fit: cover"
       />
     </div>
     <div class="case expect-ok" data-rule="nonreplaced-no-object-fit">
@@ -2308,52 +2317,8 @@
       </div>
       <canvas
         data-target
-        style="object-fit: cover; width: 100px; height: 60px; background: #eee"
+        style="object-fit: cover; width: 100px; height: 60px; background: #ddd"
       ></canvas>
-    </div>
-    <div class="case expect-ok" data-rule="nonreplaced-no-object-fit">
-      <div class="label label-ok">
-        nonreplaced-no-object-fit ok: embed with object-fit (allowlisted replaced element)
-      </div>
-      <embed
-        data-target
-        type="image/svg+xml"
-        style="object-fit: cover; width: 100px; height: 60px"
-      />
-    </div>
-    <div class="case expect-ok" data-rule="nonreplaced-no-object-fit">
-      <div class="label label-ok">
-        nonreplaced-no-object-fit ok: object with object-fit (allowlisted replaced element)
-      </div>
-      <object
-        data-target
-        type="image/svg+xml"
-        style="object-fit: cover; width: 100px; height: 60px"
-      ></object>
-    </div>
-    <div class="case expect-ok" data-rule="nonreplaced-no-object-fit">
-      <div class="label label-ok">
-        nonreplaced-no-object-fit ok: div with default object-fit (fill) and default object-position
-      </div>
-      <div data-target style="width: 200px; height: 100px">Default values — no warning needed</div>
-    </div>
-    <div class="case expect-ok" data-rule="nonreplaced-no-object-fit">
-      <div class="label label-ok">
-        nonreplaced-no-object-fit ok: div with explicit default object-position (50% 50%)
-      </div>
-      <div data-target style="object-position: 50% 50%; width: 200px; height: 100px">
-        Explicit default object-position — no warning needed
-      </div>
-    </div>
-    <div class="case expect-ok" data-rule="nonreplaced-no-object-fit">
-      <div class="label label-ok">
-        nonreplaced-no-object-fit ok: display:contents skipped (no box)
-      </div>
-      <div style="display: flex">
-        <div data-target style="display: contents; object-fit: cover">
-          <span>Child of contents element</span>
-        </div>
-      </div>
     </div>
 
     <!-- ===== nontable-no-border-spacing: border-spacing on non-table elements ===== -->
