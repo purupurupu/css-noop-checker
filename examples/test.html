@@ -2907,80 +2907,142 @@
     <h3>Should warn</h3>
     <div class="case expect-warn" data-rule="scroll-snap-no-align-without-type">
       <div class="label label-warn">
-        scroll-snap-no-align-without-type warn: scroll-snap-align start without parent
+        scroll-snap-no-align-without-type warn: scroll-snap-align: start — parent has no
         scroll-snap-type
       </div>
-      <div style="overflow: auto; width: 200px; height: 100px">
-        <div data-target style="scroll-snap-align: start">snap child</div>
+      <div style="overflow: auto; width: 200px; height: 100px; background: #e8e8e8">
+        <div data-target style="scroll-snap-align: start; background: #ddd; padding: 4px">
+          snap-align: start — ignored, parent has no snap type
+        </div>
       </div>
     </div>
     <div class="case expect-warn" data-rule="scroll-snap-no-align-without-type">
       <div class="label label-warn">
-        scroll-snap-no-align-without-type warn: scroll-snap-align center without parent
+        scroll-snap-no-align-without-type warn: scroll-snap-align: center — parent has no
         scroll-snap-type
       </div>
-      <div style="overflow: auto; width: 200px; height: 100px">
-        <div data-target style="scroll-snap-align: center">snap child</div>
+      <div style="overflow: auto; width: 200px; height: 100px; background: #e8e8e8">
+        <div data-target style="scroll-snap-align: center; background: #ddd; padding: 4px">
+          snap-align: center — ignored
+        </div>
       </div>
     </div>
     <div class="case expect-warn" data-rule="scroll-snap-no-align-without-type">
       <div class="label label-warn">
-        scroll-snap-no-align-without-type warn: scroll-snap-align end without parent
+        scroll-snap-no-align-without-type warn: scroll-snap-align: end — parent has no
         scroll-snap-type
       </div>
-      <div style="overflow: auto; width: 200px; height: 100px">
-        <div data-target style="scroll-snap-align: end">snap child</div>
+      <div style="overflow: auto; width: 200px; height: 100px; background: #e8e8e8">
+        <div data-target style="scroll-snap-align: end; background: #ddd; padding: 4px">
+          snap-align: end — ignored
+        </div>
       </div>
     </div>
     <div class="case expect-warn" data-rule="scroll-snap-no-align-without-type">
       <div class="label label-warn">
-        scroll-snap-no-align-without-type warn: scroll-snap-stop always without parent
+        scroll-snap-no-align-without-type warn: scroll-snap-stop: always — parent has no
         scroll-snap-type
       </div>
-      <div style="overflow: auto; width: 200px; height: 100px">
-        <div data-target style="scroll-snap-stop: always">snap child</div>
+      <div style="overflow: auto; width: 200px; height: 100px; background: #e8e8e8">
+        <div data-target style="scroll-snap-stop: always; background: #ddd; padding: 4px">
+          snap-stop: always — ignored
+        </div>
       </div>
     </div>
 
     <h3>Should NOT warn</h3>
     <div class="case expect-ok" data-rule="scroll-snap-no-align-without-type">
       <div class="label label-ok">
-        scroll-snap-no-align-without-type ok: parent has scroll-snap-type y mandatory
+        scroll-snap-no-align-without-type ok: parent has scroll-snap-type: y mandatory — child
+        snap-align applies (snap effect visible on scroll interaction)
       </div>
-      <div style="overflow: auto; width: 200px; height: 100px; scroll-snap-type: y mandatory">
-        <div data-target style="scroll-snap-align: start">snap child</div>
-      </div>
-    </div>
-    <div class="case expect-ok" data-rule="scroll-snap-no-align-without-type">
-      <div class="label label-ok">
-        scroll-snap-no-align-without-type ok: parent has scroll-snap-type x proximity
-      </div>
-      <div style="overflow: auto; width: 200px; height: 100px; scroll-snap-type: x proximity">
-        <div data-target style="scroll-snap-align: start">snap child</div>
-      </div>
-    </div>
-    <div class="case expect-ok" data-rule="scroll-snap-no-align-without-type">
-      <div class="label label-ok">
-        scroll-snap-no-align-without-type ok: scroll-snap-align none (default)
-      </div>
-      <div style="overflow: auto; width: 200px; height: 100px">
-        <div data-target style="scroll-snap-align: none">snap child</div>
-      </div>
-    </div>
-    <div class="case expect-ok" data-rule="scroll-snap-no-align-without-type">
-      <div class="label label-ok">
-        scroll-snap-no-align-without-type ok: scroll-snap-stop with parent scroll-snap-type
-      </div>
-      <div style="overflow: auto; width: 200px; height: 100px; scroll-snap-type: y mandatory">
-        <div data-target style="scroll-snap-stop: always">snap child</div>
+      <div
+        style="
+          overflow: auto;
+          width: 200px;
+          height: 100px;
+          scroll-snap-type: y mandatory;
+          background: #e8e8e8;
+        "
+      >
+        <div
+          data-target
+          style="scroll-snap-align: start; height: 100px; background: #c8e6c9; padding: 4px"
+        >
+          Section 1 — snaps to start
+        </div>
+        <div style="height: 100px; background: #b3e5fc; padding: 4px">Section 2</div>
+        <div style="height: 100px; background: #fff9c4; padding: 4px">Section 3</div>
       </div>
     </div>
     <div class="case expect-ok" data-rule="scroll-snap-no-align-without-type">
       <div class="label label-ok">
-        scroll-snap-no-align-without-type ok: scroll-snap-stop normal (default)
+        scroll-snap-no-align-without-type ok: parent has scroll-snap-type: x proximity — child
+        snap-align applies
       </div>
-      <div style="overflow: auto; width: 200px; height: 100px">
-        <div data-target style="scroll-snap-stop: normal">snap child</div>
+      <div
+        style="
+          overflow: auto;
+          width: 200px;
+          height: 60px;
+          scroll-snap-type: x proximity;
+          white-space: nowrap;
+          background: #e8e8e8;
+        "
+      >
+        <div
+          data-target
+          style="
+            scroll-snap-align: start;
+            display: inline-block;
+            width: 200px;
+            height: 50px;
+            background: #c8e6c9;
+            padding: 4px;
+          "
+        >
+          Panel 1
+        </div>
+        <div
+          style="
+            display: inline-block;
+            width: 200px;
+            height: 50px;
+            background: #b3e5fc;
+            padding: 4px;
+          "
+        >
+          Panel 2
+        </div>
+      </div>
+    </div>
+    <div class="case expect-ok" data-rule="scroll-snap-no-align-without-type">
+      <div class="label label-ok">
+        scroll-snap-no-align-without-type ok: scroll-snap-stop: always with parent snap type —
+        forces stop at this snap point during fling scroll
+      </div>
+      <div
+        style="
+          overflow: auto;
+          width: 200px;
+          height: 100px;
+          scroll-snap-type: y mandatory;
+          background: #e8e8e8;
+        "
+      >
+        <div
+          data-target
+          style="
+            scroll-snap-stop: always;
+            scroll-snap-align: start;
+            height: 100px;
+            background: #ffccbc;
+            padding: 4px;
+          "
+        >
+          Must stop here (snap-stop: always)
+        </div>
+        <div style="height: 100px; background: #b3e5fc; padding: 4px">Section 2</div>
       </div>
     </div>
 
