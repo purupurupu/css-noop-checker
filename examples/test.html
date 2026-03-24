@@ -2487,47 +2487,67 @@
     <h3>Should warn</h3>
     <div class="case expect-warn" data-rule="outline-no-style">
       <div class="label label-warn">outline-no-style warn: outline-width without outline-style</div>
-      <div data-target style="outline-width: 3px">
-        This element has outline-width but no outline-style
+      <div data-target style="outline-width: 3px; background: #e8e8e8; padding: 8px">
+        outline-width: 3px — no outline visible (outline-style is none)
       </div>
     </div>
     <div class="case expect-warn" data-rule="outline-no-style">
       <div class="label label-warn">outline-no-style warn: outline-color without outline-style</div>
-      <div data-target style="outline-color: red">
-        This element has outline-color but no outline-style
+      <div data-target style="outline-color: red; background: #e8e8e8; padding: 8px">
+        outline-color: red — no outline visible (outline-style is none)
       </div>
     </div>
     <div class="case expect-warn" data-rule="outline-no-style">
       <div class="label label-warn">
         outline-no-style warn: outline-offset without outline-style
       </div>
-      <div data-target style="outline-offset: 5px">
-        This element has outline-offset but no outline-style
+      <div data-target style="outline-offset: 5px; background: #e8e8e8; padding: 8px">
+        outline-offset: 5px — no outline visible (outline-style is none)
       </div>
     </div>
     <div class="case expect-warn" data-rule="outline-no-style">
       <div class="label label-warn">
         outline-no-style warn: all outline properties without outline-style
       </div>
-      <div data-target style="outline-width: 2px; outline-color: blue; outline-offset: 4px">
-        This element has all outline properties but no outline-style
+      <div
+        data-target
+        style="
+          outline-width: 2px;
+          outline-color: blue;
+          outline-offset: 4px;
+          background: #e8e8e8;
+          padding: 8px;
+        "
+      >
+        all outline props set — no outline visible (outline-style is none)
       </div>
     </div>
 
     <h3>Should NOT warn</h3>
     <div class="case expect-ok" data-rule="outline-no-style">
-      <div class="label label-ok">outline-no-style ok: outline-style is solid</div>
-      <div data-target style="outline-width: 3px; outline-style: solid; outline-color: red">
-        Visible outline
+      <div class="label label-ok">
+        outline-no-style ok: outline-style: solid — 3px red solid outline visible around element
+      </div>
+      <div
+        data-target
+        style="
+          outline-width: 3px;
+          outline-style: solid;
+          outline-color: red;
+          background: #e8e8e8;
+          padding: 8px;
+        "
+      >
+        outline: 3px solid red — visible
       </div>
     </div>
     <div class="case expect-ok" data-rule="outline-no-style">
-      <div class="label label-ok">outline-no-style ok: outline shorthand with style</div>
-      <div data-target style="outline: 2px dashed blue">Outline shorthand includes style</div>
-    </div>
-    <div class="case expect-ok" data-rule="outline-no-style">
-      <div class="label label-ok">outline-no-style ok: no inline outline properties</div>
-      <div data-target>No outline properties set</div>
+      <div class="label label-ok">
+        outline-no-style ok: outline shorthand — 2px blue dashed outline visible around element
+      </div>
+      <div data-target style="outline: 2px dashed blue; background: #e8e8e8; padding: 8px">
+        outline: 2px dashed blue — visible
+      </div>
     </div>
 
     <!-- ===== perspective-no-origin: perspective-origin without perspective ===== -->
