@@ -3471,63 +3471,83 @@
     <h3>Should warn</h3>
     <div class="case expect-warn" data-rule="table-no-padding">
       <div class="label label-warn">table-no-padding warn: padding on table-row</div>
-      <div data-target style="display: table-row; padding: 10px">
-        display: table-row with padding
+      <div style="display: table; background: #e8e8e8">
+        <div data-target style="display: table-row; padding: 10px">
+          <div style="display: table-cell; padding: 4px">table-row — padding: 10px ignored</div>
+        </div>
       </div>
     </div>
     <div class="case expect-warn" data-rule="table-no-padding">
       <div class="label label-warn">table-no-padding warn: padding on table-row-group</div>
-      <div data-target style="display: table-row-group; padding: 10px">
-        display: table-row-group with padding
+      <div style="display: table; background: #e8e8e8">
+        <div data-target style="display: table-row-group; padding: 10px">
+          <div style="display: table-row">
+            <div style="display: table-cell; padding: 4px">
+              table-row-group — padding: 10px ignored
+            </div>
+          </div>
+        </div>
       </div>
     </div>
     <div class="case expect-warn" data-rule="table-no-padding">
       <div class="label label-warn">table-no-padding warn: padding on table-header-group</div>
-      <div data-target style="display: table-header-group; padding: 10px">
-        display: table-header-group with padding
+      <div style="display: table; background: #e8e8e8">
+        <div data-target style="display: table-header-group; padding: 10px">
+          <div style="display: table-row">
+            <div style="display: table-cell; padding: 4px">
+              table-header-group — padding: 10px ignored
+            </div>
+          </div>
+        </div>
       </div>
     </div>
     <div class="case expect-warn" data-rule="table-no-padding">
       <div class="label label-warn">table-no-padding warn: padding on table-footer-group</div>
-      <div data-target style="display: table-footer-group; padding: 10px">
-        display: table-footer-group with padding
+      <div style="display: table; background: #e8e8e8">
+        <div data-target style="display: table-footer-group; padding: 10px">
+          <div style="display: table-row">
+            <div style="display: table-cell; padding: 4px">
+              table-footer-group — padding: 10px ignored
+            </div>
+          </div>
+        </div>
       </div>
     </div>
     <div class="case expect-warn" data-rule="table-no-padding">
       <div class="label label-warn">table-no-padding warn: padding on col element</div>
-      <table>
+      <table style="background: #e8e8e8">
         <colgroup>
           <col data-target style="padding: 10px" />
         </colgroup>
         <tbody>
           <tr>
-            <td>cell</td>
+            <td style="padding: 4px">col — padding: 10px ignored</td>
           </tr>
         </tbody>
       </table>
     </div>
     <div class="case expect-warn" data-rule="table-no-padding">
       <div class="label label-warn">table-no-padding warn: padding on colgroup element</div>
-      <table>
+      <table style="background: #e8e8e8">
         <colgroup data-target style="padding: 10px">
           <col />
         </colgroup>
         <tbody>
           <tr>
-            <td>cell</td>
+            <td style="padding: 4px">colgroup — padding: 10px ignored</td>
           </tr>
         </tbody>
       </table>
     </div>
     <div class="case expect-warn" data-rule="table-no-padding">
       <div class="label label-warn">table-no-padding warn: logical padding on colgroup element</div>
-      <table>
+      <table style="background: #e8e8e8">
         <colgroup data-target style="padding-block-start: 10px">
           <col />
         </colgroup>
         <tbody>
           <tr>
-            <td>cell</td>
+            <td style="padding: 4px">colgroup — padding-block-start: 10px ignored</td>
           </tr>
         </tbody>
       </table>
@@ -3535,26 +3555,43 @@
 
     <h3>Should NOT warn</h3>
     <div class="case expect-ok" data-rule="table-no-padding">
-      <div class="label label-ok">table-no-padding ok: padding on table-cell</div>
-      <div data-target style="display: table-cell; padding: 10px">
-        display: table-cell with padding (valid)
+      <div class="label label-ok">
+        table-no-padding ok: table-cell — padding creates visible inner space
+      </div>
+      <div style="display: table; background: #e8e8e8">
+        <div style="display: table-row">
+          <div
+            data-target
+            style="display: table-cell; padding: 10px; background: white; border: 1px solid #999"
+          >
+            table-cell — padding: 10px applies
+          </div>
+        </div>
       </div>
     </div>
     <div class="case expect-ok" data-rule="table-no-padding">
-      <div class="label label-ok">table-no-padding ok: padding on table</div>
-      <div data-target style="display: table; padding: 10px">
-        display: table with padding (valid)
+      <div class="label label-ok">
+        table-no-padding ok: display: table — padding creates visible inner space around cells
+      </div>
+      <div data-target style="display: table; padding: 10px; background: #e8e8e8">
+        <div style="display: table-row">
+          <div style="display: table-cell; padding: 4px; background: white; border: 1px solid #999">
+            Cell
+          </div>
+        </div>
       </div>
     </div>
     <div class="case expect-ok" data-rule="table-no-padding">
-      <div class="label label-ok">table-no-padding ok: padding on inline-table</div>
-      <div data-target style="display: inline-table; padding: 10px">
-        display: inline-table with padding (valid)
+      <div class="label label-ok">
+        table-no-padding ok: display: inline-table — padding creates visible inner space
       </div>
-    </div>
-    <div class="case expect-ok" data-rule="table-no-padding">
-      <div class="label label-ok">table-no-padding ok: table-row with no padding</div>
-      <div data-target style="display: table-row">display: table-row without padding (valid)</div>
+      <div data-target style="display: inline-table; padding: 10px; background: #e8e8e8">
+        <div style="display: table-row">
+          <div style="display: table-cell; padding: 4px; background: white; border: 1px solid #999">
+            Cell
+          </div>
+        </div>
+      </div>
     </div>
 
     <!-- ===== transform-no-origin: transform-origin without transform ===== -->
