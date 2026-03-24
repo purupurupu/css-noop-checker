@@ -3736,68 +3736,70 @@
     <h3>Should warn</h3>
     <div class="case expect-warn" data-rule="visible-overflow-no-resize">
       <div class="label label-warn">
-        visible-overflow-no-resize warn: resize:both with default overflow (visible)
+        visible-overflow-no-resize warn: resize: both — overflow is visible, no resize handle
       </div>
-      <div data-target style="resize: both; width: 200px; height: 100px">
-        This div has resize: both but overflow is visible
-      </div>
-    </div>
-    <div class="case expect-warn" data-rule="visible-overflow-no-resize">
-      <div class="label label-warn">
-        visible-overflow-no-resize warn: resize:horizontal with default overflow (visible)
-      </div>
-      <div data-target style="resize: horizontal; width: 200px; height: 100px">
-        resize: horizontal needs overflow-x to be non-visible
+      <div data-target style="resize: both; width: 200px; height: 80px; background: #e8e8e8">
+        resize: both — no handle (overflow: visible)
       </div>
     </div>
     <div class="case expect-warn" data-rule="visible-overflow-no-resize">
       <div class="label label-warn">
-        visible-overflow-no-resize warn: resize:vertical with default overflow (visible)
+        visible-overflow-no-resize warn: resize: horizontal — overflow-x is visible, no handle
       </div>
-      <div data-target style="resize: vertical; width: 200px; height: 100px">
-        resize: vertical needs overflow-y to be non-visible
+      <div data-target style="resize: horizontal; width: 200px; height: 80px; background: #e8e8e8">
+        resize: horizontal — no handle
       </div>
     </div>
     <div class="case expect-warn" data-rule="visible-overflow-no-resize">
       <div class="label label-warn">
-        visible-overflow-no-resize warn: resize:both with overflow:clip (clip does not enable
-        resize)
+        visible-overflow-no-resize warn: resize: vertical — overflow-y is visible, no handle
       </div>
-      <div data-target style="resize: both; overflow: clip; width: 200px; height: 100px">
-        overflow: clip does not create a scroll container, so resize has no effect
+      <div data-target style="resize: vertical; width: 200px; height: 80px; background: #e8e8e8">
+        resize: vertical — no handle
+      </div>
+    </div>
+    <div class="case expect-warn" data-rule="visible-overflow-no-resize">
+      <div class="label label-warn">
+        visible-overflow-no-resize warn: resize: both + overflow: clip — clip does not enable resize
+      </div>
+      <div
+        data-target
+        style="resize: both; overflow: clip; width: 200px; height: 80px; background: #e8e8e8"
+      >
+        resize: both + overflow: clip — no handle
       </div>
     </div>
 
     <h3>Should NOT warn</h3>
     <div class="case expect-ok" data-rule="visible-overflow-no-resize">
       <div class="label label-ok">
-        visible-overflow-no-resize ok: resize:both with overflow:auto (correct usage)
+        visible-overflow-no-resize ok: resize: both + overflow: auto — resize handle visible in
+        bottom-right corner
       </div>
-      <div data-target style="resize: both; overflow: auto; width: 200px; height: 100px">
-        This div is properly resizable with overflow: auto
-      </div>
-    </div>
-    <div class="case expect-ok" data-rule="visible-overflow-no-resize">
-      <div class="label label-ok">
-        visible-overflow-no-resize ok: resize:both with overflow:hidden
-      </div>
-      <div data-target style="resize: both; overflow: hidden; width: 200px; height: 100px">
-        This div is properly resizable with overflow: hidden
+      <div
+        data-target
+        style="resize: both; overflow: auto; width: 200px; height: 80px; background: #e8e8e8"
+      >
+        resizable — drag handle at bottom-right
       </div>
     </div>
     <div class="case expect-ok" data-rule="visible-overflow-no-resize">
       <div class="label label-ok">
-        visible-overflow-no-resize ok: textarea (browser special-case)
+        visible-overflow-no-resize ok: resize: both + overflow: hidden — resize handle visible
       </div>
-      <textarea data-target style="resize: both">Textarea resize works without overflow</textarea>
+      <div
+        data-target
+        style="resize: both; overflow: hidden; width: 200px; height: 80px; background: #e8e8e8"
+      >
+        resizable — drag handle at bottom-right
+      </div>
     </div>
     <div class="case expect-ok" data-rule="visible-overflow-no-resize">
       <div class="label label-ok">
-        visible-overflow-no-resize ok: resize:none (default, no warning)
+        visible-overflow-no-resize ok: textarea — browser special-case, resize handle visible even
+        without overflow
       </div>
-      <div data-target style="resize: none; width: 200px; height: 100px">
-        resize: none is the default, should not warn
-      </div>
+      <textarea data-target style="resize: both">Textarea — always resizable</textarea>
     </div>
 
     <!-- ===== visible-overflow-no-text-overflow: text-overflow on visible overflow ===== -->
