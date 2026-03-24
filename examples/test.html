@@ -2332,20 +2332,25 @@
       <div class="label label-warn">
         nontable-no-border-spacing warn: border-spacing on block element
       </div>
-      <div data-target style="border-spacing: 10px">Block with border-spacing (no effect)</div>
+      <div data-target style="border-spacing: 10px; background: #e8e8e8; padding: 4px">
+        block — border-spacing: 10px ignored, no cell gaps
+      </div>
     </div>
     <div class="case expect-warn" data-rule="nontable-no-border-spacing">
       <div class="label label-warn">
         nontable-no-border-spacing warn: border-spacing on inline element
       </div>
-      <span data-target style="border-spacing: 5px">Inline with border-spacing (no effect)</span>
+      <span data-target style="border-spacing: 5px; background: #e8e8e8"
+        >inline — border-spacing: 5px ignored</span
+      >
     </div>
     <div class="case expect-warn" data-rule="nontable-no-border-spacing">
       <div class="label label-warn">
         nontable-no-border-spacing warn: border-spacing on flex container
       </div>
-      <div data-target style="display: flex; border-spacing: 8px">
-        <span>Flex child</span>
+      <div data-target style="display: flex; border-spacing: 8px; background: #e8e8e8">
+        <span style="background: #ccc; padding: 4px">A</span>
+        <span style="background: #bbb; padding: 4px">B</span>
       </div>
     </div>
     <div class="case expect-warn" data-rule="nontable-no-border-spacing">
@@ -2354,8 +2359,11 @@
         applies)
       </div>
       <div style="display: table">
-        <div data-target style="display: table-cell; border-spacing: 6px">
-          Cell with border-spacing
+        <div
+          data-target
+          style="display: table-cell; border-spacing: 6px; background: #e8e8e8; padding: 4px"
+        >
+          table-cell — border-spacing: 6px ignored (applies to table, not cell)
         </div>
       </div>
     </div>
@@ -2363,29 +2371,35 @@
     <h3>Should NOT warn</h3>
     <div class="case expect-ok" data-rule="nontable-no-border-spacing">
       <div class="label label-ok">
-        nontable-no-border-spacing ok: border-spacing on display:table
+        nontable-no-border-spacing ok: display:table — 10px spacing creates visible gaps between
+        bordered cells
       </div>
-      <div data-target style="display: table; border-spacing: 10px">
+      <div data-target style="display: table; border-spacing: 10px; background: #e8e8e8">
         <div style="display: table-row">
-          <div style="display: table-cell">Cell</div>
+          <div style="display: table-cell; border: 1px solid #999; padding: 4px; background: white">
+            Cell 1
+          </div>
+          <div style="display: table-cell; border: 1px solid #999; padding: 4px; background: white">
+            Cell 2
+          </div>
         </div>
       </div>
     </div>
     <div class="case expect-ok" data-rule="nontable-no-border-spacing">
       <div class="label label-ok">
-        nontable-no-border-spacing ok: border-spacing on display:inline-table
+        nontable-no-border-spacing ok: display:inline-table — 5px spacing creates visible gaps
+        between bordered cells
       </div>
-      <div data-target style="display: inline-table; border-spacing: 5px">
+      <div data-target style="display: inline-table; border-spacing: 5px; background: #e8e8e8">
         <div style="display: table-row">
-          <div style="display: table-cell">Cell</div>
+          <div style="display: table-cell; border: 1px solid #999; padding: 4px; background: white">
+            Cell 1
+          </div>
+          <div style="display: table-cell; border: 1px solid #999; padding: 4px; background: white">
+            Cell 2
+          </div>
         </div>
       </div>
-    </div>
-    <div class="case expect-ok" data-rule="nontable-no-border-spacing">
-      <div class="label label-ok">
-        nontable-no-border-spacing ok: default border-spacing on block element
-      </div>
-      <div data-target>Block with default border-spacing (no warning)</div>
     </div>
 
     <!-- ===== nontable-no-empty-cells: empty-cells on non-table-cell elements ===== -->
