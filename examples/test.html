@@ -2408,37 +2408,41 @@
     <h3>Should warn</h3>
     <div class="case expect-warn" data-rule="nontable-no-empty-cells">
       <div class="label label-warn">nontable-no-empty-cells warn: empty-cells on block element</div>
-      <div data-target style="empty-cells: hide">Block with empty-cells: hide (no effect)</div>
+      <div data-target style="empty-cells: hide; background: #e8e8e8; padding: 4px">
+        block — empty-cells: hide ignored (not a table-cell)
+      </div>
     </div>
     <div class="case expect-warn" data-rule="nontable-no-empty-cells">
       <div class="label label-warn">
         nontable-no-empty-cells warn: empty-cells on inline element
       </div>
-      <span data-target style="empty-cells: hide">Inline with empty-cells: hide (no effect)</span>
+      <span data-target style="empty-cells: hide; background: #e8e8e8"
+        >inline — empty-cells: hide ignored</span
+      >
     </div>
     <div class="case expect-warn" data-rule="nontable-no-empty-cells">
       <div class="label label-warn">
         nontable-no-empty-cells warn: empty-cells on flex container
       </div>
-      <div data-target style="display: flex; empty-cells: hide">
-        <span>Flex child</span>
+      <div data-target style="display: flex; empty-cells: hide; background: #e8e8e8">
+        <span style="padding: 4px">flex — empty-cells: hide ignored</span>
       </div>
     </div>
     <div class="case expect-warn" data-rule="nontable-no-empty-cells">
       <div class="label label-warn">
         nontable-no-empty-cells warn: empty-cells on table (only table-cell applies)
       </div>
-      <div data-target style="display: table; empty-cells: hide">
+      <div data-target style="display: table; empty-cells: hide; background: #e8e8e8">
         <div style="display: table-row">
-          <div style="display: table-cell">Cell</div>
+          <div style="display: table-cell; border: 1px solid #999; padding: 4px">Cell</div>
         </div>
       </div>
     </div>
     <div class="case expect-warn" data-rule="nontable-no-empty-cells">
       <div class="label label-warn">nontable-no-empty-cells warn: empty-cells on table-row</div>
-      <div style="display: table">
+      <div style="display: table; background: #e8e8e8">
         <div data-target style="display: table-row; empty-cells: hide">
-          <div style="display: table-cell">Cell</div>
+          <div style="display: table-cell; border: 1px solid #999; padding: 4px">Cell</div>
         </div>
       </div>
     </div>
@@ -2446,28 +2450,32 @@
     <h3>Should NOT warn</h3>
     <div class="case expect-ok" data-rule="nontable-no-empty-cells">
       <div class="label label-ok">
-        nontable-no-empty-cells ok: empty-cells on display:table-cell
+        nontable-no-empty-cells ok: table-cell with empty-cells: hide — empty cell's border/bg
+        hidden, filled cell visible
       </div>
-      <div style="display: table">
+      <div style="display: table; border-spacing: 4px; background: #e8e8e8">
         <div style="display: table-row">
-          <div data-target style="display: table-cell; empty-cells: hide">Table cell</div>
-        </div>
-      </div>
-    </div>
-    <div class="case expect-ok" data-rule="nontable-no-empty-cells">
-      <div class="label label-ok">
-        nontable-no-empty-cells ok: default empty-cells on block element
-      </div>
-      <div data-target>Block with default empty-cells (no warning)</div>
-    </div>
-    <div class="case expect-ok" data-rule="nontable-no-empty-cells">
-      <div class="label label-ok">
-        nontable-no-empty-cells ok: inherited empty-cells on non-table-cell (no inline style)
-      </div>
-      <div style="display: table; empty-cells: hide">
-        <div style="display: table-row">
-          <div style="display: table-cell">
-            <div data-target>Div inside table inherits empty-cells: hide (no warning)</div>
+          <div
+            data-target
+            style="
+              display: table-cell;
+              empty-cells: hide;
+              border: 1px solid #999;
+              padding: 4px;
+              width: 80px;
+              background: white;
+            "
+          ></div>
+          <div
+            style="
+              display: table-cell;
+              empty-cells: hide;
+              border: 1px solid #999;
+              padding: 4px;
+              background: white;
+            "
+          >
+            Filled
           </div>
         </div>
       </div>
