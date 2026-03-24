@@ -3600,73 +3600,134 @@
     <h3>Should warn</h3>
     <div class="case expect-warn" data-rule="transform-no-origin">
       <div class="label label-warn">
-        transform-no-origin warn: transform-origin set without any transform
+        transform-no-origin warn: transform-origin: top left without any transform
       </div>
-      <div data-target style="transform-origin: top left">
-        transform-origin: top left but no transform
+      <div
+        data-target
+        style="transform-origin: top left; background: #e8e8e8; width: 100px; height: 50px"
+      >
+        no transform — origin ignored, element not transformed
       </div>
     </div>
     <div class="case expect-warn" data-rule="transform-no-origin">
       <div class="label label-warn">
-        transform-no-origin warn: transform-origin center top without transform
+        transform-no-origin warn: transform-origin: center top without transform
       </div>
-      <div data-target style="transform-origin: center top">
-        transform-origin: center top but no transform
+      <div
+        data-target
+        style="transform-origin: center top; background: #e8e8e8; width: 100px; height: 50px"
+      >
+        no transform — origin ignored
       </div>
     </div>
     <div class="case expect-warn" data-rule="transform-no-origin">
       <div class="label label-warn">
         transform-no-origin warn: will-change: transform-origin is not will-change: transform
       </div>
-      <div data-target style="transform-origin: top left; will-change: transform-origin">
-        will-change: transform-origin does not suppress the warning
+      <div
+        data-target
+        style="
+          transform-origin: top left;
+          will-change: transform-origin;
+          background: #e8e8e8;
+          width: 100px;
+          height: 50px;
+        "
+      >
+        will-change: transform-origin does not count
       </div>
     </div>
 
     <h3>Should NOT warn</h3>
     <div class="case expect-ok" data-rule="transform-no-origin">
-      <div class="label label-ok">transform-no-origin ok: transform-origin with transform</div>
-      <div data-target style="transform-origin: top left; transform: rotate(45deg)">
-        transform-origin + transform (valid)
+      <div class="label label-ok">
+        transform-no-origin ok: transform-origin: top left + rotate(45deg) — element rotates from
+        top-left corner
       </div>
-    </div>
-    <div class="case expect-ok" data-rule="transform-no-origin">
-      <div class="label label-ok">transform-no-origin ok: transform-origin with rotate</div>
-      <div data-target style="transform-origin: top left; rotate: 45deg">
-        transform-origin + rotate (valid)
-      </div>
-    </div>
-    <div class="case expect-ok" data-rule="transform-no-origin">
-      <div class="label label-ok">transform-no-origin ok: transform-origin with scale</div>
-      <div data-target style="transform-origin: top left; scale: 1.5">
-        transform-origin + scale (valid)
-      </div>
-    </div>
-    <div class="case expect-ok" data-rule="transform-no-origin">
-      <div class="label label-ok">transform-no-origin ok: transform-origin with offset-path</div>
-      <div data-target style="transform-origin: top left; offset-path: path('M 0 0 L 100 100')">
-        transform-origin + offset-path (valid)
-      </div>
-    </div>
-    <div class="case expect-ok" data-rule="transform-no-origin">
-      <div class="label label-ok">transform-no-origin ok: will-change includes transform</div>
-      <div data-target style="transform-origin: top left; will-change: transform">
-        transform-origin + will-change: transform (valid)
+      <div
+        data-target
+        style="
+          transform-origin: top left;
+          transform: rotate(45deg);
+          background: #e8e8e8;
+          width: 100px;
+          height: 50px;
+        "
+      >
+        rotated from top-left
       </div>
     </div>
     <div class="case expect-ok" data-rule="transform-no-origin">
       <div class="label label-ok">
-        transform-no-origin ok: transform-origin with will-change list including transform
+        transform-no-origin ok: transform-origin: top left + rotate: 45deg — individual rotate
+        property
       </div>
-      <div data-target style="transform-origin: top left; will-change: opacity, transform">
-        transform-origin + will-change list (valid)
+      <div
+        data-target
+        style="
+          transform-origin: top left;
+          rotate: 45deg;
+          background: #e8e8e8;
+          width: 100px;
+          height: 50px;
+        "
+      >
+        rotated from top-left
       </div>
     </div>
     <div class="case expect-ok" data-rule="transform-no-origin">
       <div class="label label-ok">
-        transform-no-origin ok: default transform-origin (no warning)
+        transform-no-origin ok: transform-origin: top left + scale: 1.5 — element scales from
+        top-left corner
       </div>
-      <div data-target>default transform-origin — no warning expected</div>
+      <div
+        data-target
+        style="
+          transform-origin: top left;
+          scale: 1.5;
+          background: #e8e8e8;
+          width: 100px;
+          height: 50px;
+        "
+      >
+        scaled from top-left
+      </div>
+    </div>
+    <div class="case expect-ok" data-rule="transform-no-origin">
+      <div class="label label-ok">
+        transform-no-origin ok: transform-origin + offset-path — origin serves as motion path anchor
+        (not visually obvious without animation)
+      </div>
+      <div
+        data-target
+        style="
+          transform-origin: top left;
+          offset-path: path('M 0 0 L 100 100');
+          background: #e8e8e8;
+          width: 100px;
+          height: 50px;
+        "
+      >
+        offset-path uses origin
+      </div>
+    </div>
+    <div class="case expect-ok" data-rule="transform-no-origin">
+      <div class="label label-ok">
+        transform-no-origin ok: will-change: transform — transform may be applied dynamically, not
+        visually testable
+      </div>
+      <div
+        data-target
+        style="
+          transform-origin: top left;
+          will-change: transform;
+          background: #e8e8e8;
+          width: 100px;
+          height: 50px;
+        "
+      >
+        will-change: transform — origin ready
+      </div>
     </div>
 
     <!-- ===== visible-overflow-no-resize: resize on visible overflow ===== -->
