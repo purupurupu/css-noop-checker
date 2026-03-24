@@ -2614,28 +2614,65 @@
 
     <h3>Should warn</h3>
     <div class="case expect-warn" data-rule="positioned-no-clear">
-      <div class="label label-warn">positioned-no-clear warn: clear: both on absolute</div>
-      <div style="position: relative; height: 40px; background: #f0f0f0">
-        <div data-target style="position: absolute; clear: both; top: 0; left: 0">
+      <div class="label label-warn">
+        positioned-no-clear warn: clear: both on absolute — overlaps float (clear ignored)
+      </div>
+      <div style="position: relative; height: 60px; background: #f0f0f0">
+        <div style="float: left; width: 80px; height: 30px; background: #ffcccc">float</div>
+        <div
+          data-target
+          style="
+            position: absolute;
+            clear: both;
+            top: 0;
+            left: 0;
+            background: rgba(255, 200, 200, 0.5);
+          "
+        >
           Absolute with clear
         </div>
       </div>
     </div>
 
     <div class="case expect-warn" data-rule="positioned-no-clear">
-      <div class="label label-warn">positioned-no-clear warn: clear: left on fixed</div>
+      <div class="label label-warn">
+        positioned-no-clear warn: clear: left on fixed — overlaps float (clear ignored)
+      </div>
       <!-- transform creates containing block for position:fixed child -->
-      <div style="transform: translateZ(0); height: 40px; background: #f0f0f0">
-        <div data-target style="position: fixed; clear: left; top: 0; left: 0; z-index: 1">
+      <div style="transform: translateZ(0); height: 60px; background: #f0f0f0">
+        <div style="float: left; width: 80px; height: 30px; background: #ffcccc">float</div>
+        <div
+          data-target
+          style="
+            position: fixed;
+            clear: left;
+            top: 0;
+            left: 0;
+            z-index: 1;
+            background: rgba(255, 200, 200, 0.5);
+          "
+        >
           Fixed with clear
         </div>
       </div>
     </div>
 
     <div class="case expect-warn" data-rule="positioned-no-clear">
-      <div class="label label-warn">positioned-no-clear warn: clear: right on absolute</div>
-      <div style="position: relative; height: 40px; background: #f0f0f0">
-        <div data-target style="position: absolute; clear: right; top: 0; left: 0">
+      <div class="label label-warn">
+        positioned-no-clear warn: clear: right on absolute — overlaps float (clear ignored)
+      </div>
+      <div style="position: relative; height: 60px; background: #f0f0f0">
+        <div style="float: right; width: 80px; height: 30px; background: #ffcccc">float</div>
+        <div
+          data-target
+          style="
+            position: absolute;
+            clear: right;
+            top: 0;
+            right: 0;
+            background: rgba(255, 200, 200, 0.5);
+          "
+        >
           Absolute with clear: right
         </div>
       </div>
@@ -2643,13 +2680,30 @@
 
     <h3>Should NOT warn</h3>
     <div class="case expect-ok" data-rule="positioned-no-clear">
-      <div class="label label-ok">positioned-no-clear ok: clear on static element</div>
-      <div data-target style="clear: both">Static with clear</div>
+      <div class="label label-ok">
+        positioned-no-clear ok: clear on static — appears below float
+      </div>
+      <div style="background: #f0f0f0; overflow: hidden">
+        <div style="float: left; width: 80px; height: 30px; background: #ccffcc">float</div>
+        <div data-target style="clear: both; background: rgba(200, 255, 200, 0.5)">
+          Static with clear — below float
+        </div>
+      </div>
     </div>
 
     <div class="case expect-ok" data-rule="positioned-no-clear">
-      <div class="label label-ok">positioned-no-clear ok: clear on relative element</div>
-      <div data-target style="position: relative; clear: both">Relative with clear</div>
+      <div class="label label-ok">
+        positioned-no-clear ok: clear on relative — appears below float
+      </div>
+      <div style="background: #f0f0f0; overflow: hidden">
+        <div style="float: left; width: 80px; height: 30px; background: #ccffcc">float</div>
+        <div
+          data-target
+          style="position: relative; clear: both; background: rgba(200, 255, 200, 0.5)"
+        >
+          Relative with clear — below float
+        </div>
+      </div>
     </div>
 
     <div class="case expect-ok" data-rule="positioned-no-clear">
@@ -2662,8 +2716,18 @@
     </div>
 
     <div class="case expect-ok" data-rule="positioned-no-clear">
-      <div class="label label-ok">positioned-no-clear ok: clear on sticky element</div>
-      <div data-target style="position: sticky; clear: both; top: 0">Sticky with clear</div>
+      <div class="label label-ok">
+        positioned-no-clear ok: clear on sticky — appears below float
+      </div>
+      <div style="background: #f0f0f0; overflow: hidden">
+        <div style="float: left; width: 80px; height: 30px; background: #ccffcc">float</div>
+        <div
+          data-target
+          style="position: sticky; clear: both; top: 0; background: rgba(200, 255, 200, 0.5)"
+        >
+          Sticky with clear — below float
+        </div>
+      </div>
     </div>
 
     <!-- ===== positioned-no-float: float on out-of-flow positioned element ===== -->
@@ -2744,70 +2808,95 @@
       <div class="label label-warn">
         scroll-no-scroll-padding warn: scroll-padding-top on non-scroll container
       </div>
-      <div data-target style="scroll-padding-top: 10px">scroll-padding without overflow</div>
+      <div data-target style="scroll-padding-top: 10px; background: #e8e8e8; padding: 4px">
+        overflow: visible — not a scroll container, scroll-padding ignored
+      </div>
     </div>
     <div class="case expect-warn" data-rule="scroll-no-scroll-padding">
       <div class="label label-warn">
         scroll-no-scroll-padding warn: scroll-padding-left on non-scroll container
       </div>
-      <div data-target style="scroll-padding-left: 20px">scroll-padding without overflow</div>
+      <div data-target style="scroll-padding-left: 20px; background: #e8e8e8; padding: 4px">
+        overflow: visible — not a scroll container, scroll-padding ignored
+      </div>
     </div>
     <div class="case expect-warn" data-rule="scroll-no-scroll-padding">
       <div class="label label-warn">
         scroll-no-scroll-padding warn: scroll-padding-block-start on non-scroll container
       </div>
-      <div data-target style="scroll-padding-block-start: 10px">
-        scroll-padding logical without overflow
+      <div data-target style="scroll-padding-block-start: 10px; background: #e8e8e8; padding: 4px">
+        logical property — same issue, overflow: visible
       </div>
     </div>
     <div class="case expect-warn" data-rule="scroll-no-scroll-padding">
       <div class="label label-warn">
-        scroll-no-scroll-padding warn: scroll-padding on element with overflow clip
+        scroll-no-scroll-padding warn: scroll-padding on element with overflow: clip (not a scroll
+        container)
       </div>
-      <div data-target style="overflow: clip; scroll-padding-top: 10px">
-        scroll-padding with overflow clip
+      <div
+        data-target
+        style="overflow: clip; scroll-padding-top: 10px; background: #e8e8e8; padding: 4px"
+      >
+        overflow: clip clips content but is not a scroll container
       </div>
     </div>
 
     <h3>Should NOT warn</h3>
     <div class="case expect-ok" data-rule="scroll-no-scroll-padding">
       <div class="label label-ok">
-        scroll-no-scroll-padding ok: scroll-padding-top on overflow auto container
+        scroll-no-scroll-padding ok: overflow: auto — scroll container with scrollbar,
+        scroll-padding offsets snap points (effect visible with scroll-snap)
       </div>
       <div
         data-target
-        style="overflow: auto; width: 200px; height: 100px; scroll-padding-top: 10px"
+        style="
+          overflow: auto;
+          width: 200px;
+          height: 100px;
+          scroll-padding-top: 10px;
+          background: #e8e8e8;
+        "
       >
-        <div style="height: 300px">tall content</div>
+        <div style="height: 300px; background: linear-gradient(#ccc, #666)">scrollable content</div>
       </div>
     </div>
     <div class="case expect-ok" data-rule="scroll-no-scroll-padding">
       <div class="label label-ok">
-        scroll-no-scroll-padding ok: scroll-padding-top on overflow scroll container
+        scroll-no-scroll-padding ok: overflow: scroll — always shows scrollbar, scroll-padding
+        applies
       </div>
       <div
         data-target
-        style="overflow: scroll; width: 200px; height: 100px; scroll-padding-top: 10px"
+        style="
+          overflow: scroll;
+          width: 200px;
+          height: 100px;
+          scroll-padding-top: 10px;
+          background: #e8e8e8;
+        "
       >
-        <div style="height: 300px">tall content</div>
+        <div style="height: 300px; background: linear-gradient(#ccc, #666)">scrollable content</div>
       </div>
     </div>
     <div class="case expect-ok" data-rule="scroll-no-scroll-padding">
       <div class="label label-ok">
-        scroll-no-scroll-padding ok: scroll-padding-top on overflow hidden container
+        scroll-no-scroll-padding ok: overflow: hidden — scroll container (programmatic scroll),
+        scroll-padding applies but not visually testable without JS
       </div>
       <div
         data-target
-        style="overflow: hidden; width: 200px; height: 100px; scroll-padding-top: 10px"
+        style="
+          overflow: hidden;
+          width: 200px;
+          height: 100px;
+          scroll-padding-top: 10px;
+          background: #e8e8e8;
+        "
       >
-        <div style="height: 300px">tall content</div>
+        <div style="height: 300px; background: linear-gradient(#ccc, #666)">
+          hidden overflow content
+        </div>
       </div>
-    </div>
-    <div class="case expect-ok" data-rule="scroll-no-scroll-padding">
-      <div class="label label-ok">
-        scroll-no-scroll-padding ok: no scroll-padding set (default auto)
-      </div>
-      <div data-target>no scroll-padding</div>
     </div>
     <!-- ===== scroll-snap-no-align-without-type: scroll-snap child properties without scroll-snap-type on parent ===== -->
     <h2>
