@@ -31,6 +31,7 @@
         border: 1px solid #ddd;
         border-radius: 4px;
         background: #fafafa;
+        overflow: hidden;
       }
       .expect-warn {
         border-left: 4px solid #e6a700;
@@ -2151,15 +2152,23 @@
       <div class="label label-ok">
         nonfloat-no-shape-outside ok: floated element with shape-outside
       </div>
-      <div data-target style="float: left; width: 100px; height: 100px; shape-outside: circle()">
-        Floated element with shape-outside: circle() (valid)
-      </div>
-    </div>
-    <div class="case expect-ok" data-rule="nonfloat-no-shape-outside">
-      <div class="label label-ok">
-        nonfloat-no-shape-outside ok: non-floated with default shape-outside (none)
-      </div>
-      <div data-target>Non-floated element with default shape-outside: none (no warning)</div>
+      <div
+        data-target
+        style="
+          float: left;
+          width: 100px;
+          height: 100px;
+          shape-outside: circle();
+          background: #ddd;
+          border-radius: 50%;
+          clip-path: circle();
+        "
+      ></div>
+      <p style="margin: 0">
+        This text wraps around the circle shape. Lorem ipsum dolor sit amet, consectetur adipiscing
+        elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim
+        veniam, quis nostrud exercitation ullamco laboris.
+      </p>
     </div>
 
     <!-- ===== nonreplaced-no-aspect-ratio: aspect-ratio on inline non-replaced elements ===== -->
