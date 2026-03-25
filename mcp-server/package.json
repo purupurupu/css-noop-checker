@@ -1,6 +1,6 @@
 {
   "name": "css-noop-checker-mcp",
-  "version": "0.0.1",
+  "version": "0.1.0",
   "description": "MCP server for CSS no-op detection via Playwright",
   "keywords": [
     "css",
