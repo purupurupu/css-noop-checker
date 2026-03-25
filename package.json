@@ -1,6 +1,6 @@
 {
   "name": "css-noop-checker",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "private": true,
   "description": "Chrome DevTools extension that detects no-op CSS properties",
   "keywords": [
