@@ -185,6 +185,28 @@ React app rendered in the DevTools sidebar pane. See `src/sidebar/components/` a
 - Run `pnpm fmt` before committing to apply formatting
 - Run `pnpm build` or `pnpm lint` before committing to verify nothing is broken
 
+## Release Rules
+
+Releases are triggered by pushing a `v*` tag. The GitHub Actions workflow (`.github/workflows/release.yml`) automatically runs CI, creates a GitHub Release with the extension zip, and publishes the MCP server to npm via OIDC trusted publisher.
+
+### Version bump procedure
+
+1. Update `version` in **both** `package.json` (root) and `mcp-server/package.json` — keep them in sync
+2. Commit: `chore: bump version to X.Y.Z`
+3. Merge to main via PR
+4. Tag and push:
+   ```bash
+   git checkout main && git pull
+   git tag vX.Y.Z
+   git push --tags
+   ```
+5. Workflow runs automatically — verify at GitHub Actions
+
+### Versioning
+
+- Follow semver: `0.Y.Z` during pre-1.0 development
+- Root package and MCP server share the same version
+
 ## PR Rules
 
 - Title and body must be written in **English**
