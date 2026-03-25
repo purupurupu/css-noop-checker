@@ -1,9 +1,8 @@
-#!/usr/bin/env tsx
 import { McpServer } from '@modelcontextprotocol/sdk/server/mcp.js';
 import { StdioServerTransport } from '@modelcontextprotocol/sdk/server/stdio.js';
 import { z } from 'zod';
 import { chromium } from 'playwright';
-import type { Browser } from 'playwright';
+import type { Browser, Page } from 'playwright';
 import { analyzeElement } from '../../src/rules/engine.ts';
 import { getRules } from '../../src/rules/registry.ts';
 import {
@@ -11,6 +10,8 @@ import {
   scanAllElements,
 } from '../../e2e/helpers/extract-element-data.ts';
 import { validateUrl } from './url-validation.ts';
+
+declare const __PKG_VERSION__: string;
 
 const MAX_SELECTOR_LENGTH = 500;
 
@@ -30,8 +31,16 @@ function mcpSuccess(data: unknown) {
 // Persistent browser instance with lazy init and launch-race guard
 let browserInstance: Browser | null = null;
 let launchPromise: Promise<Browser> | null = null;
+let shuttingDown = false;
+
+function isBrowserNotInstalledError(err: unknown): boolean {
+  if (!(err instanceof Error)) return false;
+  const msg = err.message;
+  return msg.includes("Executable doesn't exist") || msg.includes('PLAYWRIGHT_BROWSERS_PATH');
+}
 
 async function getBrowser(): Promise<Browser> {
+  if (shuttingDown) throw new Error('Server is shutting down');
   if (browserInstance?.isConnected()) return browserInstance;
   if (launchPromise) return launchPromise;
   launchPromise = chromium.launch().then(
@@ -42,6 +51,14 @@ async function getBrowser(): Promise<Browser> {
     },
     (err) => {
       launchPromise = null;
+      if (isBrowserNotInstalledError(err)) {
+        const helpMsg =
+          'Chromium browser is not installed for Playwright.\n' +
+          'Run the following command to install it:\n\n' +
+          '  npx playwright install chromium\n';
+        console.error(helpMsg);
+        throw new Error(helpMsg);
+      }
       console.error('Failed to launch browser:', err);
       throw err;
     },
@@ -49,16 +66,14 @@ async function getBrowser(): Promise<Browser> {
   return launchPromise;
 }
 
-let shuttingDown = false;
-
 async function shutdown() {
   if (shuttingDown) return;
   shuttingDown = true;
-  // Brief grace period lets in-flight page.evaluate() calls settle
-  // before we pull the browser out from under them.
-  await new Promise((r) => setTimeout(r, 500));
   try {
     if (browserInstance?.isConnected()) {
+      // Brief grace period lets in-flight page.evaluate() calls settle
+      // before we pull the browser out from under them.
+      await new Promise((r) => setTimeout(r, 500));
       await browserInstance.close();
     }
   } catch (err) {
@@ -67,26 +82,20 @@ async function shutdown() {
   browserInstance = null;
 }
 
-process.on('SIGINT', async () => {
-  try {
-    await shutdown();
-  } catch (err) {
-    console.error('Error during SIGINT shutdown:', err);
-  }
-  process.exit(0);
-});
-process.on('SIGTERM', async () => {
-  try {
-    await shutdown();
-  } catch (err) {
-    console.error('Error during SIGTERM shutdown:', err);
-  }
-  process.exit(0);
-});
+for (const signal of ['SIGINT', 'SIGTERM'] as const) {
+  process.on(signal, async () => {
+    try {
+      await shutdown();
+    } catch (err) {
+      console.error(`Error during ${signal} shutdown:`, err);
+    }
+    process.exit(0);
+  });
+}
 
 const server = new McpServer({
   name: 'css-noop-checker',
-  version: '0.0.1',
+  version: typeof __PKG_VERSION__ !== 'undefined' ? __PKG_VERSION__ : '0.0.0-dev',
 });
 
 server.tool('list_rules', 'List all available CSS no-op detection rules', async () => {
@@ -102,8 +111,6 @@ server.tool('list_rules', 'List all available CSS no-op detection rules', async 
     return mcpError(`Failed to list rules: ${err instanceof Error ? err.message : err}`);
   }
 });
-
-import type { Page } from 'playwright';
 
 type McpResult = ReturnType<typeof mcpSuccess> | ReturnType<typeof mcpError>;
 

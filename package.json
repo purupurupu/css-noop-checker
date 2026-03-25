@@ -24,7 +24,7 @@
   "type": "module",
   "scripts": {
     "dev": "vite build --watch",
-    "build": "tsc -b && tsc -p mcp-server/tsconfig.json --noEmit && vite build",
+    "build": "tsc -b && tsc -p mcp-server/tsconfig.json --noEmit && vite build && pnpm --filter css-noop-checker-mcp build",
     "lint": "oxlint .",
     "fmt": "oxfmt --write .",
     "fmt:check": "oxfmt --check .",
