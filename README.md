@@ -1,3 +1,5 @@
+[![MseeP.ai Security Assessment Badge](https://mseep.net/pr/purupurupu-css-noop-checker-badge.png)](https://mseep.ai/app/purupurupu-css-noop-checker)
+
 # CSS Noop Checker
 
 [![CI](https://github.com/purupurupu/css-noop-checker/actions/workflows/ci.yml/badge.svg)](https://github.com/purupurupu/css-noop-checker/actions/workflows/ci.yml)
